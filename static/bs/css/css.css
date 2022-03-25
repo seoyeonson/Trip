@@ -1,0 +1,37 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: #FF6B00;
+}
+
+.toolbar {
+    padding-left: 10vw;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home_icon {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 30px;
+    line-height: 136.5%;
+}
+
+.home_tool {
+    padding-left: 5vw;
+    /* border: 1px solid red; */
+}
+
+.home_menu {
+    margin: 0 20px 0 20px;
+}
+
+.home_tool2 {
+    position: absolute;
+    /* border: 1px solid blue; */
+    left: 80vw;
+}
