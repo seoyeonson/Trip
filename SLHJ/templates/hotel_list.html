@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block contents %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>검색</title>
+</head>
+ 
+<body>
+    <nav class="navbar navbar-expand bg-white fixed-top toolbar"> <!--홈탑메뉴바 -->
+         <a href="#"><span class="home_icon">Trip</span></a>
+        <ul class="navbar-nav home_tool">
+            <li class="home_menu">
+                <a href="#">호텔</a>
+            </li>
+            <li class="home_menu">
+                <a href="#">여행지</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav home_tool2">
+            <li class="home_menu">
+                <a href="#">로그인</a>
+            </li>
+        </ul>
+    </nav> 
+    <div id="list_search">
+        <select class="list_pl_search" >
+            <option value="suwon">수원</option>
+            <option value="siheong">시흥</option>
+            <option value="namyangzu" >남양주</option>
+            <option value="pazu" selected>파주</option>
+        </select>
+        <input type="date" class="list_stdate_search">
+        <!-- <input type="date" class="list_eddate_search"> -->
+ 
+        <select class="list_peonum_search" >
+            <option value="one" selected>1인</option>
+            <option value="two">2인</option>
+            <option value="three" >3인</option>
+            <option value="four">4인</option>
+        </select>
+    </div>
+    
+    <iframe src="https://www.google.co.kr/maps/search/37.2117829498,127.0056181833?hl=ko" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="list_gps_map"></iframe>
+    <span id="tags" class="form-control"> 
+        {% comment %}           
+        {% for tag in board.tags.all %}
+            {{ tag.name }},
+        {% endfor %}
+        {% endcomment %}
+
+        {{ board.tags.all|join:", "}}
+
+    </span>
+    <div class="table_list">
+        <table class="list1">
+        <tr><td>1</td></tr>
+        </table>
+    </div>
+    <div class="table_list">
+        <table class="list2">
+        <tr><td>2</td></tr>
+        </table>
+    </div>
+       
+    </header>
+    </body>
+
+</html>
+{% endblock %}

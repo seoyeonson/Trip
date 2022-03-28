@@ -3,4 +3,5 @@ from SLHJ import views
 
 urlpatterns = [
     path('main/', views.main),
+    path('list/', views.list),
 ]

@@ -68,3 +68,88 @@ a:hover {
     width: 30px;
     height: 30px;
 }
+
+.list_pl_search{
+    position: absolute;
+    width: 189px;
+    height: 64px;
+    left: 402px;
+    top: 112px;
+    
+    background: #F1F1F1;
+    border-radius: 10px;
+
+}
+
+.list_stdate_search{
+    position: absolute;
+    width: 344px;
+    height: 64px;
+    left: 596px;
+    top: 112px;
+    
+    background: #F1F1F1;
+    border-radius: 10px;  
+}
+.list_eddate_search::before{
+    position: absolute;
+   
+    
+    content:""; 
+}
+
+
+
+.list_peonum_search{
+    position: absolute;
+width: 193px;
+height: 64px;
+left: 945px;
+top: 112px;
+
+background: #F1F1F1;
+    border-radius: 10px;  
+}
+
+.list_gps_map{
+position: absolute;
+width: 809px;
+height: 1094px;
+left: 778px;
+top: 222px;
+} 
+.table_list{
+    border-radius: 10px;
+    text-align: center; 
+}
+.list1{
+    position: absolute;
+    width: 651px;
+    height: 201px;
+    left: 38px;
+    top: 230px;
+    
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    border-collapse: collapse;
+    border-radius: 10px;
+    text-align: center;
+
+
+
+
+
+    
+}
+.list2{
+    position: absolute;
+    width: 651px;
+    height: 201px;
+    left: 38px;
+    top: 449px;
+    
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    box-sizing: border-box;
+    border-radius: 10px;  
+}
