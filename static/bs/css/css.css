@@ -11,6 +11,11 @@ a:hover {
     color: #FF6B00;
 }
 
+/* main contents */
+.main_contents{
+    padding: 0;
+}
+
 .toolbar {
     align-items: center;
     background: #FFFFFF;
