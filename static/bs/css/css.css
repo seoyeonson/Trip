@@ -133,7 +133,6 @@ a:hover {
 
 .provision span, a{
     font-size: 13px;
-    padding-top: 20px;
 }
 
 .provision a{
@@ -212,3 +211,131 @@ a:hover {
 }
 
 /* end: reserve */
+
+.menu_icon {
+    list-style:none;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.menu_icon>ul {
+    list-style: none;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.menu_icon>ul>a>li {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.slash::before {
+    position: absolute;
+    top: calc(24%);
+    left: calc(50%);
+    width: 1px;
+    height: 50px;
+    background-color: #A8A8A8;
+    content: "";
+}
+
+.hotel_search {
+    margin-top: 10px;
+    width: 600px;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.hotel_search>ul {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+    
+}
+
+.hotel_search>ul>li {
+    display: inline-block;
+    width: 100px;
+    height: 40px;
+    background-color: #A8A8A8;
+    line-height: 40px;
+    border-radius: 6px;
+}
+
+.hotel_search>ul>ul {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+    display: inline-block;
+    background-color: #A8A8A8;
+    width: 230px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 6px;
+}
+
+.hotel_search>ul>ul>li {
+    display: inline-block;
+}
+/**/
+.vacation_search {
+    margin-top: 10px;
+    width: 400px;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.vacation_search>ul {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+    
+}
+
+.vacation_search>ul>li {
+    display: inline-block;
+    width: 100px;
+    height: 40px;
+    background-color: #A8A8A8;
+    line-height: 40px;
+    border-radius: 6px;
+}
+
+.fa-map-marker-alt {
+    margin-right:15px;
+}
+
+.fa-calendar-alt {
+    margin-right:40px;
+}
+
+.slash2::before {
+    position: absolute;
+    top: calc(36%);
+    left: calc(48%);
+    width: 1px;
+    height: 20px;
+    background-color: black;
+    content: "";
+}
+
+.chk_date {
+    margin-right: 20px;
+}
+
+.fa-user-alt {
+    margin-right:15px;
+}
