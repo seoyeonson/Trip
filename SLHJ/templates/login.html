@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+<link href="{% static 'bs/css/login.css' %}" rel="stylesheet">
+
+{% block contents %}
+<nav class="navbar navbar-expand bg-white fixed-top toolbar"> <!-- 홈탑메뉴바 -->
+    <a href="#"><span class="home_icon">Trip</span></a>
+    <ul class="navbar-nav home_tool">
+        <li class="home_menu">
+            <a href="#">호텔</a>
+        </li>
+        <li class="home_menu">
+            <a href="#">여행지</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav home_tool2">
+        <li class="home_menu">
+            <a href="#">로그인</a>
+        </li>
+    </ul>
+</nav>
+
+<section class="login_box">
+    <a href="#"><span class="home_icon">Trip</span></a>
+
+</section>
+
+{% endblock %}

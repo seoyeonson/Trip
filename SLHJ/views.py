@@ -17,3 +17,6 @@ def vacation_reserve(request):
 
 def hotel_detail(request):
     return render(request, 'hotel_detail.html')
+    
+def login(request):
+    return render(request, 'login.html')
