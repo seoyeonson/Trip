@@ -353,7 +353,7 @@ top: 222px;
     display: inline-block;
     width: 100px;
     height: 40px;
-    background-color: #A8A8A8;
+    background-color: #F1F1F1;
     line-height: 40px;
     border-radius: 6px;
 }
@@ -364,7 +364,7 @@ top: 222px;
     padding-right: 0px;
     margin-bottom: 0px;
     display: inline-block;
-    background-color: #A8A8A8;
+    background-color: #F1F1F1;
     width: 230px;
     height: 40px;
     line-height: 40px;
@@ -374,7 +374,7 @@ top: 222px;
 .hotel_search>ul>ul>li {
     display: inline-block;
 }
-/**/
+
 .vacation_search {
     margin-top: 10px;
     width: 400px;
@@ -398,17 +398,19 @@ top: 222px;
     display: inline-block;
     width: 100px;
     height: 40px;
-    background-color: #A8A8A8;
+    background-color: #F1F1F1;
     line-height: 40px;
     border-radius: 6px;
 }
 
 .fa-map-marker-alt {
     margin-right:15px;
+    color: #A8A8A8;
 }
 
 .fa-calendar-alt {
     margin-right:40px;
+    color: #A8A8A8;
 }
 
 .slash2::before {
@@ -427,4 +429,21 @@ top: 222px;
 
 .fa-user-alt {
     margin-right:15px;
+    color: #A8A8A8;
+}
+
+.hotel_submit {
+    background-color: #FF6B00 !important;
+}
+
+.hotel_submit:hover {
+    background-color: #f56600 !important;
+}
+
+.vacation_submit {
+    background-color: #FF6B00 !important;
+}
+
+.vacation_submit:hover {
+    background-color: #f56600 !important;
 }

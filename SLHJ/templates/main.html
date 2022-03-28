@@ -22,20 +22,24 @@
                 </div>
                 <div class="hotel_search" id="hotel_search"> <!-- 호텔 검색창 -->
                     <ul>
-                        <li><i class="fas fa-map-marker-alt" class="map"></i>위치</li>
+                        <li>
+                            <a href="#" onclick="search_vacation()">
+                                <i class="fas fa-map-marker-alt" class="map"></i>위치
+                            </a>
+                        </li>
                         <ul>
-                            <li class="chk_date"><i class="fas fa-calendar-alt"></i>체크아웃</li>
-                            <li class="slash2">체크인</li>
+                            <li class="chk_date"><i class="fas fa-calendar-alt"></i>체크인</li>
+                            <li class="slash2">체크아웃</li>
                         </ul>
                         <li><i class="fas fa-user-alt"></i>인원</li>
-                        <li><a href="#">검색</a></li>
+                        <li class="hotel_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
                     </ul>
                 </div>
                 <div class="vacation_search" id="vacation_search" style="display: none;"> <!-- 여행지 검색창 -->
                     <ul>
-                        <li>위치</li>
-                        <li>인원</li>
-                        <li>검색</li>
+                        <li><i class="fas fa-map-marker-alt" class="map"></i>위치</li>
+                        <li><i class="fas fa-user-alt"></i>인원</li>
+                        <li class="vacation_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
                     </ul>
                 </div>
             </div>
