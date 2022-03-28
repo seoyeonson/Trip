@@ -8,3 +8,6 @@ def hotel_reserve(request):
 
 def vacation_reserve(request):
     return render(request, 'vacation_reserve.html')
+
+def login(request):
+    return render(request, 'login.html')

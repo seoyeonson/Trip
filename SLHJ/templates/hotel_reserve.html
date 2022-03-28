@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block script %}
+<script src="{% static 'bs/js/reserve.js' %}"></script>
+{% endblock %}
 
 {% block contents %}
 <head>
@@ -25,7 +30,7 @@
 <h3 class="reserve_title">예약 > 호텔예약</h3>
 
 <section class="reservation">
-    <form name="hotel_reserve" class="hotel_reserve">
+    <form name="hotel_reserve" class="reserve">
         <div>
         <label>예약자 이름</label>
         <input class="reserve_input" type="text" value="">
@@ -43,12 +48,12 @@
             </select>
         </div>
         <div class="provision">
-        <label>이용약관</label>
-        <div><input type="checkbox"><span class="all_agree"> 전체동의</span></div>
-        <div><input type="checkbox" class="reserve_check"><a href="#"> 숙소이용규칙 및 취소/환불규정 동의 </a><span class="important">(필수)</span></div>
-        <div><input type="checkbox" class="reserve_check"><a href="#"> 개인정보 수집 및 이용 동의 </a><span class="important">(필수)</span></div>
-        <div><input type="checkbox" class="reserve_check"><a href="#"> 개인정보 제 3자 제공 동의 </a><span class="important">(필수)</span></div>
-        <div><input type="checkbox" class="reserve_check"><a href="#"> 만 14세 이상 확인 </a><span class="important">(필수)</span></div>
+            <label>이용약관</label>
+            <div><input type="checkbox" id="all_agree"><span class="all_agree"> 전체동의</span></div>
+            <div><input type="checkbox" class="reserve_check"><a href="#"> 숙소이용규칙 및 취소/환불규정 동의 </a><span class="important">(필수)</span></div>
+            <div><input type="checkbox" class="reserve_check"><a href="#"> 개인정보 수집 및 이용 동의 </a><span class="important">(필수)</span></div>
+            <div><input type="checkbox" class="reserve_check"><a href="#"> 개인정보 제 3자 제공 동의 </a><span class="important">(필수)</span></div>
+            <div><input type="checkbox" class="reserve_check"><a href="#"> 만 14세 이상 확인 </a><span class="important">(필수)</span></div>
         </div>
 
     </form>
@@ -66,10 +71,11 @@
             <label>결제금액</label>
             <label class="reserve_price">{# #}130,000원</label>
         </div>
-        <input class="purchase_btn" type="button" value="결제하기">
+        <input class="purchase_btn" id="purchase_btn" type="button" value="결제하기">
     </div>
-                
-                
+    
+    
 </section>
+
 </body>
 {% endblock %}

@@ -71,36 +71,37 @@ a:hover {
 
 /* reserve */
 .reserve_title {
-    padding-top: 10%;
+    padding-top: 20%;
     padding-bottom:5%; 
     text-align: center;
     font-weight: bold;
 }
 
 .reservation {
-    display: flex;
-    justify-content: center;
+    display: block;
     margin-bottom: 20%;
 }
 
-.hotel_reserve {
-    width: 40%;
+.reserve {
     margin-bottom: 50px;
+    width:80%;
+    margin:auto;
 }
 
-.hotel_reserve label {
+.reserve label {
     padding-top: 20px;
     padding-bottom: 10px;
     display: block;
 }
 
-.hotel_reserve select{
+.reserve select{
     background-color: #dBDBDB;
     color:#747474;
     border-radius: 7px;
     padding: 7px;
     
 }
+
 
 .reserve_input {
     background-color: #f5f5f5;
@@ -145,7 +146,9 @@ a:hover {
 
 
 .reserve_confirm {
-    width: 40%;
+    width:80%;
+    margin:auto;
+    margin-top: 30px;
     border-radius: 5%;
     background-color: #fff1e6;
     padding-left: 40px;
@@ -186,6 +189,26 @@ a:hover {
     text-align: center;
     font-size: 20px;
     line-height: 120%;
+}
+@media (min-width: 768px){
+.reservation{
+    display: flex;
+    justify-content: center;
+    /* max-width: 800px; */
+}
+.reserve_confirm{
+    width: 40%;
+}
+
+.reserve {
+    width: 40%;
+}
+
+
+.reserve_title {
+    padding-top: 100px;
+
+}
 }
 
 /* end: reserve */
