@@ -132,7 +132,8 @@ a:hover {
 
 .provision span, a{
     font-size: 13px;
-    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .provision a{

@@ -19,6 +19,24 @@
 {% endblock %}
 <body>
     <div class="container mt-3">
+        {% block header %}
+        <nav class="navbar navbar-expand bg-white fixed-top toolbar"> <!-- 홈탑메뉴바 -->
+            <a href="#"><label class="home_icon">Trip</label></a>
+            <ul class="navbar-nav home_tool">
+                <label class="home_menu">
+                    <a href="#">호텔</a>
+                </label>
+                <label class="home_menu">
+                    <a href="#">여행지</a>
+                </label>
+            </ul>
+            <ul class="navbar-nav home_tool2">
+                <label class="home_menu">
+                    <a href="#">로그인</a>
+                </label>
+            </ul>
+        </nav>
+        {% endblock %}
         {% block contents %}
         {% endblock %}
     </div>
