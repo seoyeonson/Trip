@@ -2,7 +2,7 @@
 {% block title %}그랜드 하얏트 서울{% endblock %} {# 호텔명 #}
 
 {% block contents %}
-<div class="container">
+<div class="container" style="margin-top: 30px;">
     <!--상단 평점, 호텔명, 주소-->
     <div>
         <div>
@@ -25,7 +25,10 @@
             <p>한실글래드 호텔 여의도는 9호선 국회의사당역 4번 출구에서 도보 1분 거리에 있습니다. 여의도 공원이  도보로 5분 거리에 있으며, 'IFC 몰'과 '더 현대 서울'까지는 약 15분 정도 소요됩니다. 호텔 2층에 마련된 크리에이티브 라운지에는 PC, 스캐너, 레이저 프린터 등 다양한 비즈니스 시설이 구비되어 있습니다. </p>
         </div>
         <hr>
-        <h2>위치</h2>
+        <div>
+            <h2>위치</h2>
+            <img src="/static/img/detail_test_map.png">
+        </div>
     </div>
 
     <!-- 예약 -->
@@ -42,7 +45,121 @@
     </div>
 
     <!-- 평점 -->
-    <div></div>
+    <div>
+        <div>
+            <p>4.2 / 5.0</p>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </td>
+                    <td>
+                        <p>130명</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </td>
+                    <td>
+                        <p>130명</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </td>
+                    <td>
+                        <p>130명</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </td>
+                    <td>
+                        <p>130명</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="fas fa-star"></i>
+                    </td>
+                    <td>
+                        <p>130명</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td>2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td>2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td>2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td>2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td>2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td>2022. 03. 28</td>
+                </tr>
+            </table>
+            <!-- pagination -->
+            <div class="container mt-1">
+                <ul class="pagination justify-content-center">
+                    {# < 표시 여부 #}
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);" title="이전"><i class='fas fa-angle-left'></i></a></li>
+
+                    {# 페이징 안의 '숫자' 표시 #}
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                    <li class="page-item active"><a class="page-link" href="javascript:void(0);" title="현재페이지">3</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+
+                    {# > 표시 #}
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);" title="다음"><i class='fas fa-angle-right'></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 </div>
 
