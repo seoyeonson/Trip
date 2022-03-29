@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
 a {
@@ -8,7 +9,17 @@ a {
 }
 
 a:hover {
-    color: #FF6B00;
+    color: var(--main-color);
+}
+
+/* 기본색상 */
+:root {
+    --back-color : #fff;
+	--main-color: #FF6B00;
+    --sub-color : #FFF1E6;
+    --sub-grey-color : #F1F1F1;
+    --icon-color : #A8A8A8;
+    --text-sub-color : #909090;
 }
 
 /* main contents */
@@ -23,7 +34,7 @@ a:hover {
 }
 
 .home_icon {
-    margin-left: 10vw;
+    margin-right: 20px;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 800;
@@ -31,18 +42,18 @@ a:hover {
     line-height: 136.5%;
 }
 
-.home_tool {
+/* .home_tool {
     padding-left: 5vw;
-}
+} */
 
 .home_menu {
     margin: 0 20px 0 20px;
 }
 
-.home_tool2 {
+/* .home_tool2 {
     position: absolute;
     left: 80vw;
-}
+} */
 
 .page {
 
@@ -210,6 +221,37 @@ width: 27px;
 height: 27px;
 left: 245px;
 top: 1334px;
+}
+
+/* hotel_detail */
+.rating_head i{
+    font-size:26px;
+    color: #FFC701;
+}
+
+.hotelDetail h1{
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.hotelDetail h2{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.hotel_main_img{
+    width: 100%;
+    height: 500px;
+    border-radius: 20px;
+    background-image: url(/static/img/hotel_detail_img.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.hotelDetail h5{
+    font-size: 18px;
+    color: var(--text-sub-color);
 }
 
 /* reserve */
