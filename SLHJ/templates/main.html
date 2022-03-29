@@ -23,13 +23,17 @@
                 <div class="hotel_search" id="hotel_search"> <!-- 호텔 검색창 -->
                     <ul>
                         <li>
-                            <a href="#" onclick="search_vacation()">
-                                <i class="fas fa-map-marker-alt" class="map"></i>위치
+                            <a onclick="search_location()" class="location" id="location">
+                                <i class="fas fa-map-marker-alt" class="map"></i><sapn id="lo_text">위치</sapn>
                             </a>
                         </li>
                         <ul>
-                            <li class="chk_date"><i class="fas fa-calendar-alt"></i>체크인</li>
-                            <li class="slash2">체크아웃</li>
+                            <a onclick="get_date()" class="get_date" id="get_date">
+                                <li class="chk_date">
+                                    <i class="fas fa-calendar-alt"></i><span id="chk_in">체크인</span>
+                                </li>
+                                <li><span id="chk_out">체크아웃</span></li>
+                            </a>
                         </ul>
                         <li><i class="fas fa-user-alt"></i>인원</li>
                         <li class="hotel_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
@@ -37,10 +41,32 @@
                 </div>
                 <div class="vacation_search" id="vacation_search" style="display: none;"> <!-- 여행지 검색창 -->
                     <ul>
-                        <li><i class="fas fa-map-marker-alt" class="map"></i>위치</li>
+                        <li>
+                            <a onclick="search_va_location()" class="location" id="location">
+                                <i class="fas fa-map-marker-alt" class="map"></i><sapn id="va_lo_text">위치</sapn>
+                            </a>  
+                        </li>
                         <li><i class="fas fa-user-alt"></i>인원</li>
                         <li class="vacation_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
                     </ul>
+                </div>
+                <div class="hotel_location" id="hotel_location" style="display: none;">
+                        <a onclick="hotel_lo_select()" class="select"><li id="hotel_lo_select1" class="hotel_lo_select">서울</li></a>
+                        <a onclick="hotel_lo_select()" class="select"><li id="hotel_lo_select2" class="hotel_lo_select">경기</li></a>
+                        <a onclick="hotel_lo_select()" class="select"><li id="hotel_lo_select3" class="hotel_lo_select">인천</li></a>
+                </div>
+                <div class="date_pick" id="date_pick" style="display: none;">
+                    <!-- <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" /> -->
+                    <input id="start_day" class="start_day" type="date" min="">
+                    <input id="end_day" class="end_day" type="date">
+                    <input id="submit_day" type="submit" onclick="input_date()" value="적용">
+                </div>
+
+
+                <div class="vacation_location" id="vacation_location" style="display: none;">
+                    <a onclick="vacation_lo_select()" class="select"><li id="vacation_lo_select1" class="vacation_lo_select">서울</li></a>
+                    <a onclick="vacation_lo_select()" class="select"><li id="vacation_lo_select2" class="vacation_lo_select">경기</li></a>
+                    <a onclick="vacation_lo_select()" class="select"><li id="vacation_lo_select3" class="vacation_lo_select">인천</li></a>
                 </div>
             </div>
         </div>

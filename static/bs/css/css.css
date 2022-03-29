@@ -425,7 +425,7 @@ top: 1334px;
     border-radius: 6px;
 }
 
-.hotel_search>ul>ul>li {
+.hotel_search>ul>ul>a>li {
     display: inline-block;
 }
 
@@ -500,4 +500,47 @@ top: 1334px;
 
 .vacation_submit:hover {
     background-color: #f56600 !important;
+}
+
+.location {
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hotel_location {
+    height: auto;
+    background-color: white;
+    margin-top: 10px;
+}
+
+.select {
+    cursor: pointer;
+}
+
+.hotel_lo_select {
+    list-style: none;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vacation_lo_select {
+    list-style: none;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vacation_location {
+    height: auto;
+    background-color: white;
+    margin-top: 10px;
+}
+
+.get_date {
+    cursor: pointer;
+}
+
+.date_pick {
+    margin-top: 10px;
 }
