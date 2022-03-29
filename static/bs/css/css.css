@@ -82,7 +82,7 @@ a:hover {
     height: 64px;
     left: 280px;
     top: 114px;
-    
+    border: none;
     background: #F1F1F1;
     border-radius: 10px;
 
@@ -94,18 +94,10 @@ a:hover {
     height: 64px;
     left: 474px;
     top: 114px;
-    
+    border: none;
     background: #F1F1F1;
     border-radius: 10px;  
 }
-.list_eddate_search::before{
-    position: absolute;
-   
-    
-    content:""; 
-}
-
-
 
 .list_peonum_search{
     position: absolute;
@@ -113,11 +105,23 @@ width: 193px;
 height: 64px;
 left: 823px;
 top: 114px;
-
+border: none;
 background: #F1F1F1;
     border-radius: 10px;  
 }
+.search_submit {
+    position: absolute;
+width: 135px;
+height: 64px;
+left: 1026px;
+top: 114px;
 
+    background-color:#FF6B00;
+    color:#FFFFFF;
+    border: none;
+    border-radius: 10px;
+
+}
 .list_gps_map{
 position: absolute;
 width: 809px;
@@ -126,6 +130,7 @@ left: 778px;
 top: 222px;
 } 
 .table_list{
+    border-collapse: collapse;
     border-radius: 10px;
     text-align: center; 
 }
@@ -138,8 +143,7 @@ top: 222px;
     
     background: #FFFFFF;
     border: 1px solid #E1E1E1;
-    border-collapse: collapse;
-    border-radius: 10px;
+    
     text-align: center;    
 }
 .list2{
@@ -190,26 +194,24 @@ top: 222px;
     box-sizing: border-box;
     border-radius: 10px;  
 }
-.search_submit {
-    position: absolute;
-width: 135px;
-height: 64px;
-left: 1026px;
-top: 114px;
-
-    background-color:#FF6B00;
-    color:#FFFFFF;
-    border: none;
-    border-radius: 10px;
-
-}
 
 .list_page_num{
     position: absolute;
 width: 27px;
 height: 27px;
-left: 245px;
+left: 280px;
 top: 1334px;
+
+}
+.list_page_num>ul{
+list-style: none;   
+padding-left: 0px;
+padding-right: 0px;
+}
+
+.list_page_num>ul{
+    display: inline-block;
+
 }
 
 /* reserve */

@@ -5,7 +5,7 @@
 {% block title %}검색{% endblock %}
     <div id="list_search">
         <select class="list_pl_search" >
-            <option value="suwon">수원</option>
+            <option value="suwon"><i class="fas fa-map-marker-alt" class="map"></i>수원</option>
             <option value="siheong">시흥</option>
             <option value="namyangzu" >남양주</option>
             <option value="pazu" selected>파주</option>
@@ -50,15 +50,23 @@
         </table>
     </div>
 
-    <span class="list_page_num" >
+    <div class="list_page_num" id="list_page_num">
+        <ul>
+            <li>
         <i class='fas fa-chevron-circle-left' style='font-size:24px'></i>
-        <p class="page_num_1">1</p>
-        <p class="page_num_2">2</p>
-        <p class="page_num_3">3</p>
-        <p class="page_num_4">4</p>
-        <p class="page_num_5">5</p>
+            </li>
+    
+        <li>1</li>
+        <li>2</li> 
+        <li>3</li> 
+        <li>4</li> 
+        <li>5</li>
+        <li>
         <i class='fas fa-chevron-circle-right' style='font-size:24px'></i>
-    </span>
+        </li>
+    </ul>
+
+    </div>
        
     </header>
 {% endblock %}
