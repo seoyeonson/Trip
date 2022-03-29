@@ -208,21 +208,22 @@ top: 222px;
 
 .list_page_num{
     position: absolute;
-width: 27px;
-height: 27px;
-left: 280px;
-top: 1334px;
+    width: 27px;
+    height: 27px;
+    left: 280px;
+    top: 1334px;
 
-}
-.list_page_num>ul{
-list-style: none;   
-padding-left: 0px;
-padding-right: 0px;
 }
 
 .list_page_num>ul{
+    list-style: none;   
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.list_page_num>ul>li{
     display: inline-block;
-
+    margin: 0 10px;
 }
 
 /* hotel_detail */
