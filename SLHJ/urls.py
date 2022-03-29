@@ -10,5 +10,4 @@ urlpatterns = [
     path('vacation_reserve/', views.vacation_reserve),
     # path('hotel_detail/<int:id>/', views.hotel_detail),
     path('hotel_detail/', views.hotel_detail),
-
 ]
