@@ -74,12 +74,14 @@ a:hover {
     height: 30px;
 }
 
+/* list */
+
 .list_pl_search{
     position: absolute;
     width: 189px;
     height: 64px;
-    left: 402px;
-    top: 112px;
+    left: 280px;
+    top: 114px;
     
     background: #F1F1F1;
     border-radius: 10px;
@@ -90,8 +92,8 @@ a:hover {
     position: absolute;
     width: 344px;
     height: 64px;
-    left: 596px;
-    top: 112px;
+    left: 474px;
+    top: 114px;
     
     background: #F1F1F1;
     border-radius: 10px;  
@@ -109,8 +111,8 @@ a:hover {
     position: absolute;
 width: 193px;
 height: 64px;
-left: 945px;
-top: 112px;
+left: 823px;
+top: 114px;
 
 background: #F1F1F1;
     border-radius: 10px;  
@@ -138,13 +140,7 @@ top: 222px;
     border: 1px solid #E1E1E1;
     border-collapse: collapse;
     border-radius: 10px;
-    text-align: center;
-
-
-
-
-
-    
+    text-align: center;    
 }
 .list2{
     position: absolute;
@@ -158,6 +154,64 @@ top: 222px;
     box-sizing: border-box;
     border-radius: 10px;  
 }
+.list3{
+    position: absolute;
+    width: 651px;
+    height: 201px;
+    left: 38px;
+    top: 668px;
+    
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    box-sizing: border-box;
+    border-radius: 10px;  
+}
+.list4{
+    position: absolute;
+    width: 651px;
+    height: 201px;
+    left: 38px;
+    top: 887px;
+    
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    box-sizing: border-box;
+    border-radius: 10px;  
+}
+.list5{
+    position: absolute;
+    width: 651px;
+    height: 201px;
+    left: 38px;
+    top: 1106px;
+    
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    box-sizing: border-box;
+    border-radius: 10px;  
+}
+.search_submit {
+    position: absolute;
+width: 135px;
+height: 64px;
+left: 1026px;
+top: 114px;
+
+    background-color:#FF6B00;
+    color:#FFFFFF;
+    border: none;
+    border-radius: 10px;
+
+}
+
+.list_page_num{
+    position: absolute;
+width: 27px;
+height: 27px;
+left: 245px;
+top: 1334px;
+}
+
 /* reserve */
 .reserve_title {
     padding-top: 20%;

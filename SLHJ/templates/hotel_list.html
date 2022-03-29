@@ -19,19 +19,11 @@
             <option value="three" >3인</option>
             <option value="four">4인</option>
         </select>
+        <input type="submit" class="search_submit" value="검색">
     </div>
     
     <iframe src="https://www.google.co.kr/maps/search/37.2117829498,127.0056181833?hl=ko" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="list_gps_map"></iframe>
-    <span id="tags" class="form-control"> 
-        {% comment %}           
-        {% for tag in board.tags.all %}
-            {{ tag.name }},
-        {% endfor %}
-        {% endcomment %}
-
-        {{ board.tags.all|join:", "}}
-
-    </span>
+    
     <div class="table_list">
         <table class="list1">
         <tr><td>1</td></tr>
@@ -42,6 +34,31 @@
         <tr><td>2</td></tr>
         </table>
     </div>
+    <div class="table_list">
+        <table class="list3">
+        <tr><td>3</td></tr>
+        </table>
+    </div>
+    <div class="table_list">
+        <table class="list4">
+        <tr><td>4</td></tr>
+        </table>
+    </div>
+    <div class="table_list">
+        <table class="list5">
+        <tr><td>5</td></tr>
+        </table>
+    </div>
+
+    <span class="list_page_num" >
+        <i class='fas fa-chevron-circle-left' style='font-size:24px'></i>
+        <p class="page_num_1">1</p>
+        <p class="page_num_2">2</p>
+        <p class="page_num_3">3</p>
+        <p class="page_num_4">4</p>
+        <p class="page_num_5">5</p>
+        <i class='fas fa-chevron-circle-right' style='font-size:24px'></i>
+    </span>
        
     </header>
 {% endblock %}
