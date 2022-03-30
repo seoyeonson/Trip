@@ -1,19 +1,23 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}여행지예약페이지{% endblock %}
+{% block extrahead %}
+<link href="{% static 'bs/css/reserve.css' %}" rel="stylesheet">
+{% endblock %}
 
+{% block title %}여행지 예약{% endblock %}
+
+{% block contents %}
 {% block script %}
 <script src="{% static 'bs/js/reserve.js' %}"></script>
 {% endblock %}
 
-{% block contents %}
 
 <div class="container">
-
     <h3 class="reserve_title">예약 > 여행지 예약</h3>
 
     <section class="reservation">
+        <div class="form_box">
         <form name="vacation_reserve" class="reserve">
             <div>
                 <label>예약자 이름</label>
@@ -21,15 +25,12 @@
             </div>
             <div>
                 <label>휴대폰 번호</label>
-                <input class="reserve_input" type="text" value="">
-                <input type="button" class="auth_btn" value="인증번호 전송">
-            </div>
-            <div>
-                <label>결제수단 선택</label>
-                <select>
-                    <option>신용/체크카드</option>
-                    <option>무통장입금</option>
-                </select>
+                <input class="reserve_input" id="phone_num" type="text" value="">
+                <input type="button" class="auth_btn" id="auth_btn" value="인증번호 전송">
+                <div class="phone_confirm">
+                    <input class= "confirm_box" id="confirm_box" type="text" placeholder="인증번호를 입력하세요">
+                    <input type="button" class="confirm_btn" id="confirm_btn" value="인증번호 확인">
+                </div>
             </div>
             <div class="provision">
                 <label>이용약관</label>
@@ -41,8 +42,9 @@
                 <div><input type="checkbox" class="reserve_check"><a href="#"> 만 14세 이상 확인 </a><span
                         class="important">(필수)</span></div>
             </div>
-
         </form>
+        </div>
+
         <div class="reserve_confirm">
             <label class="reserve_index">여행지 이름</label>
             <label>{# #}한국민속촌</label>
