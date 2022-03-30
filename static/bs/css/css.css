@@ -42,7 +42,7 @@ a:hover {
     line-height: 136.5%;
 }
 
-/* .home_tool {
+/* .     {
     padding-left: 5vw;
 } */
 
@@ -416,16 +416,6 @@ padding-right: 0px;
 .menu_icon>ul>a>li {
     padding-left: 20px;
     padding-right: 20px;
-}
-
-.slash::before {
-    position: absolute;
-    top: calc(24%);
-    left: calc(50%);
-    width: 1px;
-    height: 50px;
-    background-color: #A8A8A8;
-    content: "";
 }
 
 .hotel_search {

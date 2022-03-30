@@ -13,6 +13,7 @@ function search_vacation() {
 
 function search_location() {
     document.getElementById("hotel_location").style.display ='block';
+    document.getElementById("date_pick").style.display ='none';
 }
 
 function hotel_lo_select() {
@@ -29,12 +30,20 @@ function vacation_lo_select() {
 
 function get_date() {
     document.getElementById("date_pick").style.display ='block';
+    document.getElementById("hotel_location").style.display ='none';
 }
 
 function input_date() {
     start_day = document.querySelector("#start_day").value.slice(5,10);
     end_day = document.querySelector("#end_day").value.slice(5,10);
+    if(start_day > end_day) {
+        temp = start_day;
+        start_day = end_day;
+        end_day = temp;
+    }
+
     document.getElementById("date_pick").style.display = 'none';
+    
 }
 
 // $(function() {
