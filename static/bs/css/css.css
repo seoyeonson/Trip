@@ -42,7 +42,7 @@ a:hover {
     line-height: 136.5%;
 }
 
-/* .home_tool {
+/* .     {
     padding-left: 5vw;
 } */
 
@@ -144,6 +144,7 @@ top: 222px;
     border-collapse: collapse;
     border-radius: 10px;
     text-align: center; 
+    list-style: none;
 }
 .list1{
     position: absolute;
@@ -154,8 +155,82 @@ top: 222px;
     
     background: #FFFFFF;
     border: 1px solid #E1E1E1;
-    
-    text-align: center;    
+    box-sizing: border-box;
+    border-radius: 10px;     
+}
+.hotel_name_1{
+position: absolute;
+height: 27px;
+left: 300px;
+top: 256px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 20px;
+}
+.hotel_add_1{
+position: absolute;
+
+height: 20px;
+left: 300px;
+top: 289px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 136.5%;
+/* or 20px */
+
+
+color: #919191;
+}
+.hotel_image_1 {
+    background-image: url(../../img/hotel.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    position: absolute;
+width: 199px;
+height: 149px;
+left: 64px;
+top: 256px;
+}
+.hotel_image_2 {
+    background-image: url(../../img/hotel_detail_img.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    position: absolute;
+    width: 199px;
+    height: 149px;
+    left: 64px;
+    top: 475px;
+}
+.list_rating_1{
+font-size:26px;
+color: #FFC701;
+position: absolute;
+height: 26px;
+left: 299px;
+top: 318px;
+
+}
+.hotel_pay_1{
+position: absolute;
+height: 27px;
+left: 555px;
+top: 378px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 136.5%;
+/* or 27px */
+
+
+color: #FF6B00;
 }
 .list2{
     position: absolute;
@@ -169,6 +244,69 @@ top: 222px;
     box-sizing: border-box;
     border-radius: 10px;  
 }
+
+.hotel_name_2{
+    position: absolute;
+    height: 27px;
+    left: 300px;
+    top: 475px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    }
+    .hotel_add_2{
+    position: absolute;
+    
+    height: 20px;
+    left: 300px;
+    top: 508px;
+    
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    /* or 20px */
+    
+    
+    color: #919191;
+}
+.list_rating_2{
+    font-size:26px;
+    color: #FFC701;
+    position: absolute;
+    height: 26px;
+    left: 299px;
+    top: 537px;
+    
+    }.hotel_pay_2{
+        position: absolute;
+        height: 27px;
+        left: 555px;
+        top: 597px;
+        
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 136.5%;
+        /* or 27px */
+        
+        
+        color: #FF6B00;
+        }
+        .hotel_image_3 {
+            background-image: url(../../img/ocean_hotel.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            position: absolute;
+            width: 199px;
+            height: 149px;
+            left: 64px;
+            top: 694px;
+        }
 .list3{
     position: absolute;
     width: 651px;
@@ -181,6 +319,58 @@ top: 222px;
     box-sizing: border-box;
     border-radius: 10px;  
 }
+
+.hotel_name_3{
+    position: absolute;
+    height: 27px;
+    left: 300px;
+    top: 694px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    }
+    .hotel_add_3{
+    position: absolute;
+    
+    height: 20px;
+    left: 300px;
+    top: 727px;
+    
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    /* or 20px */
+    
+    
+    color: #919191;
+}
+.list_rating_3{
+    font-size:26px;
+    color: #FFC701;
+    position: absolute;
+    height: 26px;
+    left: 299px;
+    top: 756px; 
+    
+    }.hotel_pay_3{
+        position: absolute;
+        height: 27px;
+        left: 555px;
+        top: 816px;
+        
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 136.5%;
+        /* or 27px */
+        
+        
+        color: #FF6B00;
+        }
 .list4{
     position: absolute;
     width: 651px;
@@ -193,6 +383,68 @@ top: 222px;
     box-sizing: border-box;
     border-radius: 10px;  
 }
+.hotel_name_4{
+    position: absolute;
+    height: 27px;
+    left: 300px;
+    top: 913px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    }
+    .hotel_add_4{
+    position: absolute;
+    
+    height: 20px;
+    left: 300px;
+    top: 946px;
+    
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    /* or 20px */
+    
+    
+    color: #919191;
+}
+.list_rating_4{
+    font-size:26px;
+    color: #FFC701;
+    position: absolute;
+    height: 26px;
+    left: 299px;
+    top: 975px;
+    
+    }.hotel_pay_4{
+        position: absolute;
+        height: 27px;
+        left: 555px;
+        top: 1035px;
+        
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 136.5%;
+        /* or 27px */
+        
+        
+        color: #FF6B00;
+        }
+        .hotel_image_4 {
+            background-image: url(../../img/pink_hotel.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            position: absolute;
+            width: 199px;
+            height: 149px;
+            left: 64px;
+            top: 913px;
+        }
 .list5{
     position: absolute;
     width: 651px;
@@ -205,12 +457,75 @@ top: 222px;
     box-sizing: border-box;
     border-radius: 10px;  
 }
+.hotel_name_5{
+    position: absolute;
+    height: 27px;
+    left: 300px;
+    top: 1132px;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    }
+    .hotel_add_5{
+    position: absolute;
+    
+    height: 20px;
+    left: 300px;
+    top: 1165px;
+    
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    /* or 20px */
+    
+    
+    color: #919191;
+}
+.list_rating_5{
+    font-size:26px;
+    color: #FFC701;
+    position: absolute;
+    height: 26px;
+    left: 299px;
+    top: 1194px;    
+    
+    }.hotel_pay_5{
+        position: absolute;
+        height: 27px;
+        left: 555px;
+        top: 1254px;
+        
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 136.5%;
+        /* or 27px */
+        
+        
+        color: #FF6B00;
+        }
+        .hotel_image_5 {
+            background-image: url(../../img/two_hotel.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            position: absolute;
+            width: 199px;
+            height: 149px;
+            left: 64px;
+            top: 1132px;
+        }
 
 .list_page_num{
     position: absolute;
     width: 27px;
     height: 27px;
-    left: 280px;
+    left: 245px;
     top: 1334px;
 
 }
@@ -218,13 +533,14 @@ top: 222px;
 .list_page_num>ul{
     list-style: none;   
     padding-left: 0px;
-    padding-right: 0px;
 }
 
-.list_page_num>ul>li{
+.list_page_num>ul>a{
     display: inline-block;
     margin: 0 10px;
 }
+
+
 
 /* hotel_detail */
 .rating_head i{
@@ -276,16 +592,6 @@ top: 222px;
 .menu_icon>ul>a>li {
     padding-left: 20px;
     padding-right: 20px;
-}
-
-.slash::before {
-    position: absolute;
-    top: calc(24%);
-    left: calc(50%);
-    width: 1px;
-    height: 50px;
-    background-color: #A8A8A8;
-    content: "";
 }
 
 .hotel_search {

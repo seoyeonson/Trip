@@ -1,29 +1,22 @@
 {% extends "base.html" %}
-{% load static %}
-
-<link href="{% static 'bs/css/login.css' %}" rel="stylesheet">
-
 {% block contents %}
-<nav class="navbar navbar-expand bg-white fixed-top toolbar"> <!-- 홈탑메뉴바 -->
-    <a href="#"><span class="home_icon">Trip</span></a>
-    <ul class="navbar-nav home_tool">
-        <li class="home_menu">
-            <a href="#">호텔</a>
-        </li>
-        <li class="home_menu">
-            <a href="#">여행지</a>
-        </li>
-    </ul>
-    <ul class="navbar-nav home_tool2">
-        <li class="home_menu">
-            <a href="#">로그인</a>
-        </li>
-    </ul>
-</nav>
-
-<section class="login_box">
-    <a href="#"><span class="home_icon">Trip</span></a>
-
-</section>
-
+<div class="container">
+    <h1 class="mb-4"><a href="#">Trip</a></h1>
+    <form action="#">
+        <div class="form-group">
+          <input type="text" class="form-control mb-2" id="id" name="id" placeholder="아이디">
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control mb-2" id="pw" name="pw" placeholder="비밀번호">
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input">
+          <label class="form-check-label">아이디 저장</label>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" id="user_create" value="회원가입">
+        </div>
+        <input type="submit" class="btn btn-primary" id="logInCheck" value="로그인">
+      </form>
+</div>
 {% endblock %}
