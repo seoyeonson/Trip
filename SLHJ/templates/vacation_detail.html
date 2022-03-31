@@ -1,0 +1,189 @@
+{% extends "base.html"%}
+{% block title %}그랜드 하얏트 서울{% endblock %} {# 호텔명 #}
+
+{% block contents %}
+<div class="container hotel_detail">
+    <!--상단 평점, 호텔명, 주소-->
+    <div class="col-12">
+        <div class="rating_head">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star no_star"></i>
+        </div>
+        <h1 class="mt-3">한국 민속촌</h1>
+        <h5>서울 용산구 소월로 322</h5>
+        <div class="vacation_main_img mt-4 mb-5"></div>
+    </div>
+    <!-- 샹세정보 -->
+    <div class="d-lg-flex hotel_detail1">
+        <div class="col-lg-8 col-12 hotel_detail_info pe-lg-5">
+            <div>
+                <h2>상세 정보</h2>
+                <p><i class="fas fa-phone me-2"></i>031-288-0000</p>
+                <p>옛날 관가(官家)·민가(民家)·반가(班家) 등 지방별로 구조를 달리하는 건축물이 산재하며, 그 속에는 우리 조상들의 생활 모습을 재현하고 각종 생활기구·농경기구·각종 공예품 등을 전시하고 있다.</p>
+            </div>
+            <hr>
+            <div>
+                <h2>위치</h2>
+                <div class="google_map mb-lg-0 mb-5"></div>
+            </div>
+        </div>
+    
+        <!-- 예약 -->
+        <div class="col-lg-4 col-12 hotel_detail_reserve align-self-sm-start">
+            <p>예약을 진행하시려면 인원수를 입력해주세요.</p>
+            <form>
+                <div style="position: relative;">
+                    <button class="hotel_detail_reserve_btn"><i class="fas fa-user-alt"></i>인원선택</button>
+                    <div style="position: relative; left: 0; display: none;">
+                        <button>1명</button>
+                        <button>2명</button>
+                        <button>4명</button>
+                        <button>5명</button>
+                        <button>6명</button>
+                    </div>
+                </div>
+                <button class="hotel_detail_reserve_btn hotel_detail_reserve_btn_submit">예약하기</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 평점 -->
+    <div>
+        <h2>리뷰</h2>
+        <div class="hotel_review_rating d-lg-flex">
+            <div class="d-flex flex-column total_rating col-lg-6 justify-content-center">
+                <p><span class="my_rating">4.2 </span><span class="slash">/</span> 5.0</p>
+                <div class="my_rating_star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star no_star"></i>
+                </div>
+            </div>
+            <div class="col-lg-6 d-lg-flex justify-content-center">
+                <table class="review_rating_cnt">
+                    <tr>
+                        <td class="review_rating_cnt_star">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="review_rating_cnt">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="review_rating_cnt">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="review_rating_cnt">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="review_rating_cnt">
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="user_review">
+            <table class="table">
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td class="upload_date">2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td class="upload_date">2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td class="upload_date">2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td class="upload_date">2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td class="upload_date">2022. 03. 28</td>
+                </tr>
+                <tr>
+                    <td>user1</td>
+                    <td>여기 정말좋아요 남자친구..</td>
+                    <td class="upload_date">2022. 03. 28</td>
+                </tr>
+            </table>
+            <!-- pagination -->
+            <div class="container mt-1">
+                <ul class="pagination justify-content-center">
+                    {# < 표시 여부 #}
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);" title="이전"><i class='fas fa-angle-left'></i></a></li>
+
+                    {# 페이징 안의 '숫자' 표시 #}
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                    <li class="page-item active"><a class="page-link" href="javascript:void(0);" title="현재페이지">3</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+
+                    {# > 표시 #}
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);" title="다음"><i class='fas fa-angle-right'></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>추천숙소</h2>
+        <div class="d-flex">
+            <div class="recommend_vaction col-lg-3 me-lg-4"></div>
+            <div class="recommend_vaction col-lg-3 me-lg-4"></div>
+            <div class="recommend_vaction col-lg-3 me-lg-4"></div>
+            <div class="recommend_vaction col-lg-3"></div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
