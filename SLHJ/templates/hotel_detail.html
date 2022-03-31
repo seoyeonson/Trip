@@ -4,21 +4,21 @@
 {% block contents %}
 <div class="container hotel_detail">
     <!--상단 평점, 호텔명, 주소-->
-    <div>
+    <div class="col-12">
         <div class="rating_head">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star no_star"></i>
         </div>
         <h1 class="mt-3">그랜드 하얏트 서울</h1>
         <h5>서울 용산구 소월로 322</h5>
         <div class="hotel_main_img mt-4 mb-5"></div>
     </div>
     <!-- 샹세정보 -->
-    <div class="d-flex">
-        <div class="col-8 hotel_detail_info">
+    <div class="d-lg-flex hotel_detail1">
+        <div class="col-lg-8 col-12 hotel_detail_info pe-lg-5">
             <div>
                 <h2>상세 정보</h2>
                 <p>한실글래드 호텔 여의도는 9호선 국회의사당역 4번 출구에서 도보 1분 거리에 있습니다. 여의도 공원이  도보로 5분 거리에 있으며, 'IFC 몰'과 '더 현대 서울'까지는 약 15분 정도 소요됩니다. 호텔 2층에 마련된 크리에이티브 라운지에는 PC, 스캐너, 레이저 프린터 등 다양한 비즈니스 시설이 구비되어 있습니다. </p>
@@ -26,20 +26,32 @@
             <hr>
             <div>
                 <h2>위치</h2>
-                <div class="google_map"></div>
+                <div class="google_map mb-lg-0 mb-5"></div>
             </div>
         </div>
     
         <!-- 예약 -->
-        <div class="col-4 hotel_detail_reserve align-self-start">
+        <div class="col-lg-4 col-12 hotel_detail_reserve align-self-sm-start">
             <p>예약을 진행하시려면 예약 날짜와 인원수를 입력해주세요.</p>
             <form>
-                <div class="hotel_detail_reserve_btn d-flex">
+                <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex">
                     <button class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">체크인</span></button>
                     <button class="hotel_detail_reserve_checkout">체크아웃</button>
                 </div>
-                <button class="hotel_detail_reserve_btn">인원선택</button>
-                <button class="hotel_detail_reserve_btn">객실선택</button>
+                <div style="position: relative;">
+                    <button class="hotel_detail_reserve_btn"><i class="fas fa-user-alt"></i>인원선택</button>
+                    <div style="position: relative; left: 0; display: none;">
+                        <button>1명</button>
+                        <button>2명</button>
+                        <button>4명</button>
+                        <button>5명</button>
+                        <button>6명</button>
+                    </div>
+                </div>
+                <div style="position: relative;">
+                    <button class="hotel_detail_reserve_btn"><i class="fas fa-door-closed"></i>객실선택</button>
+                    <div style="position: relative; left: 0; display: none;"></div>
+                </div>
                 <button class="hotel_detail_reserve_btn hotel_detail_reserve_btn_submit">예약하기</button>
             </form>
         </div>
@@ -47,99 +59,104 @@
 
     <!-- 평점 -->
     <div>
-        <div>
-            <p>4.2 / 5.0</p>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+        <h2>리뷰</h2>
+        <div class="hotel_review_rating d-lg-flex">
+            <div class="d-flex flex-column total_rating col-lg-6 justify-content-center">
+                <p><span class="my_rating">4.2 </span><span class="slash">/</span> 5.0</p>
+                <div class="my_rating_star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star no_star"></i>
+                </div>
+            </div>
+            <div class="col-lg-6 d-lg-flex justify-content-center">
+                <table class="review_rating_cnt">
+                    <tr>
+                        <td class="review_rating_cnt_star">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="review_rating_cnt">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="review_rating_cnt">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="review_rating_cnt">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="review_rating_cnt">
+                            <i class="fas fa-star"></i>
+                        </td>
+                        <td>
+                            <p>130명</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div>
-            <table>
-                <tr>
-                    <td>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </td>
-                    <td>
-                        <p>130명</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </td>
-                    <td>
-                        <p>130명</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </td>
-                    <td>
-                        <p>130명</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </td>
-                    <td>
-                        <p>130명</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <i class="fas fa-star"></i>
-                    </td>
-                    <td>
-                        <p>130명</p>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div>
-            <table>
+        <div class="user_review">
+            <table class="table">
                 <tr>
                     <td>user1</td>
                     <td>여기 정말좋아요 남자친구..</td>
-                    <td>2022. 03. 28</td>
+                    <td class="upload_date">2022. 03. 28</td>
                 </tr>
                 <tr>
                     <td>user1</td>
                     <td>여기 정말좋아요 남자친구..</td>
-                    <td>2022. 03. 28</td>
+                    <td class="upload_date">2022. 03. 28</td>
                 </tr>
                 <tr>
                     <td>user1</td>
                     <td>여기 정말좋아요 남자친구..</td>
-                    <td>2022. 03. 28</td>
+                    <td class="upload_date">2022. 03. 28</td>
                 </tr>
                 <tr>
                     <td>user1</td>
                     <td>여기 정말좋아요 남자친구..</td>
-                    <td>2022. 03. 28</td>
+                    <td class="upload_date">2022. 03. 28</td>
                 </tr>
                 <tr>
                     <td>user1</td>
                     <td>여기 정말좋아요 남자친구..</td>
-                    <td>2022. 03. 28</td>
+                    <td class="upload_date">2022. 03. 28</td>
                 </tr>
                 <tr>
                     <td>user1</td>
                     <td>여기 정말좋아요 남자친구..</td>
-                    <td>2022. 03. 28</td>
+                    <td class="upload_date">2022. 03. 28</td>
                 </tr>
             </table>
             <!-- pagination -->
@@ -159,6 +176,18 @@
                     <li class="page-item"><a class="page-link" href="javascript:void(0);" title="다음"><i class='fas fa-angle-right'></i></a></li>
                 </ul>
             </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>추천여행지</h2>
+        <div class="d-flex">
+            <div class="recommend_vaction col-lg-3 me-lg-4"></div>
+            <div class="recommend_vaction col-lg-3 me-lg-4"></div>
+            <div class="recommend_vaction col-lg-3 me-lg-4"></div>
+            <div class="recommend_vaction col-lg-3"></div>
         </div>
     </div>
 
