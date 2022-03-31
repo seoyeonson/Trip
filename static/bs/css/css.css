@@ -12,6 +12,11 @@ a:hover {
     color: var(--main-color);
 }
 
+button{
+    border: 0;
+    outline: 0;
+}
+
 /* 기본색상 */
 :root {
     --back-color : #fff;
@@ -40,6 +45,7 @@ a:hover {
     font-weight: 800;
     font-size: 30px;
     line-height: 136.5%;
+    cursor: pointer;
 }
 
 /* .home_tool {
@@ -232,14 +238,23 @@ top: 222px;
     color: #FFC701;
 }
 
-.hotelDetail h1{
+.hotel_detail {
+    margin-top: 120px;
+}
+
+.hotel_detail h1{
     font-size: 26px;
     font-weight: bold;
 }
 
-.hotelDetail h2{
+.hotel_detail h2{
     font-size: 20px;
     font-weight: bold;
+}
+
+.hotel_detail h5{
+    font-size: 18px;
+    color: var(--text-sub-color);
 }
 
 .hotel_main_img{
@@ -252,10 +267,73 @@ top: 222px;
     background-position: bottom;
 }
 
-.hotelDetail h5{
-    font-size: 18px;
-    color: var(--text-sub-color);
+.hotel_detail_info{
+    padding-right: 50px;
 }
+
+.hotel_detail .google_map{
+    width: 100%;
+    height: 340px;
+    background-color: var(--sub-grey-color);
+    border-radius: 10px;
+}
+
+.hotel_detail_reserve{
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 40px;
+    position: relative;
+}
+
+.hotel_detail_reserve p {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.hotel_detail_reserve button{
+    padding: 15px 20px;
+    font-size: 20px;
+}
+
+.hotel_detail_reserve_btn{
+    width: 100%;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background-color: var(--sub-grey-color);
+}
+
+.hotel_detail_reserve_btn button{
+    width: 50%;
+    background-color: var(--sub-grey-color);
+    border-radius: 10px;
+}
+
+.hotel_detail_reserve_btn_submit{
+    background-color: var(--main-color);
+    color: var(--back-color);
+    margin-bottom: 0;
+}
+
+.hotel_detail_reserve_btn i {
+    font-size: 18px;
+}
+
+.fa-calendar-alt{
+    margin-right: 15px !important;
+}
+
+.hotel_detail_reserve .hotel_detail_reserve_checkout::before{
+    position: absolute;
+    top: calc(27%);
+    left: calc(50%);
+    width: 1px;
+    height: 28px;
+    background-color: var(--icon-color);
+    content: "";
+}
+
 
 /* reserve */
 .reserve_title {
