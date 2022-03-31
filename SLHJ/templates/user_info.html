@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}회원정보{% endblock %}
+
+{% block contents %}
+<div id="side_nav" class="side_nav">
+    <!-- <a href="#" 
+        class="closebtn" id="closebtn" 
+        onclick="closeNav()">&times;</a> -->
+    <div class="nav_menu" id="user_profile">{##}김회원 님</div>
+    <a class="nav_menu" id="self" href="{% url 'user_info' %}">회원정보</a>
+    <a class="nav_menu" href="{% url 'pw_change' %}">비밀번호 변경</a>
+    <a class="nav_menu" href="{% url 'history_hotel' %}">숙소관리</a>
+    <a class="nav_menu" href="{% url 'history_vacation' %}">여행지 관리</a>
+</div>
+
+<div class="con2">
+    <div class="contents">
+        <h5 id="title">마이페이지 > 회원정보</h5>
+    </div>
+</div>
+{% endblock %}
+
+
