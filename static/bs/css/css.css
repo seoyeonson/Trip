@@ -1,3 +1,5 @@
+/* 공통 */
+
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -12,6 +14,15 @@ a:hover {
     color: var(--main-color);
 }
 
+button{
+    border: 0;
+    outline: 0;
+}
+
+hr{
+    border-color : var(--sub-grey-color);
+}
+
 /* 기본색상 */
 :root {
     --back-color : #fff;
@@ -20,11 +31,7 @@ a:hover {
     --sub-grey-color : #F1F1F1;
     --icon-color : #A8A8A8;
     --text-sub-color : #909090;
-}
-
-/* main contents */
-.main_contents{
-    padding: 0;
+    --line-color : #c4c4c4;
 }
 
 .toolbar {
@@ -33,6 +40,20 @@ a:hover {
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.fa-star{
+    color: #FFC701;
+}
+
+.no_star{
+    color: var(--line-color);
+}
+
+/* 공통끝 */
+
+
+.main_contents{
+    padding: 0;
+}
 .home_icon {
     margin-right: 20px;
     font-family: 'Poppins';
@@ -40,23 +61,12 @@ a:hover {
     font-weight: 800;
     font-size: 30px;
     line-height: 136.5%;
+    cursor: pointer;
 }
 
-/* .     {
-    padding-left: 5vw;
-} */
 
 .home_menu {
     margin: 0 20px 0 20px;
-}
-
-/* .home_tool2 {
-    position: absolute;
-    left: 80vw;
-} */
-
-.page {
-
 }
 
 .main_image {
@@ -112,20 +122,21 @@ a:hover {
 
 .list_peonum_search{
     position: absolute;
-width: 193px;
-height: 64px;
-left: 823px;
-top: 114px;
-border: none;
-background: #F1F1F1;
+    width: 193px;
+    height: 64px;
+    left: 823px;
+    top: 114px;
+    border: none;
+    background: #F1F1F1;
     border-radius: 10px;  
 }
+
 .search_submit {
     position: absolute;
-width: 135px;
-height: 64px;
-left: 1026px;
-top: 114px;
+    width: 135px;
+    height: 64px;
+    left: 1026px;
+    top: 114px;
 
     background-color:#FF6B00;
     color:#FFFFFF;
@@ -133,6 +144,7 @@ top: 114px;
     border-radius: 10px;
 
 }
+
 .list_gps_map{
 position: absolute;
 width: 809px;
@@ -140,12 +152,14 @@ height: 1094px;
 left: 778px;
 top: 222px;
 } 
+
 .table_list{
     border-collapse: collapse;
     border-radius: 10px;
     text-align: center; 
     list-style: none;
 }
+
 .list1{
     position: absolute;
     width: 651px;
@@ -158,44 +172,48 @@ top: 222px;
     box-sizing: border-box;
     border-radius: 10px;     
 }
+
 .hotel_name_1{
-position: absolute;
-height: 27px;
-left: 300px;
-top: 256px;
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 20px;
+    position: absolute;
+    height: 27px;
+    left: 300px;
+    top: 256px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
 }
+
 .hotel_add_1{
-position: absolute;
+    position: absolute;
 
-height: 20px;
-left: 300px;
-top: 289px;
+    height: 20px;
+    left: 300px;
+    top: 289px;
 
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 15px;
-line-height: 136.5%;
-/* or 20px */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    /* or 20px */
 
 
-color: #919191;
+    color: #919191;
 }
+
 .hotel_image_1 {
     background-image: url(../../img/hotel.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
     position: absolute;
-width: 199px;
-height: 149px;
-left: 64px;
-top: 256px;
+    width: 199px;
+    height: 149px;
+    left: 64px;
+    top: 256px;
 }
+
 .hotel_image_2 {
     background-image: url(../../img/hotel_detail_img.jpg);
     background-size: cover;
@@ -207,31 +225,32 @@ top: 256px;
     left: 64px;
     top: 475px;
 }
+
 .list_rating_1{
-font-size:26px;
-color: #FFC701;
-position: absolute;
-height: 26px;
-left: 299px;
-top: 318px;
-
+    font-size:26px;
+    color: #FFC701;
+    position: absolute;
+    height: 26px;
+    left: 299px;
+    top: 318px;
 }
+
 .hotel_pay_1{
-position: absolute;
-height: 27px;
-left: 555px;
-top: 378px;
+    position: absolute;
+    height: 27px;
+    left: 555px;
+    top: 378px;
 
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 20px;
-line-height: 136.5%;
-/* or 27px */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 136.5%;
+    /* or 27px */
 
-
-color: #FF6B00;
+    color: #FF6B00;
 }
+
 .list2{
     position: absolute;
     width: 651px;
@@ -254,8 +273,9 @@ color: #FF6B00;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    }
-    .hotel_add_2{
+}
+
+.hotel_add_2{
     position: absolute;
     
     height: 20px;
@@ -269,18 +289,19 @@ color: #FF6B00;
     line-height: 136.5%;
     /* or 20px */
     
-    
     color: #919191;
 }
+
 .list_rating_2{
     font-size:26px;
     color: #FFC701;
     position: absolute;
     height: 26px;
     left: 299px;
-    top: 537px;
-    
-    }.hotel_pay_2{
+    top: 537px;   
+}
+
+.hotel_pay_2{
         position: absolute;
         height: 27px;
         left: 555px;
@@ -293,20 +314,21 @@ color: #FF6B00;
         line-height: 136.5%;
         /* or 27px */
         
-        
-        color: #FF6B00;
-        }
-        .hotel_image_3 {
-            background-image: url(../../img/ocean_hotel.png);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: bottom;
-            position: absolute;
-            width: 199px;
-            height: 149px;
-            left: 64px;
-            top: 694px;
-        }
+    color: #FF6B00;
+}
+
+.hotel_image_3 {
+    background-image: url(../../img/ocean_hotel.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    position: absolute;
+    width: 199px;
+    height: 149px;
+    left: 64px;
+    top: 694px;
+}
+
 .list3{
     position: absolute;
     width: 651px;
@@ -329,8 +351,9 @@ color: #FF6B00;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    }
-    .hotel_add_3{
+}
+
+.hotel_add_3{
     position: absolute;
     
     height: 20px;
@@ -344,9 +367,9 @@ color: #FF6B00;
     line-height: 136.5%;
     /* or 20px */
     
-    
     color: #919191;
 }
+
 .list_rating_3{
     font-size:26px;
     color: #FFC701;
@@ -354,23 +377,24 @@ color: #FF6B00;
     height: 26px;
     left: 299px;
     top: 756px; 
-    
-    }.hotel_pay_3{
-        position: absolute;
-        height: 27px;
-        left: 555px;
-        top: 816px;
+}
+
+.hotel_pay_3{
+    position: absolute;
+    height: 27px;
+    left: 555px;
+    top: 816px;
         
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 136.5%;
-        /* or 27px */
-        
-        
-        color: #FF6B00;
-        }
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 136.5%;
+    /* or 27px */
+          
+    color: #FF6B00;
+}
+
 .list4{
     position: absolute;
     width: 651px;
@@ -383,6 +407,7 @@ color: #FF6B00;
     box-sizing: border-box;
     border-radius: 10px;  
 }
+
 .hotel_name_4{
     position: absolute;
     height: 27px;
@@ -392,8 +417,9 @@ color: #FF6B00;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    }
-    .hotel_add_4{
+}
+
+.hotel_add_4{
     position: absolute;
     
     height: 20px;
@@ -406,10 +432,10 @@ color: #FF6B00;
     font-size: 15px;
     line-height: 136.5%;
     /* or 20px */
-    
-    
+      
     color: #919191;
 }
+
 .list_rating_4{
     font-size:26px;
     color: #FFC701;
@@ -417,34 +443,36 @@ color: #FF6B00;
     height: 26px;
     left: 299px;
     top: 975px;
-    
-    }.hotel_pay_4{
-        position: absolute;
-        height: 27px;
-        left: 555px;
-        top: 1035px;
+}
+
+.hotel_pay_4{
+    position: absolute;
+    height: 27px;
+    left: 555px;
+    top: 1035px;
         
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 136.5%;
-        /* or 27px */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 136.5%;
+    /* or 27px */ 
         
-        
-        color: #FF6B00;
-        }
-        .hotel_image_4 {
-            background-image: url(../../img/pink_hotel.png);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: bottom;
-            position: absolute;
-            width: 199px;
-            height: 149px;
-            left: 64px;
-            top: 913px;
-        }
+    color: #FF6B00;
+}
+
+.hotel_image_4 {
+    background-image: url(../../img/pink_hotel.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    position: absolute;
+    width: 199px;
+    height: 149px;
+    left: 64px;
+    top: 913px;
+}
+
 .list5{
     position: absolute;
     width: 651px;
@@ -457,6 +485,7 @@ color: #FF6B00;
     box-sizing: border-box;
     border-radius: 10px;  
 }
+
 .hotel_name_5{
     position: absolute;
     height: 27px;
@@ -467,8 +496,9 @@ color: #FF6B00;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    }
-    .hotel_add_5{
+ }
+
+.hotel_add_5{
     position: absolute;
     
     height: 20px;
@@ -482,34 +512,36 @@ color: #FF6B00;
     line-height: 136.5%;
     /* or 20px */
     
-    
     color: #919191;
 }
+
 .list_rating_5{
     font-size:26px;
     color: #FFC701;
     position: absolute;
     height: 26px;
     left: 299px;
-    top: 1194px;    
-    
-    }.hotel_pay_5{
-        position: absolute;
-        height: 27px;
-        left: 555px;
-        top: 1254px;
+    top: 1194px;       
+}
+
+.hotel_pay_5{
+    position: absolute;
+    height: 27px;
+    left: 555px;
+    top: 1254px;
         
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 136.5%;
-        /* or 27px */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 136.5%;
+    /* or 27px */
         
         
-        color: #FF6B00;
-        }
-        .hotel_image_5 {
+    color: #FF6B00;
+}
+
+.hotel_image_5 {
             background-image: url(../../img/two_hotel.png);
             background-size: cover;
             background-repeat: no-repeat;
@@ -519,7 +551,7 @@ color: #FF6B00;
             height: 149px;
             left: 64px;
             top: 1132px;
-        }
+}
 
 .list_page_num{
     position: absolute;
@@ -543,19 +575,33 @@ color: #FF6B00;
 
 
 /* hotel_detail */
+
 .rating_head i{
-    font-size:26px;
-    color: #FFC701;
+    font-size:22px;
 }
 
-.hotelDetail h1{
+.hotel_detail {
+    margin-top: 110px;
+}
+
+.hotel_detail hr{
+    margin: 32px 0;
+}
+
+.hotel_detail h1{
     font-size: 26px;
     font-weight: bold;
 }
 
-.hotelDetail h2{
+.hotel_detail h2{
     font-size: 20px;
     font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hotel_detail h5{
+    font-size: 18px;
+    color: var(--text-sub-color);
 }
 
 .hotel_main_img{
@@ -568,11 +614,288 @@ color: #FF6B00;
     background-position: bottom;
 }
 
-.hotelDetail h5{
+.hotel_detail1{
+    margin-bottom: 80px;
+}
+
+.hotel_detail .google_map{
+    width: 100%;
+    height: 340px;
+    background-color: var(--sub-grey-color);
+    border-radius: 10px;
+}
+
+.hotel_detail_reserve{
+    border: 1px solid var(--line-color);
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 40px;
+}
+.hotel_detail_reserve_date{
+    position: relative;
+}
+
+.hotel_detail_reserve p {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.hotel_detail_reserve button{
+    padding: 15px 20px;
+    font-size: 20px;
+}
+
+.hotel_detail_reserve_btn{
+    width: 100%;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background-color: var(--sub-grey-color);
+}
+
+.hotel_detail_reserve_btn button{
+    width: 50%;
+    background-color: var(--sub-grey-color);
+    border-radius: 10px;
+}
+
+.hotel_detail_reserve_btn_submit{
+    background-color: var(--main-color);
+    color: var(--back-color);
+    margin-bottom: 0;
+}
+
+.hotel_detail_reserve_btn i {
     font-size: 18px;
+    color: var(--icon-color);
+    margin-right: 15px;
+}
+
+.hotel_detail_reserve .hotel_detail_reserve_checkout::before{
+    position: absolute;
+    top: calc(28%);
+    left: calc(50%);
+    width: 1px;
+    height: 28px;
+    background-color: var(--icon-color);
+    content: "";
+}
+
+.hotel_review_rating{
+    border: 1px solid var(--line-color);
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.hotel_review_rating > div{
+    padding: 50px 100px;
+}
+
+.review_rating_cnt p{
+    padding: 5px 0;
+    margin: 0;
+}
+
+.review_rating_cnt i{
+    font-size: 18px;
+}
+
+.review_rating_cnt_star{
+    padding-right: 100px;
+}
+
+.user_review table td{
+    padding: 20px 30px;
+}
+
+.user_review .upload_date{
+    text-align: end;
+}
+
+.total_rating p{
+    font-size: 30px;
+    text-align: center;
     color: var(--text-sub-color);
 }
 
+.total_rating .slash{
+    font-size: 16px;
+}
+
+.total_rating .my_rating{
+    font-weight: 600;
+    color: black;
+}
+
+.total_rating i{
+    font-size: 22px;
+}
+
+.my_rating_star{
+    text-align: center;
+}
+
+.hotel_review_rating .my_rating_star::before{
+    position: absolute;
+    top: calc(35%);
+    left: calc(50%);
+    width: 1px;
+    height: 100px;
+    background-color: var(--line-color);
+    content: "";
+}
+
+.recommend_vaction{
+    height: 194px;
+    background-color: var(--sub-grey-color);
+    border-radius: 10px;
+}
+
+/* reserve */
+.reserve_title {
+    padding-top: 20%;
+    padding-bottom:5%; 
+    text-align: center;
+    font-weight: bold;
+}
+
+.reservation {
+    display: block;
+    margin-bottom: 20%;
+}
+
+.reserve {
+    margin-bottom: 50px;
+    width:80%;
+    margin:auto;
+}
+
+.reserve label {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: block;
+}
+
+.reserve select{
+    background-color: #dBDBDB;
+    color:#747474;
+    border-radius: 7px;
+    padding: 7px;
+    
+}
+
+
+.reserve_input {
+    background-color: #f5f5f5;
+    border: 1px solid #9e9e9e;
+    border-radius: 5px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.auth_btn {
+    background-color: #BDBDBD;
+    border: none;
+    color:#FFFFFF;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.all_agree {
+    font-weight: bold;
+}
+.reserve_check {
+    color:#747474
+}
+
+.provision{
+    padding-top:10px;
+}
+
+.provision span, a{
+    font-size: 13px;
+}
+
+.provision a{
+    color:#747474
+}
+
+.provision .important{
+    color: red;
+}
+
+
+.reserve_confirm {
+    width:80%;
+    margin:auto;
+    margin-top: 30px;
+    border-radius: 5%;
+    background-color: #fff1e6;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.reserve_index {
+    color:#747474;
+}
+
+.reserve_confirm label{
+    display: block;
+    padding-top: 20px;
+}
+
+.reserve_price {
+    color: red;
+    font-size: 30px;
+}
+
+.purchase_btn {
+    margin-left: 30%;
+    width: 40%;
+    margin-top: 30px;
+    background-color:#FF6B00;
+    color:#FFFFFF;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;   
+}
+
+.purchase_btn:hover{
+    background-color: #ff964a;
+}
+
+.purchase_container{
+    text-align: center;
+    font-size: 20px;
+    line-height: 120%;
+}
+
+@media (min-width: 768px){
+    .reservation{
+        display: flex;
+        justify-content: center;
+        /* max-width: 800px; */
+    }
+    .reserve_confirm{
+        width: 40%;
+    }
+
+    .reserve {
+        width: 40%;
+    }
+
+    .reserve_title {
+        padding-top: 100px;
+
+    }
+}
+
+
+/* end: reserve */
 /* 예약파트 css 분리하였습니다 */
 
 .menu_icon {

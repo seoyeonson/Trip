@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 def main(request):
     return render(request, 'main.html')
@@ -27,4 +27,27 @@ def hotel_confirm(request):
 def vacation_confirm(request):
     return render(request, 'vacation_confirm.html')
 
-def 
+def user_divide(request):
+    if request.method == "GET":
+        return render(request, 'user_divide.html')
+    elif request.method == "POST":
+        user_type = request.POST.get('user_type')
+        request.session['user_type'] = user_type
+        # print(request.session['user_type']) #세션값 확인
+        return redirect('/user_create')
+
+def user_create(request):
+    user_type = request.session['user_type'] # 회원구분에서 받아온 회원 타입 정보. admin 또는 basic
+    return render(request, 'user_create.html')
+
+def user_info(request):
+    return render(request, 'user_info.html')
+
+def pw_change(request):
+    return render(request, 'pw_change.html')
+
+def history_hotel(request):
+    return render(request, 'history_hotel.html')
+
+def history_vacation(request):
+    return render(request, 'history_vacation.html')

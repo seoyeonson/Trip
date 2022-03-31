@@ -30,7 +30,7 @@
 {% block script %}
 {% endblock %}
 <body>
-    <div class="container-fluid mt-5 pt-5 main_contents">
+    <div class="container-fluid mt-3 main_contents">
         {% block nav %}
         <div>
             <nav class=" bg-white fixed-top toolbar"> <!-- 홈탑메뉴바 -->
@@ -52,6 +52,11 @@
         </div>
         {% endblock %}
         {% block contents %}
+        {% endblock %}
+        {% block footer %}
+        <footer class="mt-5">
+
+        </footer>
         {% endblock %}
     </div>
 </body>
