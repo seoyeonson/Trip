@@ -23,6 +23,36 @@
 <div class="con2">
     <div class="contents">
         <h5 id="title">마이페이지 > 여행지 관리</h5>
+        <table class="vacations">
+            <td class="vacation">
+                <!--sample-->
+                <img src="{% static 'img/cat.jpg' %}">
+                <label class="vacation_name">{##}에버랜드</label>
+                <label class="vacation_adress">{##}경기도 용인시</label>
+                <label class="review_count">{##}여행지
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </label>
+
+
+                <ul>
+                    <li class="left">인원</li>
+                    <li class="right">인</li>
+                    <li class="left">가격</li>
+                    <li class="right">원</li>
+                    <li class="left">일자</li>
+                    <li class="right">2022/03/25 13:00</li>
+                
+                </ul>
+            </td>
+            <!-- {% for vacation in list %}
+            <td class="vacation"> </td>
+            {% endfor %} -->
+            
+        </table>
     </div>
 </div>
 {% endblock %}
