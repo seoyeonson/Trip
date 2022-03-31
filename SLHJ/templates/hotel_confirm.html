@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrahead %}
+<link href="{% static 'bs/css/reserve_confirm.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block contents %}
+<div class="container">
+    <h3>예약완료</h3>
+    <div class="confirm_contents">
+        <ul>
+            <li><label class="title">예약자 이름</label><label class="info">{##}김**</label></li>
+            <li><label class="title">휴대폰 번호</label><label class="info">{##}010-1234-1234</label></li>
+            <li><label class="title">예약번호</label><label class="info">{##}0023</label></li>
+            <li><label class="title">숙소이름</label><label class="info">{##}KDT호텔</label></li>
+            <li><label class="title">객실정보 / 기간</label><label class="info">{##}2022.04.30 / {# #}박</label></li>
+            <li><label class="title">숙박인원</label><label class="info">{##}2인</label></li>
+            <li><label class="title">체크인</label><label class="info">{##}2022.04.30</label></li>
+            <li><label class="title">체크아웃</label><label class="info">{##}2022.04.31</label></li>
+        </ul>
+
+        <hr>
+        <br>
+        <h4>결제금액</h4>
+        <h4 class="important">{##}76,000원</h4>
+        <br>
+        <input id="to_mypage" type="button" value="마이페이지에서 확인하기">
+
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+

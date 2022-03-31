@@ -5,8 +5,6 @@ def main(request):
 
 def list(request):
     return render(request, 'hotel_list.html')
-def user(request):
-    return render(request, 'user.html')
 
 def user_create(request):
     return render(request, 'user_create.html')
@@ -22,3 +20,9 @@ def hotel_detail(request):
     
 def login(request):
     return render(request, 'login.html')
+
+def hotel_confirm(request):
+    return render(request, 'hotel_confirm.html')
+
+def vacation_confirm(request):
+    return render(request, 'vacation_confirm.html')
