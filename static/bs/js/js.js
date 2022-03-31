@@ -118,13 +118,6 @@ function input_date() {
     
 }
 
-// $(function() {
-//     $('input[name="daterange"]').daterangepicker({
-//       opens: 'left'
-//     }, function(start_day, end_day, label) {
-//       console.log(start_day.format('MM-DD') + ' to ' + end_day.format('MM-DD'));
-//     });
-// });
 
 $(document).ready(function() {
     $("#hotel_lo_select1").click(function() {

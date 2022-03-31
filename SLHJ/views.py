@@ -26,3 +26,5 @@ def hotel_confirm(request):
 
 def vacation_confirm(request):
     return render(request, 'vacation_confirm.html')
+
+def 
