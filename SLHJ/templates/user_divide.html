@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_divide.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}회원구분{% endblock %}
+
+{% block contents %}
+{% block script %}
+<script src="{% static 'bs/js/user_divide.js' %}"></script>
+{% endblock %}
+
+<div class="container">
+    <h3>회원구분</h3>
+    <div class="con2">
+        <label>해당하는 회원가입 방식을 선택해주세요.</label>
+        <label>※ 회원구분에 따라 가입절차에 차이가 있으니 반드시 본인이 해당하는 경우를 선택해주시기 바랍니다.</label>
+        <div class="owner_member box">
+            <h5>관리자회원</h5>
+            <i class="fa-solid fa-user-large"></i>
+            <label>숙박업체 및 관광지를 등록하고 관리하는 회원</label>
+            <button type="button" id="owner_join">회원가입하기</button>
+            <form name="admin" action="." method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="user_type" value="admin">
+            </form>
+
+        </div>
+        <div class="basic_member box">
+            <h5>일반회원</h5>
+            <i class="fa-solid fa-user-large"></i>
+            <label>사이트를 이용하며 숙박업체 및 관광지를 예약하는 회원</label>
+            <button type="button" id="basic_join">회원가입하기</button>
+            
+            <form name="basic" action="." method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="user_type" value="basic">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
