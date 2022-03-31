@@ -20,4 +20,7 @@ urlpatterns = [
     path('pw_change/', views.pw_change, name='pw_change'),
     path('history_hotel/', views.history_hotel, name='history_hotel'),
     path('history_vacation/', views.history_vacation, name='history_vacation'),
+
+    #api data용
+    path('api/', views.api, name='api')
 ]
