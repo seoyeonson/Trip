@@ -3,6 +3,7 @@
 
 {% block extrahead %}
 <link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/user_info.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block title %}회원정보{% endblock %}
@@ -22,8 +23,31 @@
 <div class="con2">
     <div class="contents">
         <h5 id="title">마이페이지 > 회원정보</h5>
+        <div class="center">
+            <div name="update_userinfo" class="update_userinfo">
+                <div >
+                    <label>이름</label>
+                    <input class="info_form" type="text" name="current_pw">
+                    <input class="update_btn" type="submit" value="수정">
+                    <!-- <input class="update_btn" type="submit" value="취소">
+                    <input class="update_btn" type="submit" value="수정완료"> -->
+                </div>
+                <div>
+                    <label>전화번호</label>>
+                    <input class="info_form" type="text" name="new_pw">
+                    <input class="update_btn" type="submit" value="수정">
+                    <!-- <input class="update_btn" type="submit" value="취소">
+                    <input class="update_btn" type="submit" value="수정완료"> -->
+                </div>
+                <div>
+                    <label>이메일</label>
+                    <input class="info_form" type="text" name="confirm_pw">
+                    <input class="update_btn" type="submit" value="수정">
+                    <!-- <input class="update_btn" type="submit" value="취소">
+                    <input class="update_btn" type="submit" value="수정완료"> -->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
-
-

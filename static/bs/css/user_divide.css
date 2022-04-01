@@ -1,13 +1,14 @@
-h3 {
+.title {
     /* text-align: center; */
     padding-bottom:5%; 
     text-align: center;
     font-weight: bold;
 }
 
-.container {
+.con{
     width: 80%;
     margin: auto;
+    padding-top: 100px;
 }
 
 .con2 {
@@ -35,10 +36,10 @@ h3 {
     flex-wrap: wrap;
 }
 
-.box>label {
+/* .box>label {
     padding: 10px;
 
-}
+} */
 
 .box>h5 {
     text-align: center;
@@ -64,7 +65,7 @@ h3 {
 
 @media(min-width: 768px){
 
-    .container {
+    .con {
         width: 80%;
         margin: auto;
         max-width: 800px;

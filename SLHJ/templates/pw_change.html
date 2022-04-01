@@ -9,6 +9,9 @@
 {% block title %}비밀번호 변경{% endblock %}
 
 {% block contents %}
+{% block script %}
+<script src="{% static 'bs/js/pw_change.js' %}"></script>
+{% endblock%}
 <div id="side_nav" class="side_nav">
     <!-- <a href="#" 
         class="closebtn" id="closebtn" 
@@ -24,22 +27,22 @@
     <div class="contents">
         <h5 id="title">마이페이지 > 비밀번호변경</h5>
         <div class="center">
-            <form name="pw_change" class="pw_change">
+            <form name="pw_change" class="pw_change justify-content-center">
                 <table>
-                    <tr>
+                    <tr class="form-group">
                         <td><label>현재 비밀번호</label></td>
-                        <td><input class="pw_form" type="password" name="current_pw"></td>
+                        <td><input class="form-control" type="password" name="current_pw"></td>
                     </tr>
-                    <tr>
+                    <tr class="form_group">
                         <td>변경 비밀번호</td>
-                        <td><input class="pw_form" type="password" name="new_pw"></td>
+                        <td><input class="form-control" type="password" name="new_pw"></td>
                     </tr>
-                    <tr>
+                    <tr class="form_group">
                         <td>비밀번호 확인</td>
-                        <td><input class="pw_form" type="password" name="confirm_pw"></td>
+                        <td><input class="form-control" type="password" name="confirm_pw"></td>
                     </tr>
                 </table>
-                <input class="update_btn" type="submit" value="변경">
+                <input class="update_btn" type="button" value="변경">
             </form>
         </div>
 
