@@ -6,32 +6,32 @@
     margin-bottom: 20%;
 }
 
-h3 {
+.title {
     text-align: center;
     padding-bottom:5%; 
     text-align: center;
     font-weight: bold;
 }
 
-ul {
+.confirm_list {
     padding: 0 5% 0 5%;
     width:100%;
     margin:auto;
 }
 
-li {
+.confirm_list li {
     list-style: none;
     padding: 25px 0 15px 0;
     display: inline-block;
     width: 49%;
 }
 
-li label {
+.confirm_list li label {
     display: block;
     padding-top: 10px;
 }
 
-.title {
+.index {
     color:rgb(141, 141, 141);
 }
 
@@ -39,7 +39,7 @@ li label {
     color: red;
 }
 
-h4 {
+.sum {
     text-align: center;
 }
 

@@ -1,0 +1,44 @@
+.pw_change{
+    margin-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+
+}
+
+.pw_change tr{
+    border-bottom: 1px solid var(--sub-grey-color);
+}
+
+.pw_change td{
+    min-width:300px;
+    display: block;
+    padding:10px 30px 10px 30px;
+}
+
+.pw_change .pw_form{
+    border: 1px solid var(--text-sub-color);
+}
+
+.update_btn{
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 10px 30px 10px 30px;
+    border: 0px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+@media(min-width:768px){
+    
+    .pw_change td{
+        display: table-cell;
+    }
+}

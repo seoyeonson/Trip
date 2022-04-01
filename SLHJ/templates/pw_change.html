@@ -3,6 +3,7 @@
 
 {% block extrahead %}
 <link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/pw_change.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block title %}비밀번호 변경{% endblock %}
@@ -12,18 +13,36 @@
     <!-- <a href="#" 
         class="closebtn" id="closebtn" 
         onclick="closeNav()">&times;</a> -->
-    <div class="nav_menu" id="user_profile">{##}김회원 님</div>
-    <a class="nav_menu" href="{% url 'user_info' %}">회원정보</a>
-    <a class="nav_menu" id=self href="{% url 'pw_change' %}">비밀번호 변경</a>
-    <a class="nav_menu" href="{% url 'history_hotel' %}">숙소관리</a>
-    <a class="nav_menu" href="{% url 'history_vacation' %}">여행지 관리</a>
+    <div class="side_menu" id="user_profile">{##}김회원 님</div>
+    <a class="side_menu" href="{% url 'user_info' %}">회원정보</a>
+    <a class="side_menu" id=self href="{% url 'pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" href="{% url 'history_hotel' %}">숙소관리</a>
+    <a class="side_menu" href="{% url 'history_vacation' %}">여행지 관리</a>
 </div>
 
 <div class="con2">
     <div class="contents">
         <h5 id="title">마이페이지 > 비밀번호변경</h5>
+        <div class="center">
+            <form name="pw_change" class="pw_change">
+                <table>
+                    <tr>
+                        <td><label>현재 비밀번호</label></td>
+                        <td><input class="pw_form" type="password" name="current_pw"></td>
+                    </tr>
+                    <tr>
+                        <td>변경 비밀번호</td>
+                        <td><input class="pw_form" type="password" name="new_pw"></td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호 확인</td>
+                        <td><input class="pw_form" type="password" name="confirm_pw"></td>
+                    </tr>
+                </table>
+                <input class="update_btn" type="submit" value="변경">
+            </form>
+        </div>
+
     </div>
 </div>
 {% endblock %}
-
-
