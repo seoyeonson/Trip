@@ -25,6 +25,9 @@ urlpatterns = [
     path('history_vacation/', views.history_vacation, name='history_vacation'),
 
     #api data용
-    path('api/', views.api, name='api'),
-    path('api2/', views.api2, name='api2')
+    # path('api/', views.api, name='api'),
+    # path('api2/', views.api2, name='api2')
+    path('sample/', views.sample, name='sample'),   # vacation_review data 입력포맷
+    path('sample2/', views.sample2, name='sample2') # vacation_reserve data 입력포맷
+
 ]
