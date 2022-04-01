@@ -1,19 +1,21 @@
 {% extends "base.html"%}
-{% block title %}그랜드 하얏트 서울{% endblock %} {# 호텔명 #}
+{% block title %}{{ vacation.TURSM_INFO_NM }}{% endblock %} {# 호텔명 #}
 
 {% block contents %}
 <div class="container hotel_detail">
     <!--상단 평점, 호텔명, 주소-->
     <div class="col-12">
         <div class="rating_head">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star no_star"></i>
+            {% for i in "x"|rjust:"5" %}
+                {% if vacation.vacation_rate >= forloop.counter %}
+                    <i class="fas fa-star"></i>
+                {% else %}
+                    <i class="fas fa-star no_star"></i>
+                {% endif %}
+            {% endfor %}
         </div>
-        <h1 class="mt-3">한국 민속촌</h1>
-        <h5>서울 용산구 소월로 322</h5>
+        <h1 class="mt-3">{{ vacation.TURSM_INFO_NM }}</h1>
+        <h5>{{ vacation.SM_RE_ADDR }}</h5>
         <div class="vacation_main_img mt-4 mb-5"></div>
     </div>
     <!-- 샹세정보 -->
@@ -21,13 +23,15 @@
         <div class="col-lg-8 col-12 hotel_detail_info pe-lg-5">
             <div>
                 <h2>상세 정보</h2>
-                <p><i class="fas fa-phone me-2"></i>031-288-0000</p>
-                <p>옛날 관가(官家)·민가(民家)·반가(班家) 등 지방별로 구조를 달리하는 건축물이 산재하며, 그 속에는 우리 조상들의 생활 모습을 재현하고 각종 생활기구·농경기구·각종 공예품 등을 전시하고 있다.</p>
+                {% if vacation.TELNO %}
+                <p><i class="fas fa-phone me-2"></i>{{ vacation.TELNO }}</p>
+                {% endif %}
+                <p>{{ vacation.vacation_comment }}</p>
             </div>
             <hr>
             <div>
                 <h2>위치</h2>
-                <div class="google_map mb-lg-0 mb-5"></div>
+                <div id="googleMap" class="google_map mb-lg-0 mb-5"></div>
             </div>
         </div>
     
@@ -55,13 +59,15 @@
         <h2>리뷰</h2>
         <div class="hotel_review_rating d-lg-flex">
             <div class="d-flex flex-column total_rating col-lg-6 justify-content-center">
-                <p><span class="my_rating">4.2 </span><span class="slash">/</span> 5.0</p>
+                <p><span class="my_rating">{{ vacation.vacation_rate }} </span><span class="slash">/</span> 5.0</p>
                 <div class="my_rating_star">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star no_star"></i>
+                    {% for i in "x"|rjust:"5" %}
+                        {% if vacation.vacation_rate >= forloop.counter %}
+                            <i class="fas fa-star"></i>
+                        {% else %}
+                            <i class="fas fa-star no_star"></i>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-lg-6 d-lg-flex justify-content-center">
@@ -184,6 +190,11 @@
         </div>
     </div>
 
+    <input type="hidden" value="{{ vacation.REFINE_WGS84_LAT }}" name="lat">
+    <input type="hidden" value="{{ vacation.REFINE_WGS84_LOGT }}" name="lng">
 </div>
 
+{% endblock %}
+{% block extrafoot %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkSbB_IhB_i3-8caf6gKcuDHLJT27d0k&callback=myMap"></script>
 {% endblock %}

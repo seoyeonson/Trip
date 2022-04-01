@@ -1,19 +1,25 @@
 {% extends "base.html"%}
-{% block title %}그랜드 하얏트 서울{% endblock %} {# 호텔명 #}
+{% load static%}
+{% block extrahead %}
+{% endblock %}
+
+{% block title %}{{ hotel.BIZPLC_NM }}{% endblock %} {# 호텔명 #}
 
 {% block contents %}
 <div class="container hotel_detail">
     <!--상단 평점, 호텔명, 주소-->
     <div class="col-12">
         <div class="rating_head">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star no_star"></i>
+            {% for i in "x"|rjust:"5" %}
+                {% if hotel.hotel_rate >= forloop.counter %}
+                    <i class="fas fa-star"></i>
+                {% else %}
+                <i class="fas fa-star no_star"></i>
+                {% endif %}
+            {% endfor %}
         </div>
-        <h1 class="mt-3">그랜드 하얏트 서울</h1>
-        <h5>서울 용산구 소월로 322</h5>
+        <h1 class="mt-3">{{ hotel.BIZPLC_NM }}</h1>
+        <h5>{{ hotel.REFINE_ROADNM_ADDR }}</h5>
         <div class="hotel_main_img mt-4 mb-5"></div>
     </div>
     <!-- 샹세정보 -->
@@ -21,12 +27,12 @@
         <div class="col-lg-8 col-12 hotel_detail_info pe-lg-5">
             <div>
                 <h2>상세 정보</h2>
-                <p>한실글래드 호텔 여의도는 9호선 국회의사당역 4번 출구에서 도보 1분 거리에 있습니다. 여의도 공원이  도보로 5분 거리에 있으며, 'IFC 몰'과 '더 현대 서울'까지는 약 15분 정도 소요됩니다. 호텔 2층에 마련된 크리에이티브 라운지에는 PC, 스캐너, 레이저 프린터 등 다양한 비즈니스 시설이 구비되어 있습니다. </p>
+                <p>{{ hotel.hotel_comment }}</p>
             </div>
             <hr>
             <div>
                 <h2>위치</h2>
-                <div class="google_map mb-lg-0 mb-5"></div>
+                <div id="googleMap" class="google_map mb-lg-0 mb-5"></div>
             </div>
         </div>
     
@@ -38,7 +44,7 @@
                     <button class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">체크인</span></button>
                     <button class="hotel_detail_reserve_checkout">체크아웃</button>
                 </div>
-                <div style="position: relative;">
+                <div class="choice_people">
                     <button class="hotel_detail_reserve_btn"><i class="fas fa-user-alt"></i>인원선택</button>
                     <div style="position: relative; left: 0; display: none;">
                         <button>1명</button>
@@ -48,7 +54,7 @@
                         <button>6명</button>
                     </div>
                 </div>
-                <div style="position: relative;">
+                <div class="choice_room">
                     <button class="hotel_detail_reserve_btn"><i class="fas fa-door-closed"></i>객실선택</button>
                     <div style="position: relative; left: 0; display: none;"></div>
                 </div>
@@ -62,13 +68,15 @@
         <h2>리뷰</h2>
         <div class="hotel_review_rating d-lg-flex">
             <div class="d-flex flex-column total_rating col-lg-6 justify-content-center">
-                <p><span class="my_rating">4.2 </span><span class="slash">/</span> 5.0</p>
+                <p><span class="my_rating">{{ hotel.hotel_rate }} </span><span class="slash">/</span> 5.0</p>
                 <div class="my_rating_star">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star no_star"></i>
+                    {% for i in "x"|rjust:"5" %}
+                        {% if hotel.hotel_rate >= forloop.counter %}
+                            <i class="fas fa-star"></i>
+                        {% else %}
+                            <i class="fas fa-star no_star"></i>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-lg-6 d-lg-flex justify-content-center">
@@ -191,6 +199,11 @@
         </div>
     </div>
 
+    <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="lat">
+    <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="lng">
 </div>
 
+{% endblock %}
+{% block extrafoot %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkSbB_IhB_i3-8caf6gKcuDHLJT27d0k&callback=myMap"></script>
 {% endblock %}
