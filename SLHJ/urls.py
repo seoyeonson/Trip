@@ -24,5 +24,6 @@ urlpatterns = [
     path('history_vacation/', views.history_vacation, name='history_vacation'),
 
     #api data용
-    path('api/', views.api, name='api')
+    path('api/', views.api, name='api'),
+    path('api2/', views.api2, name='api2')
 ]
