@@ -5,7 +5,7 @@ from lxml import html
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode, quote_plus, unquote
 from django.shortcuts import render, redirect
-from SLHJ.models import User, Vacation
+from SLHJ.models import User, Vacation, Vacation_reserve, Vacation_review, Vacation_image
 from SLHJ.models import Hotel
 
 
@@ -73,6 +73,55 @@ def history_hotel(request):
 
 def history_vacation(request):
     return render(request, 'history_vacation.html')
+
+def sample(request):  # vacation_review 데이터 입력포맷입니다.
+
+    vacation_review_content = 'sample데이터입니다.'
+    vacation_review_rate = 5.0
+    
+    id = User.objects.get(pk=1)
+    vacation_id = Vacation.objects.get(pk=1)
+
+    vacation_review = Vacation_review(
+        vacation_review_content = vacation_review_content,
+        vacation_review_rate = vacation_review_rate,
+        id = id,
+        vacation_id = vacation_id
+    )
+    vacation_review.save()
+
+
+    all_cnt = Vacation_review.objects.filter(vacation_id_id = 1).count()
+    vacation_id.vacation_rate = (vacation_id.vacation_rate * (all_cnt-1) + vacation_review_rate) / all_cnt
+    vacation_id.save()
+
+    return render(request, 'sample.html')
+
+def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
+
+    vacation_reserve_people = 2
+    vacation_reserve_date = '2022-04-01'
+    vacation_reserve_username = '이광우'
+    vacation_reserve_phonenum = '010-1234-5678'
+    vacation_reserve_price = 100000
+
+    id = User.objects.get(pk=1)
+    vacation_id = Vacation.objects.get(pk=1)
+
+    vacation_reserve = Vacation_reserve(
+        vacation_reserve_people = vacation_reserve_people,
+        vacation_reserve_date = vacation_reserve_date,
+        vacation_reserve_username = vacation_reserve_username,
+        vacation_reserve_phonenum = vacation_reserve_phonenum,
+        vacation_reserve_price = vacation_reserve_price,
+        id = id,
+        vacation_id = vacation_id
+    )
+
+    vacation_reserve.save()
+
+    return render(request, 'sample2.html')
+
 
 # def api(request):
 
