@@ -33,18 +33,20 @@
     <div class="container-fluid mt-3 main_contents">
         {% block nav %}
         <div>
-            <nav class=" bg-white fixed-top toolbar"> <!-- 홈탑메뉴바 -->
-                <ul class="container home_tool align-items-center">
-                    <a href="#"><label class="home_icon">Trip</label></a>
-                    <label class="home_menu">
-                        <a href="#">호텔</a>
-                    </label>
-                    <label class="home_menu">
-                        <a href="#">여행지</a>
-                    </label>
-                    <label class="home_menu ml-auto">
-                        <a href="#">로그인</a>
-                    </label>
+            <nav class="bg-white fixed-top toolbar"> <!-- 홈탑메뉴바 -->
+                <ul class="container home_tool">
+                    <li style="padding-top: 10px;">
+                        <a href="{% url 'main' %}" class="home_icon">Trip</a>
+                    </li>
+                    <li class="home_menu">
+                        <a href="">호텔</a>
+                    </li>
+                    <li class="home_menu">
+                            <a href="#">여행지</a>
+                    </li>
+                    <li class="menu_right home_menu">
+                        <a href="{% url 'login' %}">로그인</a>
+                    </li>
                 </ul>
                 <!-- <ul class="navbar-nav home_tool2">
                 </ul> -->
