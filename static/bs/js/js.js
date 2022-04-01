@@ -1,3 +1,5 @@
+var mapProp;
+
 function search_hotel() {
     document.getElementById("hotel_search").style.display ='block';
     document.getElementById("vacation_search").style.display ='none';
@@ -257,4 +259,21 @@ $(document).ready(function() {
         return true;
     });
 });
+
+// 구글맵
+function myMap() {
+    var lat = Number($('[name="lat"]').val());
+    var lng = Number($('[name="lng"]').val());
+    var myLatlng = new google.maps.LatLng(lat, lng);
+    var mapProp = {
+        center: myLatlng,
+        zoom: 17,
+    };
+
+    var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+    var myPos = {lat: lat, lng: lng};
+	var marker = new google.maps.Marker({position: myPos});
+    marker.setMap(map);
+}
 

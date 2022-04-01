@@ -1,3 +1,4 @@
+from django.http import Http404
 import requests, bs4
 import pandas as pd
 from lxml import html
@@ -23,11 +24,21 @@ def hotel_reserve(request):
 def vacation_reserve(request):
     return render(request, 'vacation_reserve.html')
 
-def hotel_detail(request):
-    return render(request, 'hotel_detail.html')
+def hotel_detail(request, pk):
+    try:
+        hotel = Hotel.objects.get(pk=pk)
+    except Hotel.DoesNotExist:
+        raise Http404('게시글을 찾을수 없습니다')
+
+    return render(request, 'hotel_detail.html', {'hotel': hotel})
     
-def vacation_detail(request):
-    return render(request, 'vacation_detail.html')
+def vacation_detail(request, pk):
+    try:
+        vacation = Vacation.objects.get(pk=pk)
+    except Vacation.DoesNotExist:
+        raise Http404('게시글을 찾을수 없습니다')
+        
+    return render(request, 'vacation_detail.html', {'vacation' : vacation})
     
 def login(request):
     return render(request, 'login.html')
@@ -191,60 +202,60 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 #     # user_phonenum = '010-1234-5678'
 
 #     # user = User(user_id = user_id, user_password = user_password, user_type = user_type, user_email = user_email, user_phonenum = user_phonenum)
-#     # user.save()   테스트 유저 확보 
+#     # user.save()   #테스트 유저 확보 
 
 #     return render(request, 'api.html')
 
 # def api2(request):
 
-    # KEY = unquote("db11faf6254746fbb71311dedf6cdb3d")
-    # url = "https://openapi.gg.go.kr/CTST"
-    # Type = "xml"
-    # pSize = "481"
-    # pindex = "1"  # 일단 수동으로 넣어줬습니다.
+#     KEY = unquote("db11faf6254746fbb71311dedf6cdb3d")
+#     url = "https://openapi.gg.go.kr/CTST"
+#     Type = "xml"
+#     pSize = "481"
+#     pindex = "1"  # 일단 수동으로 넣어줬습니다.
 
-    # queryParmas = '?' + urlencode({ 
-    #     quote_plus('KEY') : KEY,
-    #     quote_plus('Type') : Type,
-    #     quote_plus('pindex') : pindex,
-    #     quote_plus('pSize') : pSize
-    # })
+#     queryParmas = '?' + urlencode({ 
+#         quote_plus('KEY') : KEY,
+#         quote_plus('Type') : Type,
+#         quote_plus('pindex') : pindex,
+#         quote_plus('pSize') : pSize
+#     })
     
-    # res = requests.get(url + queryParmas).text.encode('utf-8')
-    # xmlobj = bs4.BeautifulSoup(res, 'lxml-xml')
-    # rows = xmlobj.findAll('row')
+#     res = requests.get(url + queryParmas).text.encode('utf-8')
+#     xmlobj = bs4.BeautifulSoup(res, 'lxml-xml')
+#     rows = xmlobj.findAll('row')
 
-    # for i in range(int(pSize)):
-    #     columns = rows[i].find_all()
-    #     SIGUN_NM = columns[0].text
-    #     TURSM_INFO_NM = columns[1].text
-    #     SM_RE_ADDR = columns[2].text
-    #     TELNO = columns[3].text
-    #     REFINE_WGS84_LAT = columns[5].text
-    #     if columns[5].text == "":
-    #         REFINE_WGS84_LAT = 0.0
-    #     REFINE_WGS84_LOGT = columns[6].text
-    #     if columns[6].text == "":
-    #         REFINE_WGS84_LOGT = 0.0
-    #     vacation_comment = "설명이 없습니다."
-    #     vacation_price = 100000
-    #     vacation_rate = 0.0
+#     for i in range(int(pSize)):
+#         columns = rows[i].find_all()
+#         SIGUN_NM = columns[0].text
+#         TURSM_INFO_NM = columns[1].text
+#         SM_RE_ADDR = columns[2].text
+#         TELNO = columns[3].text
+#         REFINE_WGS84_LAT = columns[5].text
+#         if columns[5].text == "":
+#             REFINE_WGS84_LAT = 0.0
+#         REFINE_WGS84_LOGT = columns[6].text
+#         if columns[6].text == "":
+#             REFINE_WGS84_LOGT = 0.0
+#         vacation_comment = "설명이 없습니다."
+#         vacation_price = 100000
+#         vacation_rate = 0.0
 
-    #     vacation_admin_id = User.objects.get(pk=1)
+#         vacation_admin_id = User.objects.get(pk=1)
 
-    #     vacation = Vacation(
-    #         SIGUN_NM = SIGUN_NM,
-    #         TURSM_INFO_NM = TURSM_INFO_NM,
-    #         SM_RE_ADDR = SM_RE_ADDR,
-    #         TELNO = TELNO,
-    #         REFINE_WGS84_LAT = REFINE_WGS84_LAT,
-    #         REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
-    #         vacation_comment = vacation_comment,
-    #         vacation_price = vacation_price,
-    #         vacation_rate = vacation_rate,
-    #         vacation_admin_id = vacation_admin_id
-    #     )
+#         vacation = Vacation(
+#             SIGUN_NM = SIGUN_NM,
+#             TURSM_INFO_NM = TURSM_INFO_NM,
+#             SM_RE_ADDR = SM_RE_ADDR,
+#             TELNO = TELNO,
+#             REFINE_WGS84_LAT = REFINE_WGS84_LAT,
+#             REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
+#             vacation_comment = vacation_comment,
+#             vacation_price = vacation_price,
+#             vacation_rate = vacation_rate,
+#             vacation_admin_id = vacation_admin_id
+#         )
 
-    #     vacation.save()
+#         vacation.save()
 
-    # return render(request, 'api2.html')
+#     return render(request, 'api2.html')
