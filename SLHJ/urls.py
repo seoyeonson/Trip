@@ -15,7 +15,7 @@ urlpatterns = [
     path('vacation_detail/<int:pk>/', views.vacation_detail),
     path('hotel_confirm/', views.hotel_confirm),
     path('vacation_confirm/', views.vacation_confirm),
-    path('user_divide/', views.user_divide),
+    path('user_divide/', views.user_divide, name='user_divide'),
     path('user_create/', views.user_create, name='user_create'),
 
     # 마이페이지
@@ -28,6 +28,6 @@ urlpatterns = [
 #     path('api/', views.api, name='api'),
 #     path('api2/', views.api2, name='api2')
 
-    # path('api/', views.api, name='api'),
-    # path('api2/', views.api2, name='api2')
+    path('sample/', views.sample, name='sample'),
+    path('sample2/', views.sample2, name='sample2')
 ]

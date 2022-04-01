@@ -77,12 +77,10 @@ def history_hotel(request):
 def history_vacation(request):
     return render(request, 'history_vacation.html')
 
-# def api(request):
-
 def sample(request):  # vacation_review 데이터 입력포맷입니다.
 
     vacation_review_content = 'sample데이터입니다.'
-    vacation_review_rate = 5.0
+    vacation_review_rate = 1
     
     id = User.objects.get(pk=1)
     vacation_id = Vacation.objects.get(pk=1)
@@ -97,7 +95,7 @@ def sample(request):  # vacation_review 데이터 입력포맷입니다.
 
 
     all_cnt = Vacation_review.objects.filter(vacation_id_id = 1).count()
-    vacation_id.vacation_rate = (vacation_id.vacation_rate * (all_cnt-1) + vacation_review_rate) / all_cnt
+    vacation_id.vacation_rate = round((vacation_id.vacation_rate * (all_cnt-1) + vacation_review_rate) / all_cnt, 2)
     vacation_id.save()
 
     return render(request, 'sample.html')
@@ -111,6 +109,7 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
     vacation_reserve_price = 100000
 
     id = User.objects.get(pk=1)
+    # id = User.objects.get(pk=pk)
     vacation_id = Vacation.objects.get(pk=1)
 
     vacation_reserve = Vacation_reserve(
