@@ -1,3 +1,4 @@
+from django.http import Http404
 import requests, bs4
 import pandas as pd
 from lxml import html
@@ -26,11 +27,21 @@ def hotel_reserve(request):
 def vacation_reserve(request):
     return render(request, 'vacation_reserve.html')
 
-def hotel_detail(request):
-    return render(request, 'hotel_detail.html')
+def hotel_detail(request, pk):
+    try:
+        hotel = Hotel.objects.get(pk=pk)
+    except Hotel.DoesNotExist:
+        raise Http404('게시글을 찾을수 없습니다')
+
+    return render(request, 'hotel_detail.html', {'hotel': hotel})
     
-def vacation_detail(request):
-    return render(request, 'vacation_detail.html')
+def vacation_detail(request, pk):
+    try:
+        vacation = Vacation.objects.get(pk=pk)
+    except Vacation.DoesNotExist:
+        raise Http404('게시글을 찾을수 없습니다')
+        
+    return render(request, 'vacation_detail.html', {'vacation' : vacation})
     
 def login(request):
     return render(request, 'login.html')
@@ -196,7 +207,7 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 #     # user_phonenum = '010-1234-5678'
 
 #     # user = User(user_id = user_id, user_password = user_password, user_type = user_type, user_email = user_email, user_phonenum = user_phonenum)
-#     # user.save() #테스트 유저 확보
+#     # user.save()   #테스트 유저 확보 
 
 #     return render(request, 'api.html')
 
