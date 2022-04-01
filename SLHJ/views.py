@@ -14,6 +14,9 @@ def main(request):
 def list(request):
     return render(request, 'hotel_list.html')
 
+def list2(request):
+    return render(request, 'hotel_list2.html')
+
 def user_create(request):
     return render(request, 'user_create.html')
 
@@ -63,139 +66,139 @@ def history_hotel(request):
 def history_vacation(request):
     return render(request, 'history_vacation.html')
 
-def api(request):
+# def api(request):
 
-    KEY = unquote("db11faf6254746fbb71311dedf6cdb3d")
-    url = "https://openapi.gg.go.kr/StayingTourismHotel"
-    Type = "xml"
-    pSize = "500"
-    pindex = "1"  # 일단 수동으로 넣어줬습니다.
+#     KEY = unquote("db11faf6254746fbb71311dedf6cdb3d")
+#     url = "https://openapi.gg.go.kr/StayingTourismHotel"
+#     Type = "xml"
+#     pSize = "500"
+#     pindex = "1"  # 일단 수동으로 넣어줬습니다.
 
-    queryParmas = '?' + urlencode({ 
-        quote_plus('KEY') : KEY,
-        quote_plus('Type') : Type,
-        quote_plus('pindex') : pindex,
-        quote_plus('pSize') : pSize
-    })
+#     queryParmas = '?' + urlencode({ 
+#         quote_plus('KEY') : KEY,
+#         quote_plus('Type') : Type,
+#         quote_plus('pindex') : pindex,
+#         quote_plus('pSize') : pSize
+#     })
 
-    res = requests.get(url + queryParmas).text.encode('utf-8')
-    xmlobj = bs4.BeautifulSoup(res, 'lxml-xml')
-    rows = xmlobj.findAll('row')
+#     res = requests.get(url + queryParmas).text.encode('utf-8')
+#     xmlobj = bs4.BeautifulSoup(res, 'lxml-xml')
+#     rows = xmlobj.findAll('row')
 
-    rowList = []
-    nameList = []
-    columnList = []
+#     rowList = []
+#     nameList = []
+#     columnList = []
 
-    rowsLen = len(rows)
-    for i in range(0, rowsLen):
-        columns = rows[i].find_all()
+#     rowsLen = len(rows)
+#     for i in range(0, rowsLen):
+#         columns = rows[i].find_all()
         
-        columnsLen = len(columns)
-        for j in range(0, columnsLen):
+#         columnsLen = len(columns)
+#         for j in range(0, columnsLen):
 
-            if i == 0:
-                nameList.append(columns[j].name)
+#             if i == 0:
+#                 nameList.append(columns[j].name)
   
-            eachColumn = columns[j].text
-            columnList.append(eachColumn)
-        rowList.append(columnList)
-        columnList = []    
+#             eachColumn = columns[j].text
+#             columnList.append(eachColumn)
+#         rowList.append(columnList)
+#         columnList = []    
 
-    result = pd.DataFrame(rowList, columns=nameList)
-    print(result)
+#     result = pd.DataFrame(rowList, columns=nameList)
+#     print(result)
 
-    for i in range(int(pSize)):
-        columns = rows[i].find_all()
-        BIZPLC_NM = columns[2].text             # 사업장명
-        SIGUN_NM = columns[1].text              # 시군명
-        BSN_STATE_NM = True                     # 영업상태명
-        REFINE_ROADNM_ADDR = columns[15].text   # 소재지도로명주소
-        REFINE_WGS84_LAT = columns[18].text     # WGS위도
-        if columns[18].text == "":
-            REFINE_WGS84_LAT = 0.0
-        REFINE_WGS84_LOGT = columns[17].text    # WGS경도
-        if columns[17].text == "":
-            REFINE_WGS84_LOGT = 0.0
-        hotel_rate = 0.0
-        hotel_comment = "설명이 없습니다."
+#     for i in range(int(pSize)):
+#         columns = rows[i].find_all()
+#         BIZPLC_NM = columns[2].text             # 사업장명
+#         SIGUN_NM = columns[1].text              # 시군명
+#         BSN_STATE_NM = True                     # 영업상태명
+#         REFINE_ROADNM_ADDR = columns[15].text   # 소재지도로명주소
+#         REFINE_WGS84_LAT = columns[18].text     # WGS위도
+#         if columns[18].text == "":
+#             REFINE_WGS84_LAT = 0.0
+#         REFINE_WGS84_LOGT = columns[17].text    # WGS경도
+#         if columns[17].text == "":
+#             REFINE_WGS84_LOGT = 0.0
+#         hotel_rate = 0.0
+#         hotel_comment = "설명이 없습니다."
 
-        hotel_admin_id = User.objects.get(pk=1)
+#         hotel_admin_id = User.objects.get(pk=1)
 
-        hotel = Hotel(
-            BIZPLC_NM = BIZPLC_NM, 
-            SIGUN_NM = SIGUN_NM, 
-            BSN_STATE_NM = BSN_STATE_NM, 
-            REFINE_ROADNM_ADDR = REFINE_ROADNM_ADDR, 
-            REFINE_WGS84_LAT = REFINE_WGS84_LAT, 
-            REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
-            hotel_comment = hotel_comment,
-            hotel_rate = hotel_rate,
-            hotel_admin_id = hotel_admin_id,
-            )
+#         hotel = Hotel(
+#             BIZPLC_NM = BIZPLC_NM, 
+#             SIGUN_NM = SIGUN_NM, 
+#             BSN_STATE_NM = BSN_STATE_NM, 
+#             REFINE_ROADNM_ADDR = REFINE_ROADNM_ADDR, 
+#             REFINE_WGS84_LAT = REFINE_WGS84_LAT, 
+#             REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
+#             hotel_comment = hotel_comment,
+#             hotel_rate = hotel_rate,
+#             hotel_admin_id = hotel_admin_id,
+#             )
         
-        hotel.save()
+#         hotel.save()
 
-    # user_id = 'user1'
-    # user_password = '1234'
-    # user_type = '1'
-    # user_email = 'test@email.com'
-    # user_phonenum = '010-1234-5678'
+#     # user_id = 'user1'
+#     # user_password = '1234'
+#     # user_type = '1'
+#     # user_email = 'test@email.com'
+#     # user_phonenum = '010-1234-5678'
 
-    # user = User(user_id = user_id, user_password = user_password, user_type = user_type, user_email = user_email, user_phonenum = user_phonenum)
-    # user.save()   테스트 유저 확보 
+#     # user = User(user_id = user_id, user_password = user_password, user_type = user_type, user_email = user_email, user_phonenum = user_phonenum)
+#     # user.save() #테스트 유저 확보
 
-    return render(request, 'api.html')
+#     return render(request, 'api.html')
 
-def api2(request):
+# def api2(request):
 
-    KEY = unquote("db11faf6254746fbb71311dedf6cdb3d")
-    url = "https://openapi.gg.go.kr/CTST"
-    Type = "xml"
-    pSize = "481"
-    pindex = "1"  # 일단 수동으로 넣어줬습니다.
+#     KEY = unquote("db11faf6254746fbb71311dedf6cdb3d")
+#     url = "https://openapi.gg.go.kr/CTST"
+#     Type = "xml"
+#     pSize = "481"
+#     pindex = "1"  # 일단 수동으로 넣어줬습니다.
 
-    queryParmas = '?' + urlencode({ 
-        quote_plus('KEY') : KEY,
-        quote_plus('Type') : Type,
-        quote_plus('pindex') : pindex,
-        quote_plus('pSize') : pSize
-    })
+#     queryParmas = '?' + urlencode({ 
+#         quote_plus('KEY') : KEY,
+#         quote_plus('Type') : Type,
+#         quote_plus('pindex') : pindex,
+#         quote_plus('pSize') : pSize
+#     })
     
-    res = requests.get(url + queryParmas).text.encode('utf-8')
-    xmlobj = bs4.BeautifulSoup(res, 'lxml-xml')
-    rows = xmlobj.findAll('row')
+#     res = requests.get(url + queryParmas).text.encode('utf-8')
+#     xmlobj = bs4.BeautifulSoup(res, 'lxml-xml')
+#     rows = xmlobj.findAll('row')
 
-    for i in range(int(pSize)):
-        columns = rows[i].find_all()
-        SIGUN_NM = columns[0].text
-        TURSM_INFO_NM = columns[1].text
-        SM_RE_ADDR = columns[2].text
-        TELNO = columns[3].text
-        REFINE_WGS84_LAT = columns[5].text
-        if columns[5].text == "":
-            REFINE_WGS84_LAT = 0.0
-        REFINE_WGS84_LOGT = columns[6].text
-        if columns[6].text == "":
-            REFINE_WGS84_LOGT = 0.0
-        vacation_comment = "설명이 없습니다."
-        vacation_price = 100000
-        vacation_rate = 0.0
+#     for i in range(int(pSize)):
+#         columns = rows[i].find_all()
+#         SIGUN_NM = columns[0].text
+#         TURSM_INFO_NM = columns[1].text
+#         SM_RE_ADDR = columns[2].text
+#         TELNO = columns[3].text
+#         REFINE_WGS84_LAT = columns[5].text
+#         if columns[5].text == "":
+#             REFINE_WGS84_LAT = 0.0
+#         REFINE_WGS84_LOGT = columns[6].text
+#         if columns[6].text == "":
+#             REFINE_WGS84_LOGT = 0.0
+#         vacation_comment = "설명이 없습니다."
+#         vacation_price = 100000
+#         vacation_rate = 0.0
 
-        vacation_admin_id = User.objects.get(pk=1)
+#         vacation_admin_id = User.objects.get(pk=1)
 
-        vacation = Vacation(
-            SIGUN_NM = SIGUN_NM,
-            TURSM_INFO_NM = TURSM_INFO_NM,
-            SM_RE_ADDR = SM_RE_ADDR,
-            TELNO = TELNO,
-            REFINE_WGS84_LAT = REFINE_WGS84_LAT,
-            REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
-            vacation_comment = vacation_comment,
-            vacation_price = vacation_price,
-            vacation_rate = vacation_rate,
-            vacation_admin_id = vacation_admin_id
-        )
+#         vacation = Vacation(
+#             SIGUN_NM = SIGUN_NM,
+#             TURSM_INFO_NM = TURSM_INFO_NM,
+#             SM_RE_ADDR = SM_RE_ADDR,
+#             TELNO = TELNO,
+#             REFINE_WGS84_LAT = REFINE_WGS84_LAT,
+#             REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
+#             vacation_comment = vacation_comment,
+#             vacation_price = vacation_price,
+#             vacation_rate = vacation_rate,
+#             vacation_admin_id = vacation_admin_id
+#         )
 
-        vacation.save()
+#         vacation.save()
 
-    return render(request, 'api2.html')
+#     return render(request, 'api2.html')

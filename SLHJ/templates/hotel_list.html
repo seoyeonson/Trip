@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block contents %}
 <!DOCTYPE html>
 <html>
 <!-- {% block title %}검색{% endblock %} -->
-    <div id="list_search">
+    <div id="list_search">      <!-- 검색 창 -->
         <select class="list_pl_search" >
             <option value="suwon"><i class="fas fa-map-marker-alt" class="map"></i>수원</option>
             <option value="siheong">시흥</option>
@@ -22,13 +24,15 @@
         <input type="submit" class="search_submit" value="검색">
     </div>
     
+    <!-- 우측 지도 -->
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3177.5135141850706!2d127.00561820000001!3d37.211782899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8f20f378e26bc085!2zMzfCsDEyJzQyLjQiTiAxMjfCsDAwJzIwLjIiRQ!5e0!3m2!1sko!2skr!4v1648603766418!5m2!1sko!2skr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="list_gps_map"></iframe>
+    <!-- 좌측 list -->
     <div class="table_list_1" id="table_list_1" style="display:block"> <!--첫번째 페이지 -->
-        <div class="table_list" >
+        <a href = "#" onclick ="list_gps_subit()" id="table_list"><div class="table_list" >
                 <div class="list1">
                 </div>
             <div class="hotel_image_1"></div>
-            <li class="hotel_name_1"> 그랜드 하잇트 호텔11111</li>
+            <a href= "{% url 'hotel_detail' %}"><li class="hotel_name_1"> 그랜드 하잇트 호텔11111</li></a>
             <li class="hotel_add_1"> 서울 용산구 소월로 111 </li>
             <div class="list_rating_1">
                 <i class="fas fa-star"></i>
@@ -38,7 +42,7 @@
                 <i class="fas fa-star"></i>
             </div>
             <li class="hotel_pay_1">270,000원</li>
-        </div> 
+        </div> </a>
         <div class="table_list">
             <div class="list2"></div>
             <div class="hotel_image_2"></div>
@@ -394,6 +398,7 @@
 
 
     </div>
+    <!-- 리스트 밑의 번호 -->
         <div class="list_page_num" id="list_page_num">
             <ul class="d-flex">
                 <a href="#" onclick="list_before_page()">
