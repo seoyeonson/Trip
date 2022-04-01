@@ -4,7 +4,7 @@ from lxml import html
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode, quote_plus, unquote
 from django.shortcuts import render, redirect
-from SLHJ.models import User, Vacation
+from SLHJ.models import User, Vacation, Vacation_reserve, Vacation_review, Vacation_image
 from SLHJ.models import Hotel
 
 
@@ -62,6 +62,55 @@ def history_hotel(request):
 
 def history_vacation(request):
     return render(request, 'history_vacation.html')
+
+def sample(request):  # vacation_review 데이터 입력포맷입니다.
+
+    vacation_review_content = 'sample데이터입니다.'
+    vacation_review_rate = 5.0
+    
+    id = User.objects.get(pk=1)
+    vacation_id = Vacation.objects.get(pk=1)
+
+    vacation_review = Vacation_review(
+        vacation_review_content = vacation_review_content,
+        vacation_review_rate = vacation_review_rate,
+        id = id,
+        vacation_id = vacation_id
+    )
+    vacation_review.save()
+
+
+    all_cnt = Vacation_review.objects.filter(vacation_id_id = 1).count()
+    vacation_id.vacation_rate = (vacation_id.vacation_rate * (all_cnt-1) + vacation_review_rate) / all_cnt
+    vacation_id.save()
+
+    return render(request, 'sample.html')
+
+def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
+
+    vacation_reserve_people = 2
+    vacation_reserve_date = '2022-04-01'
+    vacation_reserve_username = '이광우'
+    vacation_reserve_phonenum = '010-1234-5678'
+    vacation_reserve_price = 100000
+
+    id = User.objects.get(pk=1)
+    vacation_id = Vacation.objects.get(pk=1)
+
+    vacation_reserve = Vacation_reserve(
+        vacation_reserve_people = vacation_reserve_people,
+        vacation_reserve_date = vacation_reserve_date,
+        vacation_reserve_username = vacation_reserve_username,
+        vacation_reserve_phonenum = vacation_reserve_phonenum,
+        vacation_reserve_price = vacation_reserve_price,
+        id = id,
+        vacation_id = vacation_id
+    )
+
+    vacation_reserve.save()
+
+    return render(request, 'sample2.html')
+
 
 # def api(request):
 
@@ -148,54 +197,54 @@ def history_vacation(request):
 
 # def api2(request):
 
-#     KEY = unquote("db11faf6254746fbb71311dedf6cdb3d")
-#     url = "https://openapi.gg.go.kr/CTST"
-#     Type = "xml"
-#     pSize = "481"
-#     pindex = "1"  # 일단 수동으로 넣어줬습니다.
+    # KEY = unquote("db11faf6254746fbb71311dedf6cdb3d")
+    # url = "https://openapi.gg.go.kr/CTST"
+    # Type = "xml"
+    # pSize = "481"
+    # pindex = "1"  # 일단 수동으로 넣어줬습니다.
 
-#     queryParmas = '?' + urlencode({ 
-#         quote_plus('KEY') : KEY,
-#         quote_plus('Type') : Type,
-#         quote_plus('pindex') : pindex,
-#         quote_plus('pSize') : pSize
-#     })
+    # queryParmas = '?' + urlencode({ 
+    #     quote_plus('KEY') : KEY,
+    #     quote_plus('Type') : Type,
+    #     quote_plus('pindex') : pindex,
+    #     quote_plus('pSize') : pSize
+    # })
     
-#     res = requests.get(url + queryParmas).text.encode('utf-8')
-#     xmlobj = bs4.BeautifulSoup(res, 'lxml-xml')
-#     rows = xmlobj.findAll('row')
+    # res = requests.get(url + queryParmas).text.encode('utf-8')
+    # xmlobj = bs4.BeautifulSoup(res, 'lxml-xml')
+    # rows = xmlobj.findAll('row')
 
-#     for i in range(int(pSize)):
-#         columns = rows[i].find_all()
-#         SIGUN_NM = columns[0].text
-#         TURSM_INFO_NM = columns[1].text
-#         SM_RE_ADDR = columns[2].text
-#         TELNO = columns[3].text
-#         REFINE_WGS84_LAT = columns[5].text
-#         if columns[5].text == "":
-#             REFINE_WGS84_LAT = 0.0
-#         REFINE_WGS84_LOGT = columns[6].text
-#         if columns[6].text == "":
-#             REFINE_WGS84_LOGT = 0.0
-#         vacation_comment = "설명이 없습니다."
-#         vacation_price = 100000
-#         vacation_rate = 0.0
+    # for i in range(int(pSize)):
+    #     columns = rows[i].find_all()
+    #     SIGUN_NM = columns[0].text
+    #     TURSM_INFO_NM = columns[1].text
+    #     SM_RE_ADDR = columns[2].text
+    #     TELNO = columns[3].text
+    #     REFINE_WGS84_LAT = columns[5].text
+    #     if columns[5].text == "":
+    #         REFINE_WGS84_LAT = 0.0
+    #     REFINE_WGS84_LOGT = columns[6].text
+    #     if columns[6].text == "":
+    #         REFINE_WGS84_LOGT = 0.0
+    #     vacation_comment = "설명이 없습니다."
+    #     vacation_price = 100000
+    #     vacation_rate = 0.0
 
-#         vacation_admin_id = User.objects.get(pk=1)
+    #     vacation_admin_id = User.objects.get(pk=1)
 
-#         vacation = Vacation(
-#             SIGUN_NM = SIGUN_NM,
-#             TURSM_INFO_NM = TURSM_INFO_NM,
-#             SM_RE_ADDR = SM_RE_ADDR,
-#             TELNO = TELNO,
-#             REFINE_WGS84_LAT = REFINE_WGS84_LAT,
-#             REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
-#             vacation_comment = vacation_comment,
-#             vacation_price = vacation_price,
-#             vacation_rate = vacation_rate,
-#             vacation_admin_id = vacation_admin_id
-#         )
+    #     vacation = Vacation(
+    #         SIGUN_NM = SIGUN_NM,
+    #         TURSM_INFO_NM = TURSM_INFO_NM,
+    #         SM_RE_ADDR = SM_RE_ADDR,
+    #         TELNO = TELNO,
+    #         REFINE_WGS84_LAT = REFINE_WGS84_LAT,
+    #         REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
+    #         vacation_comment = vacation_comment,
+    #         vacation_price = vacation_price,
+    #         vacation_rate = vacation_rate,
+    #         vacation_admin_id = vacation_admin_id
+    #     )
 
-#         vacation.save()
+    #     vacation.save()
 
-#     return render(request, 'api2.html')
+    # return render(request, 'api2.html')
