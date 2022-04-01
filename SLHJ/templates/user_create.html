@@ -1,40 +1,45 @@
 {% extends "base.html"%}
+{% load static %}
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_create.css' %}" rel="stylesheet">
+{% endblock %}
 {% block contents %}
-<div class="join d-flex flex-column">
+<div class="container d-flex flex-column join">
   <h1 class="mb-4"><a href="#">Trip</a></h1>
-  <form action="#">
+  <form action="" class="col-lg-4">
     <div class="form-group">
-        <label for="memberNm">이름</label>
+        <label for="memberNm" class="mb-1">이름</label>
         <input type="text" class="form-control" id="memberNm" name="memberNm">
         <p id="errorMsgNm" class="errorMsg"></p>
     </div>
     <div class="form-group">
-      <label for="id">아이디</label>
+      <label for="id" class="mb-1">아이디</label>
       <input type="text" class="form-control" id="id" name="id">
       <p id="errorMsgId" class="errorMsg"></p>
     </div>
     <div class="form-group">
-      <label for="pw">비밀번호</label>
+      <label for="pw" class="mb-1">비밀번호</label>
       <input type="password" class="form-control" id="pw" name="pw">
       <p id="errorMsgPw" class="errorMsg"></p>
     </div>
     <div class="form-group">
-      <label for="pwCheck">비밀번호 재확인</label>
+      <label for="pwCheck" class="mb-1">비밀번호 재확인</label>
       <input type="password" class="form-control" id="pwCheck" name="pwCheck">
       <p id="errorMsgPwCheck" class="errorMsg"></p>
     </div>
     <div class="form-group">
-      <label for="memberEmail">전화번호</label>
-      <input type="text" class="form-control" id="memberphonenum" name="phonenum">
+      <label for="phonenum" class="mb-1">전화번호</label>
+      <input type="text" class="form-control" id="phonenum" name="phonenum">
       <p id="errorMsgPhonenum" class="errorMsg"></p>
     </div>
     <div class="form-group">
-      <label for="memberEmail">이메일</label>
-      <input type="text" class="form-control" id="memberEmail" name="email">
+      <label for="email" class="mb-1">이메일</label>
+      <input type="text" class="form-control" id="email" name="email">
       <p id="errorMsgEmail" class="errorMsg"></p>
     </div>
     
-    <input type="submit" class="btn btn-primary mt-3" id="joinCheck" value="가입하기">
+    <input type="submit" class="btn col-12 mt-3" id="joinCheck" value="가입하기">
   </form>
 </div>
 {% endblock %}

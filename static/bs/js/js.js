@@ -122,6 +122,12 @@ function list_next_page(){
 } 
 
 $(document).ready(function() {
+    // 회원가입 pattern
+    var emailPat = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    var phonePat = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+    var idPat = /[a-zA-Z0-9_-]{5,20}/;
+    var pwPat = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
+
     $("#hotel_lo_select1").click(function() {
         $("#lo_text").html("서울");
     });
@@ -146,4 +152,111 @@ $(document).ready(function() {
         $("#chk_in").html(start_day);
         $("#chk_out").html(end_day);
     });
+
+    // 로그인 체크
+    $('#logInCheck').click(function(){
+        console.log("들어옴");
+        var id = $('[name="id"]').val().trim();
+        var pw = $('[name="pw"]').val().trim();
+        
+        // 아이디 체크
+        if(id == ""){
+            $('[name="id"]').focus();
+            return false;
+        }
+        // 비밀번호 체크
+        if(pw == ""){
+            $('[name="pw"]').focus();
+            return false;
+        } 
+        return true;
+    });
+
+    // 회원가입 체크
+    $('#joinCheck').click(function(){
+        var id = $('[name="id"]').val().trim();
+        var pw = $('[name="pw"]').val().trim();
+        var pwCheck = $('[name="pwCheck"]').val().trim();
+        var memberNm = $('[name="memberNm"]').val().trim();
+        var phonenum = $('[name="phonenum"]').val().trim();
+        var email = $('[name="email"]').val().trim();
+        
+        // 이름 체크
+        if(memberNm == ""){
+            $("#errorMsgNm").html("이름을 입력하세요.");
+            $('[name="memberNm"]').focus();
+            return false;
+        }else{
+            $("#errorMsgNm").html("");
+        }
+
+        // 아이디 체크
+        if(id == ""){
+            $("#errorMsgId").html("아이디를 입력하세요.");
+            $('[name="id"]').focus();
+            return false;
+        }else if(!idPat.test(id)){
+            $("#errorMsgId").html("5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.");
+            $('[name="id"]').focus();
+            return false;
+        }else{
+            $("#errorMsgId").html("");
+        }
+
+        // 비밀번호 체크
+        if(pw == ""){
+            $("#errorMsgPw").html("비밀번호를 입력하세요.");
+            $('[name="pw"]').focus();
+            return false;
+        }else if(!pwPat.test(pw)){
+            $("#errorMsgPw").html("8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
+            $('[name="pw"]').focus();
+            return false;
+        }else{
+            $("#errorMsgPw").html("");
+        }
+
+        // 비밀번호 재확인
+        if(pwCheck == ""){
+            $("#errorMsgPwCheck").html("비밀번호를 확인해주세요.");
+            $('[name="pwCheck"]').focus();
+            return false;
+        }else if(pw != pwCheck){
+            $("#errorMsgPwCheck").html("입력하신 비밀번호와 맞지 않습니다.");
+            $('[name="pwCheck"]').focus();
+            return false;
+        }else{
+            $("#errorMsgPwCheck").html("");
+        }
+        
+        // 전화번호 체크
+        if(phonenum == ""){
+            $("#errorMsgPhonenum").html("전화번호를 입력하세요.");
+            $('[name="phonenum"]').focus();
+            return false;
+        }else if(!phonePat.test(phonenum)){
+            $("#errorMsgPhonenum").html("전화번호 형식에 맞게 입력해주세요.");
+            $('[name="phonenum"]').focus();
+            return false;
+        }else{
+            $("#errorMsgPhonenum").html("");
+        }
+
+        // 이메일체크
+        if(email == ""){
+            $("#errorMsgEmail").html("이메일을 입력하세요.");
+            $('[name="email"]').focus();
+            return false;
+        }else if(!emailPat.test(email)){
+            $("#errorMsgEmail").html("이메일 형식에 맞게 입력해주세요.");
+            $('[name="email"]').focus();
+            return false;
+        }else{
+            $("#errorMsgEmail").html("");
+        }
+
+        alert("가입을 완료했습니다!");
+        return true;
+    });
 });
+

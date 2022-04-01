@@ -34,12 +34,6 @@ hr{
     --line-color : #c4c4c4;
 }
 
-.toolbar {
-    align-items: center;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
 .fa-star{
     color: #FFC701;
 }
@@ -48,12 +42,21 @@ hr{
     color: var(--line-color);
 }
 
-/* 공통끝 */
-
-
-.main_contents{
-    padding: 0;
+/* nav */
+.toolbar {
+    background: #FFFFFF;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+.home_tool li{
+    list-style: none;
+    float: left;
+}
+
+.home_tool .menu_right{
+    float: right;
+}
+
 .home_icon {
     margin-right: 20px;
     font-family: 'Poppins';
@@ -64,9 +67,20 @@ hr{
     cursor: pointer;
 }
 
-
 .home_menu {
-    margin: 0 20px 0 20px;
+    padding: 20px 0px;
+    margin: 0 20px;
+}
+
+/* nav 끝 */
+
+
+
+/* 공통끝 */
+
+
+.main_contents{
+    padding: 0;
 }
 
 .main_image {

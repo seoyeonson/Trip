@@ -1,11 +1,13 @@
+from unicodedata import name
 from django.urls import path
 from SLHJ import views
 
 urlpatterns = [
-    path('main/', views.main),
+    path('main/', views.main, name='main'),
     path('list/', views.list),
     path('list2/', views.list2),
     path('login/', views.login),
+    path('login/', views.login, name='login'),
     path('user_create/', views.user_create),
     path('hotel_reserve/', views.hotel_reserve),
     path('vacation_reserve/', views.vacation_reserve),
@@ -28,5 +30,9 @@ urlpatterns = [
 #     path('api/', views.api, name='api'),
 #     path('api2/', views.api2, name='api2')
 
+    # path('api/', views.api, name='api'),
+    # path('api2/', views.api2, name='api2')
+    path('sample/', views.sample, name='sample'),   # vacation_review data 입력포맷
+    path('sample2/', views.sample2, name='sample2') # vacation_reserve data 입력포맷
 
 ]
