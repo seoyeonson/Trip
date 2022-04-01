@@ -155,7 +155,7 @@ class Hotel_review(models.Model):
     hotel_review_date = models.DateField(verbose_name='리뷰등록시간')
 
     id = models.ForeignKey(User, on_delete=models.CASCADE)
-    room_id = models.ForeignKey(Hotel_room, on_delete=models.CASCADE)
+    hotel_id = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=True)
 
     class Meta:
         db_table = 'SLHJ_hotel_review'
@@ -164,6 +164,7 @@ class Hotel_review(models.Model):
 
     def __str__(self):
         return self.hotel_review_id
+
 
 class Hotel_image(models.Model):
     hotel_id = models.OneToOneField(Hotel, primary_key=True, on_delete=models.CASCADE)

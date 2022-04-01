@@ -25,9 +25,13 @@ urlpatterns = [
     path('history_vacation/', views.history_vacation, name='history_vacation'),
 
     #api data용
-#     path('api/', views.api, name='api'),
-#     path('api2/', views.api2, name='api2')
+    # path('api/', views.api, name='api'),
+    # path('api2/', views.api2, name='api2'),
 
-    path('sample/', views.sample, name='sample'),
-    path('sample2/', views.sample2, name='sample2')
+    path('sample/', views.sample, name='sample'),       # vacation_reveiew 포맷입니다.
+    path('sample2/', views.sample2, name='sample2'),    # vacation_reserve 포맷입니다.
+    path('sample3/', views.sample3, name='sample3'),    # hotel_room 포맷입니다.
+    path('sample4/', views.sample4, name='sample4'),    # hotel_reserve 포맷입니다.
+    path('sample5/', views.sample5, name='sample5'),    # hotel_review 포맷입니다.
+    
 ]
