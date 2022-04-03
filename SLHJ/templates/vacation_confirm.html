@@ -10,18 +10,18 @@
     <h3 class="title">예약완료</h3>
     <div class="confirm_contents">
         <ul class="confirm_list">
-            <li><label class="index">예약자 이름</label><label class="info">{##}김**</label></li>
-            <li><label class="index">휴대폰 번호</label><label class="info">{##}010-1234-1234</label></li>
-            <li><label class="index">예약번호</label><label class="info">{##}0023</label></li>
-            <li><label class="index">여행지 이름</label><label class="info">{##}한국민속촌</label></li>
-            <li><label class="index">이용날짜 / 시간</label><label class="info">{##}2022.04.30 / {# #}13:00</label></li>
-            <li><label class="index">인원 및 수량</label><label class="info">{##}2인</label></li>
+            <li><label class="index">예약자 이름</label><label class="info">{{ reserve_info.vacation_reserve_username }}</label></li>
+            <li><label class="index">휴대폰 번호</label><label class="info">{{ reserve_info.vacation_reserve_phonenum }}</label></li>
+            <li><label class="index">예약번호</label><label class="info">{{ reserve_info.vacation_reserve_id}}</label></li>
+            <li><label class="index">여행지 이름</label><label class="info">{{ place }}</label></li>
+            <li><label class="index">이용날짜</label><label class="info">{{ reserve_info.vacation_reserve_date }}</label></li>
+            <li><label class="index">인원 및 수량</label><label class="info">{{ reserve_info.vacation_reserve_people }}</label></li>
         </ul>
 
         <hr>
         <br>
         <h4 class="sum">결제금액</h4>
-        <h4 class="sum important">{##}76,000원</h4>
+        <h4 class="sum important">{{ price }}원</h4>
         <br>
         <a type="button" id="to_mypage" href="{% url 'history_vacation' %}">마이페이지에서 확인하기</a>
 
