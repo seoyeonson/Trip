@@ -2,10 +2,9 @@
 {% load static %}
 
 {% block contents %}
-<!DOCTYPE html>
-<html>
 <!-- {% block title %}검색{% endblock %} -->
-    <div id="list_search">      <!-- 검색 창 -->
+<div style="width: 100%; margin-top: 120px;">
+    <div id="list_search" style="width: 50%; margin: 0 auto;">      <!-- 검색 창 -->
         <select class="list_pl_search" >
             <option value="suwon"><i class="fas fa-map-marker-alt" class="map"></i>수원</option>
             <option value="siheong">시흥</option>
@@ -27,71 +26,74 @@
     <!-- 우측 지도 -->
     <div id="googleMap" class="list_gps_map"></div>
     <!-- 좌측 list -->
-    <div class="left_list" style="left: 38px; top:230px;">
-    {% if lists %}
+    <div class="left_list">
+        {% if lists %}
             {% for hotel in lists %}
            
             <div class="table_list">
                 <a href = "#" onclick ="list_gps_subit()" id="table_list">
-                <div class="list_content">                
-                <div class="list_hotel_image"></div>
-                <a href= "#"><li class="list_hotel_name"> {{ hotel.BIZPLC_NM }}</li></a>
-                <li class="list_hotel_add"> {{ hotel.REFINE_ROADNM_ADDR }} </li>
-                <div class="list_rating">
-                    {% for i in "x"|rjust:"5" %}
-                        {% if hotel.hotel_rate >= forloop.counter %}
-                        <i class="fas fa-star"></i>
-                        {% else %}
-                        <i class="fas fa-star no_star"></i>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <li class="hotel_pay">{{ hotel_room.room_price }}</li>
+                    <div class="list_content">                
+                        <div class="list_hotel_image"></div>
+                        <div>
+                            <ul style="list-style: none; text-align: left;">
+                                <li class="list_hotel_name"> <a href= "#">{{ hotel.BIZPLC_NM }}</a></li>
+                                <li class="list_hotel_add"> {{ hotel.REFINE_ROADNM_ADDR }} </li>
+                                <li>
+                                    <div class="list_rating">
+                                        {% for i in "x"|rjust:"5" %}
+                                            {% if hotel.hotel_rate >= forloop.counter %}
+                                            <i class="fas fa-star"></i>
+                                            {% else %}
+                                            <i class="fas fa-star no_star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </li>
+                                <li class="hotel_pay">{{ hotel_room.room_price }}</li>
+                            </ul>
+                        </div>
+                    </div>
                 </a>
-                </div>
             </div>
             <p></p>
             {% endfor %}    
-    {% endif %}    
+        {% endif %} 
 
+        <!-- 리스트 밑의 번호 -->
+        <div class="pagination" >
+            <ul class="pagination justify-content-center">
+                {# << 표시 여부 #} 
+                {% if lists.number > 1 %}       
+                <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
+                {% endif %}
 
+                {# < 표시 여부 #}
+                {% if start_page > 1%}
+                <li class="page-item"><a class="page-link" href="?page={{ lists.previous_page_number }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
+                {% endif %}
 
-    <!-- 리스트 밑의 번호 -->
-    <div class="pagination" >
-        <ul class="pagination justify-content-center">
-            {# << 표시 여부 #} 
-            {% if lists.number > 1 %}       
-            <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
-            {% endif %}
+                {# 페이징 안의 '숫자' 표시 #}
+                {% if lists.paginator.num_pages > 1 %}
+                    {% for p in page_range %}
+                        {% if lists.number != p %}
+                        <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                        {% else %}
+                        <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
 
-            {# < 표시 여부 #}
-            {% if start_page > 1%}
-            <li class="page-item"><a class="page-link" href="?page={{ lists.previous_page_number }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
-            {% endif %}
-
-            {# 페이징 안의 '숫자' 표시 #}
-            {% if lists.paginator.num_pages > 1 %}
-                {% for p in page_range %}
-                    {% if lists.number != p %}
-                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                    {% else %}
-                    <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-
-            {# > 표시 #}
-            {% if lists.paginator.num_pages > end_page %}
-            <li class="page-item"><a class="page-link" href="?page={{ lists.next_page_number }}" title="다음"><i class='fas fa-angle-right'></i></a></li>
-            {% endif %}
-        
-            {# >> 표시 #}
-            {% if lists.number < lists.paginator.num_pages %}
-            <li class="page-item"><a class="page-link" href="?page={{ end_page }}" title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
-            {% endif %}
-        </ul>
+                {# > 표시 #}
+                {% if lists.paginator.num_pages > end_page %}
+                <li class="page-item"><a class="page-link" href="?page={{ lists.next_page_number }}" title="다음"><i class='fas fa-angle-right'></i></a></li>
+                {% endif %}
+            
+                {# >> 표시 #}
+                {% if lists.number < lists.paginator.num_pages %}
+                <li class="page-item"><a class="page-link" href="?page={{ end_page }}" title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-
-       
-    </header>
+</div>
 {% endblock %}

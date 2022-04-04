@@ -135,11 +135,11 @@ hr{
 /* list */
 
 .list_pl_search{
-    position: absolute;
+    /* position: absolute; */
     width: 189px;
     height: 64px;
-    left: 280px;
-    top: 114px;
+    /* left: 280px;
+    top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;
@@ -147,33 +147,33 @@ hr{
 }
 
 .list_stdate_search{
-    position: absolute;
+    /* position: absolute; */
     width: 344px;
     height: 64px;
-    left: 474px;
-    top: 114px;
+    /* left: 474px;
+    top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;  
 }
 
 .list_peonum_search{
-    position: absolute;
+    /* position: absolute; */
     width: 193px;
     height: 64px;
-    left: 823px;
-    top: 114px;
+    /* left: 823px;
+    top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;  
 }
 
 .search_submit {
-    position: absolute;
+    /* position: absolute; */
     width: 135px;
     height: 64px;
-    left: 1026px;
-    top: 114px;
+    /* left: 1026px;
+    top: 114px; */
 
     background-color:#FF6B00;
     color:#FFFFFF;
@@ -232,7 +232,8 @@ top: 222px;
     font-size:26px;
     color: #FFC701;
     height: 26px;
-    
+}
+
 .list1{
     position: absolute;
     width: 651px;
