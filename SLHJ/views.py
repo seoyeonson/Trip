@@ -6,9 +6,14 @@ from urllib.request import Request, urlopen
 from urllib.parse import urlencode, quote_plus, unquote
 from django.shortcuts import render, redirect
 from SLHJ.models import User, Vacation, Vacation_reserve, Vacation_review, Vacation_image
-from SLHJ.models import Hotel, Hotel_room, Hotel_review, Hotel_reserve
+from SLHJ.models import Hotel, Hotel_room, Hotel_review, Hotel_reserve, Hotel_image
 import datetime
 from django.core.paginator import Paginator
+import os
+import mimetypes
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.http import FileResponse
 
 
 def main(request):
@@ -405,6 +410,25 @@ def sample5(request):       # hotel_review 포맷입니다.
     hotel_id.save()
 
     return render(request, 'sample5.html')
+
+def sample6(request):   # hotel_image 포맷입니다.  vacation_image 는 hotel => vacation 으로 바꾸기만 하면됩니다.
+    if request.method == "POST":
+        hotel_id = Hotel.objects.get(pk=4)      # 어떤 호텔의 사진인지 가져와야 합니다. ex) pk = pk
+        hotel_image_title = request.POST['fileTitle']
+        hotel_image_file_path = request.FILES["uploadedFile"]
+
+        document = Hotel_image(
+            hotel_id = hotel_id,
+            hotel_image_title = hotel_image_title,
+            hotel_image_file_path = hotel_image_file_path,
+            hotel_image_originname = hotel_image_file_path.name,
+        )
+        document.save()
+    
+    documents = Hotel_image.objects.all().order_by("-pk")
+
+    return render(request, 'sample6.html', {"sample6s" : documents})
+
 
 # def api(request):
 
