@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from SLHJ.models import User, Vacation, Vacation_reserve, Vacation_review, Vacation_image
 from SLHJ.models import Hotel, Hotel_room, Hotel_review, Hotel_reserve
 import datetime
+from django.core.paginator import Paginator
 
 
 def main(request):
@@ -29,20 +30,104 @@ def vacation_reserve(request):
     return render(request, 'vacation_reserve.html')
 
 def hotel_detail(request, pk):
+    count = {}
+    # ##### hotel_detail
     try:
         hotel = Hotel.objects.get(pk=pk)
     except Hotel.DoesNotExist:
         raise Http404('게시글을 찾을수 없습니다')
 
-    return render(request, 'hotel_detail.html', {'hotel': hotel})
+    # ##### hotel_review
+    # hotel_id 가 pk인 hotel_review 를 가져옴
+    all_hotel_reviews = Hotel_review.objects.filter(hotel_id=pk)
+
+    # 리뷰별 평점점수 (1~5점) count
+    for i in range(5):
+        # (크거나 작은 값) orm 사용
+        # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
+        count.update({i+1 : all_hotel_reviews.filter(hotel_review_rate__gt=i).filter(hotel_review_rate__lte=i+1).count()})
+
+    # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+    write_pages = int(request.session.get('write_pages', 5))
+    # 한 페이지에 보일 리뷰 개수
+    per_page = int(request.session.get('per_page', 5))
+    # 현재 페이지
+    page = int(request.GET.get('page', 1))
+
+    # 한 페이지당 5개씩 보여주는 Paginator 생성
+    paginator = Paginator(all_hotel_reviews, per_page)
+    # 페이지에 대한 정보
+    page_obj = paginator.get_page(page)
+
+    start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages - 1
+
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+
+    # ##### recommand_vacation
+    # 같은 지역,vacation_rate 가 높은 순으로 4개 가져오기
+    recommand_vacations = Vacation.objects.filter(SIGUN_NM = hotel.SIGUN_NM).order_by('-vacation_rate')[:4]
+
+    context = {
+        'hotel': hotel,
+        'reviews': page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page + 1),
+        'recommand_vacations' : recommand_vacations,
+        'count' : count,
+    }
+    return render(request, 'hotel_detail.html', context)
     
 def vacation_detail(request, pk):
+    count = {}
     try:
         vacation = Vacation.objects.get(pk=pk)
     except Vacation.DoesNotExist:
         raise Http404('게시글을 찾을수 없습니다')
+
+    # ##### vacation_review
+    # vacation_id 가 pk인 vacation_review 를 가져옴
+    all_vacation_reviews = Vacation_review.objects.filter(vacation_id=pk)
+
+    # 리뷰별 평점점수 (1~5점) count
+    for i in range(5):
+        count.update({i+1 : all_vacation_reviews.filter(vacation_review_rate__gt=i).filter(vacation_review_rate__lte=i+1).count()})
+
+    # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+    write_pages = int(request.session.get('write_pages', 5))
+    # 한 페이지에 보일 리뷰 개수
+    per_page = int(request.session.get('per_page', 5))
+    # 현재 페이지
+    page = int(request.GET.get('page', 1))
+
+    # 한 페이지당 5개씩 보여주는 Paginator 생성
+    paginator = Paginator(all_vacation_reviews, per_page)
+    # 페이지에 대한 정보
+    page_obj = paginator.get_page(page)
+
+    start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages - 1
+
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+
+    # ##### recommand_hotel
+    # 같은 지역, hotel_rate 가 높은 순으로 4개 가져오기
+    recommand_hotels = Hotel.objects.filter(SIGUN_NM=vacation.SIGUN_NM).order_by('-hotel_rate')[:4]
+
+    context = {
+        'vacation': vacation,
+        'reviews': page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page + 1),
+        'recommand_hotels' : recommand_hotels,
+        'count' : count,
+    }
         
-    return render(request, 'vacation_detail.html', {'vacation' : vacation})
+    return render(request, 'vacation_detail.html', context)
     
 def login(request):
     return render(request, 'login.html')
