@@ -49,7 +49,14 @@
                                         {% endfor %}
                                     </div>
                                 </li>
-                                <li class="hotel_pay">{{ hotel_room.room_price }}</li>
+                                <br>
+                                <li class="hotel_pay">
+                                    {% for hotel_room in hotel_rooms %}
+                                        {% if hotel_room.hotel_id_id == hotel.hotel_id %}    
+                                            {{ hotel_room.room_price }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </li>
                             </ul>
                         </div>
                     </div>
