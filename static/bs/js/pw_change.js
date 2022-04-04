@@ -1,6 +1,5 @@
 $(document).ready(function(){
-    $('.update_btn').on('click',check_form)
-
+    $('.update_btn').off().on('click',check_form);
 });
 
 function check_form(){
