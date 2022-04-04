@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from SLHJ.models import User, Vacation, Vacation_reserve, Vacation_review, Vacation_image
 from SLHJ.models import Hotel, Hotel_room, Hotel_review, Hotel_reserve
 import datetime
+from django.core.paginator import Paginator
 
 
 def main(request):
@@ -23,26 +24,196 @@ def user_create(request):
     return render(request, 'user_create.html')
 
 def hotel_reserve(request):
-    return render(request, 'hotel_reserve.html')
+    # 세션에 저장된 예약 정보들 (hotel_detail 에서 선택한 옵션들) 받아옵니다. *추후 기본값 수정 필요*
+    hotel_name = request.session.get('hotel_name', Hotel.objects.get(hotel_id=1).BIZPLC_NM)
+    hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
+    hotel_reserve_startdate = request.session.get('hotel_reserve_startdate', '2022-04-01')
+    hotel_reserve_enddate = request.session.get('hotel_reserve_enddate', '2022-04-02')
+    start_date = datetime.datetime.strptime(hotel_reserve_startdate, '%Y-%m-%d').date()
+    end_date = datetime.datetime.strptime(hotel_reserve_enddate, '%Y-%m-%d').date()
+
+    hotel_room_pk = request.session.get('hotel_room_pk',1) #detail에서, 선택한 객실의 pk. 
+    hotel_room = Hotel_room.objects.get(pk=hotel_room_pk)       # 방의 번호 hotel_room_id 를 사용합니다.
+    night = (end_date - start_date).days
+    hotel_reserve_price = hotel_room.room_price * night  # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
+    if request.method=="GET":
+        context = {
+            'hotel_name': hotel_name,
+            'reserve_people': hotel_reserve_people,
+            'reserve_startdate':  hotel_reserve_startdate,
+            'reserve_enddate': hotel_reserve_enddate,
+            'room_type': hotel_room.room_type,
+            'hotel_price': '{0:,}'.format(hotel_reserve_price),
+            'night': night,
+        }
+        return render(request, 'hotel_reserve.html', context)
+    elif request.method=="POST": # 예약정보 테이블에 저장
+
+        # form = request.POST["hotel_reserve"]
+
+
+        hotel_reserve_username = request.POST["reserve_name"]
+        hotel_reserve_phonenum = request.POST["phone_num"]
+
+        id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
+        room_id = hotel_room
+
+        hotel_reserve = Hotel_reserve(
+            hotel_reserve_people = hotel_reserve_people,
+            hotel_reserve_username = hotel_reserve_username,
+            hotel_reserve_phonenum = hotel_reserve_phonenum,
+            hotel_reserve_startdate = hotel_reserve_startdate,
+            hotel_reserve_enddate = hotel_reserve_enddate,
+            hotel_reserve_price = hotel_reserve_price,
+            
+            id = id,
+            room_id = room_id        
+        )
+
+        hotel_reserve.save()
+
+        context={
+            'reserve_info': Hotel_reserve.objects.get(pk=hotel_reserve.hotel_reserve_id)
+            }
+
+        return render(request, 'hotel_confirm.html', context)
 
 def vacation_reserve(request):
-    return render(request, 'vacation_reserve.html')
+    vacation_id = request.session.get('vacation_id', 1)
+    vacation_reserve_people = request.session.get('vacation_reserve_people', 2)
+    vacation_reserve_date = request.session.get('vacation_reserve_date', '2022-04-02')
+    vacation_reserve_price = (Vacation.objects.get(vacation_id=vacation_id).vacation_price) * vacation_reserve_people
+    place_name =  Vacation.objects.get(vacation_id=vacation_id).TURSM_INFO_NM
+    vacation_price = '{0:,}'.format(vacation_reserve_price)
+    if request.method=="GET":
+        context = {
+            'place_name': place_name,
+            'reserve_people': vacation_reserve_people,
+            'reserve_date': vacation_reserve_date,
+            'vacation_price': vacation_price,
+        }
+        return render(request, 'vacation_reserve.html', context)
+
+    elif request.method=="POST":
+        id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
+        vacation_reserve = Vacation_reserve(
+            vacation_reserve_people = vacation_reserve_people,
+            vacation_reserve_date = vacation_reserve_date,
+            vacation_reserve_username = request.POST['reserve_name'],
+            vacation_reserve_phonenum = request.POST['phone_num'],
+            vacation_reserve_price = vacation_reserve_price,
+            id = id,
+            vacation_id_id = vacation_id
+        )
+        vacation_reserve.save()
+        context = {
+            'reserve_info': vacation_reserve, 
+            'place_name': place_name, 
+            'vacation_price': vacation_price,
+            'reserve_username': request.POST['reserve_name'],
+            'reserve_phonenum': request.POST['phone_num'],
+            }
+        return redirect(f'/vacation_confirm/?reserve={vacation_reserve.vacation_reserve_id}')
 
 def hotel_detail(request, pk):
+    count = {}
+    # ##### hotel_detail
     try:
         hotel = Hotel.objects.get(pk=pk)
     except Hotel.DoesNotExist:
         raise Http404('게시글을 찾을수 없습니다')
 
-    return render(request, 'hotel_detail.html', {'hotel': hotel})
+    # ##### hotel_review
+    # hotel_id 가 pk인 hotel_review 를 가져옴
+    all_hotel_reviews = Hotel_review.objects.filter(hotel_id=pk)
+
+    # 리뷰별 평점점수 (1~5점) count
+    for i in range(5):
+        # (크거나 작은 값) orm 사용
+        # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
+        count.update({i+1 : all_hotel_reviews.filter(hotel_review_rate__gt=i).filter(hotel_review_rate__lte=i+1).count()})
+
+    # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+    write_pages = int(request.session.get('write_pages', 5))
+    # 한 페이지에 보일 리뷰 개수
+    per_page = int(request.session.get('per_page', 5))
+    # 현재 페이지
+    page = int(request.GET.get('page', 1))
+
+    # 한 페이지당 5개씩 보여주는 Paginator 생성
+    paginator = Paginator(all_hotel_reviews, per_page)
+    # 페이지에 대한 정보
+    page_obj = paginator.get_page(page)
+
+    start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages - 1
+
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+
+    # ##### recommand_vacation
+    # 같은 지역,vacation_rate 가 높은 순으로 4개 가져오기
+    recommand_vacations = Vacation.objects.filter(SIGUN_NM = hotel.SIGUN_NM).order_by('-vacation_rate')[:4]
+
+    context = {
+        'hotel': hotel,
+        'reviews': page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page + 1),
+        'recommand_vacations' : recommand_vacations,
+        'count' : count,
+    }
+    return render(request, 'hotel_detail.html', context)
     
 def vacation_detail(request, pk):
+    count = {}
     try:
         vacation = Vacation.objects.get(pk=pk)
     except Vacation.DoesNotExist:
         raise Http404('게시글을 찾을수 없습니다')
+
+    # ##### vacation_review
+    # vacation_id 가 pk인 vacation_review 를 가져옴
+    all_vacation_reviews = Vacation_review.objects.filter(vacation_id=pk)
+
+    # 리뷰별 평점점수 (1~5점) count
+    for i in range(5):
+        count.update({i+1 : all_vacation_reviews.filter(vacation_review_rate__gt=i).filter(vacation_review_rate__lte=i+1).count()})
+
+    # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+    write_pages = int(request.session.get('write_pages', 5))
+    # 한 페이지에 보일 리뷰 개수
+    per_page = int(request.session.get('per_page', 5))
+    # 현재 페이지
+    page = int(request.GET.get('page', 1))
+
+    # 한 페이지당 5개씩 보여주는 Paginator 생성
+    paginator = Paginator(all_vacation_reviews, per_page)
+    # 페이지에 대한 정보
+    page_obj = paginator.get_page(page)
+
+    start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages - 1
+
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+
+    # ##### recommand_hotel
+    # 같은 지역, hotel_rate 가 높은 순으로 4개 가져오기
+    recommand_hotels = Hotel.objects.filter(SIGUN_NM=vacation.SIGUN_NM).order_by('-hotel_rate')[:4]
+
+    context = {
+        'vacation': vacation,
+        'reviews': page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page + 1),
+        'recommand_hotels' : recommand_hotels,
+        'count' : count,
+    }
         
-    return render(request, 'vacation_detail.html', {'vacation' : vacation})
+    return render(request, 'vacation_detail.html', context)
     
 def login(request):
     return render(request, 'login.html')
@@ -51,7 +222,15 @@ def hotel_confirm(request):
     return render(request, 'hotel_confirm.html')
 
 def vacation_confirm(request):
-    return render(request, 'vacation_confirm.html')
+    reserve_id = request.GET['reserve']
+    reserve_info = Vacation_reserve.objects.get(vacation_reserve_id=reserve_id)
+    place = Vacation.objects.get(vacation_id = reserve_info.vacation_id_id).TURSM_INFO_NM
+    context = {
+        'reserve_info': reserve_info, 
+        'place': place,
+        'price': '{0:,}'.format(reserve_info.vacation_reserve_price),
+        }   
+    return render(request, 'vacation_confirm.html', context)
 
 def user_divide(request):
     if request.method == "GET":
@@ -67,16 +246,40 @@ def user_create(request):
     return render(request, 'user_create.html')
 
 def user_info(request):
-    return render(request, 'user_info.html')
+    if request.method=="GET":
+        user = User.objects.get(id=1)
+        context = {
+            'user': user
+        }
+        return render(request, 'user_info.html', context)
+    if request.method=="POST":
+        # 이메일, 전화번호를 입력한 값으로 변경
+        user = User.objects.get(id=1)
+        context = {
+            'user': user
+        }
+        return render(request, 'user_info.html', context)
 
 def pw_change(request):
-    return render(request, 'pw_change.html')
+    user = User.objects.get(id=1)
+    context = {
+        'user': user
+    }
+    return render(request, 'pw_change.html', context)
 
 def history_hotel(request):
-    return render(request, 'history_hotel.html')
+    user = User.objects.get(id=1)
+    context = {
+        'user': user
+    }
+    return render(request, 'history_hotel.html', context)
 
 def history_vacation(request):
-    return render(request, 'history_vacation.html')
+    user = User.objects.get(id=1)
+    context = {
+        'user': user
+    }
+    return render(request, 'history_vacation.html', context)
 
 def sample(request):  # vacation_review 데이터 입력포맷입니다.
 

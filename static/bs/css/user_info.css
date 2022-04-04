@@ -1,39 +1,55 @@
 .update_userinfo{
-    margin-top: 100px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-
+    width:100%;
+    margin:auto;
+    padding: 30px;
 }
 
-.center{
-    display: flex;
-    justify-content: center;
-
-}
-
-.update_userinfo tr{
+.update_userinfo>div{
+    width: 100%;
+    margin:auto;    
+    height: 150px;
+    padding: 20px 0px 20px 0px;
     border-bottom: 1px solid var(--sub-grey-color);
 }
 
-.update_userinfo td{
-    min-width:300px;
-    display: block;
-    padding:10px 30px 10px 30px;
+.update_userinfo>div>label{
+    padding-top: 70px;
+    display: inline-block;
 }
+
 
 .update_btn{
     background-color: var(--sub-grey-color);
     color: var(--text-sub-color);
-    padding: 10px 30px 10px 30px;
+    padding: 5px 20px 5px 20px;
     border: 1px solid var(--icon-color);
     border-radius: 10px;
+    font-size: 13px;
+    margin-top: 10px;
+    float: right;
+    margin: 5px 0px 5px 10px;
+}
+
+.ok_btn{
+    background-color: var(--sub-color);
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.box_phNm, .box_email{
+    display: none;
+}
+
+#error_phNm, #error_email{
+    color: red;
+    font-size: 13px;
 }
 
 
 @media(min-width:768px){
-    
-    .update_userinfo td{
-        display: table-cell;
+ 
+    .update_userinfo{
+        max-width: 700px;
     }
+
 }

@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block title %}여행지 예약{% endblock %}
-
 {% block contents %}
 {% block script %}
 <script src="{% static 'bs/js/reserve.js' %}"></script>
@@ -18,17 +17,18 @@
 
     <section class="reservation">
         <div class="form_box">
-        <form name="vacation_reserve" class="reserve">
-            <div>
+        <form name="vacation_reserve" class="reserve" action="." method="POST">
+            {% csrf_token %}
+            <div class="form-group">
                 <label>예약자 이름</label>
-                <input class="reserve_input" type="text" value="">
+                <input class="form-control" id="reserve_name" name="reserve_name" type="text" value="">
             </div>
-            <div>
+            <div class="form-group">
                 <label>휴대폰 번호</label>
-                <input class="reserve_input" id="phone_num" type="text" value="">
+                <input class="form-control" id="phone_num" name="phone_num" type="text" value="">
                 <input type="button" class="auth_btn" id="auth_btn" value="인증번호 전송">
-                <div class="phone_confirm">
-                    <input class= "confirm_box" id="confirm_box" type="text" placeholder="인증번호를 입력하세요">
+                <div class="phone_confirm form-group">
+                    <input class= "form-control confirm_box" id="confirm_box" type="text" placeholder="인증번호를 입력하세요">
                     <input type="button" class="confirm_btn" id="confirm_btn" value="인증번호 확인">
                 </div>
             </div>
@@ -47,17 +47,17 @@
 
         <div class="reserve_confirm">
             <label class="reserve_index">여행지 이름</label>
-            <label>{# #}한국민속촌</label>
-            <label class="reserve_index">이용날짜/시간</label>
-            <label>{# #}2022. 04. 30 / 17:00 </label>
+            <label>{{ place_name }}</label>
+            <label class="reserve_index">이용날짜</label>
+            <label>{{ reserve_date }}</label>
             <label class="reserve_index">인원 및 수량</label>
-            <label>{# #}인</label>
+            <label>{{ reserve_people }}인</label>
             <hr>
             <div class="purchase_container">
                 <label>결제금액</label>
-                <label class="reserve_price">{# #}76,000원</label>
+                <label class="reserve_price">{{ vacation_price }}원</label>
             </div>
-            <input class="purchase_btn" type="button" value="결제하기">
+            <input class="purchase_btn" id="purchase_btn" type="button" value="결제하기">
         </div>
 
 

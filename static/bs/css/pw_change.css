@@ -29,6 +29,13 @@
     float:right;
 }
 
+.error{
+    color: red;
+    font-size: 13px;
+    display: block;
+}
+
+
 @media(min-width:768px){
     
     .pw_change td{
