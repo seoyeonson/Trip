@@ -65,18 +65,13 @@ def hotel_reserve(request):
             hotel_reserve_startdate = hotel_reserve_startdate,
             hotel_reserve_enddate = hotel_reserve_enddate,
             hotel_reserve_price = hotel_reserve_price,
-            
             id = id,
             room_id = room_id        
         )
 
         hotel_reserve.save()
 
-        context={
-            'reserve_info': Hotel_reserve.objects.get(pk=hotel_reserve.hotel_reserve_id)
-            }
-
-        return render(request, 'hotel_confirm.html', context)
+        return redirect(f'/hotel_confirm/?reserve={hotel_reserve.hotel_reserve_id}')
 
 def vacation_reserve(request):
     vacation_id = request.session.get('vacation_id', 1)
@@ -106,13 +101,13 @@ def vacation_reserve(request):
             vacation_id_id = vacation_id
         )
         vacation_reserve.save()
-        context = {
-            'reserve_info': vacation_reserve, 
-            'place_name': place_name, 
-            'vacation_price': vacation_price,
-            'reserve_username': request.POST['reserve_name'],
-            'reserve_phonenum': request.POST['phone_num'],
-            }
+        # context = {
+        #     'reserve_info': vacation_reserve, 
+        #     'place_name': place_name, 
+        #     'vacation_price': vacation_price,
+        #     'reserve_username': request.POST['reserve_name'],
+        #     'reserve_phonenum': request.POST['phone_num'],
+        #     }
         return redirect(f'/vacation_confirm/?reserve={vacation_reserve.vacation_reserve_id}')
 
 def hotel_detail(request, pk):
@@ -219,7 +214,17 @@ def login(request):
     return render(request, 'login.html')
 
 def hotel_confirm(request):
-    return render(request, 'hotel_confirm.html')
+    reserve_id = request.GET['reserve']
+    reserve_info = Hotel_reserve.objects.get(hotel_reserve_id=reserve_id)
+    # room_type = Hotel_room.objects.get(room_id=reserve_info.room_id        
+
+    context = {
+        'reserve_info': reserve_info, 
+        'hotel': Hotel.objects.get(hotel_id = reserve_info.room_id.hotel_id.hotel_id).BIZPLC_NM,
+        'price': '{0:,}'.format(reserve_info.hotel_reserve_price),
+        'night': (reserve_info.hotel_reserve_enddate - reserve_info.hotel_reserve_startdate).days
+        }   
+    return render(request, 'hotel_confirm.html', context)
 
 def vacation_confirm(request):
     reserve_id = request.GET['reserve']
