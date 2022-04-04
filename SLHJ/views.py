@@ -130,7 +130,6 @@ def hotel_detail(request, pk):
     # 리뷰별 평점점수 (1~5점) count
     for i in range(5):
         # (크거나 작은 값) orm 사용
-        # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
         count.update({i+1 : all_hotel_reviews.filter(hotel_review_rate__gt=i).filter(hotel_review_rate__lte=i+1).count()})
 
     # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
@@ -150,11 +149,11 @@ def hotel_detail(request, pk):
 
     if end_page >= paginator.num_pages:
         end_page = paginator.num_pages
-
+    
     # ##### recommand_vacation
     # 같은 지역,vacation_rate 가 높은 순으로 4개 가져오기
     recommand_vacations = Vacation.objects.filter(SIGUN_NM = hotel.SIGUN_NM).order_by('-vacation_rate')[:4]
-
+    
     context = {
         'hotel': hotel,
         'reviews': page_obj,

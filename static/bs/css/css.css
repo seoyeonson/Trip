@@ -42,6 +42,29 @@ hr{
     color: var(--line-color);
 }
 
+.input-group-field{
+    width: 100%;
+    border: 1px solid var(--sub-grey-color);
+    text-align: center;
+}
+
+.fa-plus, .fa-minus{
+    margin: 0 !important;
+}
+
+/* .plus_minus_btn{
+    position: absolute; 
+    top: 0;
+} */
+
+.display_control{
+    display: block;
+}
+  
+.hotel_reserve_people{
+    display: none;
+}
+
 /* nav */
 .toolbar {
     background: #FFFFFF;
@@ -772,6 +795,7 @@ top: 222px;
     background-color: var(--sub-grey-color);
     border-radius: 10px;
 }
+
 
 /* vacation_detail */
 .vacation_main_img{
