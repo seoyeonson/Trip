@@ -1,6 +1,9 @@
+from argparse import Namespace
 from unicodedata import name
 from django.urls import path
 from SLHJ import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('main/', views.main, name='main'),
@@ -33,5 +36,11 @@ urlpatterns = [
     path('sample3/', views.sample3, name='sample3'),    # hotel_room 포맷입니다.
     path('sample4/', views.sample4, name='sample4'),    # hotel_reserve 포맷입니다.
     path('sample5/', views.sample5, name='sample5'),    # hotel_review 포맷입니다.
-    
+    path('sample6/', views.sample6, name='sample6'),    # hotel_imgage 포맷입니다.
 ]
+
+# hotel_image, vacation_image 경로
+urlpatterns += static(
+    settings.MEDIA_URL, 
+    document_root = settings.MEDIA_ROOT
+)

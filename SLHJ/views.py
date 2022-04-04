@@ -6,9 +6,14 @@ from urllib.request import Request, urlopen
 from urllib.parse import urlencode, quote_plus, unquote
 from django.shortcuts import render, redirect
 from SLHJ.models import User, Vacation, Vacation_reserve, Vacation_review, Vacation_image
-from SLHJ.models import Hotel, Hotel_room, Hotel_review, Hotel_reserve
+from SLHJ.models import Hotel, Hotel_room, Hotel_review, Hotel_reserve, Hotel_image
 import datetime
 from django.core.paginator import Paginator
+import os
+import mimetypes
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.http import FileResponse
 
 
 def main(request):
@@ -99,18 +104,13 @@ def hotel_reserve(request):
             hotel_reserve_startdate = hotel_reserve_startdate,
             hotel_reserve_enddate = hotel_reserve_enddate,
             hotel_reserve_price = hotel_reserve_price,
-            
             id = id,
             room_id = room_id        
         )
 
         hotel_reserve.save()
 
-        context={
-            'reserve_info': Hotel_reserve.objects.get(pk=hotel_reserve.hotel_reserve_id)
-            }
-
-        return render(request, 'hotel_confirm.html', context)
+        return redirect(f'/hotel_confirm/?reserve={hotel_reserve.hotel_reserve_id}')
 
 def vacation_reserve(request):
     vacation_id = request.session.get('vacation_id', 1)
@@ -140,13 +140,13 @@ def vacation_reserve(request):
             vacation_id_id = vacation_id
         )
         vacation_reserve.save()
-        context = {
-            'reserve_info': vacation_reserve, 
-            'place_name': place_name, 
-            'vacation_price': vacation_price,
-            'reserve_username': request.POST['reserve_name'],
-            'reserve_phonenum': request.POST['phone_num'],
-            }
+        # context = {
+        #     'reserve_info': vacation_reserve, 
+        #     'place_name': place_name, 
+        #     'vacation_price': vacation_price,
+        #     'reserve_username': request.POST['reserve_name'],
+        #     'reserve_phonenum': request.POST['phone_num'],
+        #     }
         return redirect(f'/vacation_confirm/?reserve={vacation_reserve.vacation_reserve_id}')
 
 def hotel_detail(request, pk):
@@ -253,7 +253,17 @@ def login(request):
     return render(request, 'login.html')
 
 def hotel_confirm(request):
-    return render(request, 'hotel_confirm.html')
+    reserve_id = request.GET['reserve']
+    reserve_info = Hotel_reserve.objects.get(hotel_reserve_id=reserve_id)
+    # room_type = Hotel_room.objects.get(room_id=reserve_info.room_id        
+
+    context = {
+        'reserve_info': reserve_info, 
+        'hotel': Hotel.objects.get(hotel_id = reserve_info.room_id.hotel_id.hotel_id).BIZPLC_NM,
+        'price': '{0:,}'.format(reserve_info.hotel_reserve_price),
+        'night': (reserve_info.hotel_reserve_enddate - reserve_info.hotel_reserve_startdate).days
+        }   
+    return render(request, 'hotel_confirm.html', context)
 
 def vacation_confirm(request):
     reserve_id = request.GET['reserve']
@@ -439,6 +449,25 @@ def sample5(request):       # hotel_review 포맷입니다.
     hotel_id.save()
 
     return render(request, 'sample5.html')
+
+def sample6(request):   # hotel_image 포맷입니다.  vacation_image 는 hotel => vacation 으로 바꾸기만 하면됩니다.
+    if request.method == "POST":
+        hotel_id = Hotel.objects.get(pk=4)      # 어떤 호텔의 사진인지 가져와야 합니다. ex) pk = pk
+        hotel_image_title = request.POST['fileTitle']
+        hotel_image_file_path = request.FILES["uploadedFile"]
+
+        document = Hotel_image(
+            hotel_id = hotel_id,
+            hotel_image_title = hotel_image_title,
+            hotel_image_file_path = hotel_image_file_path,
+            hotel_image_originname = hotel_image_file_path.name,
+        )
+        document.save()
+    
+    documents = Hotel_image.objects.all().order_by("-pk")
+
+    return render(request, 'sample6.html', {"sample6s" : documents})
+
 
 # def api(request):
 
