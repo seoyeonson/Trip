@@ -52,10 +52,10 @@ hr{
     margin: 0 !important;
 }
 
-/* .plus_minus_btn{
+.plus_minus_btn{
     position: absolute; 
     top: 0;
-} */
+}
 
 .display_control{
     display: block;
@@ -831,6 +831,20 @@ top: 222px;
     height: 194px;
     background-color: var(--sub-grey-color);
     border-radius: 10px;
+}
+
+.hotel_room_select{
+    list-style: none;
+    text-align: center;
+    font-size: 20px;
+    padding: 15px 20px;
+    background-color: var(--back-color);
+    display: none;
+    border: 0;
+}
+
+.hotel_room_select:hover{
+    background-color: var(--sub-color);
 }
 
 
