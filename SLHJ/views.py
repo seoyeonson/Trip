@@ -27,6 +27,8 @@ def list2(request,SIGUN_NM):
     #SIGUN_NM= OO시인 hotel 테이블 가져옴 
     all_hotel_lists = Hotel.objects.filter(SIGUN_NM = SIGUN_NM)
 
+    hotel_room = Hotel_room.objects.all()
+
     # 리뷰별 평점점수 (1~5점) count
     for i in range(5):
         # (크거나 작은 값) orm 사용
@@ -51,11 +53,12 @@ def list2(request,SIGUN_NM):
         end_page = paginator.num_pages
     context = {
         # 'hotel': hotel,
-        'lists': page_obj,
+        'lists': page_obj,  # Hotel table
         'start_page': start_page,
         'end_page': end_page,
         'page_range': range(start_page, end_page + 1),
         'count' : count,
+        'hotel_rooms' : hotel_room, # Hotel_room table
     }
     return render(request, 'hotel_list2.html', context)
 
@@ -380,7 +383,7 @@ def sample3(request):   # hotel_room 포맷입니다.
     room_price = 100000
     room_people = 2
 
-    hotel_id = Hotel.objects.get(pk=1)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
+    hotel_id = Hotel.objects.get(pk=17)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
     hotel_room = Hotel_room(
         room_type = room_type,
