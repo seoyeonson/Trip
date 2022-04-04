@@ -17,18 +17,21 @@
 
     <section class="reservation">
         <div class="form_box">
-        <form name="hotel_reserve" class="reserve">
-            <div>
+        <form name="hotel_reserve" class="reserve" action="." method="POST">
+            {% csrf_token %}
+            <div class="form-group">
                 <label>예약자 이름</label>
-                <input class="reserve_input" type="text" value="">
+                <input class="form-control" id="reserve_name" name="reserve_name"type="text" value="">
             </div>
-            <div>
+            <div class="form-group">
                 <label>휴대폰 번호</label>
-                <input class="reserve_input" id="phone_num" type="text" value="">
+                <input class="form-control" id="phone_num" name="phone_num" type="text" value="">
                 <input type="button" class="auth_btn" id="auth_btn" value="인증번호 전송">
-                <div class="phone_confirm">
-                    <input class= "confirm_box" id="confirm_box" type="text" placeholder="인증번호를 입력하세요">
+                <span id="error_phone"></span>
+                <div class="phone_confirm form-group">
+                    <input class= "confirm_box form-control" id="confirm_box" type="text" placeholder="인증번호를 입력하세요">
                     <input type="button" class="confirm_btn" id="confirm_btn" value="인증번호 확인">
+                    <span id="confirmOk"></span>
                 </div>
             </div>
             <div class="provision">
@@ -47,33 +50,21 @@
         </div>
         <div class="reserve_confirm">
             <label class="reserve_index">숙소 이름</label>
-            <label>{# #}KDT호텔</label>
+            <label>{{hotel_name}}</label>
             <label class="reserve_index">객실타입/기간</label>
-            <label>{# #}싱글 / 1박</label>
+            <label>{{room_type}} / {{night}}박</label>
             <label class="reserve_index">체크인</label>
-            <label>{# #}2022. 04. 30</label>
+            <label>{{reserve_startdate}}</label>
             <label class="reserve_index">체크아웃</label>
-            <label>{# #}2022. 04. 31</label>
+            <label>{{reserve_enddate}}</label>
             <hr>
             <div class="purchase_container">
                 <label>결제금액</label>
-                <label class="reserve_price">{# #}130,000원</label>
+                <label class="reserve_price">{{hotel_price}}</label>
             </div>
-            <input class="purchase_btn" id="purchase_btn" type="button" value="결제하기">
+            <input class="purchase_btn" id="purchase_btn" type="submit" value="결제하기">
         </div>
     </section>
 </div>
-<!-- <div class="confirm_box">
-    <div class="confirm_content">
 
-        <form class="confirm_form">
-            <h4>휴대폰 인증</h2>
-            <label>이름 입력</label>
-            <input type="text" placeholder="이름 입력" class="confirm_name">
-            <label>휴대전화 번호 입력</label>
-            <input type="text" placeholder="전화번호 입력" class="confirm_phone">
-            <button></button>
-        </form>
-    </div>
-</div> -->
 {% endblock %}

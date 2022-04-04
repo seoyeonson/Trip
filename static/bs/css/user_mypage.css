@@ -38,6 +38,7 @@
 
 #user_profile {
     background-color: #ffff;
+    color: var(--main-color);
 }
 
 

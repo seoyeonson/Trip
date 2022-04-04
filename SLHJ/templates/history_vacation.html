@@ -12,7 +12,7 @@
     <!-- <a href="#" 
         class="closebtn" id="closebtn" 
         onclick="closeNav()">&times;</a> -->
-    <div class="side_menu" id="user_profile">{##}김회원 님</div>
+    <div class="side_menu" id="user_profile">{{user.user_id}}</div>
     <a class="side_menu" href="{% url 'user_info' %}">회원정보</a>
     <a class="side_menu" href="{% url 'pw_change' %}">비밀번호 변경</a>
     <a class="side_menu" href="{% url 'history_hotel' %}">숙소관리</a>
