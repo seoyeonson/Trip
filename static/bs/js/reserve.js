@@ -4,6 +4,7 @@ $(document).ready(function(){
     $("#auth_btn").click(phone_confirm);
     $("#confirm_btn").off().on("click",confirm_num);
     $("#purchase_btn").off().on("click",purchase);
+    $("#")
 });
 
 function all_agree(){
@@ -86,3 +87,7 @@ function purchase(){
     $('.reserve').submit();
     return true;
 };
+
+function coolSMS(){
+
+}

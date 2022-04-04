@@ -49,9 +49,6 @@ def hotel_reserve(request):
         return render(request, 'hotel_reserve.html', context)
     elif request.method=="POST": # 예약정보 테이블에 저장
 
-        # form = request.POST["hotel_reserve"]
-
-
         hotel_reserve_username = request.POST["reserve_name"]
         hotel_reserve_phonenum = request.POST["phone_num"]
 
@@ -101,13 +98,6 @@ def vacation_reserve(request):
             vacation_id_id = vacation_id
         )
         vacation_reserve.save()
-        # context = {
-        #     'reserve_info': vacation_reserve, 
-        #     'place_name': place_name, 
-        #     'vacation_price': vacation_price,
-        #     'reserve_username': request.POST['reserve_name'],
-        #     'reserve_phonenum': request.POST['phone_num'],
-        #     }
         return redirect(f'/vacation_confirm/?reserve={vacation_reserve.vacation_reserve_id}')
 
 def hotel_detail(request, pk):
