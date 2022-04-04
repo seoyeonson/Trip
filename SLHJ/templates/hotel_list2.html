@@ -25,28 +25,380 @@
     </div>
     
     <!-- 우측 지도 -->
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3177.5135141850706!2d127.00561820000001!3d37.211782899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8f20f378e26bc085!2zMzfCsDEyJzQyLjQiTiAxMjfCsDAwJzIwLjIiRQ!5e0!3m2!1sko!2skr!4v1648603766418!5m2!1sko!2skr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="list_gps_map"></iframe>
+    <div id="googleMap" class="list_gps_map"></div>
     <!-- 좌측 list -->
-    {% for hotel in list %}
-    <div class="table_list" id="table_list" style="display:block">
+    <div class="table_list_1" id="table_list_1" style="display:block"> <!--첫번째 페이지 -->
         <a href = "#" onclick ="list_gps_subit()" id="table_list"><div class="table_list" >
-            <div class="list1">
+                <div class="list1">
+                </div>
+            <div class="hotel_image_1"></div>
+            <a href= "#"><li class="hotel_name_1"> {{ hotel.BIZPLC_NM }}</li></a>
+            <li class="hotel_add_1"> {{ hotel.REFINE_ROADNM_ADDR }} </li>
+            <div class="list_rating_1">
+                {% for i in "x"|rjust:"5" %}
+                {% if hotel.hotel_rate >= forloop.counter %}
+                    <i class="fas fa-star"></i>
+                {% else %}
+                <i class="fas fa-star no_star"></i>
+                {% endif %}
+                {% endfor %}
             </div>
-        <div class="hotel_image_1"></div>
-        <a href= "{% url 'hotel_detail' %}"><li class="hotel_name_1"> {{ BIZPLC_NM }}</li></a>
-        <li class="hotel_add_1"> {{ REFINE_ROADNM_ADDR }} </li>
-        <div class="list_rating_1">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <li> {{ hotel_rate }}</li>
+            <li class="hotel_pay_1">{{ hotel.hotel_price_k }}</li>
+        </div> </a>
+        <div class="table_list">
+            <div class="list2"></div>
+            <div class="hotel_image_2"></div>
+            <li class="hotel_name_2"> 파파파 호텔11111</li>
+            <li class="hotel_add_2"> 서울 용산구 소월로 222 </li>
+            <div class="list_rating_2">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <li class="hotel_pay_2">270,000원</li>
+        </div>    
+        <div class="table_list">
+            <div class="list3"></div>
+            <div class="hotel_image_3"></div>
+            <li class="hotel_name_3"> 바다 호텔11111</li>
+            <li class="hotel_add_3"> 서울 용산구 소월로 333 </li>
+            <div class="list_rating_3">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_3">270,000원</li>  
         </div>
-        <li class="hotel_pay_1">{{ room_price }}</li>
-    </div> </a>
-    {% endfor %}
-    </div> 
+        <div class="table_list">
+            <div class="list4"></div>
+            <div class="hotel_image_4"></div>
+            <li class="hotel_name_4"> 노을 호텔11111</li>
+            <li class="hotel_add_4"> 서울 용산구 소월로 444 </li>
+            <div class="list_rating_4">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_4">270,000원</li>  
+        </div>  
+        <div class="table_list">
+            <div class="list5"></div>
+            <div class="hotel_image_5"></div>
+            <li class="hotel_name_5"> 쌍둥이 호텔11111</li>
+            <li class="hotel_add_5"> 서울 용산구 소월로 444 </li>
+            <div class="list_rating_5">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_5">270,000원</li>  
+        </div>     
+    </div>
+
+    <div class="table_list_2" id="table_list_2" style="display:none"> <!--두번째 페이지 -->
+        <div class="table_list" >
+                <div class="list1">
+                </div>
+            <div class="hotel_image_1"></div>
+            <li class="hotel_name_1"> 그랜드 하잇트 호텔22222</li>
+            <li class="hotel_add_1"> 서울 용산구 소월로 111 </li>
+            <div class="list_rating_1">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <li class="hotel_pay_1">270,000원</li>
+        </div> 
+        <div class="table_list">
+            <div class="list2"></div>
+            <div class="hotel_image_2"></div>
+            <li class="hotel_name_2"> 파파파 호텔22222</li>
+            <li class="hotel_add_2"> 서울 용산구 소월로 222 </li>
+            <div class="list_rating_2">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <li class="hotel_pay_2">270,000원</li>
+        </div>    
+        <div class="table_list">
+            <div class="list3"></div>
+            <div class="hotel_image_3"></div>
+            <li class="hotel_name_3"> 바다 호텔22222</li>
+            <li class="hotel_add_3"> 서울 용산구 소월로 333 </li>
+            <div class="list_rating_3">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_3">270,000원</li>  
+        </div>
+        <div class="table_list">
+            <div class="list4"></div>
+            <div class="hotel_image_4"></div>
+            <li class="hotel_name_4"> 노을 호텔22222</li>
+            <li class="hotel_add_4"> 서울 용산구 소월로 444 </li>
+            <div class="list_rating_4">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_4">270,000원</li>  
+        </div>  
+        <div class="table_list">
+            <div class="list5"></div>
+            <div class="hotel_image_5"></div>
+            <li class="hotel_name_5"> 쌍둥이 호텔22222</li>
+            <li class="hotel_add_5"> 서울 용산구 소월로 444 </li>
+            <div class="list_rating_5">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_5">270,000원</li>  
+        </div>     
+    </div>
+
+    <div class="table_list_3" id="table_list_3" style="display:none"> <!--세번째 페이지 -->
+        <div class="table_list" >
+                <div class="list1">
+                </div>
+            <div class="hotel_image_1"></div>
+            <li class="hotel_name_1"> 그랜드 하잇트 호텔33333</li>
+            <li class="hotel_add_1"> 서울 용산구 소월로 111 </li>
+            <div class="list_rating_1">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <li class="hotel_pay_1">270,000원</li>
+        </div> 
+        <div class="table_list">
+            <div class="list2"></div>
+            <div class="hotel_image_2"></div>
+            <li class="hotel_name_2"> 파파파 호텔33333</li>
+            <li class="hotel_add_2"> 서울 용산구 소월로 222 </li>
+            <div class="list_rating_2">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <li class="hotel_pay_2">270,000원</li>
+        </div>    
+        <div class="table_list">
+            <div class="list3"></div>
+            <div class="hotel_image_3"></div>
+            <li class="hotel_name_3"> 바다 호텔33333</li>
+            <li class="hotel_add_3"> 서울 용산구 소월로 333 </li>
+            <div class="list_rating_3">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_3">270,000원</li>  
+        </div>
+        <div class="table_list">
+            <div class="list4"></div>
+            <div class="hotel_image_4"></div>
+            <li class="hotel_name_4"> 노을 호텔33333</li>
+            <li class="hotel_add_4"> 서울 용산구 소월로 444 </li>
+            <div class="list_rating_4">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_4">270,000원</li>  
+        </div>  
+        <div class="table_list">
+            <div class="list5"></div>
+            <div class="hotel_image_5"></div>
+            <li class="hotel_name_5"> 쌍둥이 호텔33333</li>
+            <li class="hotel_add_5"> 서울 용산구 소월로 444 </li>
+            <div class="list_rating_5">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_5">270,000원</li>  
+        </div>     
+    </div>
+    
+    <div class="table_list_4" id="table_list_4" style="display:none"> <!--네번째 페이지 -->
+        <div class="table_list" >
+                <div class="list1">
+                </div>
+            <div class="hotel_image_1"></div>
+            <li class="hotel_name_1"> 그랜드 하잇트 호텔44444</li>
+            <li class="hotel_add_1"> 서울 용산구 소월로 111 </li>
+            <div class="list_rating_1">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <li class="hotel_pay_1">270,000원</li>
+        </div> 
+        <div class="table_list">
+            <div class="list2"></div>
+            <div class="hotel_image_2"></div>
+            <li class="hotel_name_2"> 파파파 호텔44444</li>
+            <li class="hotel_add_2"> 서울 용산구 소월로 222 </li>
+            <div class="list_rating_2">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <li class="hotel_pay_2">270,000원</li>
+        </div>    
+        <div class="table_list">
+            <div class="list3"></div>
+            <div class="hotel_image_3"></div>
+            <li class="hotel_name_3"> 바다 호텔44444</li>
+            <li class="hotel_add_3"> 서울 용산구 소월로 333 </li>
+            <div class="list_rating_3">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_3">270,000원</li>  
+        </div>
+        <div class="table_list">
+            <div class="list4"></div>
+            <div class="hotel_image_4"></div>
+            <li class="hotel_name_4"> 노을 호텔44444</li>
+            <li class="hotel_add_4"> 서울 용산구 소월로 444 </li>
+            <div class="list_rating_4">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_4">270,000원</li>  
+        </div>  
+        <div class="table_list">
+            <div class="list5"></div>
+            <div class="hotel_image_5"></div>
+            <li class="hotel_name_5"> 쌍둥이 호텔44444</li>
+            <li class="hotel_add_5"> 서울 용산구 소월로 444 </li>
+            <div class="list_rating_5">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+        </div>  
+        <li class="hotel_pay_5">270,000원</li>  
+        </div>     
+        </div>
+    <div class="table_list_5" id="table_list_5" style="display:none"> <!--다섯번째 페이지 -->
+            <div class="table_list" >
+                    <div class="list1">
+                    </div>
+                <div class="hotel_image_1"></div>
+                <li class="hotel_name_1"> 그랜드 하잇트 호텔55555</li>
+                <li class="hotel_add_1"> 서울 용산구 소월로 111 </li>
+                <div class="list_rating_1">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <li class="hotel_pay_1">270,000원</li>
+            </div> 
+            <div class="table_list">
+                <div class="list2"></div>
+                <div class="hotel_image_2"></div>
+                <li class="hotel_name_2"> 파파파 호텔55555</li>
+                <li class="hotel_add_2"> 서울 용산구 소월로 222 </li>
+                <div class="list_rating_2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <li class="hotel_pay_2">270,000원</li>
+            </div>    
+            <div class="table_list">
+                <div class="list3"></div>
+                <div class="hotel_image_3"></div>
+                <li class="hotel_name_3"> 바다 호텔55555</li>
+                <li class="hotel_add_3"> 서울 용산구 소월로 333 </li>
+                <div class="list_rating_3">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+            </div>  
+            <li class="hotel_pay_3">270,000원</li>  
+            </div>
+            <div class="table_list">
+                <div class="list4"></div>
+                <div class="hotel_image_4"></div>
+                <li class="hotel_name_4"> 노을 호텔55555</li>
+                <li class="hotel_add_4"> 서울 용산구 소월로 444 </li>
+                <div class="list_rating_4">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+            </div>  
+            <li class="hotel_pay_4">270,000원</li>  
+            </div>  
+            <div class="table_list">
+                <div class="list5"></div>
+                <div class="hotel_image_5"></div>
+                <li class="hotel_name_5"> 쌍둥이 호텔55555</li>
+                <li class="hotel_add_5"> 서울 용산구 소월로 555 </li>
+                <div class="list_rating_5">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+            </div>  
+            <li class="hotel_pay_5">270,000원</li>  
+            </div>     
+    </div>
+
+
     </div>
     <!-- 리스트 밑의 번호 -->
         <div class="list_page_num" id="list_page_num">

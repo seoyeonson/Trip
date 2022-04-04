@@ -181,7 +181,7 @@ def sample4(request):   # hotel_reserve 포맷입니다.
 def sample5(request):       # hotel_review 포맷입니다.
 
     hotel_review_content = 'sample 데이터입니다.'
-    hotel_review_rate = 4.0
+    hotel_review_rate = 5.0
     hotel_review_date = datetime.datetime.now().strftime('%Y-%m-%d')    # 현재시간을 YYYY-MM-DD형태로 가져옵니다.
 
     id = User.objects.get(pk=1)             # 유저의 primary key 를 외부로 받아옵니다. 
@@ -275,16 +275,16 @@ def sample5(request):       # hotel_review 포맷입니다.
         
 #         hotel.save()
 
-#     # user_id = 'user1'
-#     # user_password = '1234'
-#     # user_type = '1'
-#     # user_email = 'test@email.com'
-#     # user_phonenum = '010-1234-5678'
+    # user_id = 'user1'
+    # user_password = '1234'
+    # user_type = '1'
+    # user_email = 'test@email.com'
+    # user_phonenum = '010-1234-5678'
 
-#     # user = User(user_id = user_id, user_password = user_password, user_type = user_type, user_email = user_email, user_phonenum = user_phonenum)
-#     # user.save()   #테스트 유저 확보 
+    # user = User(user_id = user_id, user_password = user_password, user_type = user_type, user_email = user_email, user_phonenum = user_phonenum)
+    # user.save()   #테스트 유저 확보 
 
-#     return render(request, 'api.html')
+    # return render(request, 'api.html')
 
 # def api2(request):
 
