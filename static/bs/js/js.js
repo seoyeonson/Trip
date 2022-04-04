@@ -155,6 +155,21 @@ $(document).ready(function() {
         $("#chk_out").html(end_day);
     });
 
+
+    // 방 종류애 따라 사용할 수 있도록 추후 수정
+    $("#hotel_room_select1").click(function() {
+        $(".room").html("디럭스");
+    });
+    $("#hotel_room_select2").click(function() {
+        $(".room").html("a");
+    });
+    $("#hotel_room_select3").click(function() {
+        $(".room").html("b");
+    });
+    $("#hotel_room_select4").click(function() {
+        $(".room").html("c");
+    });
+
     // 로그인 체크
     $('#logInCheck').click(function(){
         console.log("들어옴");
@@ -263,7 +278,6 @@ $(document).ready(function() {
 
     // This button will increment the value
     $('[data-quantity="plus"]').click(function(e){
-        // Stop acting like a button
         e.preventDefault();
         // Get the field name
         fieldName = $(this).attr('data-field');
@@ -273,6 +287,7 @@ $(document).ready(function() {
         if (!isNaN(currentVal)) {
             // Increment
             $('input[name='+fieldName+']').val(currentVal + 1);
+            $('.people').html(currentVal + 1 + '명');
         } else {
             // Otherwise put a 0 there
             $('input[name='+fieldName+']').val(1);
@@ -290,6 +305,7 @@ $(document).ready(function() {
         if (!isNaN(currentVal) && currentVal > 1) {
             // Decrement one
             $('input[name='+fieldName+']').val(currentVal - 1);
+            $('.people').html(currentVal - 1 + '명');
         } else {
             // Otherwise put a 0 there
             $('input[name='+fieldName+']').val(1);
@@ -314,12 +330,18 @@ function myMap() {
     marker.setMap(map);
 }
 
-//
 function choice_people() {
     $('.hotel_reserve_people').css('display', 'block');
+    $('.hotel_room_select').css('display', 'none');
+    $('.hotel_reserve_people').toggleClass('');
+}
+
+function choice_room() {
+    $('.hotel_room_select').css('display', 'block');
+    $('.hotel_reserve_people').css('display', 'none');
 }
 
 function hotel_room_select(){
-
+    $('.hotel_room_select').css('display', 'none');
 }
 

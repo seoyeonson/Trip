@@ -42,8 +42,8 @@
             <form>
                 <div>
                     <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex">
-                        <button class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">체크인</span></button>
-                        <button class="hotel_detail_reserve_checkout">체크아웃</button>
+                        <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">체크인</span></button>
+                        <button type="button" class="hotel_detail_reserve_checkout">체크아웃</button>
                     </div>
                     <div class="date_pick" id="date_pick" style="display: none;">
                         <!-- <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" /> -->
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="choice_people">
-                    <button type="button" class="hotel_detail_reserve_btn" name="hotel_reserve_people" onclick="choice_people()"><i class="fas fa-user-alt"></i>인원선택</button>
+                    <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="hotel_reserve_people" onclick="choice_people()"><i class="fas fa-user-alt"></i><span class="people">인원선택</span></button>
                     <div class="d-flex justify-content-center hotel_detail_reserve_btn plus_minus_btn">
                         <div class="hotel_reserve_people">
                           <button type="button" data-quantity="minus" data-field="hotel_reserve_people">
@@ -69,12 +69,12 @@
                       </div>
                 </div>
                 <div class="choice_room">
-                    <button type="button" class="hotel_detail_reserve_btn"><i class="fas fa-door-closed"></i>객실선택</button>
+                    <button type="button" class="hotel_detail_reserve_btn" onclick="choice_room()"><i class="fas fa-door-closed"></i><span class="room">객실선택</span></button>
                     <div class="hotel_detail_reserve_btn">
                         <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select1" class="hotel_room_select">디럭스</li></a>
-                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select1" class="hotel_room_select">디럭스</li></a>
-                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select1" class="hotel_room_select">디럭스</li></a>
-                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select1" class="hotel_room_select">디럭스</li></a>
+                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select2" class="hotel_room_select">a</li></a>
+                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select3" class="hotel_room_select">b</li></a>
+                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select4" class="hotel_room_select">c</li></a>
                     </div>
                 </div>
                 <button class="hotel_detail_reserve_btn hotel_detail_reserve_btn_submit">예약하기</button>
