@@ -17,8 +17,42 @@ def main(request):
 def list(request):
     return render(request, 'hotel_list.html')
 
-def list2(request):
-    return render(request, 'hotel_list2.html')
+def list2(request,SIGUN_NM):
+    count={}
+    #SIGUN_NM= OO시인 hotel 테이블 가져옴 
+    all_hotel_lists = Hotel.objects.filter(SIGUN_NM = SIGUN_NM)
+
+    # 리뷰별 평점점수 (1~5점) count
+    for i in range(5):
+        # (크거나 작은 값) orm 사용
+        # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
+        count.update({i+1 : all_hotel_lists.filter(hotel_rate__gt=i).filter(hotel_rate__lte=i+1).count()})
+    # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+    write_pages = int(request.session.get('write_pages', 5))
+    # 한 페이지에 보일 리뷰 개수
+    per_page = int(request.session.get('per_page', 5))
+    # 현재 페이지
+    page = int(request.GET.get('page', 1))
+
+    # 한 페이지당 5개씩 보여주는 Paginator 생성
+    paginator = Paginator(all_hotel_lists, per_page)
+    # 페이지에 대한 정보
+    page_obj = paginator.get_page(page)
+
+    start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages - 1
+
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+    context = {
+        # 'hotel': hotel,
+        'lists': page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page + 1),
+        'count' : count,
+    }
+    return render(request, 'hotel_list2.html', context)
 
 def user_create(request):
     return render(request, 'user_create.html')
@@ -384,7 +418,7 @@ def sample4(request):   # hotel_reserve 포맷입니다.
 def sample5(request):       # hotel_review 포맷입니다.
 
     hotel_review_content = 'sample 데이터입니다.'
-    hotel_review_rate = 5.0
+    hotel_review_rate = 4.0
     hotel_review_date = datetime.datetime.now().strftime('%Y-%m-%d')    # 현재시간을 YYYY-MM-DD형태로 가져옵니다.
 
     id = User.objects.get(pk=1)             # 유저의 primary key 를 외부로 받아옵니다. 
@@ -478,16 +512,16 @@ def sample5(request):       # hotel_review 포맷입니다.
         
 #         hotel.save()
 
-    # user_id = 'user1'
-    # user_password = '1234'
-    # user_type = '1'
-    # user_email = 'test@email.com'
-    # user_phonenum = '010-1234-5678'
+#     # user_id = 'user1'
+#     # user_password = '1234'
+#     # user_type = '1'
+#     # user_email = 'test@email.com'
+#     # user_phonenum = '010-1234-5678'
 
-    # user = User(user_id = user_id, user_password = user_password, user_type = user_type, user_email = user_email, user_phonenum = user_phonenum)
-    # user.save()   #테스트 유저 확보 
+#     # user = User(user_id = user_id, user_password = user_password, user_type = user_type, user_email = user_email, user_phonenum = user_phonenum)
+#     # user.save()   #테스트 유저 확보 
 
-    # return render(request, 'api.html')
+#     return render(request, 'api.html')
 
 # def api2(request):
 

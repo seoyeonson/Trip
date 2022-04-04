@@ -5,7 +5,7 @@ from SLHJ import views
 urlpatterns = [
     path('main/', views.main, name='main'),
     path('list/', views.list),
-    path('list2/', views.list2),
+    path('list2/<str:SIGUN_NM>/', views.list2),
     path('login/', views.login),
     path('login/', views.login, name='login'),
     path('user_create/', views.user_create),

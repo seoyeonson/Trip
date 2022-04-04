@@ -166,14 +166,50 @@ height: 1094px;
 left: 778px;
 top: 222px;
 } 
+.left_list{
+  
+    position:absolute; 
 
+}
 .table_list{
     border-collapse: collapse;
     border-radius: 10px;
     text-align: center; 
     list-style: none;
+    
+    width: 651px;
+    height: 201px;
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    box-sizing: border-box;
+    border-radius: 10px;
 }
 
+.list_hotel_name{
+    height: 27px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+.list_hotel_add{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    color: #919191;
+}
+.list_rating{
+    font-size:26px;
+    color: #FFC701;
+    height: 26px;
+    
 .list1{
     position: absolute;
     width: 651px;
