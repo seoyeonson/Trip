@@ -2,8 +2,8 @@ $(document).ready(function(){
     $("#all_agree").change(all_agree);
     $(".reserve_check").change(del_agree);
     $("#auth_btn").click(phone_confirm);
-    $("#confirm_btn").click(confirm_num);
-    $("#purchase_btn").click(purchase);
+    $("#confirm_btn").off().on("click",confirm_num);
+    $("#purchase_btn").off().on("click",purchase);
 });
 
 function all_agree(){
@@ -31,6 +31,7 @@ function confirm_cancel(){
 
 // 휴대폰 인증
 function phone_confirm(){
+    alert('야');
     phone_num = $('#phone_num').val().trim();
     phone_pat = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 
@@ -44,7 +45,8 @@ function phone_confirm(){
     }else{
         $('#error_phone').html("");
     }
-
+    var phone_new = phone_num.replace(/[^0-9]/g, "").replace(/([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/, "$1-$2-$3");
+    $('#phone_num').val(phone_new);
     $('.phone_confirm').css("display", "block"); 
 };
 
@@ -60,24 +62,26 @@ function confirm_num(){
     $('#phone_num').attr("readonly", true);
     $("#auth_btn").css("background-color", "#BDBDBD");
     $('.confirm_btn').css("background-color", "#BDBDBD");
-    alert('휴대폰 인증 완료');
+    
+    (()=>{alert('휴대폰 인증 완료')})();
 };
 
 function purchase(){
     var reserve_name = $('#reserve_name').val().trim()
-    var check = $(".reserve_check").is(":checked")
+    // var check = $(".reserve_check").is(":checked")
     // phone_num = $('#phone_num').val().trim();
     if(reserve_name==""){
         $('#reserve_name').focus();
         return false;
     }else if($('#phone_num').val().trim()==""){
         $('#phone_num').focus();
+        return false;
     }else if($("#confirmOk").html()==""){
-        alert('휴대폰 인증을 완료해주세요');
-        return false;
+            (() => {alert('휴대폰 인증을 완료해주세요')})();
+            return false;
     }else if($(".reserve_check:checked").length != $(".reserve_check").length){
-        alert('약관에 모두 동의하세요');
-        return false;
+            (() => {alert('약관에 모두 동의하세요')})();
+            return false;
     };
     $('.reserve').submit();
     return true;

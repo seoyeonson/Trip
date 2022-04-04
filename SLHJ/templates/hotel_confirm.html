@@ -10,14 +10,14 @@
     <h3 class="title">예약완료</h3>
     <div class="confirm_contents">
         <ul class="confirm_list">
-            <li><label class="index">예약자 이름</label><label class="info">{{ reserve_username }}</label></li>
-            <li><label class="index">휴대폰 번호</label><label class="info">{{ reserve_phonenum }}</label></li>
-            <li><label class="index">예약번호</label><label class="info"></label></li>
-            <li><label class="index">숙소이름</label><label class="info"></label></li>
-            <li><label class="index">객실정보 / 기간</label><label class="info">{##}2022.04.30 / {# #}박</label></li>
-            <li><label class="index">숙박인원</label><label class="info">{##}2인</label></li>
-            <li><label class="index">체크인</label><label class="info">{##}2022.04.30</label></li>
-            <li><label class="index">체크아웃</label><label class="info">{##}2022.04.31</label></li>
+            <li><label class="index">예약자 이름</label><label class="info">{{ reserve_info.hotel_reserve_username }}</label></li>
+            <li><label class="index">휴대폰 번호</label><label class="info">{{ reserve_info.hotel_reserve_phonenum }}</label></li>
+            <li><label class="index">예약번호</label><label class="info">{{ reserve_info.hotel_reserve_id }}</label></li>
+            <li><label class="index">숙소이름</label><label class="info">{{ hotel }}</label></li>
+            <li><label class="index">객실정보 / 기간</label><label class="info">{{ reserve_info.room_id.room_type }} / {{ night }}박</label></li>
+            <li><label class="index">숙박인원</label><label class="info">{{reserve_info.hotel_reserve_people}}인</label></li>
+            <li><label class="index">체크인</label><label class="info">{{reserve_info.hotel_reserve_startdate}}</label></li>
+            <li><label class="index">체크아웃</label><label class="info">{{reserve_info.hotel_reserve_enddate}}</label></li>
         </ul>
 
         <hr>
