@@ -26,7 +26,7 @@
     <!-- 우측 지도 -->
     <div id="googleMap" class="list_gps_map"></div>
     <!-- 좌측 list -->
-    <div class="left_list">
+    <div class="left_list" style="top: 20%; left:25%; margin: 0 auto;">
         {% if lists %}
             {% for hotel in lists %}
            
@@ -60,7 +60,7 @@
         {% endif %} 
 
         <!-- 리스트 밑의 번호 -->
-        <div class="pagination" >
+        <div class="pagination" style=" left:50%; margin: 0 auto;">
             <ul class="pagination justify-content-center">
                 {# << 표시 여부 #} 
                 {% if lists.number > 1 %}       
@@ -68,7 +68,7 @@
                 {% endif %}
 
                 {# < 표시 여부 #}
-                {% if start_page > 1%}
+                {% if start_page >= 1 %}
                 <li class="page-item"><a class="page-link" href="?page={{ lists.previous_page_number }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
                 {% endif %}
 
