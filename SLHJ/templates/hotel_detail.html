@@ -40,29 +40,42 @@
         <div class="col-lg-4 col-12 hotel_detail_reserve align-self-sm-start">
             <p>예약을 진행하시려면 예약 날짜와 인원수를 입력해주세요.</p>
             <form>
-                <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex">
-                    <button class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">체크인</span></button>
-                    <button class="hotel_detail_reserve_checkout">체크아웃</button>
-                </div>
-                <div class="choice_people">
-                    <button class="hotel_detail_reserve_btn"><i class="fas fa-user-alt"></i>인원선택</button>
-                    <div>
-                        <select name="" id="" style="width: 100%; margin-bottom: 12px; border-radius: 10px;  padding: 15px 20px; font-size: 20px; border: 1px solid var(--sub-grey-color); text-align: center; position: relative; top: 0; left: 0;">
-                            <option value="">인원선택</option>
-                            <option value="1">1명</option>
-                            <option value="2">2명</option>
-                            <option value="3">3명</option>
-                            <option value="4">4명</option>
-                            <option value="5">5명</option>
-                        </select>
+                <div>
+                    <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex">
+                        <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">체크인</span></button>
+                        <button type="button" class="hotel_detail_reserve_checkout">체크아웃</button>
+                    </div>
+                    <div class="date_pick" id="date_pick" style="display: none;">
+                        <!-- <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" /> -->
+                        <input id="start_day" class="start_day" type="date" min="">
+                        <input id="end_day" class="end_day" type="date">
+                        <input id="submit_day" type="submit" onclick="input_date()" value="적용">
                     </div>
                 </div>
+                <div class="choice_people">
+                    <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="hotel_reserve_people" onclick="choice_people()"><i class="fas fa-user-alt"></i><span class="people">인원선택</span></button>
+                    <div class="d-flex justify-content-center hotel_detail_reserve_btn plus_minus_btn">
+                        <div class="hotel_reserve_people">
+                          <button type="button" data-quantity="minus" data-field="hotel_reserve_people">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" value="1" readonly/>
+                        <div class="hotel_reserve_people">
+                          <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                </div>
                 <div class="choice_room">
-                    <button class="hotel_detail_reserve_btn"><i class="fas fa-door-closed"></i>객실선택</button>
-                    <select name="" id="" style="width: 100%; margin-bottom: 12px; border-radius: 10px;  padding: 15px 20px; font-size: 20px; border: 1px solid var(--sub-grey-color); text-align: center; position: absolute; top: 0; left: 0; display: none;">
-                        <option value="">객실선택</option>
-                        <option value="">디럭스</option>
-                    </select>
+                    <button type="button" class="hotel_detail_reserve_btn" onclick="choice_room()"><i class="fas fa-door-closed"></i><span class="room">객실선택</span></button>
+                    <div class="hotel_detail_reserve_btn">
+                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select1" class="hotel_room_select">디럭스</li></a>
+                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select2" class="hotel_room_select">a</li></a>
+                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select3" class="hotel_room_select">b</li></a>
+                        <a onclick="hotel_room_select()" class="select"><li id="hotel_room_select4" class="hotel_room_select">c</li></a>
+                    </div>
                 </div>
                 <button class="hotel_detail_reserve_btn hotel_detail_reserve_btn_submit">예약하기</button>
             </form>
@@ -146,7 +159,7 @@
                     {% if reviews %}
                         {% for review in reviews %}
                         <tr>
-                            <td>{{ review.id_id }}</td>
+                            <td>{{ review.id.user_id }}</td>
                             <td>{{ review.hotel_review_content }}</td>
                             <td class="upload_date">{{ review.hotel_review_date }}</td>
                         </tr>

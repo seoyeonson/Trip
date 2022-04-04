@@ -42,6 +42,29 @@ hr{
     color: var(--line-color);
 }
 
+.input-group-field{
+    width: 100%;
+    border: 1px solid var(--sub-grey-color);
+    text-align: center;
+}
+
+.fa-plus, .fa-minus{
+    margin: 0 !important;
+}
+
+.plus_minus_btn{
+    position: absolute; 
+    top: 0;
+}
+
+.display_control{
+    display: block;
+}
+  
+.hotel_reserve_people{
+    display: none;
+}
+
 /* nav */
 .toolbar {
     background: #FFFFFF;
@@ -112,11 +135,11 @@ hr{
 /* list */
 
 .list_pl_search{
-    position: absolute;
+    /* position: absolute; */
     width: 189px;
     height: 64px;
-    left: 280px;
-    top: 114px;
+    /* left: 280px;
+    top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;
@@ -124,33 +147,33 @@ hr{
 }
 
 .list_stdate_search{
-    position: absolute;
+    /* position: absolute; */
     width: 344px;
     height: 64px;
-    left: 474px;
-    top: 114px;
+    /* left: 474px;
+    top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;  
 }
 
 .list_peonum_search{
-    position: absolute;
+    /* position: absolute; */
     width: 193px;
     height: 64px;
-    left: 823px;
-    top: 114px;
+    /* left: 823px;
+    top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;  
 }
 
 .search_submit {
-    position: absolute;
+    /* position: absolute; */
     width: 135px;
     height: 64px;
-    left: 1026px;
-    top: 114px;
+    /* left: 1026px;
+    top: 114px; */
 
     background-color:#FF6B00;
     color:#FFFFFF;
@@ -166,12 +189,49 @@ height: 1094px;
 left: 778px;
 top: 222px;
 } 
+.left_list{
+  
+    position:absolute; 
 
+}
 .table_list{
     border-collapse: collapse;
     border-radius: 10px;
     text-align: center; 
     list-style: none;
+    
+    width: 651px;
+    height: 201px;
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.list_hotel_name{
+    height: 27px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+.list_hotel_add{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    color: #919191;
+}
+.list_rating{
+    font-size:26px;
+    color: #FFC701;
+    height: 26px;
 }
 
 .list1{
@@ -772,6 +832,21 @@ top: 222px;
     background-color: var(--sub-grey-color);
     border-radius: 10px;
 }
+
+.hotel_room_select{
+    list-style: none;
+    text-align: center;
+    font-size: 20px;
+    padding: 15px 20px;
+    background-color: var(--back-color);
+    display: none;
+    border: 0;
+}
+
+.hotel_room_select:hover{
+    background-color: var(--sub-color);
+}
+
 
 /* vacation_detail */
 .vacation_main_img{
