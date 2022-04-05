@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contents %}
+<script>
+    alert('아이디 비밀번호를 확인해 주세요.')
+    location.href = '/login/'
+</script>
+{% block footer %}{% endblock %}
+{% endblock %}
