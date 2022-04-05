@@ -1,3 +1,5 @@
+from distutils.log import error
+from ssl import AlertDescription
 from django.http import Http404
 import requests, bs4
 import pandas as pd
@@ -14,7 +16,6 @@ import mimetypes
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
-
 
 def main(request):
     return render(request, 'main.html')
@@ -240,9 +241,34 @@ def vacation_detail(request, pk):
     }
         
     return render(request, 'vacation_detail.html', context)
-    
+
 def login(request):
-    return render(request, 'login.html')
+    context = {
+    }
+
+    if request.method == 'POST':
+        user_id = request.POST.get('id')
+        user_pw = request.POST.get('pw')
+        try:
+            user = User.objects.get(user_id = user_id)
+        except User.DoesNotExist:
+            return redirect('/loginFail/')
+
+        if user.user_password == user_pw:
+            session_name = 'user'
+            request.session[session_name] = user_id
+            context['logged'] = True
+            context['user_id'] = user_id
+            context['user_type'] = user.user_type
+            print(context['user_type'],  context['user_id'], context['logged'])
+            return redirect('/main/')
+        elif user.user_password != user_pw:
+            return redirect('/loginFail/')
+
+    return render(request, 'login.html', context)
+
+def loginFail(request):
+    return render(request, 'loginFail.html')
 
 def hotel_confirm(request):
     reserve_id = request.GET['reserve']
@@ -279,18 +305,49 @@ def user_divide(request):
 
 def user_create(request):
     user_type = request.session['user_type'] # 회원구분에서 받아온 회원 타입 정보. admin 또는 basic
+
+    if request.method == 'POST':
+        user_id = request.POST.get('id')
+        user_password = request.POST.get('pw')
+        if user_type == 'admin':    # 관리자 회원은 user_type 이 1 입니다.
+            user_type = 1
+        elif user_type == 'basic':  # 일반회원은 user_type이 2 입니다.
+            user_type = 2
+
+        user_email = request.POST.get('email')
+        user_phonenum = request.POST.get('phonenum')
+
+        user = User(
+            user_id = user_id,
+            user_password = user_password,
+            user_type = user_type,
+            user_email = user_email,
+            user_phonenum = user_phonenum
+        )
+
+        user.save()
+        return redirect('/login/')
+
     return render(request, 'user_create.html')
 
-def user_info(request):
-    if request.method=="GET":
-        user = User.objects.get(id=1)
+def user_info(request, pk):
+    if request.method=="POST":
+        # 이메일, 전화번호를 입력한 값으로 변경
+        user = User.objects.get(pk=pk)
+        user_phonenum = request.POST.get('user_phonNum')
+        user_email = request.POST.get('user_email')
+
+        user.user_phonenum = user_phonenum
+        user.user_email = user_email
+        user.save()
+
         context = {
             'user': user
         }
+
         return render(request, 'user_info.html', context)
-    if request.method=="POST":
-        # 이메일, 전화번호를 입력한 값으로 변경
-        user = User.objects.get(id=1)
+    if request.method=="GET":
+        user = User.objects.get(pk=pk)
         context = {
             'user': user
         }
@@ -347,11 +404,12 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
     vacation_reserve_date = '2022-04-01'
     vacation_reserve_username = '이광우'
     vacation_reserve_phonenum = '010-1234-5678'
-    vacation_reserve_price = 100000 * vacation_reserve_people  # 기본가격 + 인원 수
 
     id = User.objects.get(pk=1)
     # id = User.objects.get(pk=pk)
     vacation_id = Vacation.objects.get(pk=1)
+
+    vacation_reserve_price = vacation_id.vacation_price * vacation_reserve_people  # 기본가격 + 인원 수
 
     vacation_reserve = Vacation_reserve(
         vacation_reserve_people = vacation_reserve_people,

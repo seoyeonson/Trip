@@ -7,23 +7,24 @@
 
 {% block contents %}
 <div class="container">
-  <div class="login_box d-lg-flex flex-row justify-content-center">
-    <form action="#" class="col-lg-4 col-12">
-      <h1 class="mb-5"><a href="{% url 'main' %}">Trip</a></h1>
-        <div class="form-group mb-3">
-          <input type="text" class="form-control" id="id" name="id" placeholder="아이디">
-        </div>
-        <div class="form-group mb-3">
-          <input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호">
-        </div>
-        <div class="form-group mb-3">
-            <a href="{% url 'user_divide' %}" class="user_create btn col-12">회원가입</a>
-        </div>
-        <div class="form-group mb-3">
-          <input type="submit" class="btn col-12" id="logInCheck" value="로그인">
-        </div>
-      </form>
-  </div>
+    <div class="login_box d-lg-flex flex-row justify-content-center">
+        <form method='POST' action="." class="col-lg-4 col-12">
+            {% csrf_token %}
+            <h1 class="mb-5"><a href="{% url 'main' %}">Trip</a></h1>
+            <div class="form-group mb-3">
+                <input type="text" class="form-control" id="id" name="id" placeholder="아이디">
+            </div>
+            <div class="form-group mb-3">
+                <input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호">
+            </div>
+            <div class="form-group mb-3">
+                <a href="{% url 'user_divide' %}" class="user_create btn col-12">회원가입</a>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" class="btn col-12" id="logInCheck" value="로그인">
+            </div>
+        </form>
+    </div>
 </div>
 {% block footer %}{% endblock %}
 {% endblock %}
