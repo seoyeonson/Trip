@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block contents %}
 <!-- {% block title %}검색{% endblock %} -->
@@ -58,7 +59,7 @@
                                 <li class="list_hotel_pay">
                                     {% for hotel_room in hotel_rooms %}
                                         {% if hotel_room.hotel_id_id == hotel.hotel_id %}    
-                                            {{ hotel_room.room_price }}원
+                                            {{ hotel_room.room_price|intcomma }}원
                                         {% endif %}
                                     {% endfor %}
                                 </li>

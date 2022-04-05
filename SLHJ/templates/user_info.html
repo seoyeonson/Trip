@@ -45,6 +45,7 @@
                             {% csrf_token %}
                             <input class="form-control" type="text" name="user_phonNum" value="{{user.user_phonenum}}"disabled>
                             <input class="update_btn " type="button" id="let_phone_update" value="수정">
+                            <input type="hidden" name="user_email" value="{{user.user_email}}">
                             <div class="box_phNm">
                                 <input class="cancel_btn update_btn" type="reset" id="cancel_phNm" value="취소">
                                 <input class="ok_btn update_btn" type="submit" id="phNm_updateOk" value="수정완료">
@@ -52,7 +53,7 @@
                             </div>
                         </form>
                     </div>
-
+                    
                 </div>
                 <div>
                     <label>이메일</label>
@@ -61,6 +62,7 @@
                             {% csrf_token %}
                             <input class="form-control" type="text" name="user_email" value="{{user.user_email}}" disabled>
                             <input class="update_btn" type="button" id="let_email_update" value="수정">
+                            <input type="hidden" name="user_phonNum" value="{{user.user_phonenum}}">
                             <div class="box_email">
                                 <input class="update_btn cancel_btn" type="reset" id="cancel_email" value="취소">
                                 <input class="update_btn ok_btn" type="submit" id="email_updateOk" value="수정완료">

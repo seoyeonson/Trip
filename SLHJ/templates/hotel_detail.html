@@ -67,7 +67,7 @@
                             <i class="fa fa-minus" aria-hidden="true"></i>
                           </button>
                         </div>
-                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" value="1" readonly/>
+                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" value="1" max_num="" readonly/>
                         <div class="hotel_reserve_people">
                           <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
                             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -186,7 +186,7 @@
                     {% endif %}
 
                     {# < 표시 여부 #}
-                    {% if start_page > 1%}
+                    {% if start_page < reviews.number %}
                     <li class="page-item"><a class="page-link" href="?page={{ reviews.previous_page_number }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
                     {% endif %}
 
