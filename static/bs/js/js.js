@@ -155,21 +155,6 @@ $(document).ready(function() {
         $("#chk_out").html(end_day);
     });
 
-
-    // 방 종류애 따라 사용할 수 있도록 추후 수정
-    $("#hotel_room_select1").click(function() {
-        $(".room").html("디럭스");
-    });
-    $("#hotel_room_select2").click(function() {
-        $(".room").html("a");
-    });
-    $("#hotel_room_select3").click(function() {
-        $(".room").html("b");
-    });
-    $("#hotel_room_select4").click(function() {
-        $(".room").html("c");
-    });
-
     // 로그인 체크
     $('#logInCheck').click(function(){
         console.log("들어옴");
@@ -276,7 +261,7 @@ $(document).ready(function() {
         return true;
     });
 
-    // This button will increment the value
+    // detail_reserve_people button
     $('[data-quantity="plus"]').click(function(e){
         e.preventDefault();
         // Get the field name
@@ -341,7 +326,9 @@ function choice_room() {
     $('.hotel_reserve_people').css('display', 'none');
 }
 
-function hotel_room_select(){
+function hotel_room_select(text){
     $('.hotel_room_select').css('display', 'none');
+    value = $(text).text();
+    $(".room").html(value);
 }
 
