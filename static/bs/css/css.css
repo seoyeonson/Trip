@@ -133,44 +133,51 @@ hr{
 }
 
 /* list */
-
-.list_pl_search{
-    /* position: absolute; */
-    width: 189px;
+.list_search{
+    width: 881px;
     height: 64px;
+    border-color:white;
+}
+.list_pl_search{
+ 
+    height: 64px;
+    width:189px;
     /* left: 280px;
     top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;
-
+    
+    
 }
 
 .list_stdate_search{
-    /* position: absolute; */
-    width: 344px;
+ 
     height: 64px;
+    width:344px;
     /* left: 474px;
     top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;  
+    
 }
 
 .list_peonum_search{
-    /* position: absolute; */
-    width: 193px;
+ 
     height: 64px;
+    width:193px;
     /* left: 823px;
     top: 114px; */
     border: none;
     background: #F1F1F1;
     border-radius: 10px;  
+    
 }
 
 .search_submit {
-    /* position: absolute; */
-    width: 135px;
+    
+    width:135px;
     height: 64px;
     /* left: 1026px;
     top: 114px; */
@@ -180,14 +187,16 @@ hr{
     border: none;
     border-radius: 10px;
 
+
 }
 
 .list_gps_map{
-position: absolute;
+    margin: 0 auto;
+    margin-top: 36px;
 width: 809px;
-height: 1094px;
-left: 778px;
-top: 222px;
+height: 1060px;
+left: 20%;
+top: 100%;
 } 
 .left_list{
   
@@ -199,7 +208,8 @@ top: 222px;
     border-radius: 10px;
     text-align: center; 
     list-style: none;
-    
+    display: inline-block;
+    margin: 0 10px;
     width: 651px;
     height: 201px;
     background: #FFFFFF;
@@ -207,8 +217,32 @@ top: 222px;
     box-sizing: border-box;
     border-radius: 10px;
 }
+.list_content{
+    padding:20px;
+}
+.list_text{
+    float:left;
+    width: 65%;
+    
+    text-align: left; 
+}
+.list_text>ul{
+    list-style: none;
+}
+.list_hotel_image{
+    background-image: url(../../img/hotel.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
 
-.list_hotel_name{
+    float:left;
+    width:30%;
+    height: 149px;
+    
+ 
+}
+
+.list_hotel_name>a{
     height: 27px;
     font-family: 'Poppins';
     font-style: normal;
@@ -222,16 +256,17 @@ top: 222px;
     font-size: 15px;
     line-height: 136.5%;
     font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 136.5%;
     color: #919191;
 }
 .list_rating{
     font-size:26px;
     color: #FFC701;
     height: 26px;
+}
+.list_hotel_pay{
+    text-align: right;
+    font-size:25px;
+    color:#f56600;
 }
 
 .list1{
@@ -639,11 +674,35 @@ top: 222px;
 .list_page_num>ul{
     list-style: none;   
     padding-left: 0px;
+
 }
 
 .list_page_num>ul>a{
     display: inline-block;
     margin: 0 10px;
+}
+
+.list_pagination{
+    margin: 0 auto;
+    margin-top: 36px;
+    border-radius: 100%;
+    left: 30%;
+    top: 100%;
+    
+}
+.pagination a{
+    color:#f56600
+
+    /* text-decoration: none; */
+    
+}
+.pagination a:hover{
+    color:#ffffff;
+    background-color: #f56600;
+}
+.list_pagination>pagination>li>page-item:active{
+    outline: none;
+    color:#f56600;     
 }
 
 

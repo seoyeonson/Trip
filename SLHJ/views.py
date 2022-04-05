@@ -51,15 +51,21 @@ def list2(request,SIGUN_NM):
 
     if end_page >= paginator.num_pages:
         end_page = paginator.num_pages
+    last_page=0
+
+    for last_page in paginator.page_range:
+        last_page = last_page + 1
+
     context = {
         # 'hotel': hotel,
         'lists': page_obj,  # Hotel table
         'start_page': start_page,
         'end_page': end_page,
+        'last_page' : last_page,
         'page_range': range(start_page, end_page + 1),
         'count' : count,
         'hotel_rooms' : hotel_room, # Hotel_room table
-    }
+            }
     return render(request, 'hotel_list2.html', context)
 
 def user_create(request):

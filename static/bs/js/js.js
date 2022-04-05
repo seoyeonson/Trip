@@ -47,8 +47,13 @@ function input_date() {
     document.getElementById("date_pick").style.display = 'none';
     
 }
-function list_gps_subit(){
-    
+function list_choice(){
+    var ch_lat = document.getElementsByName("li_lat").value
+    var ch_lng = document.getElementsByName("li_lng").value
+    document.getElementsByName("lat").value = ch_lat 
+    document.getElementsByName("lng").value = ch_lng 
+
+    return  document.getElementsByName("lat").value,  document.getElementsByName("lat").value
 }
 function list_first_page(){
     document.getElementById("table_list_1").style.display = 'block';
@@ -329,6 +334,7 @@ function myMap() {
 	var marker = new google.maps.Marker({position: myPos});
     marker.setMap(map);
 }
+
 
 function choice_people() {
     $('.hotel_reserve_people').css('display', 'block');
