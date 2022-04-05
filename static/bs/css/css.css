@@ -23,6 +23,19 @@ hr{
     border-color : var(--sub-grey-color);
 }
 
+.page-link{
+    color: var(--main-color);
+}
+
+.page-link:hover{
+    color: var(--main-color);
+}
+
+.page-item.active .page-link{
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+}
+
 /* 기본색상 */
 :root {
     --back-color : #fff;
@@ -748,10 +761,9 @@ top: 100%;
     width: 100%;
     height: 500px;
     border-radius: 20px;
-    background-image: url(/static/img/hotel_detail_img.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: bottom;
+    background-position: center center;
 }
 
 .hotel_detail1{

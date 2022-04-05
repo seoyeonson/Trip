@@ -4,8 +4,22 @@ $(document).ready(function(){
     $("#auth_btn").click(phone_confirm);
     $("#confirm_btn").off().on("click",confirm_num);
     $("#purchase_btn").off().on("click",purchase);
-    $("#")
 });
+
+function coolSMS(phoneNum){
+    webPreferences: {
+        nodeIntegration: true
+        contextIsolation: false
+    }
+    const spawn = require('child_process').spawn;
+    const result = spawn('python', ['phone_confirm.py', phoneNum]);
+    result.stdout.on('data', function(data){
+        console.log(data.toString());
+    });
+    result.stderr.on('data', function(data) {
+        console.log(data.toString()); 
+    });
+};
 
 function all_agree(){
     if($("#all_agree").is(":checked")){
@@ -32,7 +46,6 @@ function confirm_cancel(){
 
 // 휴대폰 인증
 function phone_confirm(){
-    alert('야');
     phone_num = $('#phone_num').val().trim();
     phone_pat = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 
@@ -48,7 +61,18 @@ function phone_confirm(){
     }
     var phone_new = phone_num.replace(/[^0-9]/g, "").replace(/([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/, "$1-$2-$3");
     $('#phone_num').val(phone_new);
-    $('.phone_confirm').css("display", "block"); 
+
+    // $("#coolsms_pNum").html(phone_new.replace(/[^0-9]/g, ""))
+    // var xhr = new XMLHttpRequest();
+    // xhr.onreadystatechange = function(){
+    //     if(this.readyState == 4 && this.status == 200){
+    //         alert(this.responseText);
+            $('.phone_confirm').css("display", "block");
+	// 	} 
+    // }
+    // xhr.open('GET',file, true);
+    // xhr.send()
+
 };
 
 function confirm_num(){
@@ -69,8 +93,7 @@ function confirm_num(){
 
 function purchase(){
     var reserve_name = $('#reserve_name').val().trim()
-    // var check = $(".reserve_check").is(":checked")
-    // phone_num = $('#phone_num').val().trim();
+
     if(reserve_name==""){
         $('#reserve_name').focus();
         return false;
@@ -88,6 +111,3 @@ function purchase(){
     return true;
 };
 
-function coolSMS(){
-
-}
