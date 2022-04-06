@@ -78,6 +78,10 @@ hr{
     display: none;
 }
 
+.date_pick{
+    display: none;
+}
+
 /* nav */
 .toolbar {
     background: #FFFFFF;
@@ -133,10 +137,8 @@ hr{
 
 .menu_select {
     display: inline-block;
-    width: 300px;
-    height: 80px;
     background-color: #FFFFFF;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 .hotel_icon {
@@ -1079,27 +1081,24 @@ top: 100%;
 
 .menu_icon {
     list-style:none;
-    padding-top: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 15px 25px;
+    margin: 0px;
 }
 
-.menu_icon>ul {
+.menu_icon ul {
     list-style: none;
     display: inline-block;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0 30px;
 }
 
 .menu_icon>ul>a>li {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 0 20px;
 }
 
 .hotel_search {
     margin-top: 10px;
-    width: 600px;
-    height: 80px;
+    /* width: 600px; */
+    /* height: 80px; */
     margin-left: auto;
     margin-right: auto;
     background-color: #FFFFFF;
@@ -1256,3 +1255,85 @@ top: 100%;
 .date_pick {
     margin-top: 10px;
 }
+
+/* body {
+    color: #000;
+    overflow-x: hidden;
+    height: 100%;
+    background-color: #FFEE58 !important;
+    background-repeat: no-repeat;
+    padding: 0 !important
+}
+
+.container {
+    padding-top: 120px;
+    padding-bottom: 120px
+}
+
+label {
+    font-size: 18px
+}
+
+input {
+    padding: 10px 15px !important;
+    border: 1px solid #CFD8DC !important;
+    border-radius: 4px !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #000 !important;
+    font-size: 16px !important;
+    letter-spacing: 1px;
+    position: relative;
+    width: 100%
+}
+
+input:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #FFA000 !important;
+    outline-width: 0
+}
+
+.daterangepicker {
+    background-color: #fff;
+    border-radius: 0 !important;
+    align-content: center !important;
+    padding: 0 !important
+}
+
+thead tr:nth-child(2) {
+    color: #BDBDBD !important
+}
+
+tbody tr td {
+    padding: 5px 7px !important
+}
+
+.month {
+    font-size: 16px !important;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important
+}
+
+.start-date,
+.end-date {
+    border-radius: 0px !important
+}
+
+.available:hover {
+    border-radius: 0px !important
+}
+
+.off {
+    color: #EEEEEE !important
+}
+
+.off:hover {
+    background-color: #EEEEEE !important;
+    color: #fff !important
+}
+
+.drp-buttons {
+    display: none !important
+} */

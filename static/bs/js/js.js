@@ -301,6 +301,17 @@ $(document).ready(function() {
             $('input[name='+fieldName+']').val(1);
         }
     });
+
+    // $(function() {
+    //     $('input[name="daterange"]').daterangepicker({
+    //         "startDate": "01/01/2020",
+    //         "endDate": "17/01/2020",
+    //         opens: 'center',
+    //         locale: {
+    //         format: 'DD/MM/YYYY'
+    //         }
+    //     });
+    // });
 });
 
 // 구글맵
@@ -322,12 +333,14 @@ function myMap() {
 
 
 function choice_people() {
+    $('.date_pick').css('display', 'none');
     $('.hotel_reserve_people').css('display', 'block');
     $('.hotel_room_select').css('display', 'none');
     $('.hotel_reserve_people').toggleClass('');
 }
 
 function choice_room() {
+    $('.date_pick').css('display', 'none');
     $('.hotel_room_select').css('display', 'block');
     $('.hotel_reserve_people').css('display', 'none');
 }
@@ -336,5 +349,13 @@ function hotel_room_select(text){
     $('.hotel_room_select').css('display', 'none');
     value = $(text).text();
     $(".room").html(value);
+    $(".room").html(value);
+    $('input[name=reserve_room]').attr('value', value);
+}
+
+function choice_date(){
+    $('.date_pick').css('display', 'block');
+    $('.hotel_reserve_people').css('display', 'none');
+    $('.hotel_room_select').css('display', 'none');
 }
 
