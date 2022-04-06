@@ -2,15 +2,17 @@
 {% load static %}
 {% load humanize %}
 {% block extrahead %}
-<link href="{% static 'bs/css/list.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/hotel_search.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block contents %}
-
+{% block script %}
+<script src="{% static 'bs/js/search.js' %}"></script>
+{% endblock%}
 {% block title %}검색{% endblock %}
-<div style="width: 100%; margin-top: 120px;">
-    <div class="list_search" style="margin: 0 auto;">      <!-- 검색 창 -->
-        <select class="list_pl_search" > <!--지역 검색-->
+<div class="search">
+    <div class="list_search">      <!-- 검색 창 -->
+        <select class="list_pl_search"> <!--지역 검색-->
             <option value="suwon"><i class="fas fa-map-marker-alt" class="map"></i>수원</option>
             <option value="siheong">시흥</option>
             <option value="namyangzu" >남양주</option>
@@ -28,21 +30,20 @@
         <input type="submit" class="search_submit" value="검색"> <!--검색버튼-->
     </div>
 </div>
-
-    <!-- 우측 지도 -->
-    <!-- <div id="googleMap" class="list_gps_map"></div> -->
-   
+    
+    
+<div class="list_content">
     <!-- 좌측 list -->
-    <div class="left_list" style=" left: 20%; margin: 0 auto; ">
+    <div class="left_list">
         {% if lists %}
             {% for hotel in lists %}
             
-                <button type="submit" class="table_list" onclick="list_choice(this)">
+                <button type="submit" class="table_list" onclick="search_choice(this)">
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="li_lat">
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="li_lng"> 
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="lat">
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="lng">
-                    <div class="list_content">                
+                    <div class="list_table_content">                
                         <div class="list_hotel_image"></div>
                         <div class= "list_text">
                             <ul>
@@ -63,8 +64,7 @@
                                 <li class="list_hotel_pay">
                                     {% for hotel_room in hotel_rooms %}
                                         {% if hotel_room.hotel_id_id == hotel.hotel_id %}    
-                                            {{ hotel_room.room_price|intcomma }}원
-                                    
+                                            {{ hotel_room.room_price|intcomma }}원        
                                         {% endif %}
                                     {% endfor %}
                                 </li>
@@ -82,8 +82,8 @@
         <!-- 리스트 밑의 번호 -->
 
 
-        <div class="list_pagination" style=" right:30%; margin: 0 auto;">
-            <ul class="pagination justify-content-center">
+        <div class="list_pagination" >
+            <ul class="pagination">
                 {# << 표시 여부 #} 
                 {% if lists.number > 1 %}       
                 <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
@@ -118,6 +118,12 @@
             </ul>
         </div>
     </div>
+    <!-- 우측 지도 -->
+    <div id="googleMap" class="list_gps_map"></div>
+</div>
+    
+    
+   
 
 
 {% endblock %}

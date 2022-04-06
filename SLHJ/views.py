@@ -23,7 +23,7 @@ def main(request):
 def list(request):
     return render(request, 'hotel_list.html')
 
-def list2(request,SIGUN_NM):
+def hotel_search(request,SIGUN_NM):
     count={}
     #SIGUN_NM= OO시인 hotel 테이블 가져옴 
     all_hotel_lists = Hotel.objects.filter(SIGUN_NM = SIGUN_NM)
@@ -35,15 +35,19 @@ def list2(request,SIGUN_NM):
         # (크거나 작은 값) orm 사용
         # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
         count.update({i+1 : all_hotel_lists.filter(hotel_rate__gt=i).filter(hotel_rate__lte=i+1).count()})
+    
     # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
     write_pages = int(request.session.get('write_pages', 5))
+    
     # 한 페이지에 보일 리뷰 개수
     per_page = int(request.session.get('per_page', 5))
+    
     # 현재 페이지
     page = int(request.GET.get('page', 1))
 
     # 한 페이지당 5개씩 보여주는 Paginator 생성
     paginator = Paginator(all_hotel_lists, per_page)
+    
     # 페이지에 대한 정보
     page_obj = paginator.get_page(page)
 
@@ -52,11 +56,14 @@ def list2(request,SIGUN_NM):
 
     if end_page >= paginator.num_pages:
         end_page = paginator.num_pages
+
     last_page=0
 
     for last_page in paginator.page_range:
         last_page = last_page + 1
 
+    last_page= last_page -1
+    zero = 0
     context = {
         # 'hotel': hotel,
         'lists': page_obj,  # Hotel table
@@ -65,9 +72,61 @@ def list2(request,SIGUN_NM):
         'last_page' : last_page,
         'page_range': range(start_page, end_page + 1),
         'count' : count,
+        'zero' : zero,
         'hotel_rooms' : hotel_room, # Hotel_room table
             }
-    return render(request, 'hotel_list2.html', context)
+    return render(request, 'hotel_search.html', context)
+
+def vacation_search(request,SIGUN_NM):
+    count={}
+    #SIGUN_NM= OO시인 vacation 테이블 가져옴 
+    all_vacation_lists = Vacation.objects.filter(SIGUN_NM = SIGUN_NM)
+
+
+    # 리뷰별 평점점수 (1~5점) count
+    for i in range(5):
+        # (크거나 작은 값) orm 사용
+        # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
+        count.update({i+1 : all_vacation_lists.filter(vacation_rate__gt=i).filter(vacation_rate__lte=i+1).count()})
+    
+    # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+    write_pages = int(request.session.get('write_pages', 5))
+   
+    # 한 페이지에 보일 리뷰 개수
+    per_page = int(request.session.get('per_page', 5))
+    
+    # 현재 페이지
+    page = int(request.GET.get('page', 1))
+
+    # 한 페이지당 5개씩 보여주는 Paginator 생성
+    paginator = Paginator(all_vacation_lists, per_page)
+    
+    # 페이지에 대한 정보
+    page_obj = paginator.get_page(page)
+
+    start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages - 1
+
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+
+    last_page=0
+
+    for last_page in paginator.page_range:
+        last_page = last_page + 1
+
+    last_page= last_page -1
+    
+    context = {
+        # 'hotel': hotel,
+        'lists': page_obj,  # vacation table
+        'start_page': start_page,
+        'end_page': end_page,
+        'last_page' : last_page,
+        'page_range': range(start_page, end_page + 1),
+        'count' : count,
+            }
+    return render(request, 'vacation_search.html', context)
 
 def user_create(request):
     return render(request, 'user_create.html')

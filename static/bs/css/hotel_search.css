@@ -1,0 +1,193 @@
+ .list_search{
+    margin:auto;
+    width: 880px;
+    height: 64px;
+    border-color:white;   
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 136.5%;
+    display:flex;
+    justify-content: center;
+    vertical-align: middle;
+    margin: auto;
+    max-width: 881px;
+    margin-top :5%
+}
+
+.list_pl_search{ 
+    width:20%;
+    border: none;
+    background: #F1F1F1;
+    border-radius: 10px;
+    text-align: center;
+    
+}
+
+.list_stdate_search{  
+    width:40%;
+    border: none;
+    background: #F1F1F1;
+    border-radius: 10px;  
+    text-align: center;
+}
+
+.list_peonum_search{   
+    width:20%;
+    border: none;
+    background: #F1F1F1;
+    border-radius: 10px;  
+    text-align: center;
+}
+
+.search_submit {    
+    width:20%;
+    background-color:#FF6B00;
+    color:#FFFFFF;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+}
+.list_content{
+    display: flex;
+    justify-content: center;
+    max-width: 1440px;
+    margin:auto;
+    margin-top:20px;
+}
+
+
+.list_gps_map{
+    width: 900px;
+    height: 1060px;
+    min-width: 900px;
+} 
+.left_list{
+    flex-direction: column;
+}
+.table_list{
+    border-collapse: collapse;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    text-align: center; 
+    list-style: none;
+    display: inline-block;
+    margin: 0 10px;
+    width: 651px;
+    height: 201px;
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    box-sizing: border-box;
+    border-radius: 10px;
+    flex-direction: row;
+}
+.list_table_content{
+    display: flex;
+    justify-content: center;
+    max-width: 1440px;
+    margin:auto;
+    margin-top:20px;
+    
+}
+.list_text{ 
+    width:65%;
+    height: 100%;
+    text-align: left; 
+    margin-bottom:10px;
+}
+
+.list_text>ul{
+    list-style: none;
+}
+
+.list_hotel_image{
+    background-image: url(../../img/hotel.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    width:35%;
+    height:150px;
+    margin-left:10px;
+    margin-bottom:20px;
+}
+
+
+.list_hotel_name>a{
+    height: 27px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+.list_hotel_add{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 136.5%;
+    font-family: 'Poppins';
+    color: #919191;
+}
+.list_rating{
+    font-size:26px;
+    color: #FFC701;
+    height: 26px;
+}
+.list_hotel_pay{
+    text-align: right;
+    margin-right: 10px;
+    margin-top:20px;
+    font-size:25px;
+    color:#f56600;
+}
+
+.list_page_num{
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    left: 245px;
+    top: 1334px;
+}
+
+.list_page_num>ul{
+    list-style: none;   
+    padding-left: 0px;
+
+}
+
+.list_page_num>ul>a{
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.list_pagination{
+    border-radius: 100%;
+    margin-left: 30%;    
+}
+
+.pagination a{
+    color:#f56600  
+}
+
+.pagination a:hover{
+    color:#ffffff;
+    background-color: #f56600;
+}
+
+.list_pagination>pagination>li>page-item:active{
+    outline: none;
+    color:#f56600;     
+}
+
+
+ 
+
+
+
+
+
+
+
+
+
