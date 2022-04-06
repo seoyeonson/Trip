@@ -24,9 +24,10 @@ urlpatterns = [
 
     # 마이페이지
     path('user_info/<int:pk>/', views.user_info, name='user_info'),
-    path('pw_change/', views.pw_change, name='pw_change'),
-    path('history_hotel/', views.history_hotel, name='history_hotel'),
-    path('history_vacation/', views.history_vacation, name='history_vacation'),
+    path('pw_change/<int:pk>/', views.pw_change, name='pw_change'),
+    path('pw_changeOk/', views.pw_changeOk, name='pw_changeOk'),
+    path('history_hotel/<int:pk>', views.history_hotel, name='history_hotel'),
+    path('history_vacation/<int:pk>', views.history_vacation, name='history_vacation'),
 
     #api data용
     # path('api/', views.api, name='api'),

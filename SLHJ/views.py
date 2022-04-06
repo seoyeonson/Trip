@@ -9,13 +9,14 @@ from urllib.parse import urlencode, quote_plus, unquote
 from django.shortcuts import render, redirect
 from SLHJ.models import User, Vacation, Vacation_reserve, Vacation_review, Vacation_image
 from SLHJ.models import Hotel, Hotel_room, Hotel_review, Hotel_reserve, Hotel_image
-import datetime
+from datetime import datetime
 from django.core.paginator import Paginator
 import os
 import mimetypes
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
+import time
 
 def main(request):
     return render(request, 'main.html')
@@ -278,15 +279,18 @@ def login(request):
             user = User.objects.get(user_id = user_id)
         except User.DoesNotExist:
             return redirect('/loginFail/')
-
+        context = {
+            'user' : user
+        }
         if user.user_password == user_pw:
             session_name = 'user'
             request.session[session_name] = user_id
             context['logged'] = True
+            context['id'] = user.id
             context['user_id'] = user_id
             context['user_type'] = user.user_type
-            print(context['user_type'],  context['user_id'], context['logged'])
-            return redirect('/main/')
+            print(context['user_type'],  context['user_id'], context['logged'], context['id'])
+            return render(request, 'user_info.html', context)
         elif user.user_password != user_pw:
             return redirect('/loginFail/')
 
@@ -378,22 +382,53 @@ def user_info(request, pk):
         }
         return render(request, 'user_info.html', context)
 
-def pw_change(request):
-    user = User.objects.get(id=1)
+def pw_change(request, pk):
+    user = User.objects.get(pk=pk)
     context = {
-        'user': user
+        'user':user
     }
+    if request.method == 'POST':
+        user_password = request.POST.get('confirm_pw')
+
+        user.user_password = user_password
+        user.save()
+
+        return redirect('/pw_changeOk/')
+
     return render(request, 'pw_change.html', context)
 
-def history_hotel(request):
-    user = User.objects.get(id=1)
+def pw_changeOk(request):
+    return render(request, 'pw_changeOk.html')
+
+def history_hotel(request, pk):
+    user = User.objects.get(pk=pk)
+    hotel_reserve = Hotel_reserve.objects.filter(id=pk)
+    hotels = []
+    hotel_reserves = []
+    for i in range(hotel_reserve.count()):
+        hotel_room = Hotel_room.objects.get(pk=hotel_reserve[i].room_id_id)
+        hotel = Hotel.objects.get(pk=hotel_room.hotel_id_id)
+        now = datetime.now()
+        date = now.strftime('%Y-%m-%d')
+        nowdate = str(date)
+        mynum = {'reservenum' : i}
+
+        if time.strptime(str(hotel_reserve[i].hotel_reserve_enddate), '%Y-%m-%d') > time.strptime(nowdate, '%Y-%m-%d'):     # 현재 날짜로부터 지난 데이터는 가져오지 않습니다.
+            hotels.append(hotel)
+            hotel_reserves.append(hotel_reserve[i])
+    
+    # hotel_reserve.room_id -> hotel_room.hotel_id -> hotel.info
+
     context = {
-        'user': user
+        'user': user,
+        'hotels': hotels,
+        'hotel_reserves' : hotel_reserves,
     }
+    
     return render(request, 'history_hotel.html', context)
 
-def history_vacation(request):
-    user = User.objects.get(id=1)
+def history_vacation(request, pk):
+    user = User.objects.get(pk=pk)
     context = {
         'user': user
     }
@@ -475,10 +510,10 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_people = 2
     hotel_reserve_username = '이광우'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-04-02'
-    hotel_reserve_enddate = '2022-04-04'
+    hotel_reserve_startdate = '2022-04-07'
+    hotel_reserve_enddate = '2022-04-08'
 
-    hotel_room = Hotel_room.objects.get(pk=1)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=2)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
     id = User.objects.get(pk=1)

@@ -22,6 +22,5 @@ function check_form(){
         $('#error_cfrm').html('비밀번호가 일치하지 않습니다')
         return false;
     }
-    alert('비밀번호가 변경되었습니다.');
     return true;
 }

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contents %}
+<script>
+    alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.')
+    location.href = '/login/'
+</script>
+{% block footer %}{% endblock %}
+{% endblock %}
