@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/hotel_regist.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}여행지 등록{% endblock %}
+
+{% block contents %}
+{% block script %}
+<script src="{% static 'bs/js/admin_vacation.js' %}"></script>
+{% endblock%}
+
+<div id="side_nav" class="side_nav">
+    <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
+    <a class="side_menu" href="{% url 'admin_info' %}">회원정보</a>
+    <a class="side_menu" href="{% url 'admin_pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" href="{% url 'admin_hotel' %}">숙소관리</a>
+    <a class="side_menu" id=self href="{% url 'admin_vacation' %}">여행지 관리</a>
+    <a class="side_menu" href="{% url 'admin_manage' %}">예약관리</a>
+</div>
+
+
+<div class="con2">
+    <div class="contents">
+        <h5 id="title">마이페이지 > 여행지등록</h5>
+        <form class="regist_form" name="vacation_regist_form">
+            <input id="register_btn" type="button" value="정보등록">
+            <input id="cancel_btn" type="button" value="등록취소">
+            <label class="index_title">기본정보</label>
+            <div class="form-group">
+                <label>고유번호</label>
+                <label class="form-control">{##}고유번호</label>
+            </div>
+            <div class="form-group">
+                <label>여행지 이름</label>
+                <input class="form-control" type="text" name="vacation_name">
+            </div>
+            <div class="form-group">
+                <label>도로명주소</label>
+                <input type="button" value="주소찾기" id="search_adress">
+                <input class="form-control" name="vacation_adress" readonly>
+
+            </div>
+            <div class="form-group">
+                <label>전화번호</label>
+                <input class="form-control" type="text" name="phoneNum">
+            </div>
+            <div class="form-group">
+                <label>요약설명</label>
+                <textarea class="form-control"></textarea>
+            </div>
+
+            <label class="index_title">대표사진 등록</label>
+            <div class="form-group">
+                <form action="{% url 'vacation_register' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input class="form-control" id="file_title" type="text" name="fileTitle" placeholder="Enter a title">
+                    <input class="file_select_btn" type="file" name="uploadedFile">
+                    <input class="file_upload_btn" type="submit" value="Upload">
+                </form>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

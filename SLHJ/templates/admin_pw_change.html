@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/pw_change.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}비밀번호 변경{% endblock %}
+
+{% block contents %}
+{% block script %}
+<script src="{% static 'bs/js/pw_change.js' %}"></script>
+{% endblock%}
+
+<div id="side_nav" class="side_nav">
+    <!-- <a href="#" 
+        class="closebtn" id="closebtn" 
+        onclick="closeNav()">&times;</a> -->
+    <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
+    <a class="side_menu" href="{% url 'admin_info' %}">회원정보</a>
+    <a class="side_menu" id=self href="{% url 'admin_pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" href="{% url 'admin_hotel' %}">숙소관리</a>
+    <a class="side_menu" href="{% url 'admin_vacation' %}">여행지 관리</a>
+    <a class="side_menu" href="{% url 'admin_manage' %}">예약관리</a>
+</div>
+
+
+<div class="con2">
+    <div class="contents">
+        <h5 id="title">마이페이지 > 비밀번호변경</h5>
+        <div class="center">
+            <form name="pw_change" id="pw_change" class="pw_change justify-content-center" action="." method="POST">
+                {% csrf_token %}
+                <table>
+                    <tr class="form-group">
+                        <td><label>현재 비밀번호</label></td>
+                        <td><input class="form-control" type="password" name="current_pw">
+                            <span class="error" id="error_curr"></span></td>
+
+                    </tr>
+                    <tr class="form_group">
+                        <td>변경 비밀번호</td>
+                        <td><input class="form-control" type="password" name="new_pw"
+                            ><span class="error" id="error_new"></span></td>
+                    </tr>
+                    <tr class="form_group">
+                        <td>비밀번호 확인</td>
+                        <td><input class="form-control" type="password" name="confirm_pw">
+                            <span class="error" id="error_cfrm"></span></td>
+                    </tr>
+                </table>
+                <input class="update_btn" type="submit" value="변경">
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

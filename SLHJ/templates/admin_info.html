@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/user_info.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}회원정보{% endblock %}
+
+{% block contents %}
+{% block script %}
+<script src="{% static 'bs/js/user_info.js' %}"></script>
+{% endblock%}
+
+<div id="side_nav" class="side_nav">
+    <!-- <a href="#" 
+        class="closebtn" id="closebtn" 
+        onclick="closeNav()">&times;</a> -->
+    <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
+    <a class="side_menu" id=self href="{% url 'admin_info' %}">회원정보</a>
+    <a class="side_menu" href="{% url 'admin_pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" href="{% url 'admin_hotel' %}">숙소관리</a>
+    <a class="side_menu" href="{% url 'admin_vacation' %}">여행지 관리</a>
+    <a class="side_menu" href="{% url 'admin_manage' %}">예약관리</a>
+</div>
+
+
+<div class="con2">
+    <div class="contents">
+        <h5 id="title">마이페이지 > 회원정보</h5>
+        <!-- <div class="center"> -->
+            <div name="update_userinfo" class="update_userinfo">
+                <div>
+                    <label>아이디</label>
+                    <div class="form-group">
+                        <form name="user_name_change" action="." method="POST">
+                            {% csrf_token %}
+                            <input class="form-control" type="text" name="user_name" value="{{user.user_id}}" disabled>
+                        </form>
+                        </div>
+                        
+                    </div>
+                    <div>
+                        <label>전화번호</label>
+                        <div class="form-group">
+                        <form id="user_phone_change" name="user_phone_change" action="." method="POST">
+                            {% csrf_token %}
+                            <input class="form-control" type="text" name="user_phonNum" value="{{user.user_phonenum}}"disabled>
+                            <input class="update_btn " type="button" id="let_phone_update" value="수정">
+                            <input type="hidden" name="user_email" value="{{user.user_email}}">
+                            <div class="box_phNm">
+                                <input class="cancel_btn update_btn" type="reset" id="cancel_phNm" value="취소">
+                                <input class="ok_btn update_btn" type="submit" id="phNm_updateOk" value="수정완료">
+                                <span id="error_phNm"></span>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+                <div>
+                    <label>이메일</label>
+                    <div class="form-group">
+                        <form id="user_email_change" name="user_email_change" action="." method="POST">
+                            {% csrf_token %}
+                            <input class="form-control" type="text" name="user_email" value="{{user.user_email}}" disabled>
+                            <input class="update_btn" type="button" id="let_email_update" value="수정">
+                            <input type="hidden" name="user_phonNum" value="{{user.user_phonenum}}">
+                            <div class="box_email">
+                                <input class="update_btn cancel_btn" type="reset" id="cancel_email" value="취소">
+                                <input class="update_btn ok_btn" type="submit" id="email_updateOk" value="수정완료">
+                                <span id="error_email"></span>
+                            </div>
+                        </form>
+                        </div>
+                </div>
+            </div>
+        <!-- </div> -->
+    </div>
+</div>
+{% endblock %}

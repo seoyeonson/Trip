@@ -54,83 +54,6 @@
     margin:auto;
 }
 
-.reserves{
-    width:100%;
-}
-
-.reserves tr{
-    width:100%;
-    margin:auto;
-}
-
-.reserve {
-    margin-top:5px;
-    margin-bottom:5px;
-    padding: 15px;
-    border: 1px solid var(--sub-grey-color);
-    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
-    display: block;
-    width:100%;
-}
-
-.reserves img{
-    margin: auto;
-    width:300px;
-    height:200px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.reserve>.info_container>label{
-    display:block;
-    padding: 10px 20px 0px 20px;
-}
-
-.reserve ul{
-    list-style: none;
-    padding: 0px;
-    width:300px;
-    margin-left: 20px;
-    margin-top: 10px;
-}
-
-.reserve>li{
-    padding:0 0 10px 0;
-    margin: 0 0 0 0;
-    display: inline-block;
-    width:40%;
-}
-
-.reserve_name{
-    font-weight:bold;
-    font-size: 20px;
-    /* width:300px; */
-}
-
-.reserve_adress{
-    color: var(--text-sub-color);
-    /* width:300px; */
-}
-
-.review_count{
-    font-size: 14px;
-}
-
-.reserve_info{
-    padding-top: 20px;
-}
-
-.reserve_info li{
-    display: inline-block;
-    padding:0 0 10px 0;
-    margin: 0 0 0 0;
-    width: 140px;
-}
-
-.reserve_info .right{
-    text-align: right;
-}
-
 
 @media(min-width:768px){
 
@@ -142,33 +65,6 @@
     margin-left:200px;
     padding:0;
 }
-
-/* reserve */
-
-
-.info_container{
-    float:right;
-}
-
-.reserves{
-    max-width: 900px;
-    min-width: 700px;
-}
-
-.hotel_reserve{
-    height: 270px;
-}
-
-.reserve_name{
-    padding-top: 0px;
-}
-
-.reserve>.info_container>label{
-    display:block;
-    padding: 0px 20px 10px 20px;
-}
-
-/* end reserve */
 
 }
 
