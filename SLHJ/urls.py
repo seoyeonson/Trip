@@ -28,6 +28,16 @@ urlpatterns = [
     path('history_hotel/', views.history_hotel, name='history_hotel'),
     path('history_vacation/', views.history_vacation, name='history_vacation'),
 
+    # 마이페이지 - admin
+    path('admin_info/', views.admin_info, name='admin_info'),
+    path('admin_pw_change/', views.admin_pw_change, name='admin_pw_change'),
+    path('admin_hotel/', views.admin_hotel, name='admin_hotel'),
+    path('admin_vacation/', views.admin_vacation, name='admin_vacation'),
+    path('admin_manage/', views.admin_manage, name='admin_manage'),
+
+    path('hotel_register/', views.hotel_register, name="hotel_register"),
+    path('vacation_register/', views.vacation_register, name="vacation_register"),
+
     #api data용
     # path('api/', views.api, name='api'),
     # path('api2/', views.api2, name='api2'),

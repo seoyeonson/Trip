@@ -399,6 +399,34 @@ def history_vacation(request):
     }
     return render(request, 'history_vacation.html', context)
 
+def admin_info(request):
+    user_id = request.session.get('user',"")
+    if user_id == "":
+        return redirect('/login/')
+    user = User.objects.get(user_id=user_id)
+    context={
+        'user' : user
+    }
+    return render(request, 'admin_info.html', context)
+
+def admin_pw_change(request):
+    return render(request, 'admin_pw_change.html')
+
+def admin_hotel(request):
+    return render(request, 'admin_hotel.html')
+
+def admin_vacation(request):
+    return render(request, 'admin_vacation.html')
+
+def admin_manage(request):
+    return render(request, 'admin_manage.html')
+
+def hotel_register(request):
+    return render(request, 'hotel_register.html')
+
+def vacation_register(request):
+    return render(request, 'vacation_register.html')
+
 def sample(request):  # vacation_review 데이터 입력포맷입니다.
 
     vacation_review_content = 'sample데이터입니다.'

@@ -1,0 +1,75 @@
+.chk_date {
+    margin-right: 20px;
+}
+
+.get_date {
+    cursor: pointer;
+}
+
+.select_period{
+    list-style: none;
+    display: inline-block;
+    padding: 10px 20px 10px 20px;
+}
+
+.search_form{
+    border: 1px solid var(--sub-grey-color);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+
+.index_title{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 10px 10px 30px;
+    width: 30%;
+    max-width: 300px;
+}
+
+.reserve_name{
+    margin: 0px 20px 0px 20px;
+    width: 70%;
+}
+
+.search_btn{
+    background-color: var(--sub-color);
+    color: var(--main-color);
+    padding: 5px 20px 5px 20px;
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 10px;
+    margin: 5px 10px 5px 10px;
+    float: right;
+}
+
+#start_date, #end_date{
+    width: 145px;
+}
+
+.res_title{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 0px 5px 20px;
+}
+
+.res_sum{
+    color: var(--main-color)
+}
+
+
+@media(min-width:768px){
+    .search_form{
+        max-width: 900px;
+        /* min-width: ; */
+    }
+
+    .reserve_name{
+        margin: 0px 20px 0px 20px;
+        width: 50%;
+        max-width: 600px;
+        display: inline-block;
+    }
+    
+}
