@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/admin_manage.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}예약관리{% endblock %}
+
+{% block contents %}
+{% block script %}
+<script src="{% static 'bs/js/admin_manage.js' %}"></script>
+{% endblock%}
+
+<div id="side_nav" class="side_nav">
+    <!-- <a href="#" 
+        class="closebtn" id="closebtn" 
+        onclick="closeNav()">&times;</a> -->
+    <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
+    <a class="side_menu" href="{% url 'admin_info' %}">회원정보</a>
+    <a class="side_menu" href="{% url 'admin_pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" href="{% url 'admin_hotel' %}">숙소관리</a>
+    <a class="side_menu" href="{% url 'admin_vacation' %}">여행지 관리</a>
+    <a class="side_menu" id=self href="{% url 'admin_manage' %}">예약관리</a>
+</div>
+
+<div class="con2">
+    <div class="contents">
+        <h5 id="title">마이페이지 > 예약관리</h5>
+        <div class="search_form form-group">
+            <input type="button" class="search_btn" value="조회">
+            <div>
+                <label class="index_title">예약자명</label>
+                <input type="text" class="form-control reserve_name" name="reserve_name">
+            </div>
+            <div>
+                <label class="index_title">기간</label>
+                <div class="select_period">
+                    <input id="start_date" type="text" placeholder="YYYY-MM-DD">
+                    <span>-</span>
+                    <input id="end_date" type="text" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <label class="res_title">검색결과 </label>
+            <label class="res_title res_sum"> 총 {##} 건 </label>
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>예약일시</th>
+                        <th>이용일시</th>
+                        <th>예약번호</th>
+                        <th>객실정보</th>
+                        <th>예약자명</th>
+                        <th>결제금액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sample6 in sample6s %}
+                    <tr>
+                        <td>{{ sample6.hotel_id_id }}</td>
+                        <td>{{ sample6.hotel_image_title }}</td>
+                        <td>{{ sample6.hotel_image_file_path }}</td>
+                        <td><a href="{{ sample6.uploadedFile.url }}">{{ sample6.uploadedFile.url }}</a></td>
+                        <td><a class="btn btn-primary btn-sm" href="#">다운로드</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

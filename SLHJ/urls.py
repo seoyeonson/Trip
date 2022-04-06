@@ -8,7 +8,8 @@ from django.conf import settings
 urlpatterns = [
     path('main/', views.main, name='main'),
     path('list/', views.list),
-    path('list2/<str:SIGUN_NM>/', views.list2),
+    path('hotel_search/<str:SIGUN_NM>/', views.hotel_search),
+    path('vacation_search/<str:SIGUN_NM>/', views.vacation_search),
     # path('login/', views.login),
     path('login/', views.login, name='login'),
     path('loginFail/', views.loginFail),
@@ -28,6 +29,16 @@ urlpatterns = [
     path('pw_changeOk/', views.pw_changeOk, name='pw_changeOk'),
     path('history_hotel/<int:pk>', views.history_hotel, name='history_hotel'),
     path('history_vacation/<int:pk>', views.history_vacation, name='history_vacation'),
+
+    # 마이페이지 - admin
+    path('admin_info/', views.admin_info, name='admin_info'),
+    path('admin_pw_change/', views.admin_pw_change, name='admin_pw_change'),
+    path('admin_hotel/', views.admin_hotel, name='admin_hotel'),
+    path('admin_vacation/', views.admin_vacation, name='admin_vacation'),
+    path('admin_manage/', views.admin_manage, name='admin_manage'),
+
+    path('hotel_register/', views.hotel_register, name="hotel_register"),
+    path('vacation_register/', views.vacation_register, name="vacation_register"),
 
     #api data용
     # path('api/', views.api, name='api'),

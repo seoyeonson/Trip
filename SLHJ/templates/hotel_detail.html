@@ -1,8 +1,10 @@
 {% extends "base.html"%}
 {% load static %}
 {% block extrahead %}
-<style>
-</style>
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
 {% endblock %}
 
 {% block title %}{{ hotel.BIZPLC_NM }}{% endblock %} {# 호텔명 #}
@@ -47,27 +49,32 @@
             <p>예약을 진행하시려면 예약 날짜와 인원수를 입력해주세요.</p>
             <form action="" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="hotel_name" value="{{ hotel.BIZPLC_NM }}">
                 <div>
-                    <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex">
-                        <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">체크인</span></button>
-                        <button type="button" class="hotel_detail_reserve_checkout">체크아웃</button>
+                    <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex" onclick="choice_date()">
+                        <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">{{ check_in }}</span></button>
+                        <button type="button" class="hotel_detail_reserve_checkout">{{ check_out }}</button>
                     </div>
-                    <div class="date_pick" id="date_pick" style="display: none;">
+                    <div class="date_pick" id="date_pick">
                         <!-- <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" /> -->
-                        <input id="start_day" class="start_day" type="date" min="">
-                        <input id="end_day" class="end_day" type="date">
-                        <input id="submit_day" type="submit" onclick="input_date()" value="적용">
+                        <input id="start_date" class="start_date" type="date" name="start_date">
+                        <input id="end_date" class="end_date" type="date" name="end_date">
                     </div>
+                    <!-- <div class="flex-row d-flex justify-content-center">
+                        <div class="col-xl-5 col-lg-6 col-11 px-1">
+                            <div class="input-group input-daterange"> <label class="">Select Date Range :</label> <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" readonly /> </div>
+                        </div>
+                    </div> -->
                 </div>
                 <div class="choice_people">
-                    <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="hotel_reserve_people" onclick="choice_people()"><i class="fas fa-user-alt"></i><span class="people">인원선택</span></button>
+                    <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="hotel_reserve_people" onclick="choice_people()"><i class="fas fa-user-alt"></i><span class="people">{{ hotel_reserve_people }}명</span></button>
                     <div class="d-flex justify-content-center hotel_detail_reserve_btn plus_minus_btn">
                         <div class="hotel_reserve_people">
                           <button type="button" data-quantity="minus" data-field="hotel_reserve_people">
                             <i class="fa fa-minus" aria-hidden="true"></i>
                           </button>
                         </div>
-                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" value="1" max_num="" readonly/>
+                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="{{ hotel_reserve_people }}" readonly/>
                         <div class="hotel_reserve_people">
                           <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
                             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -77,9 +84,12 @@
                 </div>
                 <div class="choice_room">
                     <button type="button" class="hotel_detail_reserve_btn" onclick="choice_room()"><i class="fas fa-door-closed"></i><span class="room">객실선택</span></button>
+                    <input type="hidden" name="reserve_room" id="reserve_room" value="">
                     <div class="hotel_detail_reserve_btn">
                         {% for room in hotel_room %}
+                        {% if room.room_people >= hotel_reserve_people %}
                         <a onclick="hotel_room_select(this)" class="select" data-value="{{ room.room_type }}"><li id="{{ room.room_type }}" class="hotel_room_select">{{ room.room_type }}</li></a>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>

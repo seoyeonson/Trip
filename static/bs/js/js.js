@@ -47,86 +47,7 @@ function input_date() {
     document.getElementById("date_pick").style.display = 'none';
     
 }
-function list_choice(){
-    var ch_lat = document.getElementsByName("li_lat").value
-    var ch_lng = document.getElementsByName("li_lng").value
-    document.getElementsByName("lat").value = ch_lat 
-    document.getElementsByName("lng").value = ch_lng 
 
-    return  document.getElementsByName("lat").value,  document.getElementsByName("lat").value
-}
-function list_first_page(){
-    document.getElementById("table_list_1").style.display = 'block';
-    document.getElementById("table_list_2").style.display = 'none';
-    document.getElementById("table_list_3").style.display = 'none';
-    document.getElementById("table_list_4").style.display = 'none';
-    document.getElementById("table_list_5").style.display = 'none';
-} 
-function list_second_page(){
-    document.getElementById("table_list_1").style.display = 'none';    
-    document.getElementById("table_list_2").style.display = 'block';
-    document.getElementById("table_list_3").style.display = 'none';
-    document.getElementById("table_list_4").style.display = 'none';
-    document.getElementById("table_list_5").style.display = 'none';
-} 
-function list_third_page(){
-    document.getElementById("table_list_1").style.display = 'none';    
-    document.getElementById("table_list_2").style.display = 'none';
-    document.getElementById("table_list_3").style.display = 'block';
-    document.getElementById("table_list_4").style.display = 'none';
-    document.getElementById("table_list_5").style.display = 'none';
-} 
-function list_fourth_page(){
-    document.getElementById("table_list_1").style.display = 'none';    
-    document.getElementById("table_list_2").style.display = 'none';
-    document.getElementById("table_list_3").style.display = 'none';
-    document.getElementById("table_list_4").style.display = 'block';
-    document.getElementById("table_list_5").style.display = 'none';
-} 
-function list_fiveth_page(){
-    document.getElementById("table_list_1").style.display = 'none';    
-    document.getElementById("table_list_2").style.display = 'none';
-    document.getElementById("table_list_3").style.display = 'none';
-    document.getElementById("table_list_4").style.display = 'none';
-    document.getElementById("table_list_5").style.display = 'block';
-} 
-function list_before_page(){
-    if (document.getElementById("table_list_2").style.display == 'block') {
-        document.getElementById("table_list_1").style.display = 'block';    
-        document.getElementById("table_list_2").style.display = 'none' ;   
-  
-    }
-    else if(document.getElementById("table_list_3").style.display == 'block') {
-        document.getElementById("table_list_2").style.display = 'block' ;   
-        document.getElementById("table_list_3").style.display = 'none' ;   
-    }
-    else if(document.getElementById("table_list_4").style.display == 'block') {
-        document.getElementById("table_list_3").style.display = 'block' ;   
-        document.getElementById("table_list_4").style.display = 'none' ;     
-    }
-    else if(document.getElementById("table_list_5").style.display == 'block') {  
-        document.getElementById("table_list_4").style.display = 'block' ;   
-        document.getElementById("table_list_5").style.display = 'none' ;   
-    }
-} 
-function list_next_page(){
-    if (document.getElementById("table_list_1").style.display == 'block') {
-        document.getElementById("table_list_1").style.display = 'none' ;   
-        document.getElementById("table_list_2").style.display = 'block' ;   
-    }
-    else if(document.getElementById("table_list_2").style.display == 'block') {  
-        document.getElementById("table_list_3").style.display = 'block' ;   
-        document.getElementById("table_list_2").style.display = 'none' ;     
-    }
-    else if(document.getElementById("table_list_3").style.display == 'block') {;   
-        document.getElementById("table_list_4").style.display = 'block' ;   
-        document.getElementById("table_list_3").style.display = 'none' ;    
-    }
-    else if(document.getElementById("table_list_4").style.display == 'block') {
-        document.getElementById("table_list_5").style.display = 'block';      
-        document.getElementById("table_list_4").style.display = 'none' ;     
-    }
-} 
 
 $(document).ready(function() {
     // 회원가입 pattern
@@ -301,7 +222,19 @@ $(document).ready(function() {
             $('input[name='+fieldName+']').val(1);
         }
     });
+
+    // $(function() {
+    //     $('input[name="daterange"]').daterangepicker({
+    //         "startDate": "01/01/2020",
+    //         "endDate": "17/01/2020",
+    //         opens: 'center',
+    //         locale: {
+    //         format: 'DD/MM/YYYY'
+    //         }
+    //     });
+    // });
 });
+
 
 // 구글맵
 function myMap() {
@@ -313,7 +246,7 @@ function myMap() {
         zoom: 17,
     };
 
-    var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
     var myPos = {lat: lat, lng: lng};
 	var marker = new google.maps.Marker({position: myPos});
@@ -322,12 +255,14 @@ function myMap() {
 
 
 function choice_people() {
+    $('.date_pick').css('display', 'none');
     $('.hotel_reserve_people').css('display', 'block');
     $('.hotel_room_select').css('display', 'none');
     $('.hotel_reserve_people').toggleClass('');
 }
 
 function choice_room() {
+    $('.date_pick').css('display', 'none');
     $('.hotel_room_select').css('display', 'block');
     $('.hotel_reserve_people').css('display', 'none');
 }
@@ -336,5 +271,13 @@ function hotel_room_select(text){
     $('.hotel_room_select').css('display', 'none');
     value = $(text).text();
     $(".room").html(value);
+    $(".room").html(value);
+    $('input[name=reserve_room]').attr('value', value);
+}
+
+function choice_date(){
+    $('.date_pick').css('display', 'block');
+    $('.hotel_reserve_people').css('display', 'none');
+    $('.hotel_room_select').css('display', 'none');
 }
 
