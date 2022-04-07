@@ -1,7 +1,7 @@
 from distutils.log import error
 from ssl import AlertDescription
 from django.http import Http404
-from jinja2 import Undefined
+# from jinja2 import Undefined
 import requests, bs4
 import pandas as pd
 from lxml import html

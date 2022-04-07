@@ -44,7 +44,7 @@
                     <li class="home_menu">
                             <a href="#">여행지</a>
                     </li>
-                    {% if user_id %}
+                    {% if request.session.user %}
                     <li class="menu_right home_menu">
                         <a href="#">로그아웃</a>
                     </li>
