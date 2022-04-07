@@ -29,21 +29,23 @@
 <div class="con2">
     <div class="contents">
         <h5 id="title">마이페이지 > 예약관리</h5>
-        <div class="search_form form-group">
-            <input type="button" class="search_btn" value="조회">
+        <form class="search_form form-group" action="." method="POST">
+            {% csrf_token %}
+            <input type="submit" class="search_btn" value="조회">
             <div>
                 <label class="index_title">예약자명</label>
-                <input type="text" class="form-control reserve_name" name="reserve_name">
+                <input type="text" class="form-control reserve_info" name="reserve_name">
             </div>
             <div>
-                <label class="index_title">기간</label>
-                <div class="select_period">
-                    <input id="start_date" type="text" placeholder="YYYY-MM-DD">
-                    <span>-</span>
-                    <input id="end_date" type="text" placeholder="YYYY-MM-DD">
-                </div>
+                <label class="index_title">예약번호</label>
+                <input type="text" class="form-control reserve_info" name="reserve_num">
             </div>
-        </div>
+            <div>
+                <label class="index_title">이용날짜</label>
+                <input class="form-control reserve_info" name="reserve_date" id="date" type="text"
+                    placeholder="YYYY-MM-DD" />
+            </div>
+        </form>
 
         <div>
             <label class="res_title">검색결과 </label>
@@ -51,24 +53,15 @@
             <table class="table mt-4">
                 <thead>
                     <tr>
-                        <th>예약일시</th>
-                        <th>이용일시</th>
                         <th>예약번호</th>
+                        <th>이용일시</th>
                         <th>객실정보</th>
                         <th>예약자명</th>
                         <th>결제금액</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for sample6 in sample6s %}
-                    <tr>
-                        <td>{{ sample6.hotel_id_id }}</td>
-                        <td>{{ sample6.hotel_image_title }}</td>
-                        <td>{{ sample6.hotel_image_file_path }}</td>
-                        <td><a href="{{ sample6.uploadedFile.url }}">{{ sample6.uploadedFile.url }}</a></td>
-                        <td><a class="btn btn-primary btn-sm" href="#">다운로드</a></td>
-                    </tr>
-                    {% endfor %}
+                    {# 예약정보 #}
                 </tbody>
             </table>
         </div>

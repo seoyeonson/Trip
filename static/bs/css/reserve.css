@@ -134,6 +134,13 @@ c/* reserve */
     display: none;
 }
 
+#peopleNum{
+    width: 100%;
+    border: 1px solid var(--sub-grey-color);
+    text-align: center;
+}
+
+
 @media (min-width: 768px){
 
 .reservation{

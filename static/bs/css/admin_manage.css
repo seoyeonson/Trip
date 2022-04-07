@@ -5,12 +5,13 @@
 .get_date {
     cursor: pointer;
 }
-
+/* 
 .select_period{
     list-style: none;
     display: inline-block;
-    padding: 10px 20px 10px 20px;
-}
+    padding: 0px 20px 0px 20px;
+} */
+
 
 .search_form{
     border: 1px solid var(--sub-grey-color);
@@ -22,12 +23,11 @@
 .index_title{
     font-size: 16px;
     font-weight: bold;
-    padding: 10px 10px 10px 30px;
-    width: 30%;
-    max-width: 300px;
+    padding: 20px 10px 10px 30px;
+    width: 200px;
 }
 
-.reserve_name{
+.reserve_info{
     margin: 0px 20px 0px 20px;
     width: 70%;
 }
@@ -40,24 +40,35 @@
     border-radius: 10px;
     font-size: 13px;
     margin-top: 10px;
-    margin: 5px 10px 5px 10px;
+    margin: 5px 10px 200px 10px;
     float: right;
 }
 
 #start_date, #end_date{
-    width: 145px;
+    width: 115px;
 }
 
 .res_title{
     font-size: 18px;
     font-weight: bold;
-    padding: 10px 0px 5px 20px;
+    padding: 50px 0px 5px 0px;
 }
 
 .res_sum{
+    padding-left: 30px;
     color: var(--main-color)
 }
 
+.period_btn{
+    background-color: white;
+    color: var(--icon-color);
+    width: 50px;
+    border:none;   
+}
+
+.select_period>div{
+    padding-bottom: 20px;
+}
 
 @media(min-width:768px){
     .search_form{
@@ -65,10 +76,14 @@
         /* min-width: ; */
     }
 
-    .reserve_name{
+    .reserve_info{
         margin: 0px 20px 0px 20px;
         width: 50%;
-        max-width: 600px;
+        max-width: 500px;
+        display: inline-block;
+    }
+
+    .select_period>div{
         display: inline-block;
     }
     
