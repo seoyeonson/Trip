@@ -140,6 +140,9 @@ c/* reserve */
     text-align: center;
 }
 
+#price{
+    display: none;
+}
 
 @media (min-width: 768px){
 

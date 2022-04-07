@@ -5,9 +5,10 @@ $(document).ready(function(){
     $("#confirm_btn").off().on("click",confirm_num);
     $("#purchase_btn").off().on("click",purchase);
     $(".plus-minus-btn").off().on("click", choice_people);
-    $("#peopleNum").on("change", change_peopleNum);
+    // $("#peopleNum").change(change_peopleNum);
 });
 
+// 인원수 변경
 function choice_people(){
     current = parseInt($("#peopleNum").val())
     if(this.id=="minus" && current>1 ){
@@ -15,13 +16,11 @@ function choice_people(){
 
     }else if(this.id=="plus"){
         $("#peopleNum").val(current+ 1 )
-
     }
+    $('#total_people').html($("#peopleNum").val())
+    $('#total_price').html(parseInt($("#price").html()) * parseInt($('#total_people').html()))
 }
 
-function change_peopleNum(){
-    $('#total_peopleNum').val($("#peopleNum").val())
-}
 
 function coolSMS(phoneNum){
     webPreferences: {

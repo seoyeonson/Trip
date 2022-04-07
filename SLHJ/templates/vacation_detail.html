@@ -38,7 +38,8 @@
         <!-- 예약 -->
         <div class="col-lg-4 col-12 hotel_detail_reserve align-self-sm-start">
             <p>예약을 진행하시려면 인원수를 입력해주세요.</p>
-            <form>
+            <form action="." method="POST">
+                {% csrf_token %}
                 <div style="position: relative;">
                     <button class="hotel_detail_reserve_btn"><i class="fas fa-user-alt"></i>인원선택</button>
                     <div style="position: relative; left: 0; display: none;">

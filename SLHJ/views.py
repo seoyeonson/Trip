@@ -199,18 +199,25 @@ def hotel_reserve(request):
         return redirect(f'/hotel_confirm/?reserve={hotel_reserve.hotel_reserve_id}')
 
 def vacation_reserve(request):
-    vacation_id = request.session.get('vacation_id', 1)
-    vacation_reserve_people = request.session.get('vacation_reserve_people', 2)
-    vacation_reserve_date = request.session.get('vacation_reserve_date', '2022-04-02')
-    vacation_reserve_price = (Vacation.objects.get(vacation_id=vacation_id).vacation_price) * vacation_reserve_people
-    place_name =  Vacation.objects.get(vacation_id=vacation_id).TURSM_INFO_NM
-    vacation_price = '{0:,}'.format(vacation_reserve_price)
+
+    try:
+        vacation_id = request.session.get('vacation_id')
+        vacation_reserve_people = request.session.get('vacation_reserve_people')
+        # del request.session['vacation_id'] # 세션삭제
+        # del request.session['vacation_reserve_people']
+        vacation= Vacation.objects.get(vacation_id=vacation_id)
+        vacation_reserve_price = vacation.vacation_price 
+
+        place_name =  vacation.TURSM_INFO_NM
+        
+    except: Vacation.DoesNotExist('여행지를 선택해주세요')
+
     if request.method=="GET":
         context = {
             'place_name': place_name,
             'reserve_people': vacation_reserve_people,
-            'reserve_date': vacation_reserve_date,
-            'vacation_price': vacation_price,
+            'vacation_price': vacation_reserve_price,
+            'show_price': vacation_reserve_price * vacation_reserve_people,
         }
         return render(request, 'vacation_reserve.html', context)
 
@@ -218,7 +225,7 @@ def vacation_reserve(request):
         id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
         vacation_reserve = Vacation_reserve(
             vacation_reserve_people = vacation_reserve_people,
-            vacation_reserve_date = vacation_reserve_date,
+            vacation_reserve_date = request.POST['vacation_reserve_date'],
             vacation_reserve_username = request.POST['reserve_name'],
             vacation_reserve_phonenum = request.POST['phone_num'],
             vacation_reserve_price = vacation_reserve_price,
@@ -304,7 +311,7 @@ def hotel_detail(request, pk):
         return render(request, 'hotel_detail.html', context)
 
     if request.method == "POST":
-        hotel_pk = pk;
+        hotel_pk = pk
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         hotel_reserve_people = request.POST.get('hotel_reserve_people')
@@ -325,6 +332,12 @@ def vacation_detail(request, pk):
         vacation = Vacation.objects.get(pk=pk)
     except Vacation.DoesNotExist:
         raise Http404('게시글을 찾을수 없습니다')
+
+    # vacation_reserve에 전달할 session 생성.
+    if request.method == "POST":
+        request.session['vacation_id'] = pk
+        request.session['vacation_reserve_people'] = 2 # 사용인원(임의값, 추후수정필요)
+        return redirect('/vacation_reserve/')
 
     # ##### vacation_review
     # vacation_id 가 pk인 vacation_review 를 가져옴

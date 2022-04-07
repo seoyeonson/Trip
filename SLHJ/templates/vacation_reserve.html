@@ -34,7 +34,7 @@
                         <div>
                             <button type="button" id="minus" class="plus-minus-btn btn_left"><i class="fa fa-minus"></i></button>
                         </div>
-                        <input type="number" name="peopleNum" id="peopleNum" max="1" value="1" readonly/>
+                        <input type="number" name="peopleNum" id="peopleNum" value="{{reserve_people}}" readonly>
                         <div>
                             <button type="button" id="plus" class="plus-minus-btn btn_right"><i class="fa fa-plus"></i></button>
                         </div>
@@ -72,11 +72,12 @@
             <label class="reserve_index">이용날짜</label>
             <label>{{ reserve_date }}</label>
             <label class="reserve_index">인원 및 수량</label>
-            <label>인</label>
+            <label><span id="total_people">{{ reserve_people }}</span> <span>인</span></label>
             <hr>
             <div class="purchase_container">
                 <label>결제금액</label>
-                <label>{{ vacation_price }}원</label>
+                <label id="total_price">{{ show_price }}</label>
+                <label id="price">{{ vacation_price }}</label>
             </div>
             <input class="purchase_btn" id="purchase_btn" type="button" value="결제하기">
         </div>
