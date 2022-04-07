@@ -1,6 +1,7 @@
 from distutils.log import error
 from ssl import AlertDescription
 from django.http import Http404
+from jinja2 import Undefined
 import requests, bs4
 import pandas as pd
 from lxml import html
@@ -381,13 +382,8 @@ def login(request):
             'user' : user
         }
         if user.user_password == user_pw:
-            session_name = 'user'
-            request.session[session_name] = user_id
-            context['logged'] = True
-            context['id'] = user.id
-            context['user_id'] = user_id
-            context['user_type'] = user.user_type
-            print(context['user_type'],  context['user_id'], context['logged'], context['id'])
+            request.session['user'] = user.id
+            
             return render(request, 'user_info.html', context)
         elif user.user_password != user_pw:
             return redirect('/loginFail/')
@@ -457,7 +453,9 @@ def user_create(request):
 
     return render(request, 'user_create.html')
 
-def user_info(request, pk):
+def user_info(request):
+    pk=request.session['user']
+
     if request.method=="POST":
         # 이메일, 전화번호를 입력한 값으로 변경
         user = User.objects.get(pk=pk)
@@ -511,9 +509,9 @@ def history_hotel(request, pk):
         nowdate = str(date)
         mynum = {'reservenum' : i}
 
-        if time.strptime(str(hotel_reserve[i].hotel_reserve_enddate), '%Y-%m-%d') > time.strptime(nowdate, '%Y-%m-%d'):     # 현재 날짜로부터 지난 데이터는 가져오지 않습니다.
-            hotels.append(hotel)
-            hotel_reserves.append(hotel_reserve[i])
+        # if time.strptime(str(hotel_reserve[i].hotel_reserve_enddate), '%Y-%m-%d') > time.strptime(nowdate, '%Y-%m-%d'):     # 현재 날짜로부터 지난 데이터는 가져오지 않습니다.
+        hotels.append(hotel)
+        hotel_reserves.append(hotel_reserve[i])
     
     # hotel_reserve.room_id -> hotel_room.hotel_id -> hotel.info
 
@@ -546,7 +544,70 @@ def admin_pw_change(request):
     return render(request, 'admin_pw_change.html')
 
 def admin_hotel(request):
-    return render(request, 'admin_hotel.html')
+    '''
+    pk=request.session['user']
+    if request.method=="POST":
+        hotels=Hotel.objects.get(pk=pk) 
+        
+
+   
+    
+    # 리뷰별 평점점수 (1~5점) count
+    # count={}
+    # for i in range(5):
+    # #     # (크거나 작은 값) orm 사용
+    # #     # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
+    #     count.update({i+1 : hotels.filter(hotel_rate__gt=i).filter(hotel_rate__lte=i+1).count()})
+    # # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+    # write_pages = int(request.session.get('write_pages', 5))
+
+    # # 한 페이지에 보일 리뷰 개수
+    # per_page = int(request.session.get('per_page', 5))
+
+    # # 현재 페이지
+    # page = int(request.GET.get('page', 1))
+
+    # # 한 페이지당 5개씩 보여주는 Paginator 생성
+    # paginator = Paginator(hotels, per_page)
+    
+    # # 페이지에 대한 정보
+    # page_obj = paginator.get_page(page)
+
+    # start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+    # end_page = start_page + write_pages - 1
+
+    # if end_page >= paginator.num_pages:
+    #     end_page = paginator.num_pages
+
+    # last_page=0
+
+    # for last_page in paginator.page_range:
+    #     last_page = last_page + 1
+
+    # last_page= last_page -1
+    
+
+    
+   
+    '''
+    five=5
+    i =1
+
+    context={
+         'five' : five,
+         'i' : i 
+        # 'hotels' : hotels
+        # 'lists' : page_obj,
+        # 'start_page': start_page,
+        # 'end_page': end_page,
+        # 'last_page' : last_page,
+        # 'page_range': range(start_page, end_page + 1),
+        # 'count' : count,
+
+    }
+    
+
+    return render(request, 'admin_hotel.html', context)
 
 def admin_vacation(request):
     return render(request, 'admin_vacation.html')
@@ -559,6 +620,12 @@ def hotel_register(request):
 
 def vacation_register(request):
     return render(request, 'vacation_register.html')
+
+def admin_hotel_detail(request):
+    return render(request, 'admin_hotel_detail.html')
+
+def admin_vacation_detail(request):
+    return render(request, 'admin_vacation_detail.html')
 
 def sample(request):  # vacation_review 데이터 입력포맷입니다.
 
@@ -687,8 +754,9 @@ def sample5(request):       # hotel_review 포맷입니다.
     return render(request, 'sample5.html')
 
 def sample6(request):   # hotel_image 포맷입니다.  vacation_image 는 hotel => vacation 으로 바꾸기만 하면됩니다.
-    if request.method == "GET":
-        request.session()
+    # if request.method == "GET":
+    #     request.session()
+    if request.method == "POST":
         hotel_id = Hotel.objects.get(pk=1)      # 어떤 호텔의 사진인지 가져와야 합니다. ex) pk = pk
         hotel_image_title = request.POST['fileTitle']
         hotel_image_file_path = request.FILES["uploadedFile"]

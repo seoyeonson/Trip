@@ -34,24 +34,28 @@
         </div>
 
         <table class="reserves">
-            <tr>
-                <!--sample: review-->
-                <td class="reserve">
-                    <img src="{% static 'img/hotel.png' %}">
-                    <div class="info_container">
-                        <label class="reserve_name">{##}그랜드 하얏트 서울</label>
-                        <label class="reserve_adress">{##}서울 용산구 소월로 22</label>
-                        <label class="review_count">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </label>
-                    </div>
-                    <a type="button" class="detail_btn" href="#">세부정보</a>
-                </td>
-            </tr>
+            <tr><!--테이블 시작-->
+                <!-- {% if lists %} -->
+                    {% for hotel in lists %}
+                        <td class="reserve"> 
+                            <img src="{% static 'img/hotel.png' %}">
+                            <div class="info_container">
+                                <label class="reserve_name">{##}그랜드 하얏트 서울</label>
+                                <label class="reserve_adress">{##}서울 용산구 소월로 22</label>
+                                <label class="review_count">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </label>
+                            </div>
+                            <a type="button" class="detail_btn" href="#">세부정보</a>
+                        </td>
+                    {% endfor %}
+                <!-- {% endif %} -->
+
+            </tr><!--테이블 끝-->
         </table>
     </div>
 </div>
