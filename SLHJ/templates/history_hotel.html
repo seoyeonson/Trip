@@ -14,10 +14,10 @@
         class="closebtn" id="closebtn" 
         onclick="closeNav()">&times;</a> -->
     <div class="side_menu" id="user_profile">{{user.user_id}}</div>
-    <a class="side_menu" href="{% url 'user_info' user.id %}">회원정보</a>
-    <a class="side_menu" href="{% url 'pw_change' user.id %}">비밀번호 변경</a>
-    <a class="side_menu" id='self' href="{% url 'history_hotel' user.id %}">숙소관리</a>
-    <a class="side_menu" href="{% url 'history_vacation' user.id %}">여행지 관리</a>
+    <a class="side_menu" href="{% url 'user_info' %}">회원정보</a>
+    <a class="side_menu" href="{% url 'pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" id='self' href="{% url 'history_hotel' %}">숙소관리</a>
+    <a class="side_menu" href="{% url 'history_vacation' %}">여행지 관리</a>
 </div>
 
 
@@ -60,41 +60,39 @@
 
                     </div>
                 </td> -->
-                {% for hotel in hotels %}
-                    {% for hotel_reserve in hotel_reserves %}
-                        <tr>
-                            <td class="reserve">
-                                <img src="{% static 'img/hotel.png' %}">
-                                <div class="info_container">
-                                    <label class="reserve_name">{{ hotel.BIZPLC_NM }}</label>
-                                    <label class="reserve_adress">{##}</label>
-                                    <label class="review_count">
-                                        <span>여행지평점{{ hotel.hotel_rate }}</span>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span>내 평점</span>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </label>
-                                    <ul class="reserve_info">
-                                        <li class="left">인원</li>
-                                        <li class="right">{{ hotel_reserve.hotel_reserve_people }}인</li>
-                                        <li class="left">가격</li>
-                                        <li class="right">{{ hotel_reserve.hotel_reserve_price }}원</li>
-                                        <li class="left">예약일시</li>
-                                        <li class="right">{{ hotel_reserve.hotel_reserve_startdate}} ~ {{ hotel_reserve.hotel_reserve_enddate }}</li>
-                                    </ul>
-                                    
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                {% for hotel_reserve in hotel_reserves %}
+                    <tr>
+                        <td class="reserve">
+                            <img style="background-image: url('/media/{{ hotel_reserve.room_id.hotel_id.hotel_image.hotel_image_file_path }}');">
+                            <div class="info_container">
+                                <label class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label>
+                                <label class="reserve_adress">{{ hotel_reserve.room_id.hotel_id.REFINE_ROADNM_ADDR }}</label>
+                                <label class="review_count">
+                                    <span>여행지평점{{ hotel_reserve.room_id.hotel_id.hotel_rate }}</span>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>내 평점{{ hotel_reserve.room_id.hotel_id.hotel_image_title }}</span>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </label>
+                                <ul class="reserve_info">
+                                    <li class="left">인원</li>
+                                    <li class="right">{{ hotel_reserve.hotel_reserve_people }}인</li>
+                                    <li class="left">가격</li>
+                                    <li class="right">{{ hotel_reserve.hotel_reserve_price }}원</li>
+                                    <li class="left">예약일시</li>
+                                    <li class="right">{{ hotel_reserve.hotel_reserve_startdate}} ~ {{ hotel_reserve.hotel_reserve_enddate }}</li>
+                                </ul>
+                                
+                            </div>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tr>
         </table>

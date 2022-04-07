@@ -378,17 +378,19 @@ def login(request):
         except User.DoesNotExist:
             return redirect('/loginFail/')
         context = {
-            'user' : user
+            'user' : user,
         }
         if user.user_password == user_pw:
-            session_name = 'user'
-            request.session[session_name] = user_id
-            context['logged'] = True
-            context['id'] = user.id
-            context['user_id'] = user_id
-            context['user_type'] = user.user_type
-            print(context['user_type'],  context['user_id'], context['logged'], context['id'])
-            return render(request, 'user_info.html', context)
+            request.session['user'] = user.id
+            # request.session['user_email'] = user.user_email
+
+            # context['logged'] = True
+            # context['id'] = user.id
+            # context['user_id'] = user_id
+            # context['user_type'] = user.user_type
+            # context['user'] = user
+            # print(context['user_type'],  context['user_id'], context['logged'], context['id'], context['user'].user_password)
+            return render(request, 'loginOk.html', context)
         elif user.user_password != user_pw:
             return redirect('/loginFail/')
 
@@ -457,7 +459,9 @@ def user_create(request):
 
     return render(request, 'user_create.html')
 
-def user_info(request, pk):
+def user_info(request):
+    pk = request.session['user']
+    
     if request.method=="POST":
         # 이메일, 전화번호를 입력한 값으로 변경
         user = User.objects.get(pk=pk)
@@ -469,7 +473,7 @@ def user_info(request, pk):
         user.save()
 
         context = {
-            'user': user
+            'user': user,
         }
 
         return render(request, 'user_info.html', context)
@@ -480,7 +484,9 @@ def user_info(request, pk):
         }
         return render(request, 'user_info.html', context)
 
-def pw_change(request, pk):
+def pw_change(request):
+    pk = request.session['user']
+
     user = User.objects.get(pk=pk)
     context = {
         'user':user
@@ -498,37 +504,44 @@ def pw_change(request, pk):
 def pw_changeOk(request):
     return render(request, 'pw_changeOk.html')
 
-def history_hotel(request, pk):
+def history_hotel(request):
+    pk = request.session['user']
+
     user = User.objects.get(pk=pk)
     hotel_reserve = Hotel_reserve.objects.filter(id=pk)
-    hotels = []
     hotel_reserves = []
+    hotel_image = Hotel_image.objects.get(pk=hotel_reserve[0].room_id.hotel_id)
+    print(hotel_reserve[0].room_id.hotel_id.hotel_image.hotel_image_file_path)
+    print(hotel_image.hotel_id)
+    print(hotel_image.hotel_id_id)
+    print(hotel_image.hotel_image_title)
+    print(hotel_image.hotel_image_file_path)
+    print(hotel_image.hotel_image_originname)
+
+
     for i in range(hotel_reserve.count()):
-        hotel_room = Hotel_room.objects.get(pk=hotel_reserve[i].room_id_id)
-        hotel = Hotel.objects.get(pk=hotel_room.hotel_id_id)
-        now = datetime.now()
-        date = now.strftime('%Y-%m-%d')
-        nowdate = str(date)
-        mynum = {'reservenum' : i}
-
-        if time.strptime(str(hotel_reserve[i].hotel_reserve_enddate), '%Y-%m-%d') > time.strptime(nowdate, '%Y-%m-%d'):     # 현재 날짜로부터 지난 데이터는 가져오지 않습니다.
-            hotels.append(hotel)
-            hotel_reserves.append(hotel_reserve[i])
+        hotel_reserves.append(hotel_reserve[i])
     
-    # hotel_reserve.room_id -> hotel_room.hotel_id -> hotel.info
-
     context = {
         'user': user,
-        'hotels': hotels,
         'hotel_reserves' : hotel_reserves,
+        'hotel_image' : hotel_image,
     }
     
     return render(request, 'history_hotel.html', context)
 
-def history_vacation(request, pk):
+def history_vacation(request):
+    pk = request.session['user']
+
     user = User.objects.get(pk=pk)
+    vacation_reserve = Vacation_reserve.objects.filter(id=pk)
+    vacation_reserves = []
+    for i in range(vacation_reserve.count()):
+        vacation_reserves.append(vacation_reserve[i])
+
     context = {
-        'user': user
+        'user': user,
+        'vacation_reserves' : vacation_reserves
     }
     return render(request, 'history_vacation.html', context)
 
@@ -687,8 +700,9 @@ def sample5(request):       # hotel_review 포맷입니다.
     return render(request, 'sample5.html')
 
 def sample6(request):   # hotel_image 포맷입니다.  vacation_image 는 hotel => vacation 으로 바꾸기만 하면됩니다.
-    if request.method == "GET":
-        request.session()
+    # if request.method == "GET":
+    #     request.session()
+    if request.method == "POST":
         hotel_id = Hotel.objects.get(pk=1)      # 어떤 호텔의 사진인지 가져와야 합니다. ex) pk = pk
         hotel_image_title = request.POST['fileTitle']
         hotel_image_file_path = request.FILES["uploadedFile"]
@@ -705,6 +719,25 @@ def sample6(request):   # hotel_image 포맷입니다.  vacation_image 는 hotel
 
     return render(request, 'sample6.html', {"sample6s" : documents})
 
+def sample7(request):   # vacation_image 포맷입니다.  vacation_image 는 vacation => vacation 으로 바꾸기만 하면됩니다.
+    # if request.method == "GET":
+    #     request.session()
+    if request.method == "POST":
+        vacation_id = Vacation.objects.get(pk=1)      # 어떤 호텔의 사진인지 가져와야 합니다. ex) pk = pk
+        vacation_image_title = request.POST['fileTitle']
+        vacation_image_file_path = request.FILES["uploadedFile"]
+
+        document = Vacation_image(
+            vacation_id = vacation_id,
+            vacation_image_title = vacation_image_title,
+            vacation_image_file_path = vacation_image_file_path,
+            vacation_image_originname = vacation_image_file_path.name,
+        )
+        document.save()
+    
+    documents = Vacation_image.objects.all().order_by("-pk")
+
+    return render(request, 'sample7.html', {"sample7s" : documents})
 
 # def api(request):
 
