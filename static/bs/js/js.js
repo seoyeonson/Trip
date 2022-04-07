@@ -223,16 +223,36 @@ $(document).ready(function() {
         }
     });
 
-    // $(function() {
-    //     $('input[name="daterange"]').daterangepicker({
-    //         "startDate": "01/01/2020",
-    //         "endDate": "17/01/2020",
-    //         opens: 'center',
-    //         locale: {
-    //         format: 'DD/MM/YYYY'
-    //         }
-    //     });
-    // });
+    var startDate;
+    var endDate;
+
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            "startDate": "2022-01-01",
+            "endDate": "2022-01-03",
+            autoApply : true,
+            opens: 'center',
+            locale: {
+            format: 'YYYY-MM-DD',
+            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
+            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+            }
+        }, 
+        function(start, end, label) {
+            // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            startDate = start.format('YYYY-MM-DD');
+            endDate = end.format('YYYY-MM-DD');
+        });
+    });
+
+    $('[name="reserve_date_choice"]').click(function(e) {
+        $('.date_pick').css('display', 'none');
+        $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
+        $('.hotel_detail_reserve_checkout').html(endDate);
+        $('input[name=start_date]').attr('value', startDate);
+        $('input[name=end_date]').attr('value', endDate);
+        console.log("startDate", startDate, "endDate", endDate);
+    });
 });
 
 

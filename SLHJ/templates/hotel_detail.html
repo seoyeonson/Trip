@@ -1,10 +1,9 @@
 {% extends "base.html"%}
 {% load static %}
 {% block extrahead %}
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 {% endblock %}
 
 {% block title %}{{ hotel.BIZPLC_NM }}{% endblock %} {# 호텔명 #}
@@ -54,17 +53,21 @@
                     <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex" onclick="choice_date()">
                         <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">{{ check_in }}</span></button>
                         <button type="button" class="hotel_detail_reserve_checkout">{{ check_out }}</button>
+                        <input type="hidden" value="{{ check_in }}" name="start_date">
+                        <input type="hidden" value="{{ check_out }}" name="end_date">
                     </div>
-                    <div class="date_pick" id="date_pick">
-                        <!-- <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" /> -->
+                    <!-- <div class="date_pick" id="date_pick">
+                        <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
                         <input id="start_date" class="start_date" type="date" name="start_date">
                         <input id="end_date" class="end_date" type="date" name="end_date">
-                    </div>
-                    <!-- <div class="flex-row d-flex justify-content-center">
-                        <div class="col-xl-5 col-lg-6 col-11 px-1">
-                            <div class="input-group input-daterange"> <label class="">Select Date Range :</label> <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" readonly /> </div>
-                        </div>
                     </div> -->
+                    <div class="date_pick" id="date_pick">
+                        <div class="d-flex justify-content-center">
+                            <div class="input-daterange reserve_date"><input type="text" name="daterange" id="datepicker" readonly /> 
+                            <input type="button" value="적용" name="reserve_date_choice" onclick="reserve_date_choice()">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="choice_people">
                     <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="hotel_reserve_people" onclick="choice_people()"><i class="fas fa-user-alt"></i><span class="people">{{ hotel_reserve_people }}명</span></button>
@@ -212,7 +215,7 @@
                     {% endif %}
 
                     {# > 표시 #}
-                    {% if reviews.paginator.num_pages > end_page %}
+                    {% if reviews.number < end_page %}
                     <li class="page-item"><a class="page-link" href="?page={{ reviews.next_page_number }}" title="다음"><i class='fas fa-angle-right'></i></a></li>
                     {% endif %}
                 
@@ -250,7 +253,19 @@
 {% block extrafoot %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkSbB_IhB_i3-8caf6gKcuDHLJT27d0k&callback=myMap"></script>
 <script>
-    let room_info = "{{ hotel_room|safe }}";
-    console.log(room_info);
+//     $('#submit').on('click', function(e) {
+//         data = '{{ room.room_type }}';
+//         $.ajax({
+//             type:'GET',
+//             url:'127.0.0.1:8000/hotel_detail/{{ hotel.hotel_id }}',
+//             data:JSON.stringify(data),
+//             success:function(json){
+//                 console.log("data pass success",json);
+//             },
+//             error : function(xhr,errmsg,err) {
+//             console.log(xhr.status + ": " + xhr.responseText); 
+//             }
+//     });
+//   });
 </script>
 {% endblock %}
