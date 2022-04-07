@@ -511,9 +511,9 @@ def history_hotel(request, pk):
         nowdate = str(date)
         mynum = {'reservenum' : i}
 
-        if time.strptime(str(hotel_reserve[i].hotel_reserve_enddate), '%Y-%m-%d') > time.strptime(nowdate, '%Y-%m-%d'):     # 현재 날짜로부터 지난 데이터는 가져오지 않습니다.
-            hotels.append(hotel)
-            hotel_reserves.append(hotel_reserve[i])
+        # if time.strptime(str(hotel_reserve[i].hotel_reserve_enddate), '%Y-%m-%d') > time.strptime(nowdate, '%Y-%m-%d'):     # 현재 날짜로부터 지난 데이터는 가져오지 않습니다.
+        hotels.append(hotel)
+        hotel_reserves.append(hotel_reserve[i])
     
     # hotel_reserve.room_id -> hotel_room.hotel_id -> hotel.info
 
@@ -687,8 +687,9 @@ def sample5(request):       # hotel_review 포맷입니다.
     return render(request, 'sample5.html')
 
 def sample6(request):   # hotel_image 포맷입니다.  vacation_image 는 hotel => vacation 으로 바꾸기만 하면됩니다.
-    if request.method == "GET":
-        request.session()
+    # if request.method == "GET":
+        # request.session()
+    if request.method == "POST":
         hotel_id = Hotel.objects.get(pk=1)      # 어떤 호텔의 사진인지 가져와야 합니다. ex) pk = pk
         hotel_image_title = request.POST['fileTitle']
         hotel_image_file_path = request.FILES["uploadedFile"]

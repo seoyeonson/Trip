@@ -25,6 +25,25 @@
                 <input class="form-control" id="reserve_name" name="reserve_name" type="text" value="">
             </div>
             <div class="form-group">
+                <label>인원 및 수량</label>
+                
+                <div class="vacation_peopleNum">
+
+                    </button>
+                    <div class="d-flex">
+                        <div>
+                            <button type="button" id="minus" class="plus-minus-btn btn_left"><i class="fa fa-minus"></i></button>
+                        </div>
+                        <input type="number" name="peopleNum" id="peopleNum" max="1" value="1" readonly/>
+                        <div>
+                            <button type="button" id="plus" class="plus-minus-btn btn_right"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <input class="form-control" id="reserve_peopleNum" name="reserve_peopleNum" type="int" value=""> -->
+            </div>
+            <div class="form-group">
                 <label>휴대폰 번호</label>
                 <input class="form-control" id="phone_num" name="phone_num" type="text" value="">
                 <input type="button" class="auth_btn" id="auth_btn" value="인증번호 전송">
@@ -53,11 +72,11 @@
             <label class="reserve_index">이용날짜</label>
             <label>{{ reserve_date }}</label>
             <label class="reserve_index">인원 및 수량</label>
-            <label>{{ reserve_people }}인</label>
+            <label>인</label>
             <hr>
             <div class="purchase_container">
                 <label>결제금액</label>
-                <label class="reserve_price">{{ vacation_price }}원</label>
+                <label>{{ vacation_price }}원</label>
             </div>
             <input class="purchase_btn" id="purchase_btn" type="button" value="결제하기">
         </div>

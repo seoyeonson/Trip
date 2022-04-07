@@ -4,7 +4,24 @@ $(document).ready(function(){
     $("#auth_btn").click(phone_confirm);
     $("#confirm_btn").off().on("click",confirm_num);
     $("#purchase_btn").off().on("click",purchase);
+    $(".plus-minus-btn").off().on("click", choice_people);
+    $("#peopleNum").on("change", change_peopleNum);
 });
+
+function choice_people(){
+    current = parseInt($("#peopleNum").val())
+    if(this.id=="minus" && current>1 ){
+        $("#peopleNum").val(current - 1)
+
+    }else if(this.id=="plus"){
+        $("#peopleNum").val(current+ 1 )
+
+    }
+}
+
+function change_peopleNum(){
+    $('#total_peopleNum').val($("#peopleNum").val())
+}
 
 function coolSMS(phoneNum){
     webPreferences: {
