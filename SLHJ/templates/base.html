@@ -7,21 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{% static 'bs/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'bs/css/css.css' %}" rel="stylesheet">
+    {% block extrahead %}{% endblock %}
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
     />
-    {% block extrahead %}{% endblock %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="{% static 'bs/js/bootstrap.bundle.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'bs/js/js.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <title>
         {% block title %}
         {% endblock %}
@@ -44,9 +44,18 @@
                     <li class="home_menu">
                             <a href="#">여행지</a>
                     </li>
+                    {% if user_id %}
+                    <li class="menu_right home_menu">
+                        <a href="#">로그아웃</a>
+                    </li>
+                    <li class="menu_right home_menu">
+                        <a href="#">마이페이지</a>
+                    </li>
+                    {% else %}
                     <li class="menu_right home_menu">
                         <a href="{% url 'login' %}">로그인</a>
                     </li>
+                    {% endif %}
                 </ul>
                 <!-- <ul class="navbar-nav home_tool2">
                 </ul> -->
