@@ -14,10 +14,10 @@
         class="closebtn" id="closebtn" 
         onclick="closeNav()">&times;</a> -->
     <div class="side_menu" id="user_profile">{{user.user_id}}</div>
-    <a class="side_menu" href="{% url 'user_info' user.id %}">회원정보</a>
-    <a class="side_menu" href="{% url 'pw_change' user.id %}">비밀번호 변경</a>
-    <a class="side_menu" href="{% url 'history_hotel' user.id %}">숙소관리</a>
-    <a class="side_menu" id="self" href="{% url 'history_vacation' user.id %}">여행지 관리</a>
+    <a class="side_menu" href="{% url 'user_info' %}">회원정보</a>
+    <a class="side_menu" href="{% url 'pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" href="{% url 'history_hotel' %}">숙소관리</a>
+    <a class="side_menu" id="self" href="{% url 'history_vacation' %}">여행지 관리</a>
 </div>
 
 
@@ -25,21 +25,21 @@
     <div class="contents">
         <h5 id="title">마이페이지 > 여행지 관리</h5>
         <table class="reserves">
+            {% for vacation_reserve in vacation_reserves %}
             <tr>
                 <td class="reserve">
-                    <!--sample-->
-                    <img src="{% static 'img/cat.jpg' %}">
+                    <img style="background-image: url('/media/{{ vacation_reserve.vacation_id.vacation_image.vacation_image_file_path }}');">
                     <div class="info_container">
-                        <label class="reserve_name">{##}에버랜드</label>
-                        <label class="reserve_adress">{##}경기도 용인시</label>
+                        <label class="reserve_name">{{ vacation_reserve.vacation_id.TURSM_INFO_NM }}</label>
+                        <label class="reserve_adress">{{ vacation_reserve.vacation_id.SM_RE_ADDR }}</label>
                         <label class="review_count">
-                            <span>{##}여행지</span>
+                            <span>여행지평점{{ vacation_reserve.vacation_id.vacation_rate }}</span>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
-                            <span>{##}My</span>
+                            <span>My</span>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -49,84 +49,16 @@
 
                         <ul class="reserve_info">
                             <li class="left">인원</li>
-                            <li class="right">인</li>
+                            <li class="right">{{ vacation_reserve.vacation_reserve_people }}인</li>
                             <li class="left">가격</li>
-                            <li class="right">원</li>
+                            <li class="right">{{ vacation_reserve.vacation_reserve_price }}원</li>
                             <li class="left">예약일시</li>
-                            <li class="right">2022/03/25 13:00</li>
+                            <li class="right">{{ vacation_reserve.vacation_reserve_date }}</li>
                         </ul>
                     </div>
                 </td>
             </tr>
-            <tr>
-                <!--sample: review-->
-                <td class="reserve">
-                    <img src="{% static 'img/cat.jpg' %}">
-                    <div class="info_container">
-                        <label class="reserve_name">{##}에버랜드</label>
-                        <label class="reserve_adress">{##}경기도 용인시</label>
-                        <label class="review_count">
-                            <span>{##}여행지</span>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>{##}My</span>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </label>
-
-                        <ul class="reserve_info">
-                            <li class="left">인원</li>
-                            <li class="right">인</li>
-                            <li class="left">가격</li>
-                            <li class="right">원</li>
-                            <li class="left">예약일시</li>
-                            <li class="right">2022/03/25 13:00</li>
-                        </ul>
-
-                    </div>
-                </td>
-                </tr>
-                {% for vacation in list %}
-                <tr>
-                    <td class="reserve">
-                        <img src="{% static 'img/cat.jpg' %}">
-                        <div class="info_container">
-                            <label class="reserve_name">{##}</label>
-                            <label class="reserve_adress">{##}</label>
-                            <label class="review_count">
-                                <span>{##}여행지</span>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span>{##}My</span>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </label>
-    
-                            <ul class="reserve_info">
-                                <li class="left">인원</li>
-                                <li class="right">{##}인</li>
-                                <li class="left">가격</li>
-                                <li class="right">{##}원</li>
-                                <li class="left">예약일시</li>
-                                <li class="right">{##}</li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tr>
+            {% endfor %}
         </table>
     </div>
 </div>
