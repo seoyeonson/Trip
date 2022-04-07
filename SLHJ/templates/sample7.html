@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}파일{% endblock %}
+
+{% block contents %}
+<h2>파일 업로드 & 다운로드</h2>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!-- 파일 업로드를 하려면 반드시
+    1. form 의 method 는 POST
+    2. enctype="multipart/form-data"
+    3. input type="file"
+-->
+<form action="{% url 'sample7' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="fileTitle" placeholder="Enter a title">
+    <input type="file" name="uploadedFile">
+    <input type="submit" value="Upload">
+</form>
+
+<table class="table table-striped table-hover mt-4">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Original</th>
+            <th>File Path</th>
+            <th>다운로드</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sample7 in sample7s %}
+        <tr>
+            <td>{{ sample7.vacation_id_id }}</td>
+            <td>{{ sample7.vacation_image_title }}</td>
+            <td>{{ sample7.vacation_image_file_path }}</td>
+            <td><a href="{{ sample7.uploadedFile.url }}">{{ sample7.uploadedFile.url }}</a></td>
+            <td><a class="btn btn-primary btn-sm" href="#">다운로드</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
