@@ -384,6 +384,7 @@ def login(request):
         }
         if user.user_password == user_pw:
             request.session['user'] = user.id
+            request.session['user_type'] = user.user_type
             # request.session['user_email'] = user.user_email
 
             # context['logged'] = True
@@ -548,14 +549,37 @@ def history_vacation(request):
     return render(request, 'history_vacation.html', context)
 
 def admin_info(request):
-    user_id = request.session.get('user',"")
-    if user_id == "":
-        return redirect('/login/')
-    user = User.objects.get(user_id=user_id)
-    context={
-        'user' : user
-    }
-    return render(request, 'admin_info.html', context)
+    pk = request.session['user']
+    
+    if request.method=="POST":
+        # 이메일, 전화번호를 입력한 값으로 변경
+        user = User.objects.get(pk=pk)
+        user_phonenum = request.POST.get('user_phonNum')
+        user_email = request.POST.get('user_email')
+
+        user.user_phonenum = user_phonenum
+        user.user_email = user_email
+        user.save()
+
+        context = {
+            'user': user,
+        }
+
+        return render(request, 'admin_info.html', context)
+    if request.method=="GET":
+        user = User.objects.get(pk=pk)
+        context = {
+            'user': user
+        }
+        return render(request, 'admin_info.html', context)
+    # user_id = request.session.get('user',"")
+    # if user_id == "":
+    #     return redirect('/login/')
+    # user = User.objects.get(user_id=user_id)
+    # context={
+    #     'user' : user
+    # }
+    # return render(request, 'admin_info.html', context)
 
 def admin_pw_change(request):
     return render(request, 'admin_pw_change.html')
@@ -701,7 +725,7 @@ def sample3(request):   # hotel_room 포맷입니다.
     room_price = 100000
     room_people = 2
 
-    hotel_id = Hotel.objects.get(pk=1)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
+    hotel_id = Hotel.objects.get(pk=2)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
     hotel_room = Hotel_room(
         room_type = room_type,
@@ -723,10 +747,10 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_startdate = '2022-04-07'
     hotel_reserve_enddate = '2022-04-08'
 
-    hotel_room = Hotel_room.objects.get(pk=2)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=24)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=1)
+    id = User.objects.get(pk=4)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(

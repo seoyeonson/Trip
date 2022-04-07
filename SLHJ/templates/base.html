@@ -48,9 +48,15 @@
                     <li class="menu_right home_menu">
                         <a href="#">로그아웃</a>
                     </li>
-                    <li class="menu_right home_menu">
-                        <a href="#">마이페이지</a>
-                    </li>
+                        {% if request.session.user_type == 1 %}
+                            <li class="menu_right home_menu">
+                                <a href="{% url 'admin_info' %}">마이페이지</a>
+                            </li>
+                        {%elif request.session.user_type == 2 %}
+                            <li class="menu_right home_menu">
+                                <a href="{% url 'user_info' %}">마이페이지</a>
+                            </li>
+                        {% endif %}
                     {% else %}
                     <li class="menu_right home_menu">
                         <a href="{% url 'login' %}">로그인</a>

@@ -1,7 +1,7 @@
 #side_nav {
     width: 200px;
     background-color: #f1f1f1;
-    position:absolute;
+    position: fixed;
     top:0;
     left:0;
     padding-top:56.795px;
