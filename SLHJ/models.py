@@ -4,9 +4,9 @@ from tkinter import CASCADE
 from django.db import models
 
 class User(models.Model):
-    user_id = models.CharField(max_length=20, verbose_name='유저ID')
+    user_id = models.CharField(max_length=20, verbose_name='유저ID') 
     user_password = models.CharField(max_length=20, verbose_name='유저비밀번호')
-    user_type = models.IntegerField(verbose_name='유저타입')
+    user_type = models.IntegerField(verbose_name='유저타입') # 1:관리자 2:일반
     user_email = models.EmailField(max_length=100, verbose_name='유저이메일')
     user_phonenum = models.CharField(max_length=15, verbose_name='유저전화번호')
 

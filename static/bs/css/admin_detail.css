@@ -1,0 +1,92 @@
+ .regist_form{
+    width: 100%;
+    margin: auto;
+    border: 1px solid var(--sub-grey-color);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+#cancel_btn, #search_adress{
+    background-color: var(--sub-grey-color);
+    color: var(--text-sub-color);
+    padding: 5px 20px 5px 20px;
+    border: 1px solid var(--icon-color);
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 10px;
+    margin: 5px 10px 5px 10px;
+}
+
+#register_btn{
+    background-color: var(--sub-color);
+    color: var(--main-color);
+    padding: 5px 20px 5px 20px;
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 10px;
+    margin: 5px 10px 5px 10px;
+    float:right;
+}
+
+#cancel_btn{
+    float:right;
+}
+
+.index_title{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 0px 5px 20px;
+}
+.basic_info{
+    width: 95%;
+    margin: auto;
+    border: 1px solid var(--sub-grey-color);
+    padding: 20px;
+    border-radius: 20px;
+    background-color:var(--sub-color);
+    border:none;
+    
+}
+.basic_info>p{
+    display: inline;
+    padding:40px;
+    font-weight: 100px;
+}
+/*
+.form-group{
+    padding: 20px;
+}
+
+#file_title{
+    width: 300px;
+    display: inline-block;
+}
+.file_select_btn{
+    display: inline-block;
+    width: 300px;
+    margin: 10px 0px 10px 0px;
+}
+.file_upload_btn{
+    width:200px;
+    margin: 10px 0px 10px 0px;
+    display: inline-block;
+}
+
+.form-group>label{
+    padding-right: 10px;
+}
+
+.bsn_state{
+    padding: 5px;
+    width:100px;
+    display: inline-block;
+}
+
+
+@media(min-width: 768px){
+    .regist_form{
+        max-width: 900px;
+
+    }
+} */

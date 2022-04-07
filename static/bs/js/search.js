@@ -1,10 +1,20 @@
+$(document).ready(function(){
+    if (document.getElementsByName("lat")[0].value == 0 && document.getElementsByName("lng")[0].value == 0){
+        document.getElementById("map_none").style.display = 'block';
+        document.getElementById("googleMap").style.display = 'none';
+    }
+    else{
+        document.getElementById("map_none").style.display = 'none';
+        document.getElementById("googleMap").style.display = 'block';
+    }
+});
 marker=undefined;
 function search_choice(e){
     if (marker){
         marker.setMap(null)
     }    
 
-   
+    
     // var xxx = e.getElementById('aa');
     // var ch_lat = e.getElementsByName("li_lat")[0].value
     // var ch_lng = e.getElementsByName("li_lng")[0].value
@@ -13,6 +23,14 @@ function search_choice(e){
     document.getElementsByName("lat")[0].value = ch_lat 
     document.getElementsByName("lng")[0].value = ch_lng 
 
+    if (document.getElementsByName("lat")[0].value == 0 && document.getElementsByName("lng")[0].value == 0){
+        document.getElementById("map_none").style.display = 'block';
+        document.getElementById("googleMap").style.display = 'none';
+    }
+    else{
+        document.getElementById("map_none").style.display = 'none';
+        document.getElementById("googleMap").style.display = 'block';
+    }
     
     // return  document.getElementsByName("lat").value,  document.getElementsByName("lat").value;
     
@@ -22,3 +40,6 @@ function search_choice(e){
     
     marker.setMap(map);
 }
+
+
+

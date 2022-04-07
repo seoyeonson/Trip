@@ -16,8 +16,8 @@ urlpatterns = [
     path('user_create/', views.user_create),
     path('hotel_reserve/', views.hotel_reserve),
     path('vacation_reserve/', views.vacation_reserve),
-    path('hotel_detail/<int:pk>/', views.hotel_detail),
-    path('vacation_detail/<int:pk>/', views.vacation_detail),
+    path('hotel_detail/<int:pk>/', views.hotel_detail, name='hotel_detail'),
+    path('vacation_detail/<int:pk>/', views.vacation_detail, name='vacation_detail'),
     path('hotel_confirm/', views.hotel_confirm),
     path('vacation_confirm/', views.vacation_confirm),
     path('user_divide/', views.user_divide, name='user_divide'),
@@ -39,6 +39,11 @@ urlpatterns = [
 
     path('hotel_register/', views.hotel_register, name="hotel_register"),
     path('vacation_register/', views.vacation_register, name="vacation_register"),
+    
+    path('admin_hotel_detail/', views.admin_hotel_detail, name="admin_hotel_detail"),
+    path('admin_vacation_detail/', views.admin_vacation_detail, name="admin_vacation_detail"),
+
+
 
     #api data용
     # path('api/', views.api, name='api'),

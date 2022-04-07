@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/admin_detail.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}호텔 이름{% endblock %}
+
+{% block contents %}
+{% block script %}
+<script src="{% static 'bs/js/admin_hotel.js' %}"></script>
+{% endblock%}
+
+<div id="side_nav" class="side_nav">
+    <!-- <a href="#" 
+        class="closebtn" id="closebtn" 
+        onclick="closeNav()">&times;</a> -->
+    <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
+    <a class="side_menu" href="{% url 'admin_info' %}">회원정보</a>
+    <a class="side_menu" href="{% url 'admin_pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" id=self href="{% url 'admin_hotel' %}">숙소관리</a>
+    <a class="side_menu" href="{% url 'admin_vacation' %}">여행지 관리</a>
+    <a class="side_menu" href="{% url 'admin_manage' %}">예약관리</a>
+</div>
+
+
+<div class="con2">
+    <div class="contents">
+        <h5 id="title">마이페이지 > 숙소등록 > 호텔이름</h5>
+        <form class="regist_form" name="hotel_regist_form">
+            <input id="register_btn" type="button" value="정보등록">
+            <input id="cancel_btn" type="button" value="등록취소">
+            <label class="index_title">기본정보</label>
+                <div class="basic_info">
+                    <p>고유번호</p>
+                    <p>숙소 이름</p>
+                    <p>도로명 주소</p>
+                    <p>영업 상태</p>
+                </div>
+            <!-- <div class="form-group">
+                <label>고유번호</label>
+                <label class="form-control">{##}고유번호</label>
+            </div>
+            <div class="form-group">
+                <label>숙소이름</label>
+                <input class="form-control" type="text" name="hotel_name">
+            </div>
+            <div class="form-group">
+                <label>도로명주소</label>
+                <input type="button" value="주소찾기" id="search_adress">
+                <input class="form-control" name="hotel_adress" readonly>
+
+            </div>
+            <div class="form-group">
+                <label>영업상태</label>
+                <select class="bsn_state form-control">
+                    <option name="BSN_STATE_NM">영업중</option>
+                    <option name="BSN_STATE_NM">휴업중</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>요약설명</label>
+                <textarea class="form-control"></textarea>
+            </div>
+
+            <label class="index_title">대표사진 등록</label>
+            <div class="form-group">
+                <form action="{% url 'hotel_register' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input class="form-control" id="file_title" type="text" name="fileTitle" placeholder="Enter a title">
+                    <input class="file_select_btn" type="file" name="uploadedFile">
+                    <input class="file_upload_btn" type="submit" value="Upload"> -->
+                </form>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

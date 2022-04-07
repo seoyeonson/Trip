@@ -58,6 +58,16 @@
 }
 
 
+.list_gps_none{
+    width: 900px;
+    height: 1060px;
+    min-width: 900px;
+    background-image: url(../../img/gps_noimg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    display: none;
+} 
 .list_gps_map{
     width: 900px;
     height: 1060px;

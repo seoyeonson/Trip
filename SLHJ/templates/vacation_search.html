@@ -32,7 +32,7 @@
 </div>
     
     
-<div class="list_content">
+<div class="list_content" onload="">
     <!-- 좌측 list -->
     <div class="left_list">
         {% if lists %}
@@ -47,7 +47,7 @@
                         <div class="list_vacation_image"></div>
                         <div class= "list_text">
                             <ul>
-                                <li class="list_vacation_name"> <a href= "#">{{ vacation.TURSM_INFO_NM }}</a></li> 
+                                <li class="list_vacation_name"> <a href="{% url 'vacation_detail' vacation.vacation_id %}">{{ vacation.TURSM_INFO_NM }}</a></li> 
                                 <li class="list_vacation_add"> {{ vacation.SM_RE_ADDR }} </li>
                                 <li>
                                     <div class="list_rating">
@@ -77,8 +77,8 @@
                 
             <p></p>
             {% endfor %}  
-            <input type="hidden" value="{{ vacation.REFINE_WGS84_LAT }}" name="lat">
-            <input type="hidden" value="{{ vacation.REFINE_WGS84_LOGT }}" name="lng">  
+            <input type="hidden" value="{{ vacation.REFINE_WGS84_LAT }}" name="lat" class="lat">
+            <input type="hidden" value="{{ vacation.REFINE_WGS84_LOGT }}" name="lng" class="lng">  
         {% endif %} 
 
         <!-- 리스트 밑의 번호 -->
@@ -121,6 +121,7 @@
         </div>
     </div>
     <!-- 우측 지도 -->
+    <div id="map_none" class="list_gps_none"></div>
     <div id="googleMap" class="list_gps_map"></div>
 </div>
     
@@ -132,4 +133,4 @@
 {% block extrafoot %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkSbB_IhB_i3-8caf6gKcuDHLJT27d0k&callback=myMap"></script>    
 
-{% endblock %}
+{% endblock %}  

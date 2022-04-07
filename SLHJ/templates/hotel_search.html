@@ -47,7 +47,7 @@
                         <div class="list_hotel_image"></div>
                         <div class= "list_text">
                             <ul>
-                                <li class="list_hotel_name"> <a href= "#">{{ hotel.BIZPLC_NM }}</a></li> 
+                                <li class="list_hotel_name">  <a href="{% url 'hotel_detail' hotel.hotel_id %}">{{ hotel.BIZPLC_NM }}</a></li> 
                                 <li class="list_hotel_add"> {{ hotel.REFINE_ROADNM_ADDR }} </li>
                                 <li>
                                     <div class="list_rating">
@@ -75,8 +75,8 @@
                 
             <p></p>
             {% endfor %}  
-            <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="lat">
-            <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="lng">  
+            <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="lat" class="lat">
+            <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="lng" class="lng">  
         {% endif %} 
 
         <!-- 리스트 밑의 번호 -->
@@ -119,9 +119,18 @@
         </div>
     </div>
     <!-- 우측 지도 -->
-    <div id="googleMap" class="list_gps_map"></div>
+        <div id="map_none" class="list_gps_none"></div>
+        <div id="googleMap" class="list_gps_map"></div>
+        
+   
+    <!-- <div id="googleMap" class="list_gps_map"></div>
+
+    {% if  hotel_img.hotel_image_file_path %}
+        <div class="hotel_main_img mt-4 mb-5" style="background-image: url('/media/{{ hotel_img.hotel_image_file_path }}');"></div>
+        {% else %}
+        <div class="hotel_main_img mt-4 mb-5" style="background-image: url('/static/img/img_noimg.jpg');"></div> -->
+        <!-- {% endif %} -->
 </div>
-    
     
    
 
