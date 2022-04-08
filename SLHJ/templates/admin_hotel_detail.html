@@ -30,53 +30,195 @@
 <div class="con2">
     <div class="contents">
         <h5 id="title">마이페이지 > 숙소등록 > 호텔이름</h5>
-        <form class="regist_form" name="hotel_regist_form">
-            <input id="register_btn" type="button" value="정보등록">
-            <input id="cancel_btn" type="button" value="등록취소">
-            <label class="index_title">기본정보</label>
-                <div class="basic_info">
-                    <p>고유번호</p>
-                    <p>숙소 이름</p>
-                    <p>도로명 주소</p>
-                    <p>영업 상태</p>
+        <div class="info_form" name="hotel_info_form">
+            <div class="info_top">
+                <label class="index_title">기본정보</label>
+                <input id="adjust_btn" type="button" value="정보 수정">
+                <input id="delete_btn" type="button" value="숙소 삭제">
+            </div>
+            <div class="hotel_info_title">
+                <div class="info">
+                    <ul>
+                        <li>고유번호</li>       
+                    </ul>
                 </div>
-            <!-- <div class="form-group">
-                <label>고유번호</label>
-                <label class="form-control">{##}고유번호</label>
+                <div class="info">
+                    <ul>
+                        <li>숙소 이름</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>도로명 주소</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>영업상태</li>
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
-                <label>숙소이름</label>
-                <input class="form-control" type="text" name="hotel_name">
+            <div class="hotel_info_content">
+                <div class="info">
+                    <ul>
+                        <li>0023</li>       
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>ABC호텔</li>
+                    </ul>
+                </div>
+                <div class="info3">
+                    <ul>
+                        <li>용인시 기흥구 어쩌구 저쩌구ㅁㄴㅇㄴㅁㅇ</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>영업중</li>
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
-                <label>도로명주소</label>
-                <input type="button" value="주소찾기" id="search_adress">
-                <input class="form-control" name="hotel_adress" readonly>
+            <div class="hotel_info_summary">
+                <div class="info">
+                    <ul>
+                        <li>요약설명</li>       
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>수영장물이 맛있어요</li>
+                    </ul>
+                </div>
+            </div>
 
+            <label class="room_info_label">객실 정보</label>
+            <div class="hotel_room_title">
+                <div class="info">
+                    <ul>
+                        <li>객실종류</li>       
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>객실수</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>가격</li>
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
-                <label>영업상태</label>
-                <select class="bsn_state form-control">
-                    <option name="BSN_STATE_NM">영업중</option>
-                    <option name="BSN_STATE_NM">휴업중</option>
-                </select>
+            <div class="hotel_room_content">
+                <div class="info">
+                    <ul>
+                        <li>디럭스</li>       
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>5개</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>120,000원</li>
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
-                <label>요약설명</label>
-                <textarea class="form-control"></textarea>
+            <div class="hotel_room_content">
+                <div class="info">
+                    <ul>
+                        <li>일반</li>       
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>50개</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>20,000원</li>
+                    </ul>
+                </div>
             </div>
+               
+            
 
-            <label class="index_title">대표사진 등록</label>
-            <div class="form-group">
-                <form action="{% url 'hotel_register' %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input class="form-control" id="file_title" type="text" name="fileTitle" placeholder="Enter a title">
-                    <input class="file_select_btn" type="file" name="uploadedFile">
-                    <input class="file_upload_btn" type="submit" value="Upload"> -->
-                </form>
+            <label class="hotel_img_label">대표 사진</label>
+            <div class="hotel_img"></div> 
+        </div>
+        
+        <div class="review_form" name="hotel_detail_review">
+            <label class="review_label">리뷰관리</label>
+                <div class="review_top">
+                    <div class="review_star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="review_title">
+                        <div class="user_hotel_review">
+                            <ul>
+                                <li>평점</li>       
+                            </ul>
+                        </div>
+                        <div class="user_hotel_review">
+                            <ul>
+                                <li>4.2/5.0</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="review_score">
+                        <div class="user_hotel_review">
+                            <ul>
+                                <li>리뷰 개수</li>       
+                            </ul>
+                        </div>
+                        <div class="user_hotel_review">
+                            <ul>
+                                <li>120개</li>
+                            </ul>
+                        </div>
+                    </div>
+                   
+                </div>
+            <select class="review_select"> <!--지역 검색-->
+                <option value="view_three" >3개씩</option>
+                <option value="view_five" selected>5개씩</option>
+                <option value="view_ten">10개씩</option>
+                <option value="view_twenty" >20개씩</option>
+            </select>
+            <div class="user_review">
+                <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
+                <li>asdqwe1</li>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <div class="review_img"></div>
+                <li>와! 호텔! 와! 야경!</li>
             </div>
-        </form>
-
+            <div class="user_review">
+                <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
+                <li>zmzmfnQLdQHd1</li>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <div class="review_img"></div>
+                <li>야경이 맛있어요</li>
+            </div>
+        </div>
+                
     </div>
 </div>
+
 {% endblock %}
