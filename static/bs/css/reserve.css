@@ -104,6 +104,11 @@ c/* reserve */
     font-size: 30px;
 }
 
+#total_price{
+    color: red;
+    font-size: 30px;
+}
+
 .purchase_btn {
     margin-left: 30%;
     width: 40%;

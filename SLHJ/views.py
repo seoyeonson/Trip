@@ -225,11 +225,11 @@ def vacation_reserve(request):
             
 
             vacation_reserve = Vacation_reserve(
-                vacation_reserve_people = vacation_reserve_people,
+                vacation_reserve_people = request.POST['peopleNum'],
                 vacation_reserve_date = request.POST['vacation_reserve_date'],
                 vacation_reserve_username = request.POST['reserve_name'],
                 vacation_reserve_phonenum = request.POST['phone_num'],
-                vacation_reserve_price = vacation_reserve_price*vacation_reserve_people,
+                vacation_reserve_price = vacation_reserve_price * int(request.POST['peopleNum']),
                 id = id,
                 vacation_id_id = vacation_id
             )

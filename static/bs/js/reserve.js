@@ -5,6 +5,7 @@ $(document).ready(function(){
     $("#confirm_btn").off().on("click",confirm_num);
     $("#purchase_btn").off().on("click",purchase);
     $(".plus-minus-btn").off().on("click", choice_people);
+
     // $("#peopleNum").change(change_peopleNum);
 });
 
@@ -18,7 +19,8 @@ function choice_people(){
         $("#peopleNum").val(current+ 1 )
     }
     $('#total_people').html($("#peopleNum").val())
-    $('#total_price').html(parseInt($("#price").html()) * parseInt($('#total_people').html()))
+    var total_price = parseInt($("#price").html()) * parseInt($('#total_people').html())
+    $('#total_price').html(total_price);
 }
 
 
