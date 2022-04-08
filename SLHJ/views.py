@@ -555,7 +555,7 @@ def history_hotel(request):
     pk = request.session['user']
 
     user = User.objects.get(pk=pk)
-    hotel_reserve = Hotel_reserve.objects.filter(id=pk)
+    hotel_reserve = Hotel_reserve.objects.filter(id=pk).order_by('-hotel_reserve_enddate')
     # hotel_reserves = []
 
     try:
@@ -689,13 +689,26 @@ def admin_hotel(request):
 
     user = User.objects.get(pk=pk)
     hotel = Hotel.objects.filter(hotel_admin_id = user.id)
-    hotels = []
-    for i in range(hotel.count()):
-        hotels.append(hotel[i])
+    # hotels = []
+    # for i in range(hotel.count()):
+    #     hotels.append(hotel[i])
+    per_page = 5
+    page = int(request.GET.get('page',1))
+    paginator = Paginator(hotel, per_page)
+    page_obj = paginator.get_page(page)
+    write_pages = 5
+    # 시작페이지
+    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages -1
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
 
     context = {
         'user' : user,
-        'hotels' : hotels,
+        'hotels' : page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page+1),
     }
 
     return render(request, 'admin_hotel.html', context)
@@ -902,13 +915,13 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_people = 2
     hotel_reserve_username = '유재석'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-03-20'
-    hotel_reserve_enddate = '2022-03-22'
+    hotel_reserve_startdate = '2022-05-05'
+    hotel_reserve_enddate = '2022-05-05'
 
-    hotel_room = Hotel_room.objects.get(pk=23)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=5)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=4)
+    id = User.objects.get(pk=3)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(

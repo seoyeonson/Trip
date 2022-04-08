@@ -31,15 +31,12 @@
 .reserve_name{
     font-weight:bold;
     font-size: 20px;
-    /* width:300px; */
 }
 
 .reserve_adress{
     color: var(--text-sub-color);
     /* width:300px; */
 }
-
-
 
 .review_count span {
     font-size: 14px;
@@ -74,13 +71,8 @@
 }
 .reserve_info .right{
     width: 70%;
-}
-
-
-.reserve_info .right{
     text-align: right;
 }
-
 
 .info_container{
     display: inline-block;
