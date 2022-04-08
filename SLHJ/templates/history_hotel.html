@@ -25,9 +25,9 @@
     <div class="contents">
         <h5 id="title">마이페이지 > 숙소관리</h5>
         <table class="reserves">
-            <tr>
-                <!--sample: review-->
-                <!-- <td class="reserve hotel_reserve">
+            <!-- <tr> -->
+            <!--sample: review-->
+            <!-- <td class="reserve hotel_reserve">
                     <img src="{% static 'img/hotel.png' %}">
                     <div class="info_container">
                         <label class="reserve_name">{{ hotel.BIZPLC_NM }}</label>
@@ -60,44 +60,99 @@
 
                     </div>
                 </td> -->
-                {% for hotel_reserve in hotel_reserves %}
-                    <tr>
-                        <td class="reserve">
-                            <img style="background-image: url('/media/{{ hotel_reserve.room_id.hotel_id.hotel_image.hotel_image_file_path }}');">
-                            <div class="info_container">
-                                <label class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label>
-                                <label class="reserve_adress">{{ hotel_reserve.room_id.hotel_id.REFINE_ROADNM_ADDR }}</label>
-                                <label class="review_count">
-                                    <span>여행지평점{{ hotel_reserve.room_id.hotel_id.hotel_rate }}</span>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>내 평점{{ hotel_reserve.room_id.hotel_id.hotel_image_title }}</span>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </label>
-                                <ul class="reserve_info">
-                                    <li class="left">인원</li>
-                                    <li class="right">{{ hotel_reserve.hotel_reserve_people }}인</li>
-                                    <li class="left">가격</li>
-                                    <li class="right">{{ hotel_reserve.hotel_reserve_price }}원</li>
-                                    <li class="left">예약일시</li>
-                                    <li class="right">{{ hotel_reserve.hotel_reserve_startdate}} ~ {{ hotel_reserve.hotel_reserve_enddate }}</li>
-                                </ul>
-                                
+            {% for hotel_reserve in hotel_reserves %}
+            <tr>
+                <td class="reserve">
+                    <img
+                        style="background-image: url('/media/{{ hotel_reserve.room_id.hotel_id.hotel_image.hotel_image_file_path }}');">
+                    <div class="info_container">
+                        <label class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label>
+                        <label class="reserve_adress">{{ hotel_reserve.room_id.hotel_id.REFINE_ROADNM_ADDR }}</label>
+                        <label class="review_count">
+                            <div>
+                                <span>여행지평점{{ hotel_reserve.room_id.hotel_id.hotel_rate }}</span>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                             </div>
-                        </td>
-                    </tr>
-                {% endfor %}
+                            <div>
+                                <span>내 평점{{ hotel_reserve.room_id.hotel_id.hotel_image_title }}</span>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </label>
+                        <ul class="reserve_info">
+                            <li class="left">인원</li>
+                            <li class="right">{{ hotel_reserve.hotel_reserve_people }}인</li>
+                            <li class="left">가격</li>
+                            <li class="right">{{ hotel_reserve.hotel_reserve_price }}원</li>
+                            <li class="left">예약일시</li>
+                            <li class="right">{{ hotel_reserve.hotel_reserve_startdate}} ~
+                                {{ hotel_reserve.hotel_reserve_enddate }}</li>
+                        </ul>
+
+                    </div>
+                    {% if hotel_reserve.hotel_reserve_enddate < today %}
+                    <div class="after_visit comment_box">
+                        <form name="reivew" class="form-group" method="POST">
+                            {% csrf_token %}
+                            <textarea class="form-control review_comment"></textarea>
+                            <input type="button" value="리뷰등록">
+                            <input type="button" value="수정">
+                            <input type="button" value="취소">
+                        </form>
+                    </div>
+                    {% endif %}
+                </td>
             </tr>
+            {% endfor %}
+            <!-- </tr> -->
         </table>
+
+
+        <div class="container mt-1">
+            <ul class="pagination justify-content-center">
+                {# << 표시 여부 #}
+                {% if hotel_reserves.number > 1 %}
+                <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i
+                            class='fas fa-angle-double-left'></i></a></li>
+                {% endif %}
+
+                {# < 표시 여부 #}
+                {% if start_page < hotel_reserves.number %}
+                <li class="page-item"><a class="page-link" href="?page={{ hotel_reserves.previous_page_number }}"
+                        title="이전"><i class='fas fa-angle-left'></i></a></li>
+                {% endif %}
+
+                {# 페이징 안의 '숫자' 표시 #}
+                {% if hotel_reserves.paginator.num_pages > 1 %}
+                {% for p in page_range %}
+                {% if hotel_reserves.number != p %}
+                <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                {% else %}
+                <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                {# > 표시 #}
+                {% if hotel_reserves.number < end_page %}
+                <li class="page-item"><a class="page-link" href="?page={{ hotel_reserves.next_page_number }}"
+                        title="다음"><i class='fas fa-angle-right'></i></a></li>
+                {% endif %}
+
+                {# >> 표시 #}
+                {% if hotel_reserves.number < hotel_reserves.paginator.num_pages %}
+                <li class="page-item"><a class="page-link" href="?page={{ end_page }}" title="마지막"><i
+                            class='fas fa-angle-double-right'></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}
-
-
