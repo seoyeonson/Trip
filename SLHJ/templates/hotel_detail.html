@@ -39,7 +39,11 @@
             <hr>
             <div>
                 <h2>위치</h2>
+                {% if hotel.hotel_REFINE_WGS84_LAT == 0 %}
+                <div class="google_map mb-lg-0 mb-5"></div>
+                {% else %}
                 <div id="googleMap" class="google_map mb-lg-0 mb-5"></div>
+                {% endif %}
             </div>
         </div>
     
@@ -56,15 +60,10 @@
                         <input type="hidden" value="{{ check_in }}" name="start_date">
                         <input type="hidden" value="{{ check_out }}" name="end_date">
                     </div>
-                    <!-- <div class="date_pick" id="date_pick">
-                        <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
-                        <input id="start_date" class="start_date" type="date" name="start_date">
-                        <input id="end_date" class="end_date" type="date" name="end_date">
-                    </div> -->
                     <div class="date_pick" id="date_pick">
                         <div class="d-flex justify-content-center">
                             <div class="input-daterange reserve_date"><input type="text" name="daterange" id="datepicker" readonly /> 
-                            <input type="button" value="적용" name="reserve_date_choice" onclick="reserve_date_choice()">
+                            <input type="button" value="적용" name="reserve_date_choice">
                             </div>
                         </div>
                     </div>
@@ -253,19 +252,5 @@
 {% block extrafoot %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkSbB_IhB_i3-8caf6gKcuDHLJT27d0k&callback=myMap"></script>
 <script>
-//     $('#submit').on('click', function(e) {
-//         data = '{{ room.room_type }}';
-//         $.ajax({
-//             type:'GET',
-//             url:'127.0.0.1:8000/hotel_detail/{{ hotel.hotel_id }}',
-//             data:JSON.stringify(data),
-//             success:function(json){
-//                 console.log("data pass success",json);
-//             },
-//             error : function(xhr,errmsg,err) {
-//             console.log(xhr.status + ": " + xhr.responseText); 
-//             }
-//     });
-//   });
 </script>
 {% endblock %}

@@ -31,7 +31,11 @@
             <hr>
             <div>
                 <h2>위치</h2>
+                {% if vacation.REFINE_WGS84_LAT == 0 %}
+                <div class="google_map mb-lg-0 mb-5"></div>
+                {% else %}
                 <div id="googleMap" class="google_map mb-lg-0 mb-5"></div>
+                {% endif %}
             </div>
         </div>
     
@@ -40,15 +44,21 @@
             <p>예약을 진행하시려면 인원수를 입력해주세요.</p>
             <form action="." method="POST">
                 {% csrf_token %}
-                <div style="position: relative;">
-                    <button class="hotel_detail_reserve_btn"><i class="fas fa-user-alt"></i>인원선택</button>
-                    <div style="position: relative; left: 0; display: none;">
-                        <button>1명</button>
-                        <button>2명</button>
-                        <button>4명</button>
-                        <button>5명</button>
-                        <button>6명</button>
-                    </div>
+                <div class="choice_people">
+                    <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="vacation_reserve_people" onclick="vacation_choice_people()"><i class="fas fa-user-alt"></i><span class="people">{{ vacation_reserve_people }}명</span></button>
+                    <div class="d-flex justify-content-center hotel_detail_reserve_btn plus_minus_btn">
+                        <div class="vacation_reserve_people">
+                          <button type="button" data-quantity="minus" data-field="vacation_reserve_people">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                        <input class="input-group-field vacation_reserve_people" type="number" name="vacation_reserve_people" max="1" value="{{ vacation_reserve_people }}" readonly/>
+                        <div class="vacation_reserve_people">
+                          <button type="button" data-quantity="plus" data-field="vacation_reserve_people">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
                 </div>
                 <button class="hotel_detail_reserve_btn hotel_detail_reserve_btn_submit">예약하기</button>
             </form>

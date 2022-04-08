@@ -56,10 +56,15 @@ urlpatterns = [
     path('sample5/', views.sample5, name='sample5'),    # hotel_review 포맷입니다.
     path('sample6/', views.sample6, name='sample6'),    # hotel_imgage 포맷입니다.
     path('sample7/', views.sample7, name='sample7'),    # vacation_imgage 포맷입니다.
+
+    # ajax 용
+    # path('option_change/', views.option_change, name='option_change')
 ]
 
 # hotel_image, vacation_image 경로
 urlpatterns += static(
     settings.MEDIA_URL, 
     document_root = settings.MEDIA_ROOT
+
+
 )

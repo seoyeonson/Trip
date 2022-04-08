@@ -66,7 +66,7 @@ hr{
 }
 
 .plus_minus_btn{
-    position: absolute; 
+    position: relative; 
     top: 0;
 }
 
@@ -118,7 +118,9 @@ hr{
 
 
 /* 공통끝 */
-
+.menu_icon i{
+    font-size: 30px;
+}
 
 .main_contents{
     padding: 0;
@@ -142,10 +144,194 @@ hr{
     border-radius: 10px;
 }
 
-.hotel_icon {
+/* .hotel_icon {
     background-image: url(../../img/cat.jpg);
     width: 30px;
     height: 30px;
+} */
+
+.menu_icon {
+    list-style:none;
+    padding: 15px 25px;
+    margin: 0px;
+}
+
+.menu_icon ul {
+    list-style: none;
+    display: inline-block;
+    padding: 0 30px;
+}
+
+.menu_icon>ul>a>li {
+    padding-left: 0 20px;
+}
+
+.hotel_search {
+    margin-top: 10px;
+    /* width: 600px; */
+    /* height: 80px; */
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.hotel_search>ul {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+    
+}
+
+.hotel_search>ul>li {
+    display: inline-block;
+    width: 100px;
+    height: 40px;
+    background-color: #F1F1F1;
+    line-height: 40px;
+    border-radius: 6px;
+}
+
+.hotel_search>ul>ul {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+    display: inline-block;
+    background-color: #F1F1F1;
+    width: 230px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 6px;
+}
+
+.hotel_search>ul>ul>a>li {
+    display: inline-block;
+}
+
+.vacation_search {
+    margin-top: 10px;
+    width: 400px;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.vacation_search>ul {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+    
+}
+
+.vacation_search>ul>li {
+    display: inline-block;
+    width: 100px;
+    height: 40px;
+    background-color: #F1F1F1;
+    line-height: 40px;
+    border-radius: 6px;
+}
+
+.fa-map-marker-alt {
+    margin-right:15px;
+    color: #A8A8A8;
+}
+
+.fa-calendar-alt {
+    margin-right: 15px;
+    color: #A8A8A8;
+}
+
+.slash2::before {
+    position: absolute;
+    top: calc(36%);
+    left: calc(48%);
+    width: 1px;
+    height: 20px;
+    background-color: black;
+    content: "";
+}
+
+.chk_date {
+    margin-right: 20px;
+}
+
+.fa-user-alt {
+    margin-right:15px;
+    color: #A8A8A8;
+}
+
+.hotel_submit {
+    background-color: #FF6B00 !important;
+}
+
+.hotel_submit:hover {
+    background-color: #f56600 !important;
+}
+
+.vacation_submit {
+    background-color: #FF6B00 !important;
+}
+
+.vacation_submit:hover {
+    background-color: #f56600 !important;
+}
+
+.location {
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hotel_location {
+    display: none;
+    background-color: white;
+    margin-top: 10px;
+    margin-left: auto; 
+    margin-right: auto;
+    border-radius: 10px;
+    padding: 10px 10px;
+    box-shadow: 1px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.hotel_lo_select {
+    list-style: none;
+    cursor: pointer;
+    width: 120px;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    border: 1px solid var(--line-color);
+    border-radius: 10px;
+}
+
+.hotel_lo_select:hover {
+    background-color: var(--sub-color);
+    color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+.vacation_lo_select {
+    list-style: none;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vacation_location {
+    height: auto;
+    background-color: white;
+    margin-top: 10px;
+}
+
+.get_date {
+    cursor: pointer;
 }
 
 
@@ -199,11 +385,12 @@ hr{
     margin-bottom: 80px;
 }
 
-.hotel_detail .google_map{
+.google_map{
     width: 100%;
     height: 340px;
-    /* background-color: var(--sub-grey-color); */
     border-radius: 10px;
+    background-image: url(/static/img/gps_noimg.png);
+    background-position: center center;
 }
 
 .hotel_detail_reserve{
@@ -224,7 +411,7 @@ hr{
 
 .hotel_detail_reserve button{
     padding: 15px 20px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .hotel_detail_reserve_btn{
@@ -247,7 +434,7 @@ hr{
 }
 
 .hotel_detail_reserve_btn i {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--icon-color);
     margin-right: 15px;
 }
@@ -357,6 +544,10 @@ hr{
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
+}
+
+.vacation_reserve_people{
+    display: none;
 }
 
 
@@ -506,179 +697,7 @@ hr{
 /* end: reserve */
 /* 예약파트 css 분리하였습니다 */
 
-.menu_icon {
-    list-style:none;
-    padding: 15px 25px;
-    margin: 0px;
-}
-
-.menu_icon ul {
-    list-style: none;
-    display: inline-block;
-    padding: 0 30px;
-}
-
-.menu_icon>ul>a>li {
-    padding-left: 0 20px;
-}
-
-.hotel_search {
-    margin-top: 10px;
-    /* width: 600px; */
-    /* height: 80px; */
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 15px;
-}
-
-.hotel_search>ul {
-    list-style: none;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-bottom: 0px;
-    
-}
-
-.hotel_search>ul>li {
-    display: inline-block;
-    width: 100px;
-    height: 40px;
-    background-color: #F1F1F1;
-    line-height: 40px;
-    border-radius: 6px;
-}
-
-.hotel_search>ul>ul {
-    list-style: none;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-bottom: 0px;
-    display: inline-block;
-    background-color: #F1F1F1;
-    width: 230px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 6px;
-}
-
-.hotel_search>ul>ul>a>li {
-    display: inline-block;
-}
-
-.vacation_search {
-    margin-top: 10px;
-    width: 400px;
-    height: 80px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 15px;
-}
-
-.vacation_search>ul {
-    list-style: none;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-bottom: 0px;
-    
-}
-
-.vacation_search>ul>li {
-    display: inline-block;
-    width: 100px;
-    height: 40px;
-    background-color: #F1F1F1;
-    line-height: 40px;
-    border-radius: 6px;
-}
-
-.fa-map-marker-alt {
-    margin-right:15px;
-    color: #A8A8A8;
-}
-
-.fa-calendar-alt {
-    margin-right:40px;
-    color: #A8A8A8;
-}
-
-.slash2::before {
-    position: absolute;
-    top: calc(36%);
-    left: calc(48%);
-    width: 1px;
-    height: 20px;
-    background-color: black;
-    content: "";
-}
-
-.chk_date {
-    margin-right: 20px;
-}
-
-.fa-user-alt {
-    margin-right:15px;
-    color: #A8A8A8;
-}
-
-.hotel_submit {
-    background-color: #FF6B00 !important;
-}
-
-.hotel_submit:hover {
-    background-color: #f56600 !important;
-}
-
-.vacation_submit {
-    background-color: #FF6B00 !important;
-}
-
-.vacation_submit:hover {
-    background-color: #f56600 !important;
-}
-
-.location {
-    cursor: pointer;
-    padding: 10px;
-}
-
-.hotel_location {
-    height: auto;
-    background-color: white;
-    margin-top: 10px;
-}
-
-.select {
-    cursor: pointer;
-}
-
-.hotel_lo_select {
-    list-style: none;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.vacation_lo_select {
-    list-style: none;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.vacation_location {
-    height: auto;
-    background-color: white;
-    margin-top: 10px;
-}
-
-.get_date {
-    cursor: pointer;
-}
-
+/* date_pick */
 .date_pick {
     margin-top: 10px;
 }

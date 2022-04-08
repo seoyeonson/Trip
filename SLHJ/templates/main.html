@@ -1,73 +1,90 @@
 {% extends "base.html" %}
 {% block title %}홈페이지{% endblock %}
 {% block contents %}
-    <section class="page"> <!-- 메인 이미지 및 메인 검색창-->
+    <section class="page" style="position: relative;"> <!-- 메인 이미지 및 메인 검색창-->
         <div class="main_image"> <!-- 메인 이미지 -->
             <div class="main_search"> <!-- 메인 검색 -->
-                <div class="menu_select">
-                    <ul class="menu_icon">
-                        <ul>
-                            <a href="#" onclick="search_hotel()">
-                                <li><i class="fas fa-hotel" style="font-size: 30px;"></i></li>
-                                <li>호텔</li>
-                            </a>
+                <form>
+                    <div class="menu_select">
+                        <ul class="menu_icon">
+                            <ul>
+                                <a href="#" onclick="search_hotel()">
+                                    <li><i class="fas fa-hotel"></i></li>
+                                    <li>호텔</li>
+                                </a>
+                            </ul>
+                            <ul>
+                                <a href="#" onclick="search_vacation()">
+                                    <li><i class="fas fas fa-plane"></i></li>
+                                    <li>여행지</li>
+                                </a>
+                            </ul>
                         </ul>
+                    </div>
+                    <div class="hotel_search col-lg-4" id="hotel_search"> <!-- 호텔 검색창 -->
                         <ul>
-                            <a href="#" onclick="search_vacation()">
-                                <li><i class="fas fas fa-plane" style="font-size: 30px;"></i></li>
-                                <li>여행지</li>
-                            </a>
+                            <li>
+                                <a onclick="search_location()" class="location" id="location">
+                                    <i class="fas fa-map-marker-alt" class="map"></i><sapn id="lo_text">위치</sapn>
+                                </a>
+                            </li>
+                            <ul>
+                                <a onclick="get_date()" class="get_date" id="get_date">
+                                    <li class="chk_date">
+                                        <i class="fas fa-calendar-alt"></i><span id="chk_in">체크인</span>
+                                    </li>
+                                    <li><span id="chk_out">체크아웃</span></li>
+                                    <input type="hidden" value="{{ check_in }}" name="start_date">
+                                    <input type="hidden" value="{{ check_out }}" name="end_date">
+                                </a>
+                            </ul>
+                            <li class="choice_people" onclick="choice_people()"><i class="fas fa-user-alt"></i>인원</li>
+                            <li class="hotel_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
                         </ul>
+                    </div>
+                    <ul class="hotel_location col-lg-4" id="hotel_location">
+                        {% for place in hotel_places %}
+                        <li id="{{ place.SIGUN_NM }}" class="hotel_lo_select" onclick="hotel_lo_select(this)">{{ place.SIGUN_NM }}</li>
+                        {% endfor %}
                     </ul>
-                </div>
-                <div class="hotel_search col-lg-4" id="hotel_search"> <!-- 호텔 검색창 -->
-                    <ul>
-                        <li>
-                            <a onclick="search_location()" class="location" id="location">
-                                <i class="fas fa-map-marker-alt" class="map"></i><sapn id="lo_text">위치</sapn>
-                            </a>
-                        </li>
+                    <!-- </div> -->
+                    <div class="date_pick" id="date_pick">
+                        <div>
+                            <div class="input-daterange reserve_date"><input type="text" name="daterange" id="datepicker" readonly /> 
+                            <input type="button" value="적용" name="date_choice">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="hotel_reserve_people">
+                          <button type="button" data-quantity="minus" data-field="hotel_reserve_people">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="{{ hotel_reserve_people }}" readonly/>
+                        <div class="hotel_reserve_people">
+                          <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                </form>
+                <form>
+                    <div class="vacation_search" id="vacation_search" style="display: none;"> <!-- 여행지 검색창 -->
                         <ul>
-                            <a onclick="get_date()" class="get_date" id="get_date">
-                                <li class="chk_date">
-                                    <i class="fas fa-calendar-alt"></i><span id="chk_in">체크인</span>
-                                </li>
-                                <li><span id="chk_out">체크아웃</span></li>
-                            </a>
+                            <li>
+                                <a onclick="search_va_location()" class="location" id="location">
+                                    <i class="fas fa-map-marker-alt" class="map"></i><sapn id="va_lo_text">위치</sapn>
+                                </a>  
+                            </li>
+                            <a onclick="search_va_location()" class="location" id="location"><li><i class="fas fa-user-alt"></i><span>인원</span></li></a>
+                            <li class="vacation_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
                         </ul>
-                        <li><i class="fas fa-user-alt"></i>인원</li>
-                        <li class="hotel_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
-                    </ul>
-                </div>
-                <div class="vacation_search" id="vacation_search" style="display: none;"> <!-- 여행지 검색창 -->
-                    <ul>
-                        <li>
-                            <a onclick="search_va_location()" class="location" id="location">
-                                <i class="fas fa-map-marker-alt" class="map"></i><sapn id="va_lo_text">위치</sapn>
-                            </a>  
-                        </li>
-                        <li><i class="fas fa-user-alt"></i>인원</li>
-                        <li class="vacation_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
-                    </ul>
-                </div>
-                <!-- <div class="hotel_location col-lg-4" id="hotel_location" style="display: none;"> -->
-                <ul class="hotel_location col-lg-4" id="hotel_location" style="display: none; margin-left: auto; margin-right: auto; border-radius: 10px;">
-                    <a onclick="hotel_lo_select()" class="select"><li id="hotel_lo_select1" class="hotel_lo_select">서울</li></a>
-                    <a onclick="hotel_lo_select()" class="select"><li id="hotel_lo_select2" class="hotel_lo_select">경기</li></a>
-                    <a onclick="hotel_lo_select()" class="select"><li id="hotel_lo_select3" class="hotel_lo_select">인천</li></a>
-                </ul>
-                <!-- </div> -->
-                <div class="date_pick" id="date_pick" style="display: none;">
-                    <!-- <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" /> -->
-                    <input id="start_day" class="start_day" type="date" min="">
-                    <input id="end_day" class="end_day" type="date">
-                    <input id="submit_day" type="submit" onclick="input_date()" value="적용">
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
-    <div></div>
-    </header>
     <article class="container">
         <div class="mt-5">
             <h2 class="mb-3">추천여행지</h2>
@@ -105,7 +122,5 @@
                 <a href="#" title="이전"><i class='fas fa-angle-right'></i></a>
             </div>
         </div>
-    </article>
-    <footer>푸터입니다.
-    </footer>
+    </article> 
 {% endblock %}

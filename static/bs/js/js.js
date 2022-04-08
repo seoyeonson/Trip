@@ -1,11 +1,12 @@
 var mapProp;
 
+// main 호텔 검색
 function search_hotel() {
     document.getElementById("hotel_search").style.display ='block';
     document.getElementById("vacation_search").style.display ='none';
     document.getElementById("vacation_location").style.display = 'none';
 }
-
+// main 여행지 검색
 function search_vacation() {
     document.getElementById("hotel_search").style.display ='none';
     document.getElementById("vacation_search").style.display ='block';
@@ -13,13 +14,46 @@ function search_vacation() {
     document.getElementById("date_pick").style.display = 'none';
 }
 
+//
 function search_location() {
     document.getElementById("hotel_location").style.display ='block';
     document.getElementById("date_pick").style.display ='none';
 }
 
-function hotel_lo_select() {
-    document.getElementById("hotel_location").style.display ='none';
+function choice_people() {
+    $('.date_pick').css('display', 'none');
+    $('.hotel_reserve_people').css('display', 'block');
+    $('.hotel_room_select').css('display', 'none');
+    $('.hotel_reserve_people').toggleClass('');
+}
+
+function choice_room() {
+    $('.date_pick').css('display', 'none');
+    $('.hotel_room_select').css('display', 'block');
+    $('.hotel_reserve_people').css('display', 'none');
+}
+
+function hotel_room_select(text){
+    $('.hotel_room_select').css('display', 'none');
+    value = $(text).text();
+    $(".room").html(value);
+    $('input[name=reserve_room]').attr('value', value);
+}
+
+function hotel_lo_select(text){
+    $('.hotel_location').css('display', 'none');
+    value = $(text).text();
+    $('#lo_text').html(value);
+}
+
+function choice_date(){
+    $('.date_pick').css('display', 'block');
+    $('.hotel_reserve_people').css('display', 'none');
+    $('.hotel_room_select').css('display', 'none');
+}
+
+function vacation_choice_people(){
+    $('.vacation_reserve_people').css('display', 'block');
 }
 
 function search_va_location() {
@@ -55,16 +89,6 @@ $(document).ready(function() {
     var phonePat = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
     var idPat = /[a-zA-Z0-9_-]{5,20}/;
     var pwPat = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
-
-    $("#hotel_lo_select1").click(function() {
-        $("#lo_text").html("서울");
-    });
-    $("#hotel_lo_select2").click(function() {
-        $("#lo_text").html("경기");
-    });
-    $("#hotel_lo_select3").click(function() {
-        $("#lo_text").html("인천");
-    });
 
     $("#vacation_lo_select1").click(function() {
         $("#va_lo_text").html("서울");
@@ -206,6 +230,7 @@ $(document).ready(function() {
     });
     // This button will decrement the value till 0
     $('[data-quantity="minus"]').click(function(e) {
+        let date;
         // Stop acting like a button
         e.preventDefault();
         // Get the field name
@@ -215,27 +240,49 @@ $(document).ready(function() {
         // If it isn't undefined or its greater than 0
         if (!isNaN(currentVal) && currentVal > 1) {
             // Decrement one
-            $('input[name='+fieldName+']').val(currentVal - 1);
+            data = $('input[name='+fieldName+']').val(currentVal - 1);
             $('.people').html(currentVal - 1 + '명');
         } else {
             // Otherwise put a 0 there
-            $('input[name='+fieldName+']').val(1);
+            data = $('input[name='+fieldName+']').val(1);
         }
+
+        // $.ajax({
+        //     type:'POST',
+        //     url:'/option_change/',
+        //     data: {
+        //         'hotel_reserve_people' : data,
+        //     },
+        //     success:function(json){
+        //         console.log("data pass success",json);
+        //     },
+        //     error : function(xhr,errmsg,err) {
+        //     console.log(xhr.status + ": " + xhr.responseText); 
+        //     }
+        // });
     });
 
-    var startDate;
-    var endDate;
-
+    var startDate = $('input[name=start_date]');
+    var endDate = $('input[name=end_date]');
+    var today = new Date();
+    var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
+    if(startDate == 0 && endDate == 0){
+        startDate = minDate;
+        endDate = minDate;
+    } 
     $(function() {
+        console.log(startDate, endDate, minDate);
         $('input[name="daterange"]').daterangepicker({
-            "startDate": "2022-01-01",
-            "endDate": "2022-01-03",
-            autoApply : true,
+            "startDate": startDate,
+            "endDate": endDate,
+            "minDate" : minDate,
             opens: 'center',
             locale: {
-            format: 'YYYY-MM-DD',
-            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
-            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                "applyLabel": "Apply",
+                "cancelLabel": "Cancel",
+                "format": 'YYYY-MM-DD',
+                "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
+                "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
             }
         }, 
         function(start, end, label) {
@@ -249,6 +296,15 @@ $(document).ready(function() {
         $('.date_pick').css('display', 'none');
         $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
         $('.hotel_detail_reserve_checkout').html(endDate);
+        $('input[name=start_date]').attr('value', startDate);
+        $('input[name=end_date]').attr('value', endDate);
+        console.log("startDate", startDate, "endDate", endDate);
+    });
+
+    $('[name="date_choice"]').click(function(e) {
+        $('.date_pick').css('display', 'none');
+        $('#chk_in').html(startDate);
+        $('#chk_out').html(endDate);
         $('input[name=start_date]').attr('value', startDate);
         $('input[name=end_date]').attr('value', endDate);
         console.log("startDate", startDate, "endDate", endDate);
@@ -271,33 +327,5 @@ function myMap() {
     var myPos = {lat: lat, lng: lng};
 	var marker = new google.maps.Marker({position: myPos});
     marker.setMap(map);
-}
-
-
-function choice_people() {
-    $('.date_pick').css('display', 'none');
-    $('.hotel_reserve_people').css('display', 'block');
-    $('.hotel_room_select').css('display', 'none');
-    $('.hotel_reserve_people').toggleClass('');
-}
-
-function choice_room() {
-    $('.date_pick').css('display', 'none');
-    $('.hotel_room_select').css('display', 'block');
-    $('.hotel_reserve_people').css('display', 'none');
-}
-
-function hotel_room_select(text){
-    $('.hotel_room_select').css('display', 'none');
-    value = $(text).text();
-    $(".room").html(value);
-    $(".room").html(value);
-    $('input[name=reserve_room]').attr('value', value);
-}
-
-function choice_date(){
-    $('.date_pick').css('display', 'block');
-    $('.hotel_reserve_people').css('display', 'none');
-    $('.hotel_room_select').css('display', 'none');
 }
 
