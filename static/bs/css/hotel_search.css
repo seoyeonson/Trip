@@ -11,7 +11,6 @@
     display:flex;
     justify-content: center;
     vertical-align: middle;
-    margin: auto;
     max-width: 881px;
     margin-top :5%
 }
@@ -79,7 +78,6 @@
     flex-direction: column;
 }
 .table_list{
-    border-collapse: collapse;
     border-radius: 10px;
     padding-bottom: 20px;
     text-align: center; 
