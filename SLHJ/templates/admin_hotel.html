@@ -29,33 +29,31 @@
 <div class="con2">
     <div class="contents">
         <h5 id="title">마이페이지 > 숙소관리</h5>
-        <div class="btn_container">
-            <a type="button" class="to_register" href="{% url 'hotel_register' %}">숙소등록</a>
-        </div>
 
         <table class="reserves">
-            <tr><!--테이블 시작-->
-                <!-- {% if lists %} -->
-                    {% for hotel in lists %}
-                        <td class="reserve"> 
-                            <img src="{% static 'img/hotel.png' %}">
-                            <div class="info_container">
-                                <label class="reserve_name">{##}그랜드 하얏트 서울</label>
-                                <label class="reserve_adress">{##}서울 용산구 소월로 22</label>
-                                <label class="review_count">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </label>
-                            </div>
-                            <a type="button" class="detail_btn" href="#">세부정보</a>
-                        </td>
-                    {% endfor %}
-                <!-- {% endif %} -->
+            <div class="btn_container">
+                <a type="button" class="to_register" href="{% url 'hotel_register' %}">숙소등록</a>
+            </div>
 
-            </tr><!--테이블 끝-->
+            <tr>
+                {% for hotel in hotels %}
+                <td class="reserve hotel_reserve">
+                    <img style="background-image: url('/media/{{ hotel.hotel_image.hotel_image_file_path }}');">
+                    <div class="info_container">
+                        <label class="reserve_name">{{ hotel.BIZPLC_NM }}</label>
+                        <label class="reserve_adress">{{ hotel.REFINE_ROADNM_ADDR }}</label>
+                        <label class="review_count">{{ hotel.hotel_rate}}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </label>
+                    </div>
+                    <a type="button" class="detail_btn" href="#">세부정보</a>
+                </td>
+                {% endfor %}
+            </tr>
         </table>
     </div>
 </div>

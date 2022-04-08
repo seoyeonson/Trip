@@ -508,11 +508,14 @@ def pw_change(request):
         'user':user
     }
     if request.method == 'POST':
+        now_password = request.POST.get('current_pw')
+        if now_password != user.user_password:
+            return redirect('/pw_changeFail2/')
         user_password = request.POST.get('confirm_pw')
 
         user.user_password = user_password
         user.save()
-
+        request.session.flush()
         return redirect('/pw_changeOk/')
 
     return render(request, 'pw_change.html', context)
@@ -527,13 +530,6 @@ def history_hotel(request):
     hotel_reserve = Hotel_reserve.objects.filter(id=pk)
     hotel_reserves = []
     hotel_image = Hotel_image.objects.get(pk=hotel_reserve[0].room_id.hotel_id)
-    print(hotel_reserve[0].room_id.hotel_id.hotel_image.hotel_image_file_path)
-    print(hotel_image.hotel_id)
-    print(hotel_image.hotel_id_id)
-    print(hotel_image.hotel_image_title)
-    print(hotel_image.hotel_image_file_path)
-    print(hotel_image.hotel_image_originname)
-
 
     for i in range(hotel_reserve.count()):
         hotel_reserves.append(hotel_reserve[i])
@@ -595,9 +591,46 @@ def admin_info(request):
     # return render(request, 'admin_info.html', context)
 
 def admin_pw_change(request):
+    pk = request.session['user']
+    
+    user = User.objects.get(pk=pk)
+    context = {
+        'user':user
+    }
+    if request.method == "POST":
+        now_password = request.POST.get('current_pw')
+        if now_password != user.user_password:
+            return redirect('/pw_changeFail/')
+        user_password = request.POST.get('confirm_pw')
+
+        user.user_password = user_password
+        user.save()
+        request.session.flush()
+        return redirect('/pw_changeOk/')
+
     return render(request, 'admin_pw_change.html')
 
+def pw_changeFail(request):
+    return render(request, 'pw_changeFail.html')
+
+def pw_changeFail2(request):
+    return render(request, 'pw_changeFail2.html')
+
 def admin_hotel(request):
+    pk = request.session['user']
+
+    user = User.objects.get(pk=pk)
+    hotel = Hotel.objects.filter(hotel_admin_id = user.id)
+    hotels = []
+    for i in range(hotel.count()):
+        hotels.append(hotel[i])
+
+    context = {
+        'user' : user,
+        'hotels' : hotels,
+    }
+
+    return render(request, 'admin_hotel.html', context)
     '''
     pk=request.session['user']
     if request.method=="POST":
@@ -644,27 +677,40 @@ def admin_hotel(request):
     
    
     '''
-    five=5
-    i =1
+    # five=5
+    # i =1
 
-    context={
-         'five' : five,
-         'i' : i 
-        # 'hotels' : hotels
-        # 'lists' : page_obj,
-        # 'start_page': start_page,
-        # 'end_page': end_page,
-        # 'last_page' : last_page,
-        # 'page_range': range(start_page, end_page + 1),
-        # 'count' : count,
+    # context={
+    #      'five' : five,
+    #      'i' : i 
+    #     # 'hotels' : hotels
+    #     # 'lists' : page_obj,
+    #     # 'start_page': start_page,
+    #     # 'end_page': end_page,
+    #     # 'last_page' : last_page,
+    #     # 'page_range': range(start_page, end_page + 1),
+    #     # 'count' : count,
 
-    }
+    # }
     
 
-    return render(request, 'admin_hotel.html', context)
+    # return render(request, 'admin_hotel.html', context)
 
 def admin_vacation(request):
-    return render(request, 'admin_vacation.html')
+    pk = request.session['user']
+
+    user = User.objects.get(pk=pk)
+    vacation = Vacation.objects.filter(vacation_admin_id = user.id)
+    vacations = []
+    for i in range(vacation.count()):
+        vacations.append(vacation[i])
+
+    context = {
+        'user' : user,
+        'vacations' : vacations,
+    }
+
+    return render(request, 'admin_vacation.html', context)
 
 def admin_manage(request):
     return render(request, 'admin_manage.html')

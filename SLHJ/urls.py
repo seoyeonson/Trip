@@ -26,6 +26,7 @@ urlpatterns = [
     # 마이페이지
     path('user_info/', views.user_info, name='user_info'),
     path('pw_change/', views.pw_change, name='pw_change'),
+    path('pw_changeFail2/', views.pw_changeFail2, name='pw_changeFail2'),
     path('pw_changeOk/', views.pw_changeOk, name='pw_changeOk'),
     path('history_hotel/', views.history_hotel, name='history_hotel'),
     path('history_vacation/', views.history_vacation, name='history_vacation'),
@@ -33,6 +34,7 @@ urlpatterns = [
     # 마이페이지 - admin
     path('admin_info/', views.admin_info, name='admin_info'),
     path('admin_pw_change/', views.admin_pw_change, name='admin_pw_change'),
+    path('pw_changeFail/', views.pw_changeFail, name='pw_changeFail'),
     path('admin_hotel/', views.admin_hotel, name='admin_hotel'),
     path('admin_vacation/', views.admin_vacation, name='admin_vacation'),
     path('admin_manage/', views.admin_manage, name='admin_manage'),
