@@ -25,8 +25,11 @@
     border: 1px solid var(--main-color);
     border-radius: 10px;
     font-weight: bold;
-    margin-top: 50px;
-    
+}
+.pw_change>div{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
 }
 
 .error{
@@ -40,5 +43,6 @@
     
     .pw_change td{
         display: table-cell;
+        width: 100%;
     }
 }

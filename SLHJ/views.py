@@ -201,7 +201,6 @@ def hotel_reserve(request):
         return redirect(f'/hotel_confirm/?reserve={hotel_reserve.hotel_reserve_id}')
 
 def vacation_reserve(request):
-
     try:
         vacation_id = request.session.get('vacation_pk')
         vacation_reserve_people = request.session.get('vacation_reserve_people')
@@ -209,33 +208,40 @@ def vacation_reserve(request):
         # del request.session['vacation_reserve_people']
         vacation= Vacation.objects.get(vacation_id=vacation_id)
         vacation_reserve_price = vacation.vacation_price 
+        place_name = vacation.TURSM_INFO_NM
+        id = User.objects.get(id=request.session.get('user','')) # session에 저장된 user의 정보를 불러옵니다.
+        if id == "":
+            return redirect('/login/')
 
-        place_name =  vacation.TURSM_INFO_NM
-        
-    except: Vacation.DoesNotExist('여행지를 선택해주세요')
+        if request.method=="GET":
+            
+            context = {
+                'place_name': place_name,
+                'reserve_people': vacation_reserve_people,
+                'vacation_price': vacation_reserve_price,
+                'show_price': vacation_reserve_price * vacation_reserve_people,
+            }
+            return render(request, 'vacation_reserve.html', context)
 
-    if request.method=="GET":
-        context = {
-            'place_name': place_name,
-            'reserve_people': vacation_reserve_people,
-            'vacation_price': vacation_reserve_price,
-            'show_price': vacation_reserve_price * vacation_reserve_people,
-        }
-        return render(request, 'vacation_reserve.html', context)
+        elif request.method=="POST":
+            
 
-    elif request.method=="POST":
-        id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
-        vacation_reserve = Vacation_reserve(
-            vacation_reserve_people = vacation_reserve_people,
-            vacation_reserve_date = request.POST['vacation_reserve_date'],
-            vacation_reserve_username = request.POST['reserve_name'],
-            vacation_reserve_phonenum = request.POST['phone_num'],
-            vacation_reserve_price = vacation_reserve_price,
-            id = id,
-            vacation_id_id = vacation_id
-        )
-        vacation_reserve.save()
-        return redirect(f'/vacation_confirm/?reserve={vacation_reserve.vacation_reserve_id}')
+            vacation_reserve = Vacation_reserve(
+                vacation_reserve_people = request.POST['peopleNum'],
+                vacation_reserve_date = request.POST['vacation_reserve_date'],
+                vacation_reserve_username = request.POST['reserve_name'],
+                vacation_reserve_phonenum = request.POST['phone_num'],
+                vacation_reserve_price = vacation_reserve_price * int(request.POST['peopleNum']),
+                id = id,
+                vacation_id_id = vacation_id
+            )
+            vacation_reserve.save()
+            return redirect(f'/vacation_confirm/?reserve={vacation_reserve.vacation_reserve_id}')
+    
+    except Vacation.DoesNotExist:
+        raise Http404('여행지를 선택해주세요')
+
+
 
 def hotel_detail(request, pk):
     now = datetime.datetime.now().strftime('%Y-%m-%d')
@@ -528,11 +534,14 @@ def pw_change(request):
         'user':user
     }
     if request.method == 'POST':
+        now_password = request.POST.get('current_pw')
+        if now_password != user.user_password:
+            return redirect('/pw_changeFail2/')
         user_password = request.POST.get('confirm_pw')
 
         user.user_password = user_password
         user.save()
-
+        request.session.flush()
         return redirect('/pw_changeOk/')
 
     return render(request, 'pw_change.html', context)
@@ -545,39 +554,80 @@ def history_hotel(request):
 
     user = User.objects.get(pk=pk)
     hotel_reserve = Hotel_reserve.objects.filter(id=pk)
-    hotel_reserves = []
-    hotel_image = Hotel_image.objects.get(pk=hotel_reserve[0].room_id.hotel_id)
-    print(hotel_reserve[0].room_id.hotel_id.hotel_image.hotel_image_file_path)
-    print(hotel_image.hotel_id)
-    print(hotel_image.hotel_id_id)
-    print(hotel_image.hotel_image_title)
-    print(hotel_image.hotel_image_file_path)
-    print(hotel_image.hotel_image_originname)
+    # hotel_reserves = []
 
+    try:
+        hotel_image = Hotel_image.objects.get(pk=hotel_reserve[0].room_id.hotel_id)
 
-    for i in range(hotel_reserve.count()):
-        hotel_reserves.append(hotel_reserve[i])
+    except Hotel_image.DoesNotExist:
+        hotel_image = ''
+
+    # for i in range(hotel_reserve.count()):
+    #     hotel_reserves.append(hotel_reserve[i])
+
+    # 한 페이지에 보일 예약 개수
+    per_page = 5
+    # 현재 페이지
+    page = int(request.GET.get('page',1))
+    # 페이지네이터 생성
+    paginator = Paginator(hotel_reserve, per_page)
+    # 페이지 개수 
+    page_obj = paginator.get_page(page)
+    # 보여질 페이징 개수. 
+    write_pages = int(request.session.get('write_pages', 5))
+    # 시작페이지
+    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages -1
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+
+    # hotel_reserves = []
+    # hotel_image = Hotel_image.objects.get(pk=hotel_reserve[0].room_id.hotel_id)
+
+    # for i in range(hotel_reserve.count()):
+    #     hotel_reserves.append(hotel_reserve[i])
     
     context = {
         'user': user,
-        'hotel_reserves' : hotel_reserves,
+        'hotel_reserves' : page_obj,
+        'start_page' : start_page,
+        'end_page' : end_page,
+        'page_range' : range(start_page, end_page + 1),
         'hotel_image' : hotel_image,
+        'today': datetime.datetime.now().date(),        
     }
-    
+
     return render(request, 'history_hotel.html', context)
 
 def history_vacation(request):
     pk = request.session['user']
 
     user = User.objects.get(pk=pk)
-    vacation_reserve = Vacation_reserve.objects.filter(id=pk)
-    vacation_reserves = []
-    for i in range(vacation_reserve.count()):
-        vacation_reserves.append(vacation_reserve[i])
+    vacation_reserve = Vacation_reserve.objects.filter(id=pk).order_by('-vacation_reserve_date')
 
+    # 한 페이지에 보일 예약 개수
+    per_page = 5
+    # 현재 페이지
+    page = int(request.GET.get('page',1))
+    # 페이지네이터 생성
+    paginator = Paginator(vacation_reserve, per_page)
+    # 페이지 개수 
+    page_obj = paginator.get_page(page)
+    # 보여질 페이징 개수. 
+    write_pages = int(request.session.get('write_pages', 5))
+    # 시작페이지
+    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages -1
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+    
     context = {
         'user': user,
-        'vacation_reserves' : vacation_reserves
+        'vacation_reserves': page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page+1),
+        'today': datetime.datetime.now().date()
     }
     return render(request, 'history_vacation.html', context)
 
@@ -615,9 +665,46 @@ def admin_info(request):
     # return render(request, 'admin_info.html', context)
 
 def admin_pw_change(request):
+    pk = request.session['user']
+    
+    user = User.objects.get(pk=pk)
+    context = {
+        'user':user
+    }
+    if request.method == "POST":
+        now_password = request.POST.get('current_pw')
+        if now_password != user.user_password:
+            return redirect('/pw_changeFail/')
+        user_password = request.POST.get('confirm_pw')
+
+        user.user_password = user_password
+        user.save()
+        request.session.flush()
+        return redirect('/pw_changeOk/')
+
     return render(request, 'admin_pw_change.html')
 
+def pw_changeFail(request):
+    return render(request, 'pw_changeFail.html')
+
+def pw_changeFail2(request):
+    return render(request, 'pw_changeFail2.html')
+
 def admin_hotel(request):
+    pk = request.session['user']
+
+    user = User.objects.get(pk=pk)
+    hotel = Hotel.objects.filter(hotel_admin_id = user.id)
+    hotels = []
+    for i in range(hotel.count()):
+        hotels.append(hotel[i])
+
+    context = {
+        'user' : user,
+        'hotels' : hotels,
+    }
+
+    return render(request, 'admin_hotel.html', context)
     '''
     pk=request.session['user']
     if request.method=="POST":
@@ -664,27 +751,40 @@ def admin_hotel(request):
     
    
     '''
-    five=5
-    i =1
+    # five=5
+    # i =1
 
-    context={
-         'five' : five,
-         'i' : i 
-        # 'hotels' : hotels
-        # 'lists' : page_obj,
-        # 'start_page': start_page,
-        # 'end_page': end_page,
-        # 'last_page' : last_page,
-        # 'page_range': range(start_page, end_page + 1),
-        # 'count' : count,
+    # context={
+    #      'five' : five,
+    #      'i' : i 
+    #     # 'hotels' : hotels
+    #     # 'lists' : page_obj,
+    #     # 'start_page': start_page,
+    #     # 'end_page': end_page,
+    #     # 'last_page' : last_page,
+    #     # 'page_range': range(start_page, end_page + 1),
+    #     # 'count' : count,
 
-    }
+    # }
     
 
-    return render(request, 'admin_hotel.html', context)
+    # return render(request, 'admin_hotel.html', context)
 
 def admin_vacation(request):
-    return render(request, 'admin_vacation.html')
+    pk = request.session['user']
+
+    user = User.objects.get(pk=pk)
+    vacation = Vacation.objects.filter(vacation_admin_id = user.id)
+    vacations = []
+    for i in range(vacation.count()):
+        vacations.append(vacation[i])
+
+    context = {
+        'user' : user,
+        'vacations' : vacations,
+    }
+
+    return render(request, 'admin_vacation.html', context)
 
 def admin_manage(request):
     return render(request, 'admin_manage.html')
@@ -732,7 +832,7 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
     vacation_reserve_username = '이광우'
     vacation_reserve_phonenum = '010-1234-5678'
 
-    id = User.objects.get(pk=1)
+    id = User.objects.get(pk=3)
     # id = User.objects.get(pk=pk)
     vacation_id = Vacation.objects.get(pk=1)
 
@@ -758,7 +858,7 @@ def sample3(request):   # hotel_room 포맷입니다.
     room_price = 100000
     room_people = 2
 
-    hotel_id = Hotel.objects.get(pk=2)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
+    hotel_id = Hotel.objects.get(pk=6)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
     hotel_room = Hotel_room(
         room_type = room_type,
@@ -775,15 +875,15 @@ def sample3(request):   # hotel_room 포맷입니다.
 def sample4(request):   # hotel_reserve 포맷입니다.
     
     hotel_reserve_people = 2
-    hotel_reserve_username = '이광우'
+    hotel_reserve_username = '유재석'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-04-07'
-    hotel_reserve_enddate = '2022-04-08'
+    hotel_reserve_startdate = '2022-03-30'
+    hotel_reserve_enddate = '2022-04-01'
 
-    hotel_room = Hotel_room.objects.get(pk=24)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=5)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=4)
+    id = User.objects.get(pk=3)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(
@@ -808,7 +908,7 @@ def sample5(request):       # hotel_review 포맷입니다.
     hotel_review_rate = 4.0
     hotel_review_date = datetime.datetime.now().strftime('%Y-%m-%d')    # 현재시간을 YYYY-MM-DD형태로 가져옵니다.
 
-    id = User.objects.get(pk=1)             # 유저의 primary key 를 외부로 받아옵니다. 
+    id = User.objects.get(pk=3)             # 유저의 primary key 를 외부로 받아옵니다. 
     hotel_id = Hotel.objects.get(pk = 1)    # 호텔의 primary key 를 외부로 받아와야 됩니다. pk=pk
 
     hotel_review = Hotel_review(

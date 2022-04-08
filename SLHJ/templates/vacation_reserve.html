@@ -25,6 +25,10 @@
                 <input class="form-control" id="reserve_name" name="reserve_name" type="text" value="">
             </div>
             <div class="form-group">
+                <label>이용 날짜</label>
+                <input class="form-control" id="vacation_reserve_date" name="vacation_reserve_date" type="text" value="">
+            </div>
+            <div class="form-group">
                 <label>인원 및 수량</label>
                 
                 <div class="vacation_peopleNum">
@@ -70,7 +74,7 @@
             <label class="reserve_index">여행지 이름</label>
             <label>{{ place_name }}</label>
             <label class="reserve_index">이용날짜</label>
-            <label>{{ reserve_date }}</label>
+            <label class="reserve_date"></label>
             <label class="reserve_index">인원 및 수량</label>
             <label><span id="total_people">{{ reserve_people }}</span> <span>인</span></label>
             <hr>

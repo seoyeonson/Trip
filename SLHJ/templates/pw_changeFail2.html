@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contents %}
+<script>
+    alert('현재 비밀번호가 일치하지않습니다.')
+    location.href = '/pw_change/'
+</script>
+{% block footer %}{% endblock %}
+{% endblock %}
