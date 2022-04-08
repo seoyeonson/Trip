@@ -436,6 +436,10 @@ def login(request):
 
     return render(request, 'login.html', context)
 
+def logout(request):
+    request.session.flush()
+    return render(request, 'logout.html')
+
 def loginFail(request):
     return render(request, 'loginFail.html')
 
@@ -653,14 +657,6 @@ def admin_info(request):
             'user': user
         }
         return render(request, 'admin_info.html', context)
-    # user_id = request.session.get('user',"")
-    # if user_id == "":
-    #     return redirect('/login/')
-    # user = User.objects.get(user_id=user_id)
-    # context={
-    #     'user' : user
-    # }
-    # return render(request, 'admin_info.html', context)
 
 def admin_pw_change(request):
     pk = request.session['user']

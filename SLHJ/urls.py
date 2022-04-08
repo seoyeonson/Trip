@@ -12,6 +12,7 @@ urlpatterns = [
     path('vacation_search/<str:SIGUN_NM>/', views.vacation_search),
     # path('login/', views.login),
     path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     path('loginFail/', views.loginFail),
     path('user_create/', views.user_create),
     path('hotel_reserve/', views.hotel_reserve),
