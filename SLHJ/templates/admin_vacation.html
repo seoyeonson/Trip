@@ -35,22 +35,25 @@
             </div>
 
             <tr><!--테이블시작-->
+                {% for vacation in vacations %}
                 <!--sample: review-->
                 <td class="reserve hotel_reserve">
-                    <img src="{% static 'img/hotel.png' %}">
+                    <img style="background-image: url('/media/{{ vacation.vacation_image.vacation_image_file_path }}');">
                     <div class="info_container">
-                        <label class="reserve_name">{##}한국민속촌</label>
-                        <label class="reserve_adress">{##}경기도 용인시</label>
-                        <label class="review_count">
+                        <label class="reserve_name">{{ vacation.TURSM_INFO_NM }}</label>
+                        <label class="reserve_adress">{{ vacation.SM_RE_ADDR }}</label>
+                        <label class="review_count">{{ vacation.vacation_rate}}
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </label>
+                        <label>{{ vacation.vacation_price }} 원</label>
                     </div>
                     <a type="button" class="detail_btn" href="#">세부정보</a>
                 </td>
+                {% endfor %}
             </tr> <!--테이블끝-->
         </table>
     </div>
