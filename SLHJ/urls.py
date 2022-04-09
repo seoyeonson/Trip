@@ -7,9 +7,9 @@ from django.conf import settings
 
 urlpatterns = [
     path('main/', views.main, name='main'),
-    path('list/', views.list),
-    path('hotel_search/<str:SIGUN_NM>/', views.hotel_search),
-    path('vacation_search/<str:SIGUN_NM>/', views.vacation_search),
+    # path('list/', views.list),
+    path('hotel_search/', views.hotel_search, name='hotel_search'),
+    path('vacation_search/', views.vacation_search, name='vacation_search'),
     # path('login/', views.login),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),

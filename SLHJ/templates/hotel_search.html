@@ -11,27 +11,63 @@
 {% endblock%}
 {% block title %}검색{% endblock %}
 <div class="search">
-    <div class="list_search">      <!-- 검색 창 -->
-        <select class="list_pl_search"> <!--지역 검색-->
-            <option value="suwon"><i class="fas fa-map-marker-alt" class="map"></i>수원</option>
-            <option value="siheong">시흥</option>
-            <option value="namyangzu" >남양주</option>
-            <option value="pazu" selected>파주</option>
-        </select>
-        <input type="date" class="list_stdate_search">  <!--날짜 검색-->
-        <!-- <input type="date" class="list_eddate_search"> -->
- 
-        <select class="list_peonum_search" > <!--인원 검색-->
-            <option value="one" selected>1인</option>
-            <option value="two">2인</option>
-            <option value="three" >3인</option>
-            <option value="four">4인</option>
-        </select>
-        <input type="submit" class="search_submit" value="검색"> <!--검색버튼-->
-    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="hotel_search" id="hotel_search"> <!-- 호텔 검색창 -->
+            <ul>
+                <li>
+                    <a onclick="search_location()" class="location" id="location">
+                        <i class="fas fa-map-marker-alt" class="map"></i><sapn id="lo_text">{{ request.session.SIGUN_NM }}</sapn>
+                        <input type="hidden" id="lo_text" name="SIGUN_NM" value="">
+                    </a>
+                </li>
+                <ul>
+                    <a onclick="get_date()" class="get_date" id="get_date">
+                        <li class="chk_date">
+                            <i class="fas fa-calendar-alt"></i><span id="chk_in">{{ request.session.start_date }}</span>
+                        </li>
+                        <li><span id="chk_out">{{ request.session.end_date }}</span></li>
+                        <input type="hidden" value="{{ request.session.start_date }}" name="start_date">
+                        <input type="hidden" value="{{ request.session.end_date }}" name="end_date">
+                    </a>
+                </ul>
+                <li class="choice_people" onclick="choice_people()">
+                    <a><i class="fas fa-user-alt"></i><span class="people">{{ request.session.hotel_reserve_people }}명</a></span>
+                </li>
+                <li class="hotel_submit"><input type="submit" class="chk_form" value="검색"></li>
+            </ul>
+        </div>
+        <ul class="hotel_location" id="hotel_location">
+            {% for place in hotel_places %}
+            <li id="{{ place.SIGUN_NM }}" class="hotel_lo_select" onclick="hotel_lo_select(this)">{{ place.SIGUN_NM }}</li>
+            {% endfor %}
+        </ul>
+        <!-- </div> -->
+        <div class="date_pick" id="date_pick">
+            <div>
+                <div class="input-daterange reserve_date"><input type="text" name="daterange" id="datepicker" readonly /> 
+                <input type="button" value="적용" name="date_choice">
+                </div>
+            </div>
+        </div>
+        <div class="reserve_people d-flex">
+            <div class="hotel_reserve_people">
+            <!-- 인원수 감소 -->
+            <button type="button" data-quantity="minus" data-field="hotel_reserve_people">
+                <i class="fa fa-minus" aria-hidden="true"></i>
+            </button>
+            </div>
+            <!-- 인원수 -->
+            <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="{{ request.session.hotel_reserve_people }}" readonly/>
+            <!-- 인원수 증가 -->
+            <div class="hotel_reserve_people">
+                <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
-    
-    
 <div class="list_content">
     <!-- 좌측 list -->
     <div class="left_list">

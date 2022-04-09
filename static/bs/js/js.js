@@ -5,6 +5,7 @@ function search_hotel() {
     document.getElementById("hotel_search").style.display ='block';
     document.getElementById("vacation_search").style.display ='none';
     document.getElementById("vacation_location").style.display = 'none';
+    $('.vacation_reserve_people').css('display', 'none');
 }
 // main 여행지 검색
 function search_vacation() {
@@ -12,19 +13,20 @@ function search_vacation() {
     document.getElementById("vacation_search").style.display ='block';
     document.getElementById("hotel_location").style.display = 'none';
     document.getElementById("date_pick").style.display = 'none';
+    $('.hotel_reserve_people').css('display', 'none');
 }
 
-//
 function search_location() {
-    document.getElementById("hotel_location").style.display ='block';
-    document.getElementById("date_pick").style.display ='none';
+    $('#hotel_location').css('display', 'block');
+    $('#date_pick').css('display', 'none');
+    $('.hotel_reserve_people').css('display', 'none');
 }
 
 function choice_people() {
-    $('.date_pick').css('display', 'none');
+    $('#hotel_location').css('display', 'none');
+    $('#date_pick').css('display', 'none');
     $('.hotel_reserve_people').css('display', 'block');
     $('.hotel_room_select').css('display', 'none');
-    $('.hotel_reserve_people').toggleClass('');
 }
 
 function choice_room() {
@@ -44,6 +46,7 @@ function hotel_lo_select(text){
     $('.hotel_location').css('display', 'none');
     value = $(text).text();
     $('#lo_text').html(value);
+    $('input[name=SIGUN_NM]').attr('value', value);
 }
 
 function choice_date(){
@@ -53,20 +56,26 @@ function choice_date(){
 }
 
 function vacation_choice_people(){
+    $('.vacation_location').css('display', 'none');
     $('.vacation_reserve_people').css('display', 'block');
 }
 
 function search_va_location() {
+    $('.vacation_reserve_people').css('display', 'none');
     document.getElementById("vacation_location").style.display ='block';
 }
 
-function vacation_lo_select() {
-    document.getElementById("vacation_location").style.display ='none';
+function vacation_lo_select(text) {
+    $('.vacation_location').css('display', 'none');
+    value = $(text).text();
+    $('#va_lo_text').html(value);
+    $('input[id=va_lo_text]').attr('value', value);
 }
 
 function get_date() {
     document.getElementById("date_pick").style.display ='block';
     document.getElementById("hotel_location").style.display ='none';
+    $('.hotel_reserve_people').css('display', 'none');
 }
 
 function input_date() {
@@ -90,20 +99,10 @@ $(document).ready(function() {
     var idPat = /[a-zA-Z0-9_-]{5,20}/;
     var pwPat = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
 
-    $("#vacation_lo_select1").click(function() {
-        $("#va_lo_text").html("서울");
-    });
-    $("#vacation_lo_select2").click(function() {
-        $("#va_lo_text").html("경기");
-    });
-    $("#vacation_lo_select3").click(function() {
-        $("#va_lo_text").html("인천");
-    });
-
-    $("#submit_day").click(function() {
-        $("#chk_in").html(start_day);
-        $("#chk_out").html(end_day);
-    });
+    // $("#submit_day").click(function() {
+    //     $("#chk_in").html(start_day);
+    //     $("#chk_out").html(end_day);
+    // });
 
     // 로그인 체크
     $('#logInCheck').click(function(){
@@ -222,7 +221,11 @@ $(document).ready(function() {
         if (!isNaN(currentVal)) {
             // Increment
             $('input[name='+fieldName+']').val(currentVal + 1);
-            $('.people').html(currentVal + 1 + '명');
+            if(fieldName == 'hotel_reserve_people'){
+                $('.people').html(currentVal + 1 + '명');
+            }else{
+                $('.va_people').html(currentVal + 1 + '명');
+            }
         } else {
             // Otherwise put a 0 there
             $('input[name='+fieldName+']').val(1);
@@ -241,7 +244,11 @@ $(document).ready(function() {
         if (!isNaN(currentVal) && currentVal > 1) {
             // Decrement one
             data = $('input[name='+fieldName+']').val(currentVal - 1);
-            $('.people').html(currentVal - 1 + '명');
+            if(fieldName == 'hotel_reserve_people'){
+                $('.people').html(currentVal - 1 + '명');
+            }else{
+                $('.va_people').html(currentVal - 1 + '명');
+            }
         } else {
             // Otherwise put a 0 there
             data = $('input[name='+fieldName+']').val(1);
@@ -262,49 +269,10 @@ $(document).ready(function() {
         // });
     });
 
-    var startDate = $('input[name=start_date]');
-    var endDate = $('input[name=end_date]');
-    var today = new Date();
-    var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
-    if(startDate == 0 && endDate == 0){
-        startDate = minDate;
-        endDate = minDate;
-    } 
-    $(function() {
-        console.log(startDate, endDate, minDate);
-        $('input[name="daterange"]').daterangepicker({
-            "startDate": startDate,
-            "endDate": endDate,
-            "minDate" : minDate,
-            opens: 'center',
-            locale: {
-                "applyLabel": "Apply",
-                "cancelLabel": "Cancel",
-                "format": 'YYYY-MM-DD',
-                "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
-                "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-            }
-        }, 
-        function(start, end, label) {
-            // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-            startDate = start.format('YYYY-MM-DD');
-            endDate = end.format('YYYY-MM-DD');
-        });
-    });
-
     $('[name="reserve_date_choice"]').click(function(e) {
         $('.date_pick').css('display', 'none');
         $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
         $('.hotel_detail_reserve_checkout').html(endDate);
-        $('input[name=start_date]').attr('value', startDate);
-        $('input[name=end_date]').attr('value', endDate);
-        console.log("startDate", startDate, "endDate", endDate);
-    });
-
-    $('[name="date_choice"]').click(function(e) {
-        $('.date_pick').css('display', 'none');
-        $('#chk_in').html(startDate);
-        $('#chk_out').html(endDate);
         $('input[name=start_date]').attr('value', startDate);
         $('input[name=end_date]').attr('value', endDate);
         console.log("startDate", startDate, "endDate", endDate);
