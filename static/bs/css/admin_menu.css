@@ -18,6 +18,11 @@
     width:100%;
 }
 
+.reserve:hover{
+background-color: rgb(197, 197, 197, 0.1);
+transition: 0.2s
+}
+
 .reserves img{
     width:350px;
     height:230px;
@@ -77,8 +82,7 @@
     border-radius: 10px;
     font-size: 13px;
     margin-top: 10px;
-    margin: 5px 15px 15px 10px;
-    float:right;
+    margin: 5px 10px 15px 10px;
 }
 
 .to_register:hover{
@@ -87,6 +91,12 @@
     color: var(--sub-color);
     font-weight: bold;
 }
+
+.btn_container{
+    display: flex;
+    justify-content: flex-end;
+}
+
 
 @media(min-width:768px){
     
@@ -107,14 +117,5 @@
     .reserves{
         min-width: 780px;
     }
-       
-    /* .detail_btn{
-        float:right;
-    } */
 
-    .btn_container{
-        max-width: 900px;
-        min-width: 700px;
-    }
-    
 }

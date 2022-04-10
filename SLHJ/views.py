@@ -782,15 +782,25 @@ def admin_vacation(request):
 
     user = User.objects.get(pk=pk)
     vacation = Vacation.objects.filter(vacation_admin_id = user.id)
-    vacations = []
-    for i in range(vacation.count()):
-        vacations.append(vacation[i])
+
+    per_page = 5
+    page = int(request.GET.get('page',1))
+    paginator = Paginator(vacation, per_page)
+    page_obj = paginator.get_page(page)
+    write_pages = 5
+    # 시작페이지
+    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages -1
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
 
     context = {
         'user' : user,
-        'vacations' : vacations,
+        'vacations' : page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page+1),
     }
-
     return render(request, 'admin_vacation.html', context)
 
 def admin_manage(request):
@@ -838,6 +848,24 @@ def admin_vacation_detail(request):
     }
 
     return render(request, 'admin_vacation_detail.html',context )
+
+def hotel_update(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+
+    context = {
+        'user' : user,
+    }
+    return render(request, 'hotel_update.html', context)
+
+def vacation_update(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+
+    context = {
+        'user' : user,
+    }
+    return render(request, 'vacation_update.html', context)
 
 def sample(request):  # vacation_review 데이터 입력포맷입니다.
 

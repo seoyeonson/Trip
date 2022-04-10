@@ -45,6 +45,8 @@ urlpatterns = [
     
     path('admin_hotel_detail/', views.admin_hotel_detail, name="admin_hotel_detail"),
     path('admin_vacation_detail/', views.admin_vacation_detail, name="admin_vacation_detail"),
+    path('hotel_update/', views.hotel_update, name="hotel_update"),
+    path('vacaion_update/', views.vacation_update, name="vacation_update"),
 
 
 
