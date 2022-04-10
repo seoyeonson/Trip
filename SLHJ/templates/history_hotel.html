@@ -70,7 +70,7 @@
                         <label class="reserve_adress">{{ hotel_reserve.room_id.hotel_id.REFINE_ROADNM_ADDR }}</label>
                         <label class="review_count">
                             <div>
-                                <span>여행지평점{{ hotel_reserve.room_id.hotel_id.hotel_rate }}</span>
+                                <span>호텔평점{{ hotel_reserve.room_id.hotel_id.hotel_rate }}</span>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -101,10 +101,10 @@
                     <div class="after_visit comment_box">
                         <form name="reivew" class="form-group" method="POST">
                             {% csrf_token %}
-                            <textarea class="form-control review_comment"></textarea>
-                            <input type="button" value="리뷰등록">
-                            <input type="button" value="수정">
-                            <input type="button" value="취소">
+                            <input type="hidden" id = hotel_id name = hotel_id value="{{ hotel_reserve.room_id.hotel_id_id }}">     <!--views 에 어떤호텔인지 인자를 넘겨주기 위한 값입니다. -->
+                            <textarea id = review name = review class="form-control review_comment"></textarea>
+                            <input type="number" id = rate name = rate class="form-control review_comment" min="1" max="5">
+                            <input type="submit" value="리뷰등록">
                         </form>
                     </div>
                     {% endif %}

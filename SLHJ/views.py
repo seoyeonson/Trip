@@ -639,6 +639,29 @@ def history_hotel(request):
         'today': datetime.datetime.now().date(),        
     }
 
+    if request.method == 'POST':
+        review = request.POST.get('review')
+        rate = request.POST.get('rate')
+        hotel_id = request.POST.get('hotel_id')
+        hotel = Hotel.objects.get(pk=hotel_id)
+        now = datetime.datetime.now().strftime('%Y-%m-%d')
+
+        hotel_review = Hotel_review(
+            hotel_review_content = review,
+            hotel_review_rate = rate,
+            hotel_review_date = now,
+
+            id = user,
+            hotel_id = hotel
+        )
+
+        hotel_review.save()
+
+        all_cnt = Hotel_review.objects.filter(hotel_id_id = hotel_id).count()
+        hotel.hotel_rate = round((hotel.hotel_rate * (all_cnt-1) + int(rate)) / all_cnt, 2)    # 평점을 새로고침하는 계산식입니다.
+        hotel.save()
+        return redirect(f'/hotel_detail/{hotel_id}')
+
     return render(request, 'history_hotel.html', context)
 
 def history_vacation(request):
