@@ -1,3 +1,9 @@
+ .search{
+     text-align: center;
+     margin-top: 50px;
+     height: 100px;
+ }
+
  .list_search{
     margin:auto;
     width: 880px;

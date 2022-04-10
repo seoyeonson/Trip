@@ -1,31 +1,39 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extrahead %}
+<script src="{% static 'bs/js/main.js' %}"></script>
+{% endblock %}
 {% block title %}홈페이지{% endblock %}
 {% block contents %}
-    <section class="page" style="position: relative;"> <!-- 메인 이미지 및 메인 검색창-->
+    <section class="page"> <!-- 메인 이미지 및 메인 검색창-->
         <div class="main_image"> <!-- 메인 이미지 -->
             <div class="main_search"> <!-- 메인 검색 -->
-                <form>
-                    <div class="menu_select">
-                        <ul class="menu_icon">
-                            <ul>
-                                <a href="#" onclick="search_hotel()">
-                                    <li><i class="fas fa-hotel"></i></li>
-                                    <li>호텔</li>
-                                </a>
-                            </ul>
-                            <ul>
-                                <a href="#" onclick="search_vacation()">
-                                    <li><i class="fas fas fa-plane"></i></li>
-                                    <li>여행지</li>
-                                </a>
-                            </ul>
+                <div class="menu_select">
+                    <ul class="menu_icon">
+                        <ul>
+                            <a href="#" onclick="search_hotel()">
+                                <li><i class="fas fa-hotel"></i></li>
+                                <li>호텔</li>
+                            </a>
                         </ul>
-                    </div>
-                    <div class="hotel_search col-lg-4" id="hotel_search"> <!-- 호텔 검색창 -->
+                        <ul>
+                            <a href="#" onclick="search_vacation()">
+                                <li><i class="fas fas fa-plane"></i></li>
+                                <li>여행지</li>
+                            </a>
+                        </ul>
+                    </ul>
+                </div>
+                <!-- 호텔 검색 -->
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- 호텔 검색창 -->
+                    <div class="hotel_search" id="hotel_search">
                         <ul>
                             <li>
                                 <a onclick="search_location()" class="location" id="location">
                                     <i class="fas fa-map-marker-alt" class="map"></i><sapn id="lo_text">위치</sapn>
+                                    <input type="hidden" id="lo_text" name="SIGUN_NM" value="">
                                 </a>
                             </li>
                             <ul>
@@ -38,16 +46,20 @@
                                     <input type="hidden" value="{{ check_out }}" name="end_date">
                                 </a>
                             </ul>
-                            <li class="choice_people" onclick="choice_people()"><i class="fas fa-user-alt"></i>인원</li>
-                            <li class="hotel_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
+                            <li class="choice_people" onclick="choice_people()">
+                                <a><i class="fas fa-user-alt"></i><span class="people">1명</a></span>
+                            </li>
+                            <li class="hotel_submit"><input type="submit" class="chk_ho_form" value="검색"></li>
                         </ul>
                     </div>
-                    <ul class="hotel_location col-lg-4" id="hotel_location">
+                    <!-- 호텔 상세선택창 -->
+                    <!-- 지역 선택 -->
+                    <ul class="hotel_location" id="hotel_location">
                         {% for place in hotel_places %}
                         <li id="{{ place.SIGUN_NM }}" class="hotel_lo_select" onclick="hotel_lo_select(this)">{{ place.SIGUN_NM }}</li>
                         {% endfor %}
                     </ul>
-                    <!-- </div> -->
+                    <!-- 체크인/체크아웃 선택 -->
                     <div class="date_pick" id="date_pick">
                         <div>
                             <div class="input-daterange reserve_date"><input type="text" name="daterange" id="datepicker" readonly /> 
@@ -55,44 +67,78 @@
                             </div>
                         </div>
                     </div>
-                    <div class="">
+                    <!-- 인원선택 -->
+                    <div class="reserve_people d-flex">
                         <div class="hotel_reserve_people">
-                          <button type="button" data-quantity="minus" data-field="hotel_reserve_people">
+                        <!-- 인원수 감소 -->
+                        <button type="button" data-quantity="minus" data-field="hotel_reserve_people">
                             <i class="fa fa-minus" aria-hidden="true"></i>
-                          </button>
+                        </button>
                         </div>
-                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="{{ hotel_reserve_people }}" readonly/>
+                        <!-- 인원수 -->
+                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="1" readonly/>
+                        <!-- 인원수 증가 -->
                         <div class="hotel_reserve_people">
-                          <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
+                        <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
                             <i class="fa fa-plus" aria-hidden="true"></i>
-                          </button>
+                        </button>
                         </div>
-                      </div>
+                    </div>
                 </form>
-                <form>
-                    <div class="vacation_search" id="vacation_search" style="display: none;"> <!-- 여행지 검색창 -->
+                <!-- 여행지 검색 -->
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="vacation_search" id="vacation_search" style="display: none;"> 
                         <ul>
                             <li>
                                 <a onclick="search_va_location()" class="location" id="location">
                                     <i class="fas fa-map-marker-alt" class="map"></i><sapn id="va_lo_text">위치</sapn>
                                 </a>  
                             </li>
-                            <a onclick="search_va_location()" class="location" id="location"><li><i class="fas fa-user-alt"></i><span>인원</span></li></a>
-                            <li class="vacation_submit"><a href="#"><span style="color:white; padding:10px 30px 10px 30px;">검색</span></a></li>
+                            <li>
+                                <a onclick="vacation_choice_people()" class="location" id="location">
+                                    <i class="fas fa-user-alt"></i><span class="va_people">1명</span></a>
+                            </li>
+                            <li class="hotel_submit"><input type="submit" class="chk_va_form" value="검색"></li>
                         </ul>
                     </div>
+                    <!-- 여행지 상세선택창 -->
+                    <!-- 지역 선택 -->
+                    <ul class="vacation_location" id="vacation_location">
+                        {% for place in hotel_places %}
+                        <li id="{{ place.SIGUN_NM }}" class="vacation_lo_select" onclick="vacation_lo_select(this)">{{ place.SIGUN_NM }}</li>
+                        <input type="hidden" id="va_lo_text" name="SIGUN_NM" value="">
+                        {% endfor %}
+                    </ul>
+                    <!-- 인원선택 -->
+                    <div class="reserve_people d-flex">
+                        <div class="vacation_reserve_people">
+                        <!-- 인원수 감소 -->
+                        <button type="button" data-quantity="minus" data-field="vacation_reserve_people">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                        </div>
+                        <!-- 인원수 -->
+                        <input class="input-group-field vacation_reserve_people" type="number" name="vacation_reserve_people" max="1" value="1" readonly/>
+                        <!-- 인원수 증가 -->
+                        <div class="vacation_reserve_people">
+                        <button type="button" data-quantity="plus" data-field="vacation_reserve_people">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        </div>
+                    </div>
                 </form>
-            </div>
-        </div>
+            </div> <!-- 메인 검색 끝 -->
+        </div> <!-- 메인 이미지 끝 -->
     </section>
     <article class="container">
         <div class="mt-5">
             <h2 class="mb-3">추천여행지</h2>
             <div class="d-lg-flex">
-                <a href="#" title="이전"><i class='fas fa-angle-left'></i></a>
+                <!-- <a href="#" title="이전"><i class='fas fa-angle-left'></i></a> -->
                     {% for vacation in recommand_vacations %}
                         {% if forloop.counter < 4 %}
-                        <div class="recommend_vaction col-lg-3 col-12 me-lg-4">
+                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3">
                             <p>{{ vacation.TURSM_INFO_NM }}</p>
                         </div>
                         {% else %}
@@ -101,16 +147,16 @@
                         </div>
                         {% endif %}
                     {% endfor %}
-                <a href="#" title="이전"><i class='fas fa-angle-right'></i></a>
+                <!-- <a href="#" title="이전"><i class='fas fa-angle-right'></i></a> -->
             </div>
         </div>
         <div class="mt-5">
             <h2 class="mb-3">추천숙소</h2>
             <div class="d-lg-flex">
-                <a href="#" title="이전"><i class='fas fa-angle-left'></i></a>
+                <!-- <a href="#" title="이전"><i class='fas fa-angle-left'></i></a> -->
                 {% for hotel in recommand_hotels %}
                     {% if forloop.counter < 4 %}
-                    <div class="recommend_vaction col-lg-3 col-12 me-lg-4">
+                    <div class="recommend_vaction col-lg-3 col-12 me-lg-3">
                         <p>{{ hotel.BIZPLC_NM }}</p>
                     </div>
                     {% else %}
@@ -119,7 +165,7 @@
                     </div>
                     {% endif %}
                 {% endfor %}
-                <a href="#" title="이전"><i class='fas fa-angle-right'></i></a>
+                <!-- <a href="#" title="이전"><i class='fas fa-angle-right'></i></a> -->
             </div>
         </div>
     </article> 
