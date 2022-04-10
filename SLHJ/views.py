@@ -21,77 +21,151 @@ from django.http import FileResponse
 import time
 
 def main(request):
-    hotel_places = Hotel.objects.all().values('SIGUN_NM').distinct()
-    recommand_vacations = Vacation.objects.all().order_by('-vacation_rate')[:4]
-    recommand_hotels = Hotel.objects.all().order_by('-hotel_rate')[:4]
+    vacation_imgs = []
+    hotel_imgs = []
 
-    context = {
-        'hotel_places' : hotel_places,
-        'recommand_vacations' : recommand_vacations,
-        'recommand_hotels' : recommand_hotels,
-    }
-    return render(request, 'main.html', context)
+    if request.method == 'GET':
+        hotel_places = Hotel.objects.all().values('SIGUN_NM').distinct()
+        recommand_vacations = Vacation.objects.all().order_by('-vacation_rate')[:4]
+        recommand_hotels = Hotel.objects.all().order_by('-hotel_rate')[:4]
 
-def list(request):
-    return render(request, 'hotel_list.html')
+        # 추천 호텔 이미지
+        for hotel in recommand_hotels:
+            # 추천 호텔 이미지가 있을 경우
+            if Hotel_image.objects.filter(hotel_id=hotel.hotel_id):
+                hotel_imgs.append(Hotel_image.objects.get(hotel_id=hotel.hotel_id))
+            # 추천 호텔 이미지가 없을 경우
+            else:
+                hotel_imgs.append("")
 
-def hotel_search(request,SIGUN_NM):
+        # 추천 여행지 이미지
+        for vacation in recommand_vacations:
+            # 추천 여행지 이미지가 있을 경우
+            if Vacation_image.objects.filter(vacation_id=vacation.vacation_id):
+                vacation_imgs.append(Vacation_image.objects.get(vacation_id=vacation.vacation_id))
+            # 추천 여행지 이미지가 없을 경우
+            else:
+                vacation_imgs.append("")
+
+
+        context = {
+            'hotel_places' : hotel_places,
+            'hotel_imgs': hotel_imgs,
+            'vacation_imgs': vacation_imgs,
+        }
+        return render(request, 'main.html', context)
+
+    if request.method == 'POST':
+        if request.POST.get('hotel_type') == 'hotel_type' :
+            SIGUN_NM = request.POST.get('SIGUN_NM')
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            hotel_reserve_people = request.POST.get('hotel_reserve_people')
+
+            request.session['SIGUN_NM'] = SIGUN_NM
+            request.session['start_date'] = start_date
+            request.session['end_date'] = end_date
+            request.session['hotel_reserve_people'] = hotel_reserve_people
+
+            return redirect('/hotel_search/')
+
+        if request.POST.get('vacation_type') == 'vacation_type':
+            SIGUN_NM = request.POST.get('SIGUN_NM')
+            vacation_reserve_people = request.POST.get('vacation_reserve_people')
+
+            request.session['SIGUN_NM'] = SIGUN_NM
+            request.session['vacation_reserve_people'] = vacation_reserve_people
+
+            return redirect('/vacation_search/')
+
+
+def hotel_search(request):
+    if request.method == "POST":
+        SIGUN_NM = request.POST.get('SIGUN_NM')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        hotel_reserve_people = request.POST.get('hotel_reserve_people')
+        print(start_date, end_date)
+
+        request.session['SIGUN_NM'] = SIGUN_NM
+        request.session['start_date'] = start_date
+        request.session['end_date'] = end_date
+        request.session['hotel_reserve_people'] = hotel_reserve_people
+
+        return redirect('/hotel_search/')
+
+    if request.method == "GET":
+        count={}
+        # [TODO] hotel list => seach 조건 고려해서 가져오기 (날짜, 인원수, 지역) 
+        hotel_places = Hotel.objects.all().values('SIGUN_NM').distinct()
+        SIGUN_NM = request.session.get('SIGUN_NM', '평택시')
+        start_date = request.session.get('start_date')
+        end_date = request.session.get('end_date')
+        hotel_reserve_people = request.session.get('hotel_reserve_people')
+
+        #SIGUN_NM= OO시인 hotel 테이블 가져옴 
+        all_hotel_lists = Hotel.objects.filter(SIGUN_NM = SIGUN_NM)
+
+        hotel_room = Hotel_room.objects.all()
+
+        # 리뷰별 평점점수 (1~5점) count
+        for i in range(5):
+            # (크거나 작은 값) orm 사용
+            # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
+            count.update({i+1 : all_hotel_lists.filter(hotel_rate__gt=i).filter(hotel_rate__lte=i+1).count()})
+        
+        # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+        write_pages = int(request.session.get('write_pages', 5))
+        
+        # 한 페이지에 보일 리뷰 개수
+        per_page = int(request.session.get('per_page', 5))
+        
+        # 현재 페이지
+        page = int(request.GET.get('page', 1))
+
+        # 한 페이지당 5개씩 보여주는 Paginator 생성
+        paginator = Paginator(all_hotel_lists, per_page)
+        
+        # 페이지에 대한 정보
+        page_obj = paginator.get_page(page)
+
+        start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+        end_page = start_page + write_pages - 1
+
+        if end_page >= paginator.num_pages:
+            end_page = paginator.num_pages
+
+        last_page=0
+
+        for last_page in paginator.page_range:
+            last_page = last_page + 1
+
+        last_page= last_page -1
+        zero = 0
+        context = {
+            # 'hotel': hotel,
+            'hotel_places' : hotel_places,
+            'lists': page_obj,  # Hotel table
+            'SIGUN_NM': SIGUN_NM,
+            'start_date': start_date,
+            'end_date' : end_date,
+            'hotel_reserve_people': hotel_reserve_people,
+            'start_page': start_page,
+            'end_page': end_page,
+            'last_page' : last_page,
+            'page_range': range(start_page, end_page + 1),
+            'count' : count,
+            'zero' : zero,
+            'hotel_rooms' : hotel_room, # Hotel_room table
+                }
+        return render(request, 'hotel_search.html', context)
+
+def vacation_search(request):
     count={}
-    #SIGUN_NM= OO시인 hotel 테이블 가져옴 
-    all_hotel_lists = Hotel.objects.filter(SIGUN_NM = SIGUN_NM)
-
-    hotel_room = Hotel_room.objects.all()
-
-    # 리뷰별 평점점수 (1~5점) count
-    for i in range(5):
-        # (크거나 작은 값) orm 사용
-        # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
-        count.update({i+1 : all_hotel_lists.filter(hotel_rate__gt=i).filter(hotel_rate__lte=i+1).count()})
-    
-    # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
-    write_pages = int(request.session.get('write_pages', 5))
-    
-    # 한 페이지에 보일 리뷰 개수
-    per_page = int(request.session.get('per_page', 5))
-    
-    # 현재 페이지
-    page = int(request.GET.get('page', 1))
-
-    # 한 페이지당 5개씩 보여주는 Paginator 생성
-    paginator = Paginator(all_hotel_lists, per_page)
-    
-    # 페이지에 대한 정보
-    page_obj = paginator.get_page(page)
-
-    start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
-    end_page = start_page + write_pages - 1
-
-    if end_page >= paginator.num_pages:
-        end_page = paginator.num_pages
-
-    last_page=0
-
-    for last_page in paginator.page_range:
-        last_page = last_page + 1
-
-    last_page= last_page -1
-    zero = 0
-    context = {
-        # 'hotel': hotel,
-        'lists': page_obj,  # Hotel table
-        'start_page': start_page,
-        'end_page': end_page,
-        'last_page' : last_page,
-        'page_range': range(start_page, end_page + 1),
-        'count' : count,
-        'zero' : zero,
-        'hotel_rooms' : hotel_room, # Hotel_room table
-            }
-    return render(request, 'hotel_search.html', context)
-
-def vacation_search(request,SIGUN_NM):
-    count={}
+    vacation_places = Vacation.objects.all().values('SIGUN_NM').distinct()
     #SIGUN_NM= OO시인 vacation 테이블 가져옴 
+    SIGUN_NM = request.session.get('SIGUN_NM', '평택시')
+    vacation_reserve_people = request.session.get('vacation_reserve_people')
     all_vacation_lists = Vacation.objects.filter(SIGUN_NM = SIGUN_NM)
 
 
@@ -130,14 +204,16 @@ def vacation_search(request,SIGUN_NM):
     last_page= last_page -1
     
     context = {
-        # 'hotel': hotel,
+        'vacation_places' : vacation_places,
         'lists': page_obj,  # vacation table
         'start_page': start_page,
         'end_page': end_page,
+        'SIGUN_NM': SIGUN_NM,
+        'vacation_reserve_people': vacation_reserve_people,
         'last_page' : last_page,
         'page_range': range(start_page, end_page + 1),
         'count' : count,
-            }
+    }
     return render(request, 'vacation_search.html', context)
 
 def user_create(request):
@@ -145,26 +221,19 @@ def user_create(request):
 
 def hotel_reserve(request):
     # 세션에 저장된 예약 정보들 (hotel_detail 에서 선택한 옵션들) 받아옵니다. *추후 기본값 수정 필요*
-    # hotel_name = request.session.get('hotel_name', Hotel.objects.get(hotel_id=1).BIZPLC_NM)
-    # hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
-    # hotel_reserve_startdate = request.session.get('hotel_reserve_startdate', '2022-04-01')
-    # hotel_reserve_enddate = request.session.get('hotel_reserve_enddate', '2022-04-02')
-    # start_date = datetime.datetime.strptime(hotel_reserve_startdate, '%Y-%m-%d').date()
-    # end_date = datetime.datetime.strptime(hotel_reserve_enddate, '%Y-%m-%d').date()
     hotel_name = request.session.get('hotel_name', Hotel.objects.get(hotel_id=1).BIZPLC_NM)
     hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
     hotel_reserve_startdate = request.session.get('start_date', '2022-04-01')
     hotel_reserve_enddate = request.session.get('end_date', '2022-04-02')
-    print(type(hotel_reserve_startdate))
     start_date = datetime.datetime.strptime(hotel_reserve_startdate, '%Y-%m-%d').date()
     end_date = datetime.datetime.strptime(hotel_reserve_enddate, '%Y-%m-%d').date()
     reserve_room = request.session.get('reserve_room')
 
 
-    # hotel_room_pk = request.session.get('hotel_room_pk',1) #detail에서, 선택한 객실의 pk. 
-    # hotel_room = Hotel_room.objects.get(pk=hotel_room_pk)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room_pk = request.session.get('hotel_room_pk', 1) #detail에서, 선택한 객실의 pk. 
+    hotel_room = Hotel_room.objects.get(pk=hotel_room_pk)       # 방의 번호 hotel_room_id 를 사용합니다.
     night = (end_date - start_date).days
-    # hotel_reserve_price = hotel_room.room_price * night  # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
+    hotel_reserve_price = hotel_room.room_price * night  # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
     if request.method=="GET":
         context = {
             'hotel_name': hotel_name,
@@ -173,8 +242,8 @@ def hotel_reserve(request):
             'reserve_enddate': hotel_reserve_enddate,
             'reserve_room' : reserve_room,
             'night': night,
-            # 'room_type': hotel_room.room_type,
-            # 'hotel_price': '{0:,}'.format(hotel_reserve_price),
+            'room_type': hotel_room.room_type,
+            'hotel_price': '{0:,}'.format(hotel_reserve_price),
         }
         return render(request, 'hotel_reserve.html', context)
     elif request.method=="POST": # 예약정보 테이블에 저장
@@ -183,7 +252,7 @@ def hotel_reserve(request):
         hotel_reserve_phonenum = request.POST["phone_num"]
 
         id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
-        # room_id = hotel_room
+        room_id = hotel_room
 
         hotel_reserve = Hotel_reserve(
             hotel_reserve_people = hotel_reserve_people,
@@ -193,7 +262,7 @@ def hotel_reserve(request):
             hotel_reserve_enddate = hotel_reserve_enddate,
             hotel_reserve_price = hotel_reserve_price,
             id = id,
-            # room_id = room_id        
+            room_id = room_id,       
         )
 
         hotel_reserve.save()
@@ -245,17 +314,22 @@ def hotel_detail(request, pk):
     now = datetime.datetime.now().strftime('%Y-%m-%d')
     if request.method == "GET":
         # list 에서 session으로 넘어온 값
-        check_in = request.session.get('check_in', now)
-        check_out = request.session.get('check_out', now)
-        hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
+        # check_in = request.session.get('check_in', now)
+        # check_out = request.session.get('check_out', now)
+        # hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
 
+        # 평점별 인원수
         count = {}
+        # 추천 여행지 이미지
+        vacation_imgs = []
+
         # ##### hotel_detail
         try:
             hotel = Hotel.objects.get(pk=pk)
 
             # ##### hotel_room
-            hotel_room = Hotel_room.objects.filter(hotel_id=pk).values('room_type','room_people', 'room_price').distinct()
+            # hotel_room = Hotel_room.objects.filter(hotel_id=pk).values('room_type','room_people', 'room_price').distinct()
+            hotel_room = Hotel_room.objects.filter(hotel_id=pk)
 
             # ##### hotel_review
             # hotel_id 가 pk인 hotel_review 를 가져옴
@@ -264,6 +338,8 @@ def hotel_detail(request, pk):
             # ##### recommand_vacation
             # 같은 지역,vacation_rate 가 높은 순으로 4개 가져오기
             recommand_vacations = Vacation.objects.filter(SIGUN_NM = hotel.SIGUN_NM).order_by('-vacation_rate')[:4]
+
+            print(type(recommand_vacations))
 
             # ##### hotel_img
             try:
@@ -288,22 +364,29 @@ def hotel_detail(request, pk):
             paginator = Paginator(all_hotel_reviews, per_page)
             # 페이지에 대한 정보
             page_obj = paginator.get_page(page)
-
             start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
             end_page = start_page + write_pages - 1
-            
-
             if end_page >= paginator.num_pages:
                 end_page = paginator.num_pages
+
+            # 추천 여행지 이미지
+            for vacation in recommand_vacations:
+                # 추천 여행지 이미지가 있을 경우
+                if Vacation_image.objects.filter(vacation_id=vacation.vacation_id):
+                    vacation_imgs.append(Vacation_image.objects.get(vacation_id=vacation.vacation_id))
+                # 추천 여행지 이미지가 없을 경우
+                else:
+                    vacation_imgs.append("")
 
         except Hotel.DoesNotExist:
             raise Http404('게시글을 찾을수 없습니다')
             
 
         context = {
-            'check_in' : check_in,
-            'check_out' : check_out,
-            'hotel_reserve_people' : hotel_reserve_people,
+            # 'check_in' : check_in,
+            # 'check_out' : check_out,
+            # 'hotel_reserve_people' : hotel_reserve_people,
+            'vacation_imgs': vacation_imgs,
             'hotel': hotel,
             'hotel_room': hotel_room,
             'reviews': page_obj,
@@ -323,18 +406,20 @@ def hotel_detail(request, pk):
         end_date = request.POST.get('end_date')
         hotel_reserve_people = request.POST.get('hotel_reserve_people')
         reserve_room = request.POST.get('reserve_room')
+        hotel_room_pk = request.POST.get('hotel_room_pk')
 
         request.session['start_date'] = start_date
         request.session['end_date'] = end_date
         request.session['hotel_pk'] = hotel_pk
         request.session['hotel_reserve_people'] = hotel_reserve_people
         request.session['reserve_room'] = reserve_room
+        request.session['hotel_room_pk'] = hotel_room_pk
 
         return redirect('/hotel_reserve/')
 
 def vacation_detail(request, pk):
     now = datetime.datetime.now()
-    print
+    hotel_imgs = []
     if request.method == "GET":
         check_in = request.session.get('check_in', now)
         check_out = request.session.get('check_out', now)
@@ -350,6 +435,15 @@ def vacation_detail(request, pk):
                 vacation_img = Vacation_image.objects.get(vacation_id=pk)
             except Vacation_image.DoesNotExist:
                 vacation_img = '';
+
+            # 추천 호텔 이미지
+            for hotel in recommand_hotels:
+                # 추천 호텔 이미지가 있을 경우
+                if Hotel_image.objects.filter(hotel_id=hotel.hotel_id):
+                    hotel_imgs.append(Hotel_image.objects.get(hotel_id=hotel.hotel_id))
+                # 추천 호텔 이미지가 없을 경우
+                else:
+                    hotel_imgs.append("")
 
             # Pagination
             # 리뷰별 평점점수 (1~5점) count
@@ -384,6 +478,7 @@ def vacation_detail(request, pk):
             'check_in' : check_in,
             'check_out' : check_out,
             'vacation_reserve_people' : vacation_reserve_people,
+            'hotel_imgs': hotel_imgs,
             'vacation': vacation,
             'reviews': page_obj,
             'start_page': start_page,
@@ -435,6 +530,10 @@ def login(request):
             return redirect('/loginFail/')
 
     return render(request, 'login.html', context)
+
+def logout(request):
+    request.session.flush()
+    return render(request, 'logout.html')
 
 def loginFail(request):
     return render(request, 'loginFail.html')
@@ -551,7 +650,7 @@ def history_hotel(request):
     pk = request.session['user']
 
     user = User.objects.get(pk=pk)
-    hotel_reserve = Hotel_reserve.objects.filter(id=pk)
+    hotel_reserve = Hotel_reserve.objects.filter(id=pk).order_by('-hotel_reserve_enddate')
     # hotel_reserves = []
 
     try:
@@ -594,6 +693,29 @@ def history_hotel(request):
         'hotel_image' : hotel_image,
         'today': datetime.datetime.now().date(),        
     }
+
+    if request.method == 'POST':
+        review = request.POST.get('review')
+        rate = request.POST.get('rate')
+        hotel_id = request.POST.get('hotel_id')
+        hotel = Hotel.objects.get(pk=hotel_id)
+        now = datetime.datetime.now().strftime('%Y-%m-%d')
+
+        hotel_review = Hotel_review(
+            hotel_review_content = review,
+            hotel_review_rate = rate,
+            hotel_review_date = now,
+
+            id = user,
+            hotel_id = hotel
+        )
+
+        hotel_review.save()
+
+        all_cnt = Hotel_review.objects.filter(hotel_id_id = hotel_id).count()
+        hotel.hotel_rate = round((hotel.hotel_rate * (all_cnt-1) + int(rate)) / all_cnt, 2)    # 평점을 새로고침하는 계산식입니다.
+        hotel.save()
+        return redirect(f'/hotel_detail/{hotel_id}')
 
     return render(request, 'history_hotel.html', context)
 
@@ -653,14 +775,6 @@ def admin_info(request):
             'user': user
         }
         return render(request, 'admin_info.html', context)
-    # user_id = request.session.get('user',"")
-    # if user_id == "":
-    #     return redirect('/login/')
-    # user = User.objects.get(user_id=user_id)
-    # context={
-    #     'user' : user
-    # }
-    # return render(request, 'admin_info.html', context)
 
 def admin_pw_change(request):
     pk = request.session['user']
@@ -693,13 +807,26 @@ def admin_hotel(request):
 
     user = User.objects.get(pk=pk)
     hotel = Hotel.objects.filter(hotel_admin_id = user.id)
-    hotels = []
-    for i in range(hotel.count()):
-        hotels.append(hotel[i])
+    # hotels = []
+    # for i in range(hotel.count()):
+    #     hotels.append(hotel[i])
+    per_page = 5
+    page = int(request.GET.get('page',1))
+    paginator = Paginator(hotel, per_page)
+    page_obj = paginator.get_page(page)
+    write_pages = 5
+    # 시작페이지
+    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages -1
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
 
     context = {
         'user' : user,
-        'hotels' : hotels,
+        'hotels' : page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page+1),
     }
 
     return render(request, 'admin_hotel.html', context)
@@ -773,15 +900,25 @@ def admin_vacation(request):
 
     user = User.objects.get(pk=pk)
     vacation = Vacation.objects.filter(vacation_admin_id = user.id)
-    vacations = []
-    for i in range(vacation.count()):
-        vacations.append(vacation[i])
+
+    per_page = 5
+    page = int(request.GET.get('page',1))
+    paginator = Paginator(vacation, per_page)
+    page_obj = paginator.get_page(page)
+    write_pages = 5
+    # 시작페이지
+    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    end_page = start_page + write_pages -1
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
 
     context = {
         'user' : user,
-        'vacations' : vacations,
+        'vacations' : page_obj,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range': range(start_page, end_page+1),
     }
-
     return render(request, 'admin_vacation.html', context)
 
 def admin_manage(request):
@@ -829,6 +966,24 @@ def admin_vacation_detail(request):
     }
 
     return render(request, 'admin_vacation_detail.html',context )
+
+def hotel_update(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+
+    context = {
+        'user' : user,
+    }
+    return render(request, 'hotel_update.html', context)
+
+def vacation_update(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+
+    context = {
+        'user' : user,
+    }
+    return render(request, 'vacation_update.html', context)
 
 def sample(request):  # vacation_review 데이터 입력포맷입니다.
 
@@ -887,7 +1042,7 @@ def sample3(request):   # hotel_room 포맷입니다.
     room_price = 100000
     room_people = 2
 
-    hotel_id = Hotel.objects.get(pk=6)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
+    hotel_id = Hotel.objects.get(pk=1)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
     hotel_room = Hotel_room(
         room_type = room_type,
@@ -906,13 +1061,13 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_people = 2
     hotel_reserve_username = '유재석'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-03-20'
-    hotel_reserve_enddate = '2022-03-22'
+    hotel_reserve_startdate = '2022-05-05'
+    hotel_reserve_enddate = '2022-05-05'
 
-    hotel_room = Hotel_room.objects.get(pk=23)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=5)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=4)
+    id = User.objects.get(pk=3)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(

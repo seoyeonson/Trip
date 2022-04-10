@@ -71,6 +71,25 @@
             </div>
         </form>
 
+        <form class="regist_form" name="hotel_room_register">
+            <label class="index_title">객실정보 등록</label>
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>객실 타입</th>
+                        <th>객실 가격</th>
+                    </tr>
+                </thead>
+                <tbody id="room_table">
+                    <tr>
+                        <td><input type="text" name="room_type" placeholder="객실타입 입력"></td>
+                        <td><input type="number" name="room_price" placeholder="객실가격 입력"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="add_row">객실추가</button>
+
+        </form>
     </div>
 </div>
 {% endblock %}

@@ -205,7 +205,7 @@ hr{
 
 .hotel_search {
     margin-top: 10px;
-    /* width: 600px; */
+    width: 600px;
     /* height: 80px; */
     margin-left: auto;
     margin-right: auto;
@@ -248,6 +248,24 @@ hr{
     display: inline-block;
 }
 
+.reserve_people{
+    width: 530px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    background-color: var(--sub-grey-color);
+}
+
+.reserve_people button{
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+.reserve_people input{
+    width: 80%;
+}
+
 .vacation_search {
     margin-top: 10px;
     width: 400px;
@@ -272,7 +290,7 @@ hr{
     width: 100px;
     height: 40px;
     background-color: #F1F1F1;
-    line-height: 40px;
+    line-height: 35px;
     border-radius: 6px;
 }
 
@@ -309,8 +327,21 @@ hr{
     background-color: #FF6B00 !important;
 }
 
+.hotel_submit a{
+    color:white; 
+    padding:10px 30px;
+}
+
 .hotel_submit:hover {
     background-color: #f56600 !important;
+}
+
+.hotel_submit input{
+    font-size: 13px;
+    border: 0;
+    background-color: transparent;
+    line-height: 35px;
+    color: white;
 }
 
 .vacation_submit {
@@ -328,6 +359,19 @@ hr{
 
 .hotel_location {
     display: none;
+    width: 600px;
+    background-color: white;
+    margin-top: 10px;
+    margin-left: auto; 
+    margin-right: auto;
+    border-radius: 10px;
+    padding: 10px 10px;
+    box-shadow: 1px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.vacation_location {
+    display: none;
+    width: 600px;
     background-color: white;
     margin-top: 10px;
     margin-left: auto; 
@@ -353,18 +397,21 @@ hr{
     color: var(--main-color);
     border-color: var(--main-color);
 }
-
 .vacation_lo_select {
     list-style: none;
     cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
+    width: 120px;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    border: 1px solid var(--line-color);
+    border-radius: 10px;
 }
 
-.vacation_location {
-    height: auto;
-    background-color: white;
-    margin-top: 10px;
+.vacation_lo_select:hover {
+    background-color: var(--sub-color);
+    color: var(--main-color);
+    border-color: var(--main-color);
 }
 
 .get_date {
@@ -375,6 +422,12 @@ hr{
 /* hotel_detail */
 .choice_people{
     position: relative;
+    cursor: pointer;
+}
+
+.choice_people a span:hover{
+    position: relative;
+    color: var(--main-color);
 }
 
 .choice_room{
@@ -553,8 +606,9 @@ hr{
 
 .recommend_vaction{
     height: 194px;
-    background-color: var(--sub-grey-color);
+    background-image: url(/static/img/img_noimg.jpg);
     border-radius: 10px;
+    background-position: center center;
 }
 
 .hotel_room_select{

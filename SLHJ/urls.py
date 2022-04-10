@@ -7,11 +7,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('main/', views.main, name='main'),
-    path('list/', views.list),
-    path('hotel_search/<str:SIGUN_NM>/', views.hotel_search),
-    path('vacation_search/<str:SIGUN_NM>/', views.vacation_search),
+    # path('list/', views.list),
+    path('hotel_search/', views.hotel_search, name='hotel_search'),
+    path('vacation_search/', views.vacation_search, name='vacation_search'),
     # path('login/', views.login),
     path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     path('loginFail/', views.loginFail),
     path('user_create/', views.user_create),
     path('hotel_reserve/', views.hotel_reserve),
@@ -44,6 +45,8 @@ urlpatterns = [
     
     path('admin_hotel_detail/', views.admin_hotel_detail, name="admin_hotel_detail"),
     path('admin_vacation_detail/', views.admin_vacation_detail, name="admin_vacation_detail"),
+    path('hotel_update/', views.hotel_update, name="hotel_update"),
+    path('vacaion_update/', views.vacation_update, name="vacation_update"),
 
 
 

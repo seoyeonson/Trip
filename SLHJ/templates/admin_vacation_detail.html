@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extrahead %}
+<link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
+<link href="{% static 'bs/css/admin_vacation_detail.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block title %}여행지 상세{% endblock %}
+
+{% block contents %}
+{% block script %}
+<script src="{% static 'bs/js/admin_vacation_detail.js' %}"></script>
+{% endblock%}
+
+<div id="side_nav" class="side_nav">
+    <!-- <a href="#" 
+        class="closebtn" id="closebtn" 
+        onclick="closeNav()">&times;</a> -->
+    <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
+    <a class="side_menu" href="{% url 'admin_info' %}">회원정보</a>
+    <a class="side_menu" href="{% url 'admin_pw_change' %}">비밀번호 변경</a>
+    <a class="side_menu" id=self href="{% url 'admin_hotel' %}">숙소관리</a>
+    <a class="side_menu" href="{% url 'admin_vacation' %}">여행지 관리</a>
+    <a class="side_menu" href="{% url 'admin_manage' %}">예약관리</a>
+</div>
+
+
+<div class="con2">
+    <div class="contents">
+        <h5 id="title">마이페이지 > 여행지 상세정보 </h5>
+        <div class="info_form" name="hotel_info_form">
+            <div class="info_top">
+                <label class="index_title">기본정보</label>
+                <a id="adjust_btn" type="button" href="{% url 'vacation_update'%}">정보수정</a>
+                <input id="delete_btn" type="button" value="숙소 삭제">
+            </div>
+            <div class="vacation_info_title">
+                <div class="info_title">
+                    <ul>
+                        <li>고유번호</li>
+                    </ul>
+                </div>
+                <div class="info_title">
+                    <ul>
+                        <li>여행지 이름</li>
+                    </ul>
+                </div>
+                <div class="info_title">
+                    <ul>
+                        <li>도로명 주소</li>
+                    </ul>
+                </div>
+                <div class="info_title">
+                    <ul>
+                        <li>전화번호</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="vacation_info_content">
+                <div class="info">
+                    <ul>
+                        <li>0023</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>ABC호텔</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>주소</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>032-2222-2222</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="vacation_info_summary">
+                <label class="info_title">요약설명</label>
+                <span>한국민속촌입니다</span>
+            </div>
+
+            <label class="vacation_img_label">대표 사진</label>
+            <div class="vacation_img"></div>
+        </div>
+
+        <div class="review_form" name="vacation_detail_review">
+            <label class="review_label index_title">리뷰관리</label>
+            <div class="review_top">
+                <div class="user_vacation_review">
+                    <label class="review_title">평점</label>
+                    <div class="review_rate">
+                        <label>{#여행지평점#}4.4</label>
+                        <label class="max_rate">/5.0</label>
+                    </div>
+                    <div class="review_star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review_score">
+                    <div>
+                        <label class="review_count">리뷰 개수</label>
+                    </div>
+                    <div>
+                        <label class="review_total">{# 리뷰개수 #} 120개</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="select_box">
+                <select class="review_select">
+                    <!--지역 검색-->
+                    <option value="view_three">3개씩</option>
+                    <option value="view_five" selected>5개씩</option>
+                    <option value="view_ten">10개씩</option>
+                    <option value="view_twenty">20개씩</option>
+                </select>
+            </div>
+
+            <div class="user_review">
+                <div class="reviewer_profile">
+                    <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
+                    <div>
+                        <label class="reviewer_id">zmzmfnQLdQHd1{# 리뷰작성자 아이디 #}</label>
+                        <div class="review_star_box">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <span class="review_comment">리뷰{# 리뷰 상세내용 #}</span>
+            </div>
+
+            <div class="user_review">
+                <div class="reviewer_profile">
+                    <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
+                    <div>
+                        <label class="reviewer_id">zmzmfnQLdQHd1{# 리뷰작성자 아이디 #}</label>
+                        <div class="review_star_box">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <span class="review_comment">리뷰{# 리뷰 상세내용 #}</span>
+            </div>
+
+        </div>
+    </div>
+    {% endblock %}
