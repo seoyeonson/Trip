@@ -8,17 +8,17 @@ $(document).ready(function(){
         document.getElementById("googleMap").style.display = 'block';
     }
 
-    var startDate = $('input[name=start_date]');
-    var endDate = $('input[name=end_date]');
+    var startDate = $('input[name=start_date]').val();
+    var endDate = $('input[name=end_date]').val();
     var today = new Date();
     var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
     if(startDate == 0 && endDate == 0){
         startDate = minDate;
         endDate = minDate;
-    } 
+    }
     
     $(function() {
-        console.log(startDate, endDate, minDate);
+
         $('input[name="daterange"]').daterangepicker({
             "startDate": startDate,
             "endDate": endDate,

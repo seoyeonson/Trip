@@ -1,16 +1,13 @@
 $(document).ready(function(){
-    var startDate = $('input[name=start_date]');
-    var endDate = $('input[name=end_date]');
+    var startDate = $('input[name=start_date]').val();
+    var endDate = $('input[name=end_date]').val();
     var today = new Date();
     var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
     if(startDate == 0 && endDate == 0){
         startDate = minDate;
         endDate = minDate;
     } 
-
-    console.log("o")
     $(function() {
-        console.log(startDate, endDate, minDate);
         $('input[name="daterange"]').daterangepicker({
             "startDate": startDate,
             "endDate": endDate,
@@ -29,5 +26,14 @@ $(document).ready(function(){
             startDate = start.format('YYYY-MM-DD');
             endDate = end.format('YYYY-MM-DD');
         });
+    });
+
+    $('[name="reserve_date_choice"]').click(function(e) {
+        $('.date_pick').css('display', 'none');
+        $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
+        $('.hotel_detail_reserve_checkout').html(endDate);
+        $('input[name=start_date]').attr('value', startDate);
+        $('input[name=end_date]').attr('value', endDate);
+        console.log("startDate", startDate, "endDate", endDate);
     });
 })

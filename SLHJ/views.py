@@ -74,7 +74,7 @@ def hotel_search(request):
 
     if request.method == "GET":
         count={}
-
+        # [TODO] hotel list => seach 조건 고려해서 가져오기 (날짜, 인원수, 지역) 
         hotel_places = Hotel.objects.all().values('SIGUN_NM').distinct()
         SIGUN_NM = request.session.get('SIGUN_NM', '평택시')
         start_date = request.session.get('start_date')
@@ -196,13 +196,12 @@ def hotel_reserve(request):
     hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
     hotel_reserve_startdate = request.session.get('start_date', '2022-04-01')
     hotel_reserve_enddate = request.session.get('end_date', '2022-04-02')
-    print(type(hotel_reserve_startdate))
     start_date = datetime.datetime.strptime(hotel_reserve_startdate, '%Y-%m-%d').date()
     end_date = datetime.datetime.strptime(hotel_reserve_enddate, '%Y-%m-%d').date()
     reserve_room = request.session.get('reserve_room')
 
 
-    hotel_room_pk = request.session.get('hotel_room_pk',1) #detail에서, 선택한 객실의 pk. 
+    hotel_room_pk = request.session.get('hotel_room_pk', 1) #detail에서, 선택한 객실의 pk. 
     hotel_room = Hotel_room.objects.get(pk=hotel_room_pk)       # 방의 번호 hotel_room_id 를 사용합니다.
     night = (end_date - start_date).days
     hotel_reserve_price = hotel_room.room_price * night  # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
@@ -286,9 +285,9 @@ def hotel_detail(request, pk):
     now = datetime.datetime.now().strftime('%Y-%m-%d')
     if request.method == "GET":
         # list 에서 session으로 넘어온 값
-        check_in = request.session.get('check_in', now)
-        check_out = request.session.get('check_out', now)
-        hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
+        # check_in = request.session.get('check_in', now)
+        # check_out = request.session.get('check_out', now)
+        # hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
 
         count = {}
         # ##### hotel_detail
@@ -298,7 +297,6 @@ def hotel_detail(request, pk):
             # ##### hotel_room
             # hotel_room = Hotel_room.objects.filter(hotel_id=pk).values('room_type','room_people', 'room_price').distinct()
             hotel_room = Hotel_room.objects.filter(hotel_id=pk)
-
 
             # ##### hotel_review
             # hotel_id 가 pk인 hotel_review 를 가져옴
@@ -341,9 +339,9 @@ def hotel_detail(request, pk):
             
 
         context = {
-            'check_in' : check_in,
-            'check_out' : check_out,
-            'hotel_reserve_people' : hotel_reserve_people,
+            # 'check_in' : check_in,
+            # 'check_out' : check_out,
+            # 'hotel_reserve_people' : hotel_reserve_people,
             'hotel': hotel,
             'hotel_room': hotel_room,
             'reviews': page_obj,
@@ -363,12 +361,14 @@ def hotel_detail(request, pk):
         end_date = request.POST.get('end_date')
         hotel_reserve_people = request.POST.get('hotel_reserve_people')
         reserve_room = request.POST.get('reserve_room')
+        hotel_room_pk = request.POST.get('hotel_room_pk')
 
         request.session['start_date'] = start_date
         request.session['end_date'] = end_date
         request.session['hotel_pk'] = hotel_pk
         request.session['hotel_reserve_people'] = hotel_reserve_people
         request.session['reserve_room'] = reserve_room
+        request.session['hotel_room_pk'] = hotel_room_pk
 
         return redirect('/hotel_reserve/')
 
@@ -936,7 +936,7 @@ def sample3(request):   # hotel_room 포맷입니다.
     room_price = 100000
     room_people = 2
 
-    hotel_id = Hotel.objects.get(pk=6)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
+    hotel_id = Hotel.objects.get(pk=1)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
     hotel_room = Hotel_room(
         room_type = room_type,

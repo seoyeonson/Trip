@@ -1,9 +1,6 @@
 {% extends "base.html"%}
 {% load static %}
 {% block extrahead %}
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 <script src="{% static 'bs/js/detail.js' %}"></script>
 {% endblock %}
 
@@ -77,7 +74,7 @@
                             <i class="fa fa-minus" aria-hidden="true"></i>
                           </button>
                         </div>
-                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="{{ hotel_reserve_people }}" readonly/>
+                        <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="{{ request.session.hotel_reserve_people }}" readonly/>
                         <div class="hotel_reserve_people">
                           <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
                             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -88,11 +85,12 @@
                 <div class="choice_room">
                     <button type="button" class="hotel_detail_reserve_btn" onclick="choice_room()"><i class="fas fa-door-closed"></i><span class="room">객실선택</span></button>
                     <input type="hidden" name="reserve_room" id="reserve_room" value="">
+                    <input type="hidden" name="hotel_room_pk" id="hotel_room_pk" value="">
                     <div class="hotel_detail_reserve_btn">
                         {% for room in hotel_room %}
-                        {% if room.room_people >= hotel_reserve_people %}
-                        <a onclick="hotel_room_select(this)" class="select" data-value="{{ room.room_type }}"><li id="{{ room.room_type }}" class="hotel_room_select">{{ room.room_type }}</li></a>
-                        {% endif %}
+                            {% if room.room_people >= request.session.hotel_reserve_people|add:"0" %}
+                            <a onclick="hotel_room_select(this)" class="select" data-value="{{ room.room_type }}"><li id="{{ room.room_type }}" class="hotel_room_select" value="{{ room.room_id }}">{{ room.room_type }}</li></a>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>

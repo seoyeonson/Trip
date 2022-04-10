@@ -18,7 +18,7 @@
                 <li>
                     <a onclick="search_location()" class="location" id="location">
                         <i class="fas fa-map-marker-alt" class="map"></i><sapn id="lo_text">{{ request.session.SIGUN_NM }}</sapn>
-                        <input type="hidden" id="lo_text" name="SIGUN_NM" value="">
+                        <input type="hidden" id="lo_text" name="SIGUN_NM" value="{{ request.session.SIGUN_NM }}">
                     </a>
                 </li>
                 <ul>

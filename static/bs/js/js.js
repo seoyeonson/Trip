@@ -38,8 +38,10 @@ function choice_room() {
 function hotel_room_select(text){
     $('.hotel_room_select').css('display', 'none');
     value = $(text).text();
+    value_room_pk = $('.hotel_room_select').val();
     $(".room").html(value);
     $('input[name=reserve_room]').attr('value', value);
+    $('input[name=hotel_room_pk]').attr('value', value_room_pk);
 }
 
 function hotel_lo_select(text){
@@ -267,15 +269,6 @@ $(document).ready(function() {
         //     console.log(xhr.status + ": " + xhr.responseText); 
         //     }
         // });
-    });
-
-    $('[name="reserve_date_choice"]').click(function(e) {
-        $('.date_pick').css('display', 'none');
-        $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
-        $('.hotel_detail_reserve_checkout').html(endDate);
-        $('input[name=start_date]').attr('value', startDate);
-        $('input[name=end_date]').attr('value', endDate);
-        console.log("startDate", startDate, "endDate", endDate);
     });
 });
 
