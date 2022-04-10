@@ -40,7 +40,7 @@
                 <td class="reserve hotel_reserve">
                     <img style="background-image: url('/media/{{ hotel.hotel_image.hotel_image_file_path }}');">
                     <div class="info_container">
-                        <a type="button" class="detail_btn" href="#">세부정보</a>
+                        <a type="button" class="detail_btn" href="{% url 'admin_hotel_detail' %}">세부정보</a>
                         <label class="reserve_name">{{ hotel.BIZPLC_NM }}</label>
                         <label class="reserve_adress">{{ hotel.REFINE_ROADNM_ADDR }}</label>
                         <label class="review_count">{{ hotel.hotel_rate}}
