@@ -113,6 +113,43 @@ hr{
     margin: 0 20px;
 }
 
+.footer{
+    background: #f7f7f7;
+    /* background: gray; */
+    position: absolute;
+    height: 64px;
+    width: 100%;
+    padding: 0px 60px;
+    line-height: 21px;
+    margin-top:50px;
+    border-top: 1px solid #dee5e7;
+
+}
+.left_footer{
+    
+    list-style: none;
+    float: left;
+    padding: 20px 0px;
+    margin: 0 5px;
+    font-size: 12px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 800;
+}
+.left_footer a{
+
+}
+
+.right_footer{
+    list-style: none;
+    float: right;
+    padding: 20px 0px;
+    margin: 0 20px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 800;
+}
+
 /* nav 끝 */
 
 

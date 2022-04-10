@@ -31,11 +31,11 @@
     <div class="contents">
         <h5 id="title">마이페이지 > 숙소등록 > 호텔이름</h5>
         <div class="info_form" name="hotel_info_form">
-            <div class="info_top">
-                <label class="index_title">기본정보</label>
-                <input id="adjust_btn" type="button" value="정보 수정">
-                <input id="delete_btn" type="button" value="숙소 삭제">
-            </div>
+           
+            <label class="index_title">기본정보</label>
+            <input id="adjust_btn" type="button" value="정보 수정">
+            <input id="delete_btn" type="button" value="숙소 삭제">
+        
             <div class="hotel_info_title">
                 <div class="info">
                     <ul>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="info">
                     <ul>
-                        <li>객실수</li>
+                        <li>사용인원</li>
                     </ul>
                 </div>
                 <div class="info">
@@ -119,7 +119,7 @@
                 </div>
                 <div class="info">
                     <ul>
-                        <li>5개</li>
+                        <li>5명</li>
                     </ul>
                 </div>
                 <div class="info">
@@ -136,7 +136,7 @@
                 </div>
                 <div class="info">
                     <ul>
-                        <li>50개</li>
+                        <li>2명</li>
                     </ul>
                 </div>
                 <div class="info">
@@ -145,11 +145,13 @@
                     </ul>
                 </div>
             </div>
-               
+            <div>
+                <label class="hotel_img_label">대표 사진</label>
+                <div class="hotel_img"></div> 
+            </div> 
+        
+          
             
-
-            <label class="hotel_img_label">대표 사진</label>
-            <div class="hotel_img"></div> 
         </div>
         
         <div class="review_form" name="hotel_detail_review">
@@ -162,31 +164,19 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <div class="review_title">
-                        <div class="user_hotel_review">
-                            <ul>
-                                <li>평점</li>       
-                            </ul>
-                        </div>
-                        <div class="user_hotel_review">
-                            <ul>
-                                <li>4.2/5.0</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="review_score">
-                        <div class="user_hotel_review">
-                            <ul>
-                                <li>리뷰 개수</li>       
-                            </ul>
-                        </div>
-                        <div class="user_hotel_review">
-                            <ul>
-                                <li>120개</li>
-                            </ul>
-                        </div>
-                    </div>
-                   
+                    <span class="review_score">
+                        <ul>
+                            <li>평점:</li>       
+                            <li>4.2 / 5.0</li>
+                        </ul>
+                    </span>
+            
+                    <span class="review_cnt">
+                        <ul>
+                            <li>리뷰 개수:</li>       
+                            <li>120개</li>
+                        </ul>
+                    </span>          
                 </div>
             <select class="review_select"> <!--지역 검색-->
                 <option value="view_three" >3개씩</option>
@@ -195,26 +185,28 @@
                 <option value="view_twenty" >20개씩</option>
             </select>
             <div class="user_review">
-                <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
-                <li>asdqwe1</li>
+                <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:10%;'></i>
+                <li>asdqwe1</li> <!--아이디-->
+                <i class="fas fa-star" style="margin-left:10%;"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <div class="review_img"></div>
+            </div>
+            <div class="user_review_content">
                 <li>와! 호텔! 와! 야경!</li>
             </div>
             <div class="user_review">
-                <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
-                <li>zmzmfnQLdQHd1</li>
+                <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:10%;'></i>
+                <li>zmzmfnQLdQHd1</li><!--아이디-->
+                <i class="fas fa-star" style="margin-left:10%;"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <div class="review_img"></div>
-                <li>야경이 맛있어요</li>
+            </div>
+            <div class="user_review_content">
+                <li>와! 호텔! 와! 야경!</li>
             </div>
         </div>
                 

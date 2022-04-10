@@ -8,6 +8,9 @@ $(document).ready(function(){
         document.getElementById("googleMap").style.display = 'block';
     }
 });
+// $(document).ready(function(){
+//     if ()
+// });
 marker=undefined;
 function search_choice(e){
     if (marker){
