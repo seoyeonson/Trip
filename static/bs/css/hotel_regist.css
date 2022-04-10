@@ -4,6 +4,8 @@
     border: 1px solid var(--sub-grey-color);
     padding: 20px;
     border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 #cancel_btn, #search_adress{
@@ -68,6 +70,15 @@
     display: inline-block;
 }
 
+.add_row{
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+    background-color: var(--sub-color);
+    display: block;
+    width:100%;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+}
 
 @media(min-width: 768px){
     .regist_form{
