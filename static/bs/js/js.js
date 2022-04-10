@@ -7,6 +7,7 @@ function search_hotel() {
     document.getElementById("vacation_location").style.display = 'none';
     $('.vacation_reserve_people').css('display', 'none');
 }
+
 // main 여행지 검색
 function search_vacation() {
     document.getElementById("hotel_search").style.display ='none';
@@ -27,21 +28,6 @@ function choice_people() {
     $('#date_pick').css('display', 'none');
     $('.hotel_reserve_people').css('display', 'block');
     $('.hotel_room_select').css('display', 'none');
-}
-
-function choice_room() {
-    $('.date_pick').css('display', 'none');
-    $('.hotel_room_select').css('display', 'block');
-    $('.hotel_reserve_people').css('display', 'none');
-}
-
-function hotel_room_select(text){
-    $('.hotel_room_select').css('display', 'none');
-    value = $(text).text();
-    value_room_pk = $('.hotel_room_select').val();
-    $(".room").html(value);
-    $('input[name=reserve_room]').attr('value', value);
-    $('input[name=hotel_room_pk]').attr('value', value_room_pk);
 }
 
 function hotel_lo_select(text){
@@ -79,20 +65,6 @@ function get_date() {
     document.getElementById("hotel_location").style.display ='none';
     $('.hotel_reserve_people').css('display', 'none');
 }
-
-function input_date() {
-    start_day = document.querySelector("#start_day").value.slice(5,10);
-    end_day = document.querySelector("#end_day").value.slice(5,10);
-    if(start_day > end_day) {
-        temp = start_day;
-        start_day = end_day;
-        end_day = temp;
-    }
-
-    document.getElementById("date_pick").style.display = 'none';
-    
-}
-
 
 $(document).ready(function() {
     // 회원가입 pattern
@@ -212,16 +184,12 @@ $(document).ready(function() {
         return true;
     });
 
-    // detail_reserve_people button
+    // 인원수 선택
     $('[data-quantity="plus"]').click(function(e){
         e.preventDefault();
-        // Get the field name
         fieldName = $(this).attr('data-field');
-        // Get its current value
         var currentVal = parseInt($('input[name='+fieldName+']').val());
-        // If is not undefined
         if (!isNaN(currentVal)) {
-            // Increment
             $('input[name='+fieldName+']').val(currentVal + 1);
             if(fieldName == 'hotel_reserve_people'){
                 $('.people').html(currentVal + 1 + '명');
@@ -229,32 +197,72 @@ $(document).ready(function() {
                 $('.va_people').html(currentVal + 1 + '명');
             }
         } else {
-            // Otherwise put a 0 there
             $('input[name='+fieldName+']').val(1);
         }
     });
-    // This button will decrement the value till 0
+
     $('[data-quantity="minus"]').click(function(e) {
-        let date;
-        // Stop acting like a button
         e.preventDefault();
-        // Get the field name
         fieldName = $(this).attr('data-field');
-        // Get its current value
         var currentVal = parseInt($('input[name='+fieldName+']').val());
-        // If it isn't undefined or its greater than 0
         if (!isNaN(currentVal) && currentVal > 1) {
-            // Decrement one
-            data = $('input[name='+fieldName+']').val(currentVal - 1);
+            $('input[name='+fieldName+']').val(currentVal - 1);
             if(fieldName == 'hotel_reserve_people'){
                 $('.people').html(currentVal - 1 + '명');
             }else{
                 $('.va_people').html(currentVal - 1 + '명');
             }
         } else {
-            // Otherwise put a 0 there
-            data = $('input[name='+fieldName+']').val(1);
+            $('input[name='+fieldName+']').val(1);
         }
+
+        var startDate = $('input[name=start_date]').val();
+        var endDate = $('input[name=end_date]').val();
+        var today = new Date();
+        var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
+        if(startDate == 0 && endDate == 0){
+            startDate = minDate;
+            endDate = minDate;
+        }
+    
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                "startDate": startDate,
+                "endDate": endDate,
+                "minDate" : minDate,
+                opens: 'center',
+                locale: {
+                    "applyLabel": "Apply",
+                    "cancelLabel": "Cancel",
+                    "format": 'YYYY-MM-DD',
+                    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
+                    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                }
+            }, 
+            function(start, end, label) {
+                // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+                startDate = start.format('YYYY-MM-DD');
+                endDate = end.format('YYYY-MM-DD');
+            });
+        });
+
+        $('[name="reserve_date_choice"]').click(function(e) {
+            $('.date_pick').css('display', 'none');
+            $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
+            $('.hotel_detail_reserve_checkout').html(endDate);
+            $('input[name=start_date]').attr('value', startDate);
+            $('input[name=end_date]').attr('value', endDate);
+            console.log("startDate", startDate, "endDate", endDate);
+        });
+
+        $('[name="date_choice"]').click(function(e) {
+            $('.date_pick').css('display', 'none');
+            $('#chk_in').html(startDate);
+            $('#chk_out').html(endDate);
+            $('input[name=start_date]').attr('value', startDate);
+            $('input[name=end_date]').attr('value', endDate);
+            console.log("startDate", startDate, "endDate", endDate);
+        });
 
         // $.ajax({
         //     type:'POST',
@@ -271,7 +279,6 @@ $(document).ready(function() {
         // });
     });
 });
-
 
 // 구글맵
 function myMap() {
@@ -290,3 +297,18 @@ function myMap() {
     marker.setMap(map);
 }
 
+// hotel_detail room 선택
+function choice_room() {
+    $('.date_pick').css('display', 'none');
+    $('.hotel_room_select').css('display', 'block');
+    $('.hotel_reserve_people').css('display', 'none');
+}
+
+function hotel_room_select(text){
+    $('.hotel_room_select').css('display', 'none');
+    value = $(text).text();
+    value_room_pk = $('.hotel_room_select').val();
+    $(".room").html(value);
+    $('input[name=reserve_room]').attr('value', value);
+    $('input[name=hotel_room_pk]').attr('value', value_room_pk);
+}

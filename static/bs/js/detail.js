@@ -37,3 +37,18 @@ $(document).ready(function(){
         console.log("startDate", startDate, "endDate", endDate);
     });
 })
+
+function choice_room() {
+    $('.date_pick').css('display', 'none');
+    $('.hotel_room_select').css('display', 'block');
+    $('.hotel_reserve_people').css('display', 'none');
+}
+
+function hotel_room_select(text){
+    $('.hotel_room_select').css('display', 'none');
+    value = $(text).text();
+    value_room_pk = $('.hotel_room_select').val();
+    $(".room").html(value);
+    $('input[name=reserve_room]').attr('value', value);
+    $('input[name=hotel_room_pk]').attr('value', value_room_pk);
+}

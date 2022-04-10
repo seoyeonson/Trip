@@ -17,22 +17,22 @@
             <ul>
                 <li>
                     <a onclick="search_location()" class="location" id="location">
-                        <i class="fas fa-map-marker-alt" class="map"></i><sapn id="lo_text">{{ request.session.SIGUN_NM }}</sapn>
-                        <input type="hidden" id="lo_text" name="SIGUN_NM" value="{{ request.session.SIGUN_NM }}">
+                        <i class="fas fa-map-marker-alt" class="map"></i><sapn id="lo_text">{{ SIGUN_NM }}</sapn>
+                        <input type="hidden" id="lo_text" name="SIGUN_NM" value="{{ SIGUN_NM }}">
                     </a>
                 </li>
                 <ul>
                     <a onclick="get_date()" class="get_date" id="get_date">
                         <li class="chk_date">
-                            <i class="fas fa-calendar-alt"></i><span id="chk_in">{{ request.session.start_date }}</span>
+                            <i class="fas fa-calendar-alt"></i><span id="chk_in">{{ start_date }}</span>
                         </li>
-                        <li><span id="chk_out">{{ request.session.end_date }}</span></li>
-                        <input type="hidden" value="{{ request.session.start_date }}" name="start_date">
-                        <input type="hidden" value="{{ request.session.end_date }}" name="end_date">
+                        <li><span id="chk_out">{{ end_date }}</span></li>
+                        <input type="hidden" value="{{ start_date }}" name="start_date">
+                        <input type="hidden" value="{{ end_date }}" name="end_date">
                     </a>
                 </ul>
                 <li class="choice_people" onclick="choice_people()">
-                    <a><i class="fas fa-user-alt"></i><span class="people">{{ request.session.hotel_reserve_people }}명</a></span>
+                    <a><i class="fas fa-user-alt"></i><span class="people">{{ hotel_reserve_people }}명</a></span>
                 </li>
                 <li class="hotel_submit"><input type="submit" class="chk_form" value="검색"></li>
             </ul>
@@ -58,7 +58,7 @@
             </button>
             </div>
             <!-- 인원수 -->
-            <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="{{ request.session.hotel_reserve_people }}" readonly/>
+            <input class="input-group-field hotel_reserve_people" type="number" name="hotel_reserve_people" max="1" value="{{ hotel_reserve_people }}" readonly/>
             <!-- 인원수 증가 -->
             <div class="hotel_reserve_people">
                 <button type="button" data-quantity="plus" data-field="hotel_reserve_people">
@@ -73,7 +73,6 @@
     <div class="left_list">
         {% if lists %}
             {% for hotel in lists %}
-            
                 <button type="submit" class="table_list" onclick="search_choice(this)">
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="li_lat">
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="li_lng"> 

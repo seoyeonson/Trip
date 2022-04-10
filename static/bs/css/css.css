@@ -253,7 +253,7 @@ hr{
     width: 100px;
     height: 40px;
     background-color: #F1F1F1;
-    line-height: 40px;
+    line-height: 35px;
     border-radius: 6px;
 }
 
@@ -303,6 +303,8 @@ hr{
     font-size: 13px;
     border: 0;
     background-color: transparent;
+    line-height: 35px;
+    color: white;
 }
 
 .vacation_submit {
@@ -567,8 +569,9 @@ hr{
 
 .recommend_vaction{
     height: 194px;
-    background-color: var(--sub-grey-color);
+    background-image: url(/static/img/img_noimg.jpg);
     border-radius: 10px;
+    background-position: center center;
 }
 
 .hotel_room_select{

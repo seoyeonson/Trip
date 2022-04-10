@@ -28,6 +28,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     <!-- 호텔 검색창 -->
+                    <input type="hidden" name="hotel_type" id="hotel_type" value="hotel_type">
                     <div class="hotel_search" id="hotel_search">
                         <ul>
                             <li>
@@ -88,6 +89,7 @@
                 <!-- 여행지 검색 -->
                 <form method="POST">
                     {% csrf_token %}
+                    <input type="hidden" name="vacation_type" id="vacation_type" value="vacation_type">
                     <div class="vacation_search" id="vacation_search" style="display: none;"> 
                         <ul>
                             <li>
@@ -136,15 +138,19 @@
             <h2 class="mb-3">추천여행지</h2>
             <div class="d-lg-flex">
                 <!-- <a href="#" title="이전"><i class='fas fa-angle-left'></i></a> -->
-                    {% for vacation in recommand_vacations %}
+                    {% for vacation in vacation_imgs %}
                         {% if forloop.counter < 4 %}
-                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3">
-                            <p>{{ vacation.TURSM_INFO_NM }}</p>
-                        </div>
+                            {% if vacation %}
+                                <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div>
+                            {% else %}
+                                <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
+                            {% endif %}
                         {% else %}
-                        <div class="recommend_vaction col-lg-3 col-12">
-                            <p>{{ vacation.TURSM_INFO_NM }}</p>
-                        </div>
+                            {% if vacation %}
+                                <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div>
+                            {% else %}
+                                <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 <!-- <a href="#" title="이전"><i class='fas fa-angle-right'></i></a> -->
@@ -154,15 +160,19 @@
             <h2 class="mb-3">추천숙소</h2>
             <div class="d-lg-flex">
                 <!-- <a href="#" title="이전"><i class='fas fa-angle-left'></i></a> -->
-                {% for hotel in recommand_hotels %}
+                {% for hotel in hotel_imgs %}
                     {% if forloop.counter < 4 %}
-                    <div class="recommend_vaction col-lg-3 col-12 me-lg-3">
-                        <p>{{ hotel.BIZPLC_NM }}</p>
-                    </div>
+                        {% if hotel %}
+                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div>
+                        {% else %}
+                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
+                        {% endif %}
                     {% else %}
-                    <div class="recommend_vaction col-lg-3 col-12">
-                        <p>{{ hotel.BIZPLC_NM }}</p>
-                    </div>
+                        {% if hotel %}
+                        <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div>
+                        {% else %}
+                        <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 <!-- <a href="#" title="이전"><i class='fas fa-angle-right'></i></a> -->

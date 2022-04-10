@@ -229,15 +229,19 @@
     <div>
         <h2>추천여행지</h2>
         <div class="d-flex">
-            {% for vacation in recommand_vacations %}
+            {% for vacation in vacation_imgs %}
                 {% if forloop.counter < 4 %}
-                <div class="recommend_vaction col-lg-3 me-lg-4">
-                    <p>{{ vacation.TURSM_INFO_NM }}</p>
-                </div>
+                    {% if vacation %}
+                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div>
+                    {% else %}
+                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
+                    {% endif %}
                 {% else %}
-                <div class="recommend_vaction col-lg-3">
-                    <p>{{ vacation.TURSM_INFO_NM }}</p>
-                </div>
+                    {% if vacation %}
+                        <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div>
+                    {% else %}
+                        <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>

@@ -1,4 +1,9 @@
 {% extends "base.html"%}
+{% load static %}
+{% block extrahead %}
+<script src="{% static 'bs/js/detail.js' %}"></script>
+{% endblock %}
+
 {% block title %}{{ vacation.TURSM_INFO_NM }}{% endblock %} {# 호텔명 #}
 
 {% block contents %}
@@ -43,7 +48,23 @@
         <div class="col-lg-4 col-12 hotel_detail_reserve align-self-sm-start">
             <p>예약을 진행하시려면 인원수를 입력해주세요.</p>
             <form action="." method="POST">
+                <input type="hidden" name="vacation_name" value="{{ vacation.TURSM_INFO_NM }}">
                 {% csrf_token %}
+                <div>
+                    <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex" onclick="choice_date()">
+                        <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">{{ request.session.start_date }}</span></button>
+                        <button type="button" class="hotel_detail_reserve_checkout">{{ request.session.end_date }}</button>
+                        <input type="hidden" value="{{ request.session.start_date }}" name="start_date">
+                        <input type="hidden" value="{{ request.session.end_date }}" name="end_date">
+                    </div>
+                    <div class="date_pick" id="date_pick">
+                        <div class="d-flex justify-content-center">
+                            <div class="input-daterange reserve_date"><input type="text" name="daterange" id="datepicker" readonly /> 
+                            <input type="button" value="적용" name="reserve_date_choice">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="choice_people">
                     <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="vacation_reserve_people" onclick="vacation_choice_people()"><i class="fas fa-user-alt"></i><span class="people">{{ vacation_reserve_people }}명</span></button>
                     <div class="d-flex justify-content-center hotel_detail_reserve_btn plus_minus_btn">
@@ -193,17 +214,21 @@
     <div>
         <h2>추천숙소</h2>
         <div class="d-flex">
-            {% for hotel in recommand_hotels %}
-                {% if forloop.counter < 4 %}
-                <div class="recommend_vaction col-lg-3 me-lg-4">
-                    <p>{{ hotel.BIZPLC_NM }}</p>
-                </div>
-                {% else %}
-                <div class="recommend_vaction col-lg-3">
-                    <p>{{ hotel.BIZPLC_NM }}</p>
-                </div>
-                {% endif %}
-            {% endfor %}
+            {% for hotel in hotel_imgs %}
+                    {% if forloop.counter < 4 %}
+                        {% if hotel %}
+                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div>
+                        {% else %}
+                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
+                        {% endif %}
+                    {% else %}
+                        {% if hotel %}
+                        <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div>
+                        {% else %}
+                        <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
         </div>
     </div>
 
