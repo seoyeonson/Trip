@@ -1,4 +1,5 @@
 from distutils.log import error
+from pickle import TRUE
 from ssl import AlertDescription
 from django.http import Http404
 # from jinja2 import Undefined
@@ -996,6 +997,34 @@ def hotel_register(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
 
+    if request.method == 'POST':
+        BIZPLC_NM = request.POST.get('hotel_name')
+        SIGUN_NM = request.POST.get('hotel_area')
+        BSN_STATE_NM = 1
+        REFINE_ROADNM_ADDR = request.POST.get('hotel_adress')
+        REFINE_WGS84_LAT = 0.0
+        REFINE_WGS84_LOGT = 0.0
+        hotel_rate = 0.0
+        hotel_comment = request.POST.get('context')
+        hotel_admin_id = user
+        if hotel_comment == '':
+            hotel_comment = '설명이 없습니다.'
+
+        hotel = Hotel(
+            BIZPLC_NM = BIZPLC_NM,
+            SIGUN_NM = SIGUN_NM,
+            BSN_STATE_NM = BSN_STATE_NM,
+            REFINE_ROADNM_ADDR = REFINE_ROADNM_ADDR,
+            REFINE_WGS84_LAT = REFINE_WGS84_LAT,
+            REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
+            hotel_rate = hotel_rate,
+            hotel_comment = hotel_comment,
+            hotel_admin_id = hotel_admin_id,
+        )
+
+        hotel.save()
+        return redirect('/admin_hotel/')
+
     context = {
         'user' : user,
     }
@@ -1010,12 +1039,20 @@ def vacation_register(request):
     }
     return render(request, 'vacation_register.html', context)
 
-def admin_hotel_detail(request):
+def admin_hotel_detail(request, hk):
     pk = request.session['user']
+    hotel = Hotel.objects.get(pk = hk)
+    hotel_room = Hotel_room.objects.filter(hotel_id = hk)
     user = User.objects.get(pk=pk)
+    hotel_review = Hotel_review.objects.filter(hotel_id = hk).order_by("-pk")
+    all_review = hotel_review.count()
 
     context = {
         'user' : user,
+        'hotel' : hotel,
+        'hotel_rooms' : hotel_room,
+        'hotel_reviews' : hotel_review,
+        'all_review' : all_review,
     }
     return render(request, 'admin_hotel_detail.html', context)
 
