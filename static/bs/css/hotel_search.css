@@ -67,6 +67,7 @@
     width: 900px;
     height: 1060px;
     min-width: 900px;
+    z-index: 2;
 } 
 
 .list_gps_none{

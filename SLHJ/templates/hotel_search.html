@@ -77,7 +77,13 @@
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="li_lat">
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="li_lng"> 
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="lat">
-                    <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="lng">
+                    <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="lng">                  
+                    {% for hotel_room in hotel_rooms %}                                           
+                        {% if hotel_room.hotel_id_id == hotel.hotel_id %}
+                            <input type="hidden" value="{{ hotel_room.room_price }}" name="price[]">  
+                        {% endif %}                                       
+                    {% endfor %}
+                    <input type="hidden" value="0" name="min_price"> 
                     <div class="list_table_content">                
                         <div class="list_hotel_image"></div>
                         <div class= "list_text">
@@ -96,14 +102,10 @@
                                     </div>
                                 </li>
                                 <br>
-                                <li class="list_hotel_pay">
-                                    {% for hotel_room in hotel_rooms %}
-                                        {% if hotel_room.hotel_id_id == hotel.hotel_id %}    
-                                            {{ hotel_room.room_price|intcomma }}원        
-                                        {% endif %}
-                                    {% endfor %}
+                                <li class="list_hotel_pay">                            
+                                <div id="fn_price" style="display:inline"></div>원
                                 </li>
-                            </ul>
+                            </ul> 
                         </div>
                     </div>
                 </button>

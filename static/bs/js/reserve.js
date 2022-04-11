@@ -9,6 +9,28 @@ $(document).ready(function(){
     // $("#peopleNum").change(change_peopleNum);
 });
 
+(function ($) {
+    var originalVal = $.fn.val;
+    $.fn.val = function (value) {
+        var res = originalVal.apply(this, arguments);
+ 
+        if (this.is('input:text') && arguments.length >= 1) {
+            // this is input type=text setter
+            this.trigger("input");
+        }
+ 
+        return res;
+    };
+})(jQuery);
+
+
+//이용날짜 변경
+function change_date(){
+    alert('됨')
+    var new_date = $('.vacation_reserve_date').val()
+    $('.reserve_date').html($('.vacation_reserve_date').val());
+};
+
 // 인원수 변경
 function choice_people(){
     current = parseInt($("#peopleNum").val())

@@ -273,13 +273,16 @@ def hotel_reserve(request):
         return redirect(f'/hotel_confirm/?reserve={hotel_reserve.hotel_reserve_id}')
 
 def vacation_reserve(request):
-    try:
-        vacation_id = request.session.get('vacation_pk')
-        vacation_reserve_people = int(request.session.get('vacation_reserve_people'))
-        # del request.session['vacation_id'] # 세션삭제
-        # del request.session['vacation_reserve_people']
+    
+    vacation_id = request.session.get('vacation_pk')
+    vacation_reserve_people = request.session.get('vacation_reserve_people')
+    vacation_reserve_date = request.session.get('vacation_reserve_date')
+    if (vacation_id=="") or (vacation_reserve_people=="") or (vacation_reserve_date==""):
+        return redirect('/main/') # session에 예약정보가 담겨있지 않은 경우 main으로 redirect됩니다.
+    try:    
         vacation= Vacation.objects.get(vacation_id=vacation_id)
         vacation_reserve_price = vacation.vacation_price 
+        vacation_reserve_people = int(vacation_reserve_people)
         place_name = vacation.TURSM_INFO_NM
         id = User.objects.get(id=request.session.get('user','')) # session에 저장된 user의 정보를 불러옵니다.
         if id == "":
@@ -292,13 +295,14 @@ def vacation_reserve(request):
                 'reserve_people': vacation_reserve_people,
                 'vacation_price': vacation_reserve_price,
                 'show_price': vacation_reserve_price * vacation_reserve_people,
+                'vacation_reserve_date': vacation_reserve_date,
             }
             return render(request, 'vacation_reserve.html', context)
 
         elif request.method=="POST":
             vacation_reserve = Vacation_reserve(
                 vacation_reserve_people = request.POST['peopleNum'],
-                vacation_reserve_date = request.POST['vacation_reserve_date'],
+                vacation_reserve_date = request.POST['end_date'],
                 vacation_reserve_username = request.POST['reserve_name'],
                 vacation_reserve_phonenum = request.POST['phone_num'],
                 vacation_reserve_price = vacation_reserve_price * int(request.POST['peopleNum']),
@@ -306,11 +310,12 @@ def vacation_reserve(request):
                 vacation_id_id = vacation_id
             )
             vacation_reserve.save()
+            del request.session['vacation_pk'] # vacation 예약 후 세션삭제
+            del request.session['vacation_reserve_people']
             return redirect(f'/vacation_confirm/?reserve={vacation_reserve.vacation_reserve_id}')
     
     except Vacation.DoesNotExist:
-        raise Http404('여행지를 선택해주세요')
-
+        raise Http404('잘못된 접근입니다.')
 
 
 def hotel_detail(request, pk):
@@ -497,7 +502,9 @@ def vacation_detail(request, pk):
     if request.method == "POST":
         vacation_pk = pk
         vacation_reserve_people = request.POST.get('vacation_reserve_people')
+        vacation_reserve_date = request.POST.get('end_date') # 우선 end_date를 이용날짜로 받아오도록 하였습니다. (추후 하루만 선택가능하도록 datepicker 수정 필요)
 
+        request.session['vacation_reserve_date'] = vacation_reserve_date
         request.session['vacation_reserve_people'] = vacation_reserve_people
         request.session['vacation_pk'] = vacation_pk
 
@@ -569,13 +576,12 @@ def user_divide(request):
     if request.method == "GET":
         return render(request, 'user_divide.html')
     elif request.method == "POST":
-        user_type = request.POST.get('user_type')
-        request.session['user_type'] = user_type
-        # print(request.session['user_type']) #세션값 확인
+        join_type = request.POST.get('join_type') # 혹시 삭제되지 않을 경우 다른 기능에 영향을 주지 않도록 'user_type' 대신 다른 이름으로 변경했습니다.
+        request.session['join_type'] = join_type
         return redirect('/user_create')
 
 def user_create(request):
-    user_type = request.session['user_type'] # 회원구분에서 받아온 회원 타입 정보. admin 또는 basic
+    user_type = request.session['join_type'] # 회원구분에서 받아온 회원 타입 정보. admin 또는 basic
 
     if request.method == 'POST':
         user_id = request.POST.get('id')
@@ -597,6 +603,7 @@ def user_create(request):
         )
 
         user.save()
+        del request.session['join_type'] # 회원등록 완료. 세션 삭제
         return redirect('/login/')
 
     return render(request, 'user_create.html')
@@ -676,7 +683,7 @@ def history_hotel(request):
     # 보여질 페이징 개수. 
     write_pages = int(request.session.get('write_pages', 5))
     # 시작페이지
-    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    start_page =((int)((page_obj.number -1 ) / write_pages) * write_pages) + 1
     end_page = start_page + write_pages -1
     if end_page >= paginator.num_pages:
         end_page = paginator.num_pages
@@ -739,7 +746,7 @@ def history_vacation(request):
     # 보여질 페이징 개수. 
     write_pages = int(request.session.get('write_pages', 5))
     # 시작페이지
-    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    start_page =((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
     end_page = start_page + write_pages -1
     if end_page >= paginator.num_pages:
         end_page = paginator.num_pages
@@ -813,13 +820,13 @@ def admin_hotel(request):
     # hotels = []
     # for i in range(hotel.count()):
     #     hotels.append(hotel[i])
-    per_page = 5
+    # per_page = 5
     page = int(request.GET.get('page',1))
-    paginator = Paginator(hotel, per_page)
+    paginator = Paginator(hotel, 5)
     page_obj = paginator.get_page(page)
-    write_pages = 5
+    write_pages = int(request.session.get('write_pages', 5))
     # 시작페이지
-    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    start_page = ((int)((page_obj.number-1) / write_pages) * write_pages) + 1
     end_page = start_page + write_pages -1
     if end_page >= paginator.num_pages:
         end_page = paginator.num_pages
@@ -910,7 +917,7 @@ def admin_vacation(request):
     page_obj = paginator.get_page(page)
     write_pages = 5
     # 시작페이지
-    start_page =((int)((page_obj.number) / write_pages) * write_pages) + 1
+    start_page =((int)((page_obj.number-1) / write_pages) * write_pages) + 1
     end_page = start_page + write_pages -1
     if end_page >= paginator.num_pages:
         end_page = paginator.num_pages
@@ -1015,13 +1022,13 @@ def sample(request):  # vacation_review 데이터 입력포맷입니다.
 def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 
     vacation_reserve_people = 2
-    vacation_reserve_date = '2022-04-01'
+    vacation_reserve_date = '2022-12-31'
     vacation_reserve_username = '이광우'
     vacation_reserve_phonenum = '010-1234-5678'
 
     id = User.objects.get(pk=3)
     # id = User.objects.get(pk=pk)
-    vacation_id = Vacation.objects.get(pk=1)
+    vacation_id = Vacation.objects.get(pk=14)
 
     vacation_reserve_price = vacation_id.vacation_price * vacation_reserve_people  # 기본가격 + 인원 수
 
@@ -1064,10 +1071,10 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_people = 3
     hotel_reserve_username = '김사과'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-05-10'
-    hotel_reserve_enddate = '2022-05-13'
+    hotel_reserve_startdate = '2022-08-09'
+    hotel_reserve_enddate = '2022-08-10'
 
-    hotel_room = Hotel_room.objects.get(pk=5)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=10)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
     id = User.objects.get(pk=2)

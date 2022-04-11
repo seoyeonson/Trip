@@ -60,36 +60,29 @@
             <ul class="pagination justify-content-center">
                 {# << 표시 여부 #}
                 {% if hotels.number > 1 %}
-                <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i
-                            class='fas fa-angle-double-left'></i></a></li>
+                <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.previous_page_number }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
                 {% endif %}
 
-                {# < 표시 여부 #}
-                {% if start_page < hotels.number %}
-                <li class="page-item"><a class="page-link" href="?page={{ hotels.previous_page_number }}" title="이전"><i
-                            class='fas fa-angle-left'></i></a></li>
-                {% endif %}
-
-                {# 페이징 안의 '숫자' 표시 #}
                 {% if hotels.paginator.num_pages > 1 %}
                 {% for p in page_range %}
-                {% if hotels.number != p %}
-                <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                {% else %}
-                <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
-                {% endif %}
+                    {% if hotels.number != p %}
+                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                    {% else %}
+                     <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
+                    {% endif %}
                 {% endfor %}
                 {% endif %}
 
                 {# > 표시 #}
-                {% if hotels.number < end_page %}
+                {% if hotels.paginator.num_pages > end_page %}
                 <li class="page-item"><a class="page-link" href="?page={{ hotels.next_page_number }}" title="다음"><i
                             class='fas fa-angle-right'></i></a></li>
                 {% endif %}
 
                 {# >> 표시 #}
                 {% if hotels.number < hotels.paginator.num_pages %}
-                <li class="page-item"><a class="page-link" href="?page={{ end_page }}" title="마지막"><i
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.paginator.num_pages }}" title="마지막"><i
                             class='fas fa-angle-double-right'></i></a></li>
                 {% endif %}
             </ul>
