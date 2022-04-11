@@ -273,7 +273,8 @@ def vacation_reserve(request):
     
     vacation_id = request.session.get('vacation_pk')
     vacation_reserve_people = request.session.get('vacation_reserve_people')
-    if (vacation_id=="") or (vacation_reserve_people==""):
+    vacation_reserve_date = request.session.get('vacation_reserve_date')
+    if (vacation_id=="") or (vacation_reserve_people=="") or (vacation_reserve_date==""):
         return redirect('/main/') # session에 예약정보가 담겨있지 않은 경우 main으로 redirect됩니다.
     try:    
         vacation= Vacation.objects.get(vacation_id=vacation_id)
@@ -291,13 +292,14 @@ def vacation_reserve(request):
                 'reserve_people': vacation_reserve_people,
                 'vacation_price': vacation_reserve_price,
                 'show_price': vacation_reserve_price * vacation_reserve_people,
+                'vacation_reserve_date': vacation_reserve_date,
             }
             return render(request, 'vacation_reserve.html', context)
 
         elif request.method=="POST":
             vacation_reserve = Vacation_reserve(
                 vacation_reserve_people = request.POST['peopleNum'],
-                vacation_reserve_date = request.POST['vacation_reserve_date'],
+                vacation_reserve_date = request.POST['end_date'],
                 vacation_reserve_username = request.POST['reserve_name'],
                 vacation_reserve_phonenum = request.POST['phone_num'],
                 vacation_reserve_price = vacation_reserve_price * int(request.POST['peopleNum']),
@@ -497,7 +499,9 @@ def vacation_detail(request, pk):
     if request.method == "POST":
         vacation_pk = pk
         vacation_reserve_people = request.POST.get('vacation_reserve_people')
+        vacation_reserve_date = request.POST.get('end_date') # 우선 end_date를 이용날짜로 받아오도록 하였습니다. (추후 하루만 선택가능하도록 datepicker 수정 필요)
 
+        request.session['vacation_reserve_date'] = vacation_reserve_date
         request.session['vacation_reserve_people'] = vacation_reserve_people
         request.session['vacation_pk'] = vacation_pk
 
