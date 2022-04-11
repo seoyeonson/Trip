@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    console.log(test)
     var startDate = $('input[name=start_date]').val();
     var endDate = $('input[name=end_date]').val();
     var today = new Date();
@@ -7,6 +8,12 @@ $(document).ready(function(){
         startDate = minDate;
         endDate = minDate;
     } 
+
+    var a = moment("2022-04-22");
+    var b = moment("2022-04-23");
+    var x = moment("2022-04-25");
+    var y = moment("2022-05-02");
+
     $(function() {
         $('input[name="daterange"]').daterangepicker({
             "startDate": startDate,
@@ -19,7 +26,16 @@ $(document).ready(function(){
                 "format": 'YYYY-MM-DD',
                 "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
                 "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-            }
+            },
+            isInvalidDate: function (date) {
+                    if (date >= a && date <= b) {
+                        return true;
+                    }
+                    if(date >= x && date <= y) {
+                        return true;
+                    }
+                    return false;
+                }
         }, 
         function(start, end, label) {
             // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');

@@ -68,6 +68,7 @@
         </div>
     </form>
 </div>
+{% if lists %}
 <div class="list_content">
     <!-- 좌측 list -->
     <div class="left_list">
@@ -168,7 +169,11 @@
         <div class="hotel_main_img mt-4 mb-5" style="background-image: url('/static/img/img_noimg.jpg');"></div> -->
         <!-- {% endif %} -->
 </div>
-    
+{% else %}
+<div>
+    <p class="d-flex justify-content-center mt-5">예약가능한 숙소 정보가 없습니다.</p>
+</div>
+{% endif %}    
    
 
 

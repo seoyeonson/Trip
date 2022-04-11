@@ -63,7 +63,7 @@ urlpatterns = [
     path('sample7/', views.sample7, name='sample7'),    # vacation_imgage 포맷입니다.
 
     # ajax 용
-    path('option_change/<int:pk>/', views.option_change, name='option_change')
+    path(r'option_change/<int:pk>/', views.option_change, name='option_change')
 ]
 
 # hotel_image, vacation_image 경로
