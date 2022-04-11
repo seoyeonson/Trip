@@ -163,6 +163,7 @@ footer{
     min-height: 100%;
     position: relative;
     padding-bottom:64px;
+    max-width: 1920px;
 }
 
 .main_image {
