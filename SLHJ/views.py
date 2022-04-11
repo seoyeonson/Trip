@@ -665,6 +665,8 @@ def history_hotel(request):
 
     except Hotel_image.DoesNotExist:
         hotel_image = ''
+    except IndexError:
+        hotel_image = ''
 
     # for i in range(hotel_reserve.count()):
     #     hotel_reserves.append(hotel_reserve[i])
