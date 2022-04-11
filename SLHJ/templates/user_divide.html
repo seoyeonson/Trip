@@ -24,7 +24,7 @@
             <button type="button" id="owner_join">회원가입하기</button>
             <form name="admin" action="." method="POST">
                 {% csrf_token %}
-                <input type="hidden" name="user_type" value="admin">
+                <input type="hidden" name="join_type" value="admin">
             </form>
 
         </div>
@@ -36,7 +36,7 @@
             
             <form name="basic" action="." method="POST">
                 {% csrf_token %}
-                <input type="hidden" name="user_type" value="basic">
+                <input type="hidden" name="join_type" value="basic">
             </form>
         </div>
     </div>

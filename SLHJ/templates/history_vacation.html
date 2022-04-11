@@ -82,10 +82,6 @@
                 {# << 표시 여부 #} 
                 {% if vacation_reserves.number > 1 %}       
                 <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
-                {% endif %}
-
-                {# < 표시 여부 #}
-                {% if start_page < vacation_reserves.number %}
                 <li class="page-item"><a class="page-link" href="?page={{ vacation_reserves.previous_page_number }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
                 {% endif %}
 
@@ -101,7 +97,7 @@
                 {% endif %}
 
                 {# > 표시 #}
-                {% if vacation_reserves.number < end_page %}
+                {% if vacation_reserves.paginator.num_pages > end_page %}
                 <li class="page-item"><a class="page-link" href="?page={{ vacation_reserves.next_page_number }}" title="다음"><i class='fas fa-angle-right'></i></a></li>
                 {% endif %}
             
