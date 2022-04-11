@@ -30,8 +30,9 @@
 <div class="con2">
     <div class="contents">
         <h5 id="title">마이페이지 > 숙소등록</h5>
-        <form class="regist_form" name="hotel_regist_form">
-            <input id="register_btn" type="button" value="정보등록">
+        <form class="regist_form" name="hotel_regist_form" method="POST">
+            {% csrf_token %}
+            <input id="register_btn" type="submit" value="정보등록">
             <input id="cancel_btn" type="button" value="등록취소">
             <label class="index_title">기본정보</label>
             <div class="form-group">
@@ -40,24 +41,28 @@
             </div>
             <div class="form-group">
                 <label>숙소이름</label>
-                <input class="form-control" type="text" name="hotel_name">
+                <input class="form-control" type="text" name="hotel_name" required>
+            </div>
+            <div class="form-group">
+                <label>시군명</label>
+                <input class="form-control" type="text" name="hotel_area" required>
             </div>
             <div class="form-group">
                 <label>도로명주소</label>
-                <input type="button" value="주소찾기" id="search_adress">
-                <input class="form-control" name="hotel_adress" readonly>
+                <!-- <input type="button" value="주소찾기" id="search_adress"> -->
+                <input class="form-control" type="text" name="hotel_adress" required>
 
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label>영업상태</label>
                 <select class="bsn_state form-control">
-                    <option name="BSN_STATE_NM">영업중</option>
-                    <option name="BSN_STATE_NM">휴업중</option>
+                    <option name="BSN_STATE_NM" value="TRUE">영업중</option>
+                    <option name="BSN_STATE_NM" value="FALSE">휴업중</option>
                 </select>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label>요약설명</label>
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control" name='context'></textarea>
             </div>
 
             <label class="index_title">대표사진 등록</label>
