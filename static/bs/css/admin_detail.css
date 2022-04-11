@@ -167,6 +167,114 @@
  
 }
 
+.review_form{
+    width: 100%;
+    margin: auto;
+    border: 1px solid var(--sub-grey-color);
+    padding: 20px ;
+    border-radius: 20px;
+    margin-top: 30px;
+ 
+}
+
+.review_title{
+    padding: 10px 20px 0px 20px;
+    text-align: center;
+
+}
+
+.review_score{
+    display: inline-block;
+    height: auto;
+    padding-top: 20px;
+}
+.review_score>div{
+    padding-top:10px;
+}
+
+.review_rate>label{
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.review_count{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.review_count>label{
+    padding-top: 10px;
+    font-size: 20px;
+}
+
+.review_total{
+    font-size: 20px;
+}
+
+.review_top{
+    text-align:center;
+    margin:auto;
+    border-radius: 20px;
+    background-color:var(--sub-color);
+    margin-top:20px;
+    padding: 20px 10px 20px 10px;
+}
+
+.user_vacation_review>label{
+    font-weight: bold;
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.max_rate{
+    color: var(--icon-color);
+}
+.review_select{
+    /* float:right; */
+    background-color: var(--sub-grey-color);
+    color: var(--text-sub-color);
+    padding: 5px 20px 5px 20px;
+    border: 1px solid var(--icon-color);
+    border-radius: 10px;
+    font-size: 16px;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.select_box{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.user_review{
+    margin-top:20px;
+    padding: 10px;
+    border-top: 1px solid var(--sub-grey-color);
+    
+}
+.review_star_box{
+    padding: 5px 40px 5px 10px;
+}
+
+.review_comment{
+    padding: 20px 10px 20px 10px;
+    display: inline-block;
+}
+
+.reviewer_id{
+    display: block;
+    padding: 3px 0px 0px 10px;
+}
+
+.reviewer_profile{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.reviewer_profile>.fas{
+    padding-top: 15px;
+}
+/* 
 .review_label{
     font-size: 20px;
     font-weight: bold;
@@ -175,14 +283,12 @@
 }
 .review_top{
     text-align:center;
-    /* width: 97%; */
     border: 1px solid var(--sub-grey-color);
     padding: 10% 1px;
     border-radius: 20px;
     background-color:var(--sub-color);
     border:none;
     margin-top:2%;
-        
 }
 .review_star>i{
     width: 100px;
@@ -237,10 +343,8 @@
 
 }
 .user_review{
-    /* border: 1px solid var(--main-color); */
     display: flex;
     list-style: none;
-    /* flex-direction: row; */
     padding-top: 10%;
     font-family: 'Poppins';
     font-style: normal;
@@ -264,7 +368,7 @@
     text-align: left;
     margin-left:2%;
     margin-top:2%;
-}
+} */
 
 /*
 .form-group{
@@ -301,5 +405,15 @@
     .regist_form{
         max-width: 900px;
 
+    }
+    .review_score, .user_vacation_review{
+        display: inline-block;
+        width: 48%;
+        padding: 0px;
+    }
+
+    .review_top{
+        display: flex;
+        flex-wrap: wrap;
     }
 } 

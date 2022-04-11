@@ -16,7 +16,29 @@ $(document).ready(function(){
         startDate = minDate;
         endDate = minDate;
     }
-    
+    $(function() {
+        var a = document.getElementsByName("price[]")[0].value;
+        var b = document.getElementsByName("price[]")[1].value;
+        var c = document.getElementsByName("price[]").length;
+        console.log(a)
+        console.log(b)
+        console.log(c) //2
+        
+        if(document.getElementsByName("price[]").length == 0) {
+            return 0;
+        }   else{
+            let min_price=document.getElementsByName("price[]")[0].value;   
+            for (var i=0; i<document.getElementsByName("price[]").length; i++){
+                if (document.getElementsByName("price[]")[i].value<min_price){
+                    min_price = document.getElementsByName("price[]")[i].value;
+                }
+            min_price= Number(min_price);   
+            }
+        min_price= min_price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById("fn_price").innerText = min_price;
+        }
+    });
+
     $(function() {
 
         $('input[name="daterange"]').daterangepicker({
@@ -38,6 +60,8 @@ $(document).ready(function(){
             endDate = end.format('YYYY-MM-DD');
         });
     });
+
+
 
     $('[name="date_choice"]').click(function(e) {
         $('.date_pick').css('display', 'none');

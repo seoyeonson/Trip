@@ -154,9 +154,15 @@
             
         </div>
         
-        <div class="review_form" name="hotel_detail_review">
-            <label class="review_label">리뷰관리</label>
-                <div class="review_top">
+        <div class="review_form" name="vacation_detail_review">
+            <label class="review_label index_title">리뷰관리</label>
+            <div class="review_top">
+                <div class="user_vacation_review">
+                    <label class="review_title">평점</label>
+                    <div class="review_rate">
+                        <label>{#여행지평점#}4.4</label>
+                        <label class="max_rate">/5.0</label>
+                    </div>
                     <div class="review_star">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -164,50 +170,62 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <span class="review_score">
-                        <ul>
-                            <li>평점:</li>       
-                            <li>4.2 / 5.0</li>
-                        </ul>
-                    </span>
-            
-                    <span class="review_cnt">
-                        <ul>
-                            <li>리뷰 개수:</li>       
-                            <li>120개</li>
-                        </ul>
-                    </span>          
                 </div>
-            <select class="review_select"> <!--지역 검색-->
-                <option value="view_three" >3개씩</option>
-                <option value="view_five" selected>5개씩</option>
-                <option value="view_ten">10개씩</option>
-                <option value="view_twenty" >20개씩</option>
-            </select>
+                <div class="review_score">
+                    <div>
+                        <label class="review_count">리뷰 개수</label>
+                    </div>
+                    <div><p></p></div>
+                    <div>
+                        <label class="review_total">{# 리뷰개수 #} 120개</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="select_box">
+                <select class="review_select">
+                    <!--지역 검색-->
+                    <option value="view_three">3개씩</option>
+                    <option value="view_five" selected>5개씩</option>
+                    <option value="view_ten">10개씩</option>
+                    <option value="view_twenty">20개씩</option>
+                </select>
+            </div>
+
             <div class="user_review">
-                <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:10%;'></i>
-                <li>asdqwe1</li> <!--아이디-->
-                <i class="fas fa-star" style="margin-left:10%;"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+                <div class="reviewer_profile">
+                    <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
+                    <div>
+                        <label class="reviewer_id">zmzmfnQLdQHd1{# 리뷰작성자 아이디 #}</label>
+                        <div class="review_star_box">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <span class="review_comment">리뷰{# 리뷰 상세내용 #}</span>
             </div>
-            <div class="user_review_content">
-                <li>와! 호텔! 와! 야경!</li>
-            </div>
+
             <div class="user_review">
-                <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:10%;'></i>
-                <li>zmzmfnQLdQHd1</li><!--아이디-->
-                <i class="fas fa-star" style="margin-left:10%;"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+                <div class="reviewer_profile">
+                    <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
+                    <div>
+                        <label class="reviewer_id">zmzmfnQLdQHd1{# 리뷰작성자 아이디 #}</label>
+                        <div class="review_star_box">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <span class="review_comment">리뷰{# 리뷰 상세내용 #}</span>
             </div>
-            <div class="user_review_content">
-                <li>와! 호텔! 와! 야경!</li>
-            </div>
+
         </div>
                 
     </div>

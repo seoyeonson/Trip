@@ -1039,7 +1039,7 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 def sample3(request):   # hotel_room 포맷입니다.
 
     room_type = "디럭스"
-    room_price = 100000
+    room_price = 90000
     room_people = 2
 
     hotel_id = Hotel.objects.get(pk=1)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.

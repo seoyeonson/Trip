@@ -39,10 +39,10 @@
                         <a href="{% url 'main' %}" class="home_icon">Trip</a>
                     </li>
                     <li class="home_menu">
-                        <a href="">호텔</a>
+                        <a href="{% url 'hotel_search' %}"">호텔</a>
                     </li>
                     <li class="home_menu">
-                            <a href="#">여행지</a>
+                            <a href="{% url 'vacation_search' %}">여행지</a>
                     </li>
                     {% if request.session.user %}
                     <li class="menu_right home_menu">
@@ -70,28 +70,28 @@
         {% endblock %}
         {% block contents %}
         {% endblock %}
-        {% block footer %}
-        <footer>
-            <nav class="bg-gray footer">
-                <ul class="container foot_link">
-                    <li class="left_footer" >ⓒ2022 K-Digital 과정</li>
-                    <li class="left_footer">· 개인정보 처리방침</li>
-                    <li class="left_footer"> 이용약관</li>
-                    <li class="left_footer">· 회사 세부정보</li>
-
-                    <li class="right_footer">Pr.FG</li>
-                    <li class="right_footer">S.B</li>
-                    <li class="right_footer">어무해</li>
-                    <li class="right_footer">P.V</li>
-                    <li class="right_footer">EcoGum</li>
-                    <li class="right_footer">SLHG</li>
-                    <li class="right_footer">· 관련사이트</li>
-                    <li style="clear:both; list-style:none;"></li>
-                </ul>
-            </nav>
-        </footer>
-        {% endblock %}
     </div>
+    {% block footer %}
+    <footer>
+        <nav class="bg-gray footer">
+            <ul class="container foot_link">
+                <li class="left_footer" >ⓒ2022 K-Digital 과정</li>
+                <li class="left_footer"><a href=#>· 개인정보 처리방침</a></li>
+                <li class="left_footer"><a href=#>· 이용약관</a></li>
+                <li class="left_footer"><a href=#>· 회사 세부정보</a></li>
+
+                <li class="right_footer"><a href=#>Pr.FG</a></li>
+                <li class="right_footer"><a href=#>S.B</a></li>
+                <li class="right_footer"><a href=#>어무해</a></li>
+                <li class="right_footer"><a href=#>P.V</a></li>
+                <li class="right_footer"><a href=#>EcoGum</a></li>
+                <li class="right_footer"><a href=#>SLHG</a></li>
+                <li class="right_footer">· 관련사이트</li>
+                <li style="clear:both; list-style:none;"></li>
+            </ul>
+        </nav>
+    </footer>
+    {% endblock %}
 </body>
 {% block extrafoot %}{% endblock %}
 </html>
