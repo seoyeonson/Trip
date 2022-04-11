@@ -8,6 +8,7 @@ from lxml import html
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode, quote_plus, unquote
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from SLHJ.models import User, Vacation, Vacation_reserve, Vacation_review, Vacation_image
 from SLHJ.models import Hotel, Hotel_room, Hotel_review, Hotel_reserve, Hotel_image
 from datetime import datetime
@@ -19,6 +20,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
 import time
+import json
 
 def main(request):
     vacation_imgs = []
@@ -98,12 +100,13 @@ def hotel_search(request):
         count={}
         # [TODO] hotel list => seach 조건 고려해서 가져오기 (날짜, 인원수, 지역) 
         hotel_places = Hotel.objects.all().values('SIGUN_NM').distinct()
-        SIGUN_NM = request.session.get('SIGUN_NM', '평택시')
+        SIGUN_NM = request.session.get('SIGUN_NM')
         start_date = request.session.get('start_date')
         end_date = request.session.get('end_date')
         hotel_reserve_people = request.session.get('hotel_reserve_people')
 
-        #SIGUN_NM= OO시인 hotel 테이블 가져옴 
+        # SIGUN_NM= OO시인 hotel 테이블 가져옴
+        # 그 호텔의 예약정보가 겹치지 않는 호텔
         all_hotel_lists = Hotel.objects.filter(SIGUN_NM = SIGUN_NM)
 
         hotel_room = Hotel_room.objects.all()
@@ -333,7 +336,7 @@ def hotel_detail(request, pk):
 
             # ##### hotel_review
             # hotel_id 가 pk인 hotel_review 를 가져옴
-            all_hotel_reviews = Hotel_review.objects.filter(hotel_id=pk)
+            all_hotel_reviews = Hotel_review.objects.filter(hotel_id=pk).order_by('-hotel_review_id')
 
             # ##### recommand_vacation
             # 같은 지역,vacation_rate 가 높은 순으로 4개 가져오기
@@ -428,7 +431,7 @@ def vacation_detail(request, pk):
         count = {}
         try:
             vacation = Vacation.objects.get(pk=pk)
-            all_vacation_reviews = Vacation_review.objects.filter(vacation_id=pk)
+            all_vacation_reviews = Vacation_review.objects.filter(vacation_id=pk).order_by('-vacation_review_id')
             recommand_hotels = Hotel.objects.filter(SIGUN_NM = vacation.SIGUN_NM).order_by('-hotel_rate')[:4]
             
             try:
@@ -1038,9 +1041,9 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 
 def sample3(request):   # hotel_room 포맷입니다.
 
-    room_type = "디럭스"
-    room_price = 100000
-    room_people = 2
+    room_type = "더블베드룸"
+    room_price = 200000
+    room_people = 3
 
     hotel_id = Hotel.objects.get(pk=1)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
@@ -1058,16 +1061,16 @@ def sample3(request):   # hotel_room 포맷입니다.
 
 def sample4(request):   # hotel_reserve 포맷입니다.
     
-    hotel_reserve_people = 2
-    hotel_reserve_username = '유재석'
+    hotel_reserve_people = 3
+    hotel_reserve_username = '김사과'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-05-05'
-    hotel_reserve_enddate = '2022-05-05'
+    hotel_reserve_startdate = '2022-05-10'
+    hotel_reserve_enddate = '2022-05-13'
 
     hotel_room = Hotel_room.objects.get(pk=5)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=3)
+    id = User.objects.get(pk=2)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(
@@ -1283,28 +1286,25 @@ def sample7(request):   # vacation_image 포맷입니다.  vacation_image 는 va
 #             vacation_rate = vacation_rate,
 #             vacation_admin_id = vacation_admin_id
 #         )
-
 #         vacation.save()
 
 #     return render(request, 'api2.html')
 
-# def option_change(request, pk):
-    # if request.method == "POST":
-        # check_in = request.POST.get('check_in', '')
-        # check_out = request.POST.get('check_out', '')
-        # hotel_reserve_people = request.POST.get('hotel_reserve_people', 0)
-        # print(check_in, check_out, hotel_reserve_people)
-        # print( hotel_reserve_people)
+def option_change(request, pk):
+    if request.method == "POST":
+        check_in = request.POST.get('check_in', '')
+        check_out = request.POST.get('check_out', '')
+        hotel_reserve_people = request.POST.get('hotel_reserve_people', 0)
 
-        # reserve = Hotel_reserve.objects.get(pk=pk)
-        # hotel_room = Hotel_room.objects.filter(hotel_id=pk).values('room_type','room_people', 'room_price').distinct()
+        reserve = Hotel_reserve.objects.get(pk=pk)
+        hotel_room = Hotel_room.objects.filter(hotel_id=pk)
 
         
-        # context = {
-            # 'check_in' : check_in,
-            # 'check_out' : check_out,
-            # 'hotel_reserve_people' : hotel_reserve_people,
-        # }
-        # return render(request, 'hotel_detail.html', context)
-        # return HttpResponse(json.dumps(context), content_type="application/json")
+        context = {
+            'check_in' : check_in,
+            'check_out' : check_out,
+            'hotel_reserve_people' : hotel_reserve_people,
+            'hotel_room' : hotel_room,
+        }
+        return HttpResponse(json.dumps(context), content_type="application/json")
         # context를 json 타입으로

@@ -199,6 +199,7 @@ $(document).ready(function() {
         } else {
             $('input[name='+fieldName+']').val(1);
         }
+        location.href='{% url "option_change" %}';
     });
 
     $('[data-quantity="minus"]').click(function(e) {
@@ -215,6 +216,7 @@ $(document).ready(function() {
         } else {
             $('input[name='+fieldName+']').val(1);
         }
+    });
 
         var startDate = $('input[name=start_date]').val();
         var endDate = $('input[name=end_date]').val();
@@ -277,7 +279,6 @@ $(document).ready(function() {
         //     console.log(xhr.status + ": " + xhr.responseText); 
         //     }
         // });
-    });
 });
 
 // 구글맵

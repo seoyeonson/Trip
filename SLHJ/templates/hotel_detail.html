@@ -70,7 +70,7 @@
                     <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="hotel_reserve_people" onclick="choice_people()"><i class="fas fa-user-alt"></i><span class="people">{{ request.session.hotel_reserve_people }}명</span></button>
                     <div class="d-flex justify-content-center hotel_detail_reserve_btn plus_minus_btn">
                         <div class="hotel_reserve_people">
-                          <button type="button" data-quantity="minus" data-field="hotel_reserve_people">
+                          <button type="button" data-quantity="minus" data-field="hotel_reserve_people" href="{% url 'option_change' hotel.hotel_id %}">
                             <i class="fa fa-minus" aria-hidden="true"></i>
                           </button>
                         </div>
