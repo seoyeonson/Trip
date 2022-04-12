@@ -8,29 +8,29 @@ $(document).ready(function(){
         document.getElementById("googleMap").style.display = 'block';
     }
 
-    $(function() {
-        var a = document.getElementsByName("price[]")[0].value;
-        var b = document.getElementsByName("price[]")[1].value;
-        var c = document.getElementsByName("price[]").length;
-        console.log(a)
-        console.log(b)
-        console.log(c) //2
+    // $(function() {
+    //     var a = document.getElementsByName("price[]")[0].value;
+    //     var b = document.getElementsByName("price[]")[1].value;
+    //     var c = document.getElementsByName("price[]").length;
+    //     console.log(a)
+    //     console.log(b)
+    //     console.log(c) //2
         
-        if(document.getElementsByName("price[]").length == 0) {
-            min_price=0;
-            min_price= Number(min_price); 
-        }   else{
-            let min_price=document.getElementsByName("price[]")[0].value;   
-            for (var i=0; i<document.getElementsByName("price[]").length; i++){
-                if (document.getElementsByName("price[]")[i].value<min_price){
-                    min_price = document.getElementsByName("price[]")[i].value;
-                }
-            min_price= Number(min_price);   
-            }
-        min_price= min_price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        document.getElementById("fn_price").innerText = min_price;
-        }
-    });
+    //     if(document.getElementsByName("price[]").length == 0) {
+    //         min_price=0;
+    //         min_price= Number(min_price); 
+    //     }   else{
+    //         let min_price=document.getElementsByName("price[]")[0].value;   
+    //         for (var i=0; i<document.getElementsByName("price[]").length; i++){
+    //             if (document.getElementsByName("price[]")[i].value<min_price){
+    //                 min_price = document.getElementsByName("price[]")[i].value;
+    //             }
+    //         min_price= Number(min_price);   
+    //         }
+    //     min_price= min_price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    //     document.getElementById("fn_price").innerText = min_price;
+    //     }
+    // });
 });
 // $(document).ready(function(){
 //     if ()

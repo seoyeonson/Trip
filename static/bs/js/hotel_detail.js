@@ -52,6 +52,16 @@ $(document).ready(function(){
         $('input[name=end_date]').attr('value', endDate);
         console.log("startDate", startDate, "endDate", endDate);
     });
+
+    $('button[type=submit]').click(function(){
+        var room_type = $('input[name=reserve_room]').val();
+        
+        if(room_type == ''){
+            alert('방을 선택해주세요.');
+            return false;
+        }
+        return true;
+    });
 })
 
 function choice_room() {

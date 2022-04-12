@@ -114,7 +114,7 @@
                     <!-- 여행지 상세선택창 -->
                     <!-- 지역 선택 -->
                     <ul class="vacation_location" id="vacation_location">
-                        {% for place in hotel_places %}
+                        {% for place in vacation_places %}
                         <li id="{{ place.SIGUN_NM }}" class="vacation_lo_select" onclick="vacation_lo_select(this)">{{ place.SIGUN_NM }}</li>
                         <input type="hidden" id="va_lo_text" name="SIGUN_NM" value="">
                         {% endfor %}
