@@ -1,7 +1,8 @@
 {% extends "base.html"%}
 {% load static %}
 {% block extrahead %}
-<script src="{% static 'bs/js/vacation_detail.js' %}"></script>
+<!-- <script src="{% static 'bs/js/vacation_detail.js' %}"></script> -->
+<script src="{% static 'bs/js/va_search.js' %}"></script>
 {% endblock %}
 
 {% block title %}{{ vacation.TURSM_INFO_NM }}{% endblock %} {# 호텔명 #}
@@ -51,15 +52,13 @@
                 <input type="hidden" name="vacation_name" value="{{ vacation.TURSM_INFO_NM }}">
                 {% csrf_token %}
                 <div>
-                    <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex" onclick="choice_date()">
-                        <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">{{ request.session.start_date }}</span></button>
-                        <button type="button" class="hotel_detail_reserve_checkout">{{ request.session.end_date }}</button>
-                        <input type="hidden" value="{{ request.session.start_date }}" name="start_date">
-                        <input type="hidden" value="{{ request.session.end_date }}" name="end_date">
+                    <div class="hotel_detail_reserve_btn hotel_detail_reserve_date" onclick="choice_date()">
+                        <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">{{ request.session.vacation_date }}</span></button>
+                        <input type="hidden" value="{{ request.session.vacation_date }}" name="vacation_date">
                     </div>
                     <div class="date_pick" id="date_pick">
                         <div class="d-flex justify-content-center">
-                            <div class="input-daterange reserve_date"><input type="text" name="daterange" id="datepicker" readonly /> 
+                            <div class="input-daterange reserve_date"><input type="text" name="va_daterange" id="datepicker" readonly /> 
                             <input type="button" value="적용" name="reserve_date_choice">
                             </div>
                         </div>
