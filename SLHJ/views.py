@@ -77,9 +77,12 @@ def main(request):
         if request.POST.get('vacation_type') == 'vacation_type':
             SIGUN_NM = request.POST.get('SIGUN_NM')
             vacation_reserve_people = request.POST.get('vacation_reserve_people')
+            vacation_date = request.POST.get('vacation_date')
+            
 
             request.session['SIGUN_NM'] = SIGUN_NM
             request.session['vacation_reserve_people'] = vacation_reserve_people
+            request.session['vacation_date'] = vacation_date
 
             return redirect('/vacation_search/')
 
@@ -221,6 +224,7 @@ def vacation_search(request):
     #SIGUN_NM= OO시인 vacation 테이블 가져옴 
     SIGUN_NM = request.session.get('SIGUN_NM', '평택시')
     vacation_reserve_people = request.session.get('vacation_reserve_people')
+    vacation_date = request.session.get('vacation_date')
     all_vacation_lists = Vacation.objects.filter(SIGUN_NM = SIGUN_NM)
 
 
@@ -264,6 +268,7 @@ def vacation_search(request):
         'start_page': start_page,
         'end_page': end_page,
         'SIGUN_NM': SIGUN_NM,
+        'vacation_date': vacation_date,
         'vacation_reserve_people': vacation_reserve_people,
         'last_page' : last_page,
         'page_range': range(start_page, end_page + 1),

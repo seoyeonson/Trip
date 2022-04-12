@@ -81,9 +81,20 @@ hr{
     display: none;
 }
 
+#datepicker{
+    text-align: center;
+}
+
 .date_pick{
     display: none;
     width: 100%;
+    margin-top: 10px;
+}
+
+.vacation_date_pick{
+    display: none;
+    width: 100%;
+    margin-top: 10px;
 }
 
 /* nav */
@@ -227,8 +238,7 @@ footer{
 
 .hotel_search>ul>li {
     display: inline-block;
-    width: 100px;
-    height: 40px;
+    padding: 0 20px;
     background-color: #F1F1F1;
     line-height: 40px;
     border-radius: 6px;
@@ -271,10 +281,21 @@ footer{
     width: 80%;
 }
 
+.reserve_people{
+    width: 530px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    background-color: var(--sub-grey-color);
+    position: relative;
+    z-index: 3;
+}
+
 .vacation_search {
     margin-top: 10px;
-    width: 400px;
-    height: 80px;
+    width: 530px;
+    /* height: 80px; */
     margin-left: auto;
     margin-right: auto;
     background-color: #FFFFFF;
@@ -292,12 +313,46 @@ footer{
 
 .vacation_search>ul>li {
     display: inline-block;
+    padding: 0px 20px;
+    background-color: #F1F1F1;
+    line-height: 40px;
+    border-radius: 6px;
+}
+
+.vacation_search>ul>ul {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+    display: inline-block;
+    background-color: #F1F1F1;
+    width: 230px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 6px;
+}
+
+.vacation_search>ul>ul>a>li {
+    display: inline-block;
+}
+
+
+/* .vacation_search>ul {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+    
+}
+
+.vacation_search>ul>li {
+    display: inline-block;
     width: 100px;
     height: 40px;
     background-color: #F1F1F1;
     line-height: 35px;
     border-radius: 6px;
-}
+} */
 
 .fa-map-marker-alt {
     margin-right:15px;
@@ -798,11 +853,6 @@ footer{
 
 /* end: reserve */
 /* 예약파트 css 분리하였습니다 */
-
-/* date_pick */
-.date_pick {
-    margin-top: 10px;
-}
 
 .reserve_date input {
     padding: 15px 15px;
