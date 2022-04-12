@@ -341,10 +341,10 @@ def vacation_reserve(request):
         vacation_reserve_price = vacation.vacation_price 
         vacation_reserve_people = int(vacation_reserve_people)
         place_name = vacation.TURSM_INFO_NM
-        id = User.objects.get(id=request.session.get('user','')) # session에 저장된 user의 정보를 불러옵니다.
-        if id == "":
+        id = id=request.session.get('user','') # session에 저장된 user의 정보를 불러옵니다.
+        if id == "": # session에 저장된 user 정보가 없을경우 로그인페이지로 redirect됩니다.
             return redirect('/login/')
-
+        
         if request.method=="GET":
             
             context = {
@@ -363,7 +363,7 @@ def vacation_reserve(request):
                 vacation_reserve_username = request.POST['reserve_name'],
                 vacation_reserve_phonenum = request.POST['phone_num'],
                 vacation_reserve_price = vacation_reserve_price * int(request.POST['peopleNum']),
-                id = id,
+                id = User.objects.get(id=id),
                 vacation_id_id = vacation_id
             )
             vacation_reserve.save()

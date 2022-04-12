@@ -96,6 +96,11 @@ $(document).ready(function() {
     var idPat = /[a-zA-Z0-9_-]{5,20}/;
     var pwPat = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
 
+    // 하이픈 없이 입력받은 전화번호를 자동으로 하이픈 입력한 값으로 변경합니다.
+    $('[name="phonenum"]').change(function(){
+        var phone_new = $('[name="phonenum"]').val().replace(/[^0-9]/g, "").replace(/([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/, "$1-$2-$3");
+        $('input[name="phonenum"]').val(phone_new);
+    });
     // $("#submit_day").click(function() {
     //     $("#chk_in").html(start_day);
     //     $("#chk_out").html(end_day);
@@ -378,6 +383,9 @@ $(document).ready(function() {
         $('input[name=vacation_date]').attr('value', startDate);
 
     });
+
+    $('.fa-bars').click(side_nav)
+    $('.nav_close').click(side_nav)
 });
 
 // 구글맵
@@ -412,3 +420,9 @@ function hotel_room_select(text){
     $('input[name=reserve_room]').attr('value', value);
     $('input[name=hotel_room_pk]').attr('value', value_room_pk);
 }
+
+// 마이페이지 side_nav
+
+function side_nav(){
+        $('.side_nav').toggleClass("responsive_nav");
+};
