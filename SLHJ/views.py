@@ -27,7 +27,7 @@ def main(request):
     hotel_imgs = []
 
     if request.method == 'GET':
-        request.session.flush()
+        # request.session.flush()
         
         hotel_places = Hotel.objects.all().values('SIGUN_NM').distinct()
         recommand_vacations = Vacation.objects.all().order_by('-vacation_rate')[:4]
@@ -50,8 +50,7 @@ def main(request):
             # 추천 여행지 이미지가 없을 경우
             else:
                 vacation_imgs.append("")
-
-
+                
         context = {
             'hotel_places' : hotel_places,
             'hotel_imgs': hotel_imgs,
@@ -116,12 +115,6 @@ def hotel_search(request):
         all_hotel_lists = Hotel.objects.filter(SIGUN_NM = SIGUN_NM)
 
         hotel_room = Hotel_room.objects.all()
-
-        # 리뷰별 평점점수 (1~5점) count
-        for i in range(5):
-            # (크거나 작은 값) orm 사용
-            # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
-            count.update({i+1 : all_hotel_lists.filter(hotel_rate__gt=i).filter(hotel_rate__lte=i+1).count()})
         
         # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
         write_pages = int(request.session.get('write_pages', 5))
@@ -163,7 +156,6 @@ def hotel_search(request):
             'end_page': end_page,
             'last_page' : last_page,
             'page_range': range(start_page, end_page + 1),
-            'count' : count,
             'zero' : zero,
             'hotel_rooms' : hotel_room, # Hotel_room table
                 }
@@ -236,54 +228,61 @@ def user_create(request):
     return render(request, 'user_create.html')
 
 def hotel_reserve(request):
-    # 세션에 저장된 예약 정보들 (hotel_detail 에서 선택한 옵션들) 받아옵니다. *추후 기본값 수정 필요*
-    hotel_name = request.session.get('hotel_name', Hotel.objects.get(hotel_id=1).BIZPLC_NM)
-    hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
-    hotel_reserve_startdate = request.session.get('start_date', '2022-04-01')
-    hotel_reserve_enddate = request.session.get('end_date', '2022-04-02')
-    start_date = datetime.datetime.strptime(hotel_reserve_startdate, '%Y-%m-%d').date()
-    end_date = datetime.datetime.strptime(hotel_reserve_enddate, '%Y-%m-%d').date()
-    reserve_room = request.session.get('reserve_room')
+    try:    
+        id = id=request.session.get('user','') # session에 저장된 user의 정보를 불러옵니다.
+        if id == "": # session에 저장된 user 정보가 없을경우 로그인페이지로 redirect됩니다.
+            return redirect('/login/')
+    except:
+        # 세션에 저장된 예약 정보들 (hotel_detail 에서 선택한 옵션들) 받아옵니다. *추후 기본값 수정 필요*
+        hotel_name = request.session.get('hotel_name', Hotel.objects.get(hotel_id=1).BIZPLC_NM)
+        hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
+        hotel_reserve_startdate = request.session.get('start_date', '2022-04-01')
+        hotel_reserve_enddate = request.session.get('end_date', '2022-04-02')
+        start_date = datetime.datetime.strptime(hotel_reserve_startdate, '%Y-%m-%d').date()
+        end_date = datetime.datetime.strptime(hotel_reserve_enddate, '%Y-%m-%d').date()
+        reserve_room = request.session.get('reserve_room')
 
+        if  (hotel_reserve_people=="") or (hotel_reserve_startdate==""):
+            return redirect('/main/') # session에 예약정보가 담겨있지 않은 경우 main으로 redirect됩니다.
 
-    hotel_room_pk = request.session.get('hotel_room_pk', 1) #detail에서, 선택한 객실의 pk. 
-    hotel_room = Hotel_room.objects.get(pk=hotel_room_pk)       # 방의 번호 hotel_room_id 를 사용합니다.
-    night = (end_date - start_date).days
-    hotel_reserve_price = hotel_room.room_price * night  # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
-    if request.method=="GET":
-        context = {
-            'hotel_name': hotel_name,
-            'reserve_people': hotel_reserve_people,
-            'reserve_startdate':  hotel_reserve_startdate,
-            'reserve_enddate': hotel_reserve_enddate,
-            'reserve_room' : reserve_room,
-            'night': night,
-            'room_type': hotel_room.room_type,
-            'hotel_price': '{0:,}'.format(hotel_reserve_price),
-        }
-        return render(request, 'hotel_reserve.html', context)
-    elif request.method=="POST": # 예약정보 테이블에 저장
+        hotel_room_pk = request.session.get('hotel_room_pk', 1) #detail에서, 선택한 객실의 pk. 
+        hotel_room = Hotel_room.objects.get(pk=hotel_room_pk)       # 방의 번호 hotel_room_id 를 사용합니다.
+        night = (end_date - start_date).days
+        hotel_reserve_price = hotel_room.room_price * night  # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
+        if request.method=="GET":
+            context = {
+                'hotel_name': hotel_name,
+                'reserve_people': hotel_reserve_people,
+                'reserve_startdate':  hotel_reserve_startdate,
+                'reserve_enddate': hotel_reserve_enddate,
+                'reserve_room' : reserve_room,
+                'night': night,
+                'room_type': hotel_room.room_type,
+                'hotel_price': '{0:,}'.format(hotel_reserve_price),
+            }
+            return render(request, 'hotel_reserve.html', context)
+        elif request.method=="POST": # 예약정보 테이블에 저장
 
-        hotel_reserve_username = request.POST["reserve_name"]
-        hotel_reserve_phonenum = request.POST["phone_num"]
+            hotel_reserve_username = request.POST["reserve_name"]
+            hotel_reserve_phonenum = request.POST["phone_num"]
 
-        id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
-        room_id = hotel_room
+            id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
+            room_id = hotel_room
 
-        hotel_reserve = Hotel_reserve(
-            hotel_reserve_people = hotel_reserve_people,
-            hotel_reserve_username = hotel_reserve_username,
-            hotel_reserve_phonenum = hotel_reserve_phonenum,
-            hotel_reserve_startdate = hotel_reserve_startdate,
-            hotel_reserve_enddate = hotel_reserve_enddate,
-            hotel_reserve_price = hotel_reserve_price,
-            id = id,
-            room_id = room_id,       
-        )
+            hotel_reserve = Hotel_reserve(
+                hotel_reserve_people = hotel_reserve_people,
+                hotel_reserve_username = hotel_reserve_username,
+                hotel_reserve_phonenum = hotel_reserve_phonenum,
+                hotel_reserve_startdate = hotel_reserve_startdate,
+                hotel_reserve_enddate = hotel_reserve_enddate,
+                hotel_reserve_price = hotel_reserve_price,
+                id = id,
+                room_id = room_id,       
+            )
 
-        hotel_reserve.save()
+            hotel_reserve.save()
 
-        return redirect(f'/hotel_confirm/?reserve={hotel_reserve.hotel_reserve_id}')
+            return redirect(f'/hotel_confirm/?reserve={hotel_reserve.hotel_reserve_id}')
 
 def vacation_reserve(request):
     
@@ -961,7 +960,7 @@ def hotel_register(request):
         BIZPLC_NM = request.POST.get('hotel_name')
         SIGUN_NM = request.POST.get('hotel_area')
         BSN_STATE_NM = 1
-        REFINE_ROADNM_ADDR = request.POST.get('hotel_adress')
+        REFINE_ROADNM_ADDR = request.POST.get('hotel_addr', '')
         REFINE_WGS84_LAT = 0.0
         REFINE_WGS84_LOGT = 0.0
         hotel_rate = 0.0
@@ -1071,12 +1070,20 @@ def vacation_register(request):
     }
     return render(request, 'vacation_register.html', context)
 
-def admin_hotel_detail(request):
+def admin_hotel_detail(request, hk):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
+    hotel = Hotel.objects.get(pk = hk)
+    hotel_review = Hotel_review.objects.filter(hotel_id = hk) 
+    hotel_room = Hotel_room.objects.filter(hotel_id = hk)
+    all_review = hotel_review.count()
 
     context = {
         'user' : user,
+        'hotel' : hotel,
+        'hotel_reviews' : hotel_review,
+        'hotel_rooms' : hotel_room,
+        'all_review' : all_review,
     }
     return render(request, 'admin_hotel_detail.html', context)
 
