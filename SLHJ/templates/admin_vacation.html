@@ -40,7 +40,7 @@
                 <td class="reserve hotel_reserve">
                     <img style="background-image: url('/media/{{ vacation.vacation_image.vacation_image_file_path }}');">
                     <div class="info_container">
-                        <a type="button" class="detail_btn" href="{% url 'admin_vacation_detail' %}">세부정보</a>
+                        <a type="button" class="detail_btn" href="{% url 'admin_vacation_detail' vacation.vacation_id %}">세부정보</a>
                         <label class="reserve_name">{{ vacation.TURSM_INFO_NM }}</label>
                         <label class="reserve_adress">{{ vacation.SM_RE_ADDR }}</label>
                         <label class="review_count">{{ vacation.vacation_rate}}

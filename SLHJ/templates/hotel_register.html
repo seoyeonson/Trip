@@ -30,7 +30,7 @@
 <div class="con2">
     <div class="contents">
         <h5 id="title">마이페이지 > 숙소등록</h5>
-        <form class="regist_form" name="hotel_regist_form" method="POST">
+        <form action="{% url 'hotel_register' %}" class="regist_form" name="hotel_regist_form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input id="register_btn" type="submit" value="정보등록">
             <input id="cancel_btn" type="button" value="등록취소">
@@ -67,28 +67,24 @@
 
             <label class="index_title">대표사진 등록</label>
             <div class="form-group">
-                <form action="{% url 'hotel_register' %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input class="form-control" id="file_title" type="text" name="fileTitle" placeholder="Enter a title">
-                    <input class="file_select_btn" type="file" name="uploadedFile">
-                    <input class="file_upload_btn" type="submit" value="Upload">
-                </form>
+                <input class="form-control" id="file_title" type="text" name="fileTitle" placeholder="Enter a title">
+                <input class="file_select_btn" type="file" name="uploadedFile">
             </div>
-        </form>
 
-        <form class="regist_form" name="hotel_room_register">
             <label class="index_title">객실정보 등록</label>
             <table class="table mt-4">
                 <thead>
                     <tr>
                         <th>객실 타입</th>
                         <th>객실 가격</th>
+                        <th>객실 인원</th>
                     </tr>
                 </thead>
                 <tbody id="room_table">
                     <tr>
-                        <td><input type="text" name="room_type" placeholder="객실타입 입력"></td>
-                        <td><input type="number" name="room_price" placeholder="객실가격 입력"></td>
+                        <td><input type="text" name="room_type[]" placeholder="객실타입 입력"></td>
+                        <td><input type="number" name="room_price[]" placeholder="객실가격 입력"></td>
+                        <td><input type="number" name="room_people[]" placeholder="객실인원 입력"></td>
                     </tr>
                 </tbody>
             </table>

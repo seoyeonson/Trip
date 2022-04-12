@@ -62,32 +62,34 @@
             <div class="vacation_info_content">
                 <div class="info">
                     <ul>
-                        <li>0023</li>
+                        <li>{{ vacation.vacation_id }}</li>
                     </ul>
                 </div>
                 <div class="info">
                     <ul>
-                        <li>ABC호텔</li>
+                        <li>{{ vacation.TURSM_INFO_NM }}</li>
                     </ul>
                 </div>
                 <div class="info">
                     <ul>
-                        <li>주소</li>
+                        <li>{{ vacation.SM_RE_ADDR }}</li>
                     </ul>
                 </div>
                 <div class="info">
                     <ul>
-                        <li>032-2222-2222</li>
+                        <li>{{ vacation.TELNO }}</li>
                     </ul>
                 </div>
             </div>
             <div class="vacation_info_summary">
                 <label class="info_title">요약설명</label>
-                <span>한국민속촌입니다</span>
+                <span>{{ vacation.vacation_comment }}</span>
             </div>
 
             <label class="vacation_img_label">대표 사진</label>
-            <div class="vacation_img"></div>
+            <div>
+                <img style="background-image: url('/media/{{ vacation.vacation_image.vacation_image_file_path }}'); width: 350px; height: 230px;">
+            </div>
         </div>
 
         <div class="review_form" name="vacation_detail_review">
@@ -96,7 +98,7 @@
                 <div class="user_vacation_review">
                     <label class="review_title">평점</label>
                     <div class="review_rate">
-                        <label>{#여행지평점#}4.4</label>
+                        <label>{{ vacation.vacation_rate }}</label>
                         <label class="max_rate">/5.0</label>
                     </div>
                     <div class="review_star">
@@ -113,7 +115,7 @@
                     </div>
                     <div><p></p></div>
                     <div>
-                        <label class="review_total">{# 리뷰개수 #} 120개</label>
+                        <label class="review_total">{{ all_review }}개</label>
                     </div>
                 </div>
             </div>
@@ -128,40 +130,26 @@
                 </select>
             </div>
 
+            {% for vacation_review in vacation_reviews %}
             <div class="user_review">
                 <div class="reviewer_profile">
                     <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
                     <div>
-                        <label class="reviewer_id">zmzmfnQLdQHd1{# 리뷰작성자 아이디 #}</label>
+                        <label class="reviewer_id">{{ vacation_review.id }}</label>
                         <div class="review_star_box">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
+                            <label>{{ vacation_review.vacation_review_rate }}</label><br>
+                            <label>{{ vacation_review.vacation_review_date }}</label>
                         </div>
                     </div>
                 </div>
-                <span class="review_comment">리뷰{# 리뷰 상세내용 #}</span>
+                <span class="review_comment">{{ vacation_review.vacation_review_content }}</span>
             </div>
-
-            <div class="user_review">
-                <div class="reviewer_profile">
-                    <i class='fas fa-user-circle' style='font-size:30px;color:#CECECE;margin-left:1%;'></i>
-                    <div>
-                        <label class="reviewer_id">zmzmfnQLdQHd1{# 리뷰작성자 아이디 #}</label>
-                        <div class="review_star_box">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <span class="review_comment">리뷰{# 리뷰 상세내용 #}</span>
-            </div>
-
+            {% endfor %}
         </div>
     </div>
     {% endblock %}

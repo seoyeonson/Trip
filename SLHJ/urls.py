@@ -43,8 +43,8 @@ urlpatterns = [
     path('hotel_register/', views.hotel_register, name="hotel_register"),
     path('vacation_register/', views.vacation_register, name="vacation_register"),
     
-    path('admin_hotel_detail/<int:hk>', views.admin_hotel_detail, name="admin_hotel_detail"),
-    path('admin_vacation_detail/', views.admin_vacation_detail, name="admin_vacation_detail"),
+    path('admin_hotel_detail/<int:hk>/', views.admin_hotel_detail, name="admin_hotel_detail"),
+    path('admin_vacation_detail/<int:hk>/', views.admin_vacation_detail, name="admin_vacation_detail"),
     path('hotel_update/', views.hotel_update, name="hotel_update"),
     path('vacaion_update/', views.vacation_update, name="vacation_update"),
 

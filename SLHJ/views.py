@@ -1,5 +1,6 @@
 from distutils.log import error
 from pickle import TRUE
+from re import M
 from ssl import AlertDescription
 from django.http import Http404
 # from jinja2 import Undefined
@@ -1030,6 +1031,36 @@ def hotel_register(request):
         )
 
         hotel.save()
+
+        hotel_id = Hotel.objects.get(pk = hotel.hotel_id)
+        hotel_image_title = request.POST['fileTitle']
+        hotel_image_file_path = request.FILES["uploadedFile"]
+        document = Hotel_image(
+            hotel_id = hotel_id,
+            hotel_image_title = hotel_image_title,
+            hotel_image_file_path = hotel_image_file_path,
+            hotel_image_originname = "",
+        )
+        document.save()
+
+        room_type = request.POST.getlist('room_type[]')
+        room_price = request.POST.getlist('room_price[]')
+        room_people = request.POST.getlist('room_people[]')
+        all_room = len(room_type)
+        if room_type[-1] == "":
+            all_room -= 1
+
+        for i in range(all_room):
+            hotel_room = Hotel_room(
+                room_type = room_type[i],
+                room_price = room_price[i],
+                room_people = room_people[i],
+
+                hotel_id = hotel_id
+            )
+            
+            hotel_room.save()
+
         return redirect('/admin_hotel/')
 
     context = {
@@ -1040,6 +1071,48 @@ def hotel_register(request):
 def vacation_register(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        SIGUN_NM = request.POST.get('SIGUN_NM')
+        TURSM_INFO_NM = request.POST.get('vacation_name')
+        SM_RE_ADDR =  request.POST.get('vacation_adress')
+        TELNO =  request.POST.get('phoneNum')
+        REFINE_WGS84_LAT = 0.0
+        REFINE_WGS84_LOGT = 0.0
+        vacation_comment = request.POST.get('context')
+        vacation_price = request.POST.get('vacation_price')
+        vacation_rate = 0.0
+        vacation_admin_id = user
+        if vacation_comment == '':
+            vacation_comment = '설명이 없습니다.'
+
+        vacation = Vacation(
+            SIGUN_NM = SIGUN_NM,
+            TURSM_INFO_NM = TURSM_INFO_NM,
+            SM_RE_ADDR = SM_RE_ADDR,
+            TELNO = TELNO,
+            REFINE_WGS84_LAT = REFINE_WGS84_LAT,
+            REFINE_WGS84_LOGT = REFINE_WGS84_LOGT,
+            vacation_comment = vacation_comment,
+            vacation_price = vacation_price,
+            vacation_rate = vacation_rate,
+            vacation_admin_id = vacation_admin_id,
+        )
+
+        vacation.save()
+
+        vacation_id = Vacation.objects.get(pk = vacation.vacation_id)
+        vacation_image_title = request.POST['fileTitle']
+        vacation_image_file_path = request.FILES["uploadedFile"]
+        document = Vacation_image(
+            vacation_id = vacation_id,
+            vacation_image_title = vacation_image_title,
+            vacation_image_file_path = vacation_image_file_path,
+            vacation_image_originname = "",
+        )
+        document.save()
+
+        return redirect('/admin_vacation/')
 
     context = {
         'user' : user,
@@ -1063,12 +1136,18 @@ def admin_hotel_detail(request, hk):
     }
     return render(request, 'admin_hotel_detail.html', context)
 
-def admin_vacation_detail(request):
+def admin_vacation_detail(request, hk):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
+    vacation = Vacation.objects.get(pk = hk)
+    vacation_review = Vacation_review.objects.filter(vacation_id = hk)
+    all_review = vacation_review.count()
 
     context = {
         'user' : user,
+        'vacation' : vacation,
+        'vacation_reviews' : vacation_review,
+        'all_review' : all_review,
     }
 
     return render(request, 'admin_vacation_detail.html',context )
