@@ -25,7 +25,8 @@ $(document).ready(function(){
         console.log(c) //2
         
         if(document.getElementsByName("price[]").length == 0) {
-            return 0;
+            min_price=0;
+            min_price= Number(min_price); 
         }   else{
             let min_price=document.getElementsByName("price[]")[0].value;   
             for (var i=0; i<document.getElementsByName("price[]").length; i++){

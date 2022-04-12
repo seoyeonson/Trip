@@ -24,6 +24,12 @@
                         </a>  
                     </li>
                     <li>
+                        <a onclick="vacation_get_date()" class="vacation_get_date" id="vacation_get_date">
+                            <i class="fas fa-calendar-alt"></i><span id="vacation_date">{{ vacation_date }}</span>
+                            <input type="hidden" value="{{ vacation_date }}" name="vacation_date">
+                        </a>
+                    </li>
+                    <li>
                         <a onclick="vacation_choice_people()" class="location" id="location">
                             <i class="fas fa-user-alt"></i><span class="va_people">{{ vacation_reserve_people }}명</span></a>
                     </li>
@@ -38,6 +44,14 @@
                 <input type="hidden" id="va_lo_text" name="SIGUN_NM" value="">
                 {% endfor %}
             </ul>
+            <!-- 체크인/체크아웃 선택 -->
+            <div class="vacation_date_pick" id="vacation_date_pick">
+                <div>
+                    <div class="input-daterange reserve_date"><input type="text" name="va_daterange" id="datepicker" readonly /> 
+                    <input type="button" value="적용" name="va_date_choice">
+                    </div>
+                </div>
+            </div>
             <!-- 인원선택 -->
             <div class="reserve_people d-flex">
                 <div class="vacation_reserve_people">

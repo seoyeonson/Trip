@@ -1,7 +1,7 @@
 {% extends "base.html"%}
 {% load static %}
 {% block extrahead %}
-<script src="{% static 'bs/js/detail.js' %}"></script>
+<script src="{% static 'bs/js/hotel_detail.js' %}"></script>
 {% endblock %}
 
 {% block title %}{{ hotel.BIZPLC_NM }}{% endblock %} {# 호텔명 #}
@@ -51,6 +51,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="hotel_name" value="{{ hotel.BIZPLC_NM }}">
+                <input type="hidden" name="hotel_pk" value="{{ hotel.hotel_id }}">
                 <div>
                     <div class="hotel_detail_reserve_btn hotel_detail_reserve_date d-flex" onclick="choice_date()">
                         <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">{{ request.session.start_date }}</span></button>
@@ -86,10 +87,10 @@
                     <button type="button" class="hotel_detail_reserve_btn" onclick="choice_room()"><i class="fas fa-door-closed"></i><span class="room">객실선택</span></button>
                     <input type="hidden" name="reserve_room" id="reserve_room" value="">
                     <input type="hidden" name="hotel_room_pk" id="hotel_room_pk" value="">
-                    <div class="hotel_detail_reserve_btn">
+                    <div class="hotel_detail_reserve_btn hotel_room_type">
                         {% for room in hotel_room %}
                             {% if room.room_people >= request.session.hotel_reserve_people|add:"0" %}
-                            <a onclick="hotel_room_select(this)" class="select" data-value="{{ room.room_type }}"><li id="{{ room.room_type }}" class="hotel_room_select" value="{{ room.room_id }}">{{ room.room_type }}</li></a>
+                                <a onclick="hotel_room_select(this)" class="select" data-value="{{ room.room_type }}"><li id="{{ room.room_type }}" class="hotel_room_select" value="{{ room.room_id }}">{{ room.room_type }}</li></a>
                             {% endif %}
                         {% endfor %}
                     </div>
@@ -254,6 +255,7 @@
 {% endblock %}
 {% block extrafoot %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkSbB_IhB_i3-8caf6gKcuDHLJT27d0k&callback=myMap"></script>
-<script>
+<script type="text/javascript">
+    var test = "{{hotel|safe}}";
 </script>
 {% endblock %}

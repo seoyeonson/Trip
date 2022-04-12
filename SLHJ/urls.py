@@ -43,7 +43,7 @@ urlpatterns = [
     path('hotel_register/', views.hotel_register, name="hotel_register"),
     path('vacation_register/', views.vacation_register, name="vacation_register"),
     
-    path('admin_hotel_detail/', views.admin_hotel_detail, name="admin_hotel_detail"),
+    path('admin_hotel_detail/<int:hk>', views.admin_hotel_detail, name="admin_hotel_detail"),
     path('admin_vacation_detail/', views.admin_vacation_detail, name="admin_vacation_detail"),
     path('hotel_update/', views.hotel_update, name="hotel_update"),
     path('vacaion_update/', views.vacation_update, name="vacation_update"),
@@ -63,7 +63,7 @@ urlpatterns = [
     path('sample7/', views.sample7, name='sample7'),    # vacation_imgage 포맷입니다.
 
     # ajax 용
-    path('option_change/<int:pk>/', views.option_change, name='option_change')
+    path(r'option_change/<int:pk>/', views.option_change, name='option_change')
 ]
 
 # hotel_image, vacation_image 경로

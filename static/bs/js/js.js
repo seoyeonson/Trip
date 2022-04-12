@@ -5,7 +5,9 @@ function search_hotel() {
     document.getElementById("hotel_search").style.display ='block';
     document.getElementById("vacation_search").style.display ='none';
     document.getElementById("vacation_location").style.display = 'none';
-    $('.vacation_reserve_people').css('display', 'none');
+    document.getElementById("vacation_date_pick").style.display = 'none';
+    $('.vacation_reserve_people').attr('style', 'display : none !important');
+    $('.reserve_people').attr('style', 'display : block;');
 }
 
 // main 여행지 검색
@@ -14,6 +16,7 @@ function search_vacation() {
     document.getElementById("vacation_search").style.display ='block';
     document.getElementById("hotel_location").style.display = 'none';
     document.getElementById("date_pick").style.display = 'none';
+    $('.reserve_people').attr('style', 'display : none !important');
     $('.hotel_reserve_people').css('display', 'none');
 }
 
@@ -23,6 +26,22 @@ function search_location() {
     $('.hotel_reserve_people').css('display', 'none');
 }
 
+// 호텔 검색창
+// 1. 시군명
+function hotel_lo_select(text){
+    $('.hotel_location').css('display', 'none');
+    value = $(text).text();
+    $('#lo_text').html(value);
+    $('input[name=SIGUN_NM]').attr('value', value);
+}
+// 2. 체크인, 체크아웃 날짜
+function get_date() {
+    document.getElementById("date_pick").style.display ='block';
+    document.getElementById("hotel_location").style.display ='none';
+    $('.hotel_reserve_people').css('display', 'none');
+}
+
+// 3. 예약 인원
 function choice_people() {
     $('#hotel_location').css('display', 'none');
     $('#date_pick').css('display', 'none');
@@ -30,12 +49,7 @@ function choice_people() {
     $('.hotel_room_select').css('display', 'none');
 }
 
-function hotel_lo_select(text){
-    $('.hotel_location').css('display', 'none');
-    value = $(text).text();
-    $('#lo_text').html(value);
-    $('input[name=SIGUN_NM]').attr('value', value);
-}
+
 
 function choice_date(){
     $('.date_pick').css('display', 'block');
@@ -43,13 +57,11 @@ function choice_date(){
     $('.hotel_room_select').css('display', 'none');
 }
 
-function vacation_choice_people(){
-    $('.vacation_location').css('display', 'none');
-    $('.vacation_reserve_people').css('display', 'block');
-}
-
+// 여행지 검색창
+// 1. 시군명
 function search_va_location() {
     $('.vacation_reserve_people').css('display', 'none');
+    document.getElementById("vacation_date_pick").style.display ='none';
     document.getElementById("vacation_location").style.display ='block';
 }
 
@@ -60,11 +72,22 @@ function vacation_lo_select(text) {
     $('input[id=va_lo_text]').attr('value', value);
 }
 
-function get_date() {
-    document.getElementById("date_pick").style.display ='block';
-    document.getElementById("hotel_location").style.display ='none';
-    $('.hotel_reserve_people').css('display', 'none');
+// 2. 예약 날짜
+function vacation_get_date() {
+    document.getElementById("vacation_date_pick").style.display ='block';
+    document.getElementById("vacation_location").style.display ='none';
+    $('.vacation_reserve_people').css('display', 'none');
 }
+
+// 3.예약 인원
+function vacation_choice_people(){
+    document.getElementById("vacation_date_pick").style.display ='none';
+    $('.vacation_location').css('display', 'none');
+    $('.vacation_reserve_people').css('display', 'block');
+    $('.va_reserve_people').attr('style', 'display : block;');
+}
+
+
 
 $(document).ready(function() {
     // 회원가입 pattern
@@ -199,7 +222,35 @@ $(document).ready(function() {
         } else {
             $('input[name='+fieldName+']').val(1);
         }
-        location.href='{% url "option_change" %}';
+
+        var pk = $('input[name=hotel_pk]').val();
+        var hotel_reserve_people = $('input[name=hotel_reserve_people]').val();
+        var start_date = $('input[name=start_date]').val();
+        var end_date = $('input[name=end_date]').val();
+        var html ="";
+
+        $.ajax({ // <새로고침> 없이 ajax로 서버와 통신하겠다.
+        type: "POST", // 데이터를 전송하는 방법을 지정
+        url: "/option_change/"+ pk +"/", // 통신할 url을 지정
+        data: {'pk': '{{ hotel.hotel_id }}', 'hotel_reserve_people': hotel_reserve_people, 'start_date' : start_date, 'end_date': end_date, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, // 서버로 데이터 전송시 옵션
+        dataType: "json", 
+            success:function(json){
+                console.log("성공");
+                for (var i=0;i<json['hotel_room'].length;i++){
+                    // console.log("들어옴");
+                    // console.log(json['hotel_room']);
+                    // console.log(json['hotel_reserve_people']);
+                    // console.log(json['hotel_room'][i]['room_people']);
+                    if(json['hotel_reserve_people'] <= json['hotel_room'][i]['room_people']){
+                        html += '<a onclick="hotel_room_select(this)" class="select" data-value="'+ json['hotel_room'][i]['room_type'] + '"><li id="'+ json['hotel_room'][i]['room_type'] + '" class="hotel_room_select" value="'+ json['hotel_room'][i]['room_id'] + '">'+ json['hotel_room'][i]['room_type'] + '</li></a>'
+                    }
+                }
+                $('.hotel_room_type').html(html);
+            },
+            error : function(xhr,errmsg,err) {
+                console.log("실패"); 
+            }
+        });
     });
 
     $('[data-quantity="minus"]').click(function(e) {
@@ -216,69 +267,117 @@ $(document).ready(function() {
         } else {
             $('input[name='+fieldName+']').val(1);
         }
+
+        var pk = $('input[name=hotel_pk]').val();
+        var hotel_reserve_people = $('input[name=hotel_reserve_people]').val();
+        var start_date = $('input[name=start_date]').val();
+        var end_date = $('input[name=end_date]').val();
+        var html = "";
+
+        $.ajax({ // .like 버튼을 클릭하면 <새로고침> 없이 ajax로 서버와 통신하겠다.
+            type: "POST", // 데이터를 전송하는 방법을 지정
+            url: "/option_change/"+ pk +"/", // 통신할 url을 지정
+            data: {'pk': '{{ hotel.hotel_id }}', 'hotel_reserve_people': hotel_reserve_people, 'start_date' : start_date, 'end_date': end_date, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, // 서버로 데이터 전송시 옵션
+            dataType: "json", // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
+                success:function(json){
+                    console.log("성공");
+                    for (var i=0;i<json['hotel_room'].length;i++){
+                        // console.log("들어옴");
+                        // console.log(json['hotel_room']);
+                        // console.log(json['hotel_reserve_people']);
+                        // console.log(json['hotel_room'][i]['room_people']);
+                        if(json['hotel_reserve_people'] <= json['hotel_room'][i]['room_people']){
+                            html += '<a onclick="hotel_room_select(this)" class="select" data-value="'+ json['hotel_room'][i]['room_type'] + '"><li id="'+ json['hotel_room'][i]['room_type'] + '" class="hotel_room_select" value="'+ json['hotel_room'][i]['room_id'] + '">'+ json['hotel_room'][i]['room_type'] + '</li></a>'
+                        }
+                    }
+                    $('.hotel_room_type').html(html);
+                },
+                error:function(xhr,errmsg,err) {
+                    console.log("실패"); 
+                }
+        });
     });
 
-        var startDate = $('input[name=start_date]').val();
-        var endDate = $('input[name=end_date]').val();
-        var today = new Date();
-        var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
-        if(startDate == 0 && endDate == 0){
-            startDate = minDate;
-            endDate = minDate;
-        }
-    
-        $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                "startDate": startDate,
-                "endDate": endDate,
-                "minDate" : minDate,
-                opens: 'center',
-                locale: {
-                    "applyLabel": "Apply",
-                    "cancelLabel": "Cancel",
-                    "format": 'YYYY-MM-DD',
-                    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
-                    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-                }
-            }, 
-            function(start, end, label) {
-                // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-                startDate = start.format('YYYY-MM-DD');
-                endDate = end.format('YYYY-MM-DD');
-            });
-        });
+    // main hotel_date
+    var startDate = $('input[name=start_date]').val();
+    var endDate = $('input[name=end_date]').val();
+    var today = new Date();
+    var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
+    if(startDate == 0 && endDate == 0){
+        startDate = minDate;
+        endDate = minDate;
+    }
 
-        $('[name="reserve_date_choice"]').click(function(e) {
-            $('.date_pick').css('display', 'none');
-            $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
-            $('.hotel_detail_reserve_checkout').html(endDate);
-            $('input[name=start_date]').attr('value', startDate);
-            $('input[name=end_date]').attr('value', endDate);
-            console.log("startDate", startDate, "endDate", endDate);
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            "startDate": startDate,
+            "endDate": endDate,
+            "minDate" : minDate,
+            opens: 'center',
+            locale: {
+                "applyLabel": "Apply",
+                "cancelLabel": "Cancel",
+                "format": 'YYYY-MM-DD',
+                "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
+                "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+            }
+        }, 
+        function(start, end, label) {
+            // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            startDate = start.format('YYYY-MM-DD');
+            endDate = end.format('YYYY-MM-DD');
         });
+    });
+    console.log(startDate)
 
-        $('[name="date_choice"]').click(function(e) {
-            $('.date_pick').css('display', 'none');
-            $('#chk_in').html(startDate);
-            $('#chk_out').html(endDate);
-            $('input[name=start_date]').attr('value', startDate);
-            $('input[name=end_date]').attr('value', endDate);
-            console.log("startDate", startDate, "endDate", endDate);
+    // main vacation date
+    var startDate = $('input[name=vacation_date]').val();
+    var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
+
+    $(function() {
+        $('input[name="va_daterange"]').daterangepicker({
+            "singleDatePicker": true,
+            "minDate" : minDate,
+            opens: 'center',
+            locale: {
+                "applyLabel": "Apply",
+                "cancelLabel": "Cancel",
+                "format": 'YYYY-MM-DD',
+                "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"], 
+                "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+            },
+
+        }, 
+        function(start, end, label) {
+            startDate = start.format('YYYY-MM-DD');
+            console.log(startDate);
         });
+    });
 
-        // $.ajax({
-        //     type:'POST',
-        //     url:'/option_change/',
-        //     data: {
-        //         'hotel_reserve_people' : data,
-        //     },
-        //     success:function(json){
-        //         console.log("data pass success",json);
-        //     },
-        //     error : function(xhr,errmsg,err) {
-        //     console.log(xhr.status + ": " + xhr.responseText); 
-        //     }
-        // });
+    $('[name="reserve_date_choice"]').click(function(e) {
+        $('.date_pick').css('display', 'none');
+        $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
+        $('.hotel_detail_reserve_checkout').html(endDate);
+        $('input[name=start_date]').attr('value', startDate);
+        $('input[name=end_date]').attr('value', endDate);
+        console.log("startDate", startDate, "endDate", endDate);
+    });
+
+    $('[name="date_choice"]').click(function(e) {
+        $('.date_pick').css('display', 'none');
+        $('#chk_in').html(startDate);
+        $('#chk_out').html(endDate);
+        $('input[name=start_date]').attr('value', startDate);
+        $('input[name=end_date]').attr('value', endDate);
+        console.log("startDate", startDate, "endDate", endDate);
+    });
+
+    $('[name="va_date_choice"]').click(function(e) {
+        $('.vacation_date_pick').css('display', 'none');
+        $('#vacation_date').html(startDate);
+        $('input[name=vacation_date]').attr('value', startDate);
+
+    });
 });
 
 // 구글맵
