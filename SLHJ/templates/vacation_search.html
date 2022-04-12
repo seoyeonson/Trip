@@ -3,6 +3,7 @@
 {% load humanize %}
 {% block extrahead %}
 <link href="{% static 'bs/css/vacation_search.css' %}" rel="stylesheet">
+<script src="{% static 'bs/js/va_search.js' %}"></script>
 {% endblock %}
 
 {% block contents %}
@@ -20,7 +21,7 @@
                 <ul>
                     <li>
                         <a onclick="search_va_location()" class="location" id="location">
-                            <i class="fas fa-map-marker-alt" class="map"></i><sapn id="va_lo_text">{{ SIGUN_NM}}</sapn>
+                            <i class="fas fa-map-marker-alt" class="map"></i><sapn id="va_lo_text">{{ SIGUN_NM }}</sapn>
                         </a>  
                     </li>
                     <li>
@@ -41,7 +42,7 @@
             <ul class="vacation_location" id="vacation_location">
                 {% for place in vacation_places %}
                 <li id="{{ place.SIGUN_NM }}" class="vacation_lo_select" onclick="vacation_lo_select(this)">{{ place.SIGUN_NM }}</li>
-                <input type="hidden" id="va_lo_text" name="SIGUN_NM" value="">
+                <input type="hidden" id="va_lo_text" name="SIGUN_NM" value="{{ SIGUN_NM }}">
                 {% endfor %}
             </ul>
             <!-- 체크인/체크아웃 선택 -->

@@ -12,12 +12,14 @@
 {% block contents %}
 {% block script %}
 <script src="{% static 'bs/js/admin_hotel.js' %}"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fcba78034b5a60b2b8f8d5dc4dcd572a&libraries=services"></script>
+[출처] 21. Daum 우편번호찾기를 이용한 위,경도 좌표 구하기|작성자 LaValse
 {% endblock%}
+<i class="fa fa-bars"></i>
 
 <div id="side_nav" class="side_nav">
-    <!-- <a href="#" 
-        class="closebtn" id="closebtn" 
-        onclick="closeNav()">&times;</a> -->
+    <span class="nav_close">&times;</span>
     <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
     <a class="side_menu" href="{% url 'admin_info' %}">회원정보</a>
     <a class="side_menu" href="{% url 'admin_pw_change' %}">비밀번호 변경</a>
@@ -36,10 +38,6 @@
             <input id="cancel_btn" type="button" value="등록취소">
             <label class="index_title">기본정보</label>
             <div class="form-group">
-                <label>고유번호</label>
-                <label class="form-control">{##}고유번호</label>
-            </div>
-            <div class="form-group">
                 <label>숙소이름</label>
                 <input class="form-control" type="text" name="hotel_name" required>
             </div>
@@ -49,8 +47,15 @@
             </div>
             <div class="form-group">
                 <label>도로명주소</label>
-                <!-- <input type="button" value="주소찾기" id="search_adress"> -->
-                <input class="form-control" type="text" name="hotel_adress" required>
+                <input type="text" id="sample4_postcode" placeholder="우편번호">
+                <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+                <input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+                <!-- <span id="guide" style="color:#999;"></span> -->
+                <input type="text" id="sample4_extraAddress" placeholder="참고항목">
+                <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+                <div id="lat" type="hidden"></div>
+                <div id="lng" type="hidden"></div>
 
             </div>
             <!-- <div class="form-group">

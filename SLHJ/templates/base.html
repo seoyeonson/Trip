@@ -30,7 +30,7 @@
 {% block script %}
 {% endblock %}
 <body>
-    <div class="container-fluid mt-3 main_contents">
+    <div class="container mt-3 main_contents">
         {% block nav %}
         <div>
             <nav class="bg-white fixed-top toolbar"> <!-- 홈탑메뉴바 -->
@@ -39,7 +39,7 @@
                         <a href="{% url 'main' %}" class="home_icon">Trip</a>
                     </li>
                     <li class="home_menu">
-                        <a href="{% url 'hotel_search' %}"">호텔</a>
+                        <a href="{% url 'hotel_search' %}">호텔</a>
                     </li>
                     <li class="home_menu">
                             <a href="{% url 'vacation_search' %}">여행지</a>
@@ -73,7 +73,7 @@
     </div>
     {% block footer %}
     <footer>
-        <nav class="bg-gray footer">
+        <div class="bg-gray footer">
             <ul class="container foot_link">
                 <li class="left_footer" >ⓒ2022 K-Digital 과정</li>
                 <li class="left_footer"><a href=#>· 개인정보 처리방침</a></li>
@@ -89,7 +89,7 @@
                 <li class="right_footer">· 관련사이트</li>
                 <li style="clear:both; list-style:none;"></li>
             </ul>
-        </nav>
+        </div>
     </footer>
     {% endblock %}
 </body>

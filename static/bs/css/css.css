@@ -174,7 +174,7 @@ footer{
     min-height: 100%;
     position: relative;
     padding-bottom:64px;
-    max-width: 1920px;
+    max-width: 6144px;
 }
 
 .main_image {
@@ -182,6 +182,9 @@ footer{
     height: 600px;
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
+    /* min-width:3000px; */
+
 }
 
 .main_search {
@@ -670,8 +673,9 @@ footer{
     content: "";
 }
 
-.recommend_vaction{
+.recommend_vaction, .recommend_vaction a{
     height: 194px;
+    width: 324px;
     background-image: url(/static/img/img_noimg.jpg);
     border-radius: 10px;
     background-position: center center;

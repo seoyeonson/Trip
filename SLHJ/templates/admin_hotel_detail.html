@@ -13,11 +13,10 @@
 {% block script %}
 <script src="{% static 'bs/js/admin_hotel.js' %}"></script>
 {% endblock%}
+<i class="fa fa-bars"></i>
 
 <div id="side_nav" class="side_nav">
-    <!-- <a href="#" 
-        class="closebtn" id="closebtn" 
-        onclick="closeNav()">&times;</a> -->
+    <span class="nav_close">&times;</span>
     <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
     <a class="side_menu" href="{% url 'admin_info' %}">회원정보</a>
     <a class="side_menu" href="{% url 'admin_pw_change' %}">비밀번호 변경</a>

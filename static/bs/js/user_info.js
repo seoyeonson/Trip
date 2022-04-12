@@ -18,13 +18,11 @@ function update_info(){
 }
 
 function phNm_close(){
-    $('input[name="user_phonNum"]').value = null
     $('.box_phNm').css('display', 'none');
     $('#let_phone_update').css('display','block');
     $('input[name=user_phonNum]').attr('disabled',true);
 }
 function email_close(){
-    $('input[name="user_email"]').value = null
     $('.box_email').css('display','none');
     $('#let_email_update').css('display','block');
     $('input[name=user_email]').attr('disabled',true);
@@ -36,7 +34,7 @@ function end_update(){
         phNm_close();
     }
     else if(this.id=='email_updateOk'){
-        email = $('input[name="user_email"]').val().trim()
+        email = $('#user_email').val().trim()
         email_pat = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
         if (email==""){
             $('#error_email').html("이메일을 입력하세요")
@@ -44,6 +42,8 @@ function end_update(){
         }else if(!email_pat.test(email)){
             $('#error_email').html("이메일 형식에 맞게 입력해주세요")
             return false;
+        }else{
+            $('#error_email').html("")
         };
         return true;
     }
@@ -59,6 +59,10 @@ function end_update(){
         }else if(!phNm_pat.test(phNm)){
             $('#error_phNm').html("전화번호 형식에 맞게 입력해주세요")
             return false;
+        }else{
+            $('#error_phNm').html("")
+            var phNm_new = phNm.replace(/[^0-9]/g, "").replace(/([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/, "$1-$2-$3");
+            $('#user_phonNum').val(phNm_new);
         };
         return true;
     };
