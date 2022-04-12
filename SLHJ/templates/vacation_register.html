@@ -13,8 +13,10 @@
 {% block script %}
 <script src="{% static 'bs/js/admin_vacation.js' %}"></script>
 {% endblock%}
+<i class="fa fa-bars"></i>
 
 <div id="side_nav" class="side_nav">
+    <span class="nav_close">&times;</span>
     <div class="side_menu" id="user_profile">{{ user.user_id }}</div>
     <a class="side_menu" href="{% url 'admin_info' %}">회원정보</a>
     <a class="side_menu" href="{% url 'admin_pw_change' %}">비밀번호 변경</a>
@@ -32,10 +34,6 @@
             <input id="cancel_btn" type="button" value="등록취소">
             <label class="index_title">기본정보</label>
             <div class="form-group">
-                <label>고유번호</label>
-                <label class="form-control">{##}고유번호</label>
-            </div>
-            <div class="form-group">
                 <label>여행지 이름</label>
                 <input class="form-control" type="text" name="vacation_name">
             </div>
@@ -52,6 +50,11 @@
             <div class="form-group">
                 <label>요약설명</label>
                 <textarea class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>입장 가격</label>
+                <input class="form-control" type="number" name="vacation_price">
             </div>
 
             <label class="index_title">대표사진 등록</label>
