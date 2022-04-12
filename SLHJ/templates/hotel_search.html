@@ -3,6 +3,7 @@
 {% load humanize %}
 {% block extrahead %}
 <link href="{% static 'bs/css/hotel_search.css' %}" rel="stylesheet">
+<script src="{% static 'bs/js/ho_search.js' %}"></script>
 {% endblock %}
 
 {% block contents %}
@@ -45,7 +46,7 @@
         <!-- </div> -->
         <div class="date_pick" id="date_pick">
             <div>
-                <div class="input-daterange reserve_date"><input type="text" name="daterange" id="datepicker" readonly /> 
+                <div class="input-daterange reserve_date"><input type="text" name="search_ho_daterange" id="datepicker" readonly /> 
                 <input type="button" value="적용" name="date_choice">
                 </div>
             </div>

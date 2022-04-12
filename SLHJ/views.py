@@ -30,6 +30,8 @@ def main(request):
     hotel_imgs = []
 
     if request.method == 'GET':
+        request.session.flush()
+        
         hotel_places = Hotel.objects.all().values('SIGUN_NM').distinct()
         recommand_vacations = Vacation.objects.all().order_by('-vacation_rate')[:4]
         recommand_hotels = Hotel.objects.all().order_by('-hotel_rate')[:4]
@@ -102,15 +104,18 @@ def hotel_search(request):
         return redirect('/hotel_search/')
 
     if request.method == "GET":
+        now = datetime.datetime.now().strftime('%Y-%m-%d')
+        nextDay = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+
         # 시군명 검색시 사용되는 Query
         # table 에 있는 지역만 선택 가능하도록
         hotel_places = Hotel.objects.all().values('SIGUN_NM').distinct()
         
         # session 에서 가져온 시군명, 체크아웃, 체크인, 예약인원 정보 
-        SIGUN_NM = request.session.get('SIGUN_NM')
-        start_date = request.session.get('start_date')
-        end_date = request.session.get('end_date')
-        hotel_reserve_people = request.session.get('hotel_reserve_people')
+        SIGUN_NM = request.session.get('SIGUN_NM', '평택시')
+        start_date = request.session.get('start_date', now)
+        end_date = request.session.get('end_date', nextDay)
+        hotel_reserve_people = request.session.get('hotel_reserve_people', 1)
 
         # filter range를 사용하기 위해 date로 형변환, format 변환
         hotel_reserve_startdate = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
@@ -219,62 +224,67 @@ def hotel_search(request):
         return render(request, 'hotel_search.html', context)
 
 def vacation_search(request):
-    count={}
-    vacation_places = Vacation.objects.all().values('SIGUN_NM').distinct()
-    #SIGUN_NM= OO시인 vacation 테이블 가져옴 
-    SIGUN_NM = request.session.get('SIGUN_NM', '평택시')
-    vacation_reserve_people = request.session.get('vacation_reserve_people')
-    vacation_date = request.session.get('vacation_date')
-    all_vacation_lists = Vacation.objects.filter(SIGUN_NM = SIGUN_NM)
+    if request.method == 'POST':
+        SIGUN_NM = request.POST.get('SIGUN_NM')
+        vacation_date = request.POST.get('vacation_date')
+        vacation_reserve_people = request.POST.get('vacation_reserve_people')
 
+        request.session['SIGUN_NM'] = SIGUN_NM
+        request.session['vacation_date'] = vacation_date
+        request.session['vacation_reserve_people'] = vacation_reserve_people
 
-    # 리뷰별 평점점수 (1~5점) count
-    for i in range(5):
-        # (크거나 작은 값) orm 사용
-        # 참고 https://dev-yakuza.posstree.com/ko/django/orm/
-        count.update({i+1 : all_vacation_lists.filter(vacation_rate__gt=i).filter(vacation_rate__lte=i+1).count()})
+        return redirect('/vacation_search/')
+
+    if request.method == 'GET':
+        now = datetime.datetime.now().strftime('%Y-%m-%d')
+
+        vacation_places = Vacation.objects.all().values('SIGUN_NM').distinct()
+        #SIGUN_NM= OO시인 vacation 테이블 가져옴 
+        SIGUN_NM = request.session.get('SIGUN_NM', '평택시')
+        vacation_date = request.session.get('vacation_date', now)
+        vacation_reserve_people = request.session.get('vacation_reserve_people', 1)
+        all_vacation_lists = Vacation.objects.filter(SIGUN_NM = SIGUN_NM)
+        
+        # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
+        write_pages = int(request.session.get('write_pages', 5))
     
-    # 보여질 페이지 번호 < << 1 2 3 4 5 >> >
-    write_pages = int(request.session.get('write_pages', 5))
-   
-    # 한 페이지에 보일 리뷰 개수
-    per_page = int(request.session.get('per_page', 5))
-    
-    # 현재 페이지
-    page = int(request.GET.get('page', 1))
+        # 한 페이지에 보일 리뷰 개수
+        per_page = int(request.session.get('per_page', 5))
+        
+        # 현재 페이지
+        page = int(request.GET.get('page', 1))
 
-    # 한 페이지당 5개씩 보여주는 Paginator 생성
-    paginator = Paginator(all_vacation_lists, per_page)
-    
-    # 페이지에 대한 정보
-    page_obj = paginator.get_page(page)
+        # 한 페이지당 5개씩 보여주는 Paginator 생성
+        paginator = Paginator(all_vacation_lists, per_page)
+        
+        # 페이지에 대한 정보
+        page_obj = paginator.get_page(page)
 
-    start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
-    end_page = start_page + write_pages - 1
+        start_page = ((int)((page_obj.number - 1) / write_pages) * write_pages) + 1
+        end_page = start_page + write_pages - 1
 
-    if end_page >= paginator.num_pages:
-        end_page = paginator.num_pages
+        if end_page >= paginator.num_pages:
+            end_page = paginator.num_pages
 
-    last_page=0
+        last_page=0
 
-    for last_page in paginator.page_range:
-        last_page = last_page + 1
+        for last_page in paginator.page_range:
+            last_page = last_page + 1
 
-    last_page= last_page -1
-    
-    context = {
-        'vacation_places' : vacation_places,
-        'lists': page_obj,  # vacation table
-        'start_page': start_page,
-        'end_page': end_page,
-        'SIGUN_NM': SIGUN_NM,
-        'vacation_date': vacation_date,
-        'vacation_reserve_people': vacation_reserve_people,
-        'last_page' : last_page,
-        'page_range': range(start_page, end_page + 1),
-        'count' : count,
-    }
-    return render(request, 'vacation_search.html', context)
+        last_page= last_page -1
+        
+        context = {
+            'vacation_places' : vacation_places,
+            'lists': page_obj,  # vacation table
+            'start_page': start_page,
+            'end_page': end_page,
+            'SIGUN_NM': SIGUN_NM,
+            'vacation_date': vacation_date,
+            'vacation_reserve_people': vacation_reserve_people,
+            'last_page' : last_page,
+            'page_range': range(start_page, end_page + 1),
+        }
+        return render(request, 'vacation_search.html', context)
 
 def user_create(request):
     return render(request, 'user_create.html')
