@@ -6,7 +6,7 @@
 {% block title %}홈페이지{% endblock %}
 {% block contents %}
     <section class="page"> <!-- 메인 이미지 및 메인 검색창-->
-        <div class="main_image"> <!-- 메인 이미지 -->
+        <div class="main_image"> <!--메인 이미지-->
             <div class="main_search"> <!-- 메인 검색 -->
                 <div class="menu_select">
                     <ul class="menu_icon">
@@ -155,13 +155,13 @@
                     {% for vacation in vacation_imgs %}
                         {% if forloop.counter < 4 %}
                             {% if vacation %}
-                                <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div>
+                                <a href=="{% url 'vacation_detail' vacation.pk %}"><div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div></a>
                             {% else %}
                                 <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
                             {% endif %}
                         {% else %}
                             {% if vacation %}
-                                <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div>
+                                <a href="{% url 'vacation_detail' vacation.pk %}"><div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div></a>
                             {% else %}
                                 <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
                             {% endif %}
@@ -177,13 +177,13 @@
                 {% for hotel in hotel_imgs %}
                     {% if forloop.counter < 4 %}
                         {% if hotel %}
-                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div>
+                        <a href="{% url 'hotel_detail' hotel.pk %}"><div class="recommend_vaction  me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div></a>
                         {% else %}
                         <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
                         {% endif %}
                     {% else %}
                         {% if hotel %}
-                        <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div>
+                        <a href="{% url 'hotel_detail' hotel.pk %}"><div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div></a>
                         {% else %}
                         <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
                         {% endif %}
