@@ -1067,11 +1067,82 @@ def admin_vacation(request):
 def admin_manage(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
-
+    my_hotels = Hotel.objects.filter(hotel_admin_id_id=pk)
+    my_vacations = Vacation.objects.filter(vacation_admin_id_id=pk)
     context = {
+        'hotel': my_hotels,
+        'vacation': my_vacations,
         'user' : user,
     }
-    return render(request, 'admin_manage.html', context)
+    if request.method == "GET":
+        return render(request, 'admin_manage.html', context)
+
+    if request.method == "POST":
+
+        choice = request.POST.get('choice') # 호텔인지, 여행지인지 선택하는 항목
+        reserve_name = request.POST.get('reserve_name')
+        reserve_num = request.POST.get('reserve_num')
+        reserve_date = request.POST.get('reserve_date')
+        if choice == 'hotel':
+            selected_place = request.POST.get('choice_hotel')
+            hotel_id = Hotel.objects.get(BIZPLC_NM=selected_place).hotel_id
+            
+            # rooms = list(Hotel_room.objects.filter(hotel_id=hotel_id).values())
+            # q = Q()
+            # for room in rooms:
+            #     q.add(Q(room_id_id=room['room_id']), q.OR)
+
+            rooms_2 = Hotel_room.objects.filter(hotel_id=hotel_id)
+            reserveses = []
+            print(rooms_2.count())
+            for r in range(rooms_2.count()):
+                reserve = Hotel_reserve.objects.filter(room_id=rooms_2[r].hotel_id_id)
+                print(type(reserve))
+                for i in range(reserve.count()):
+                    reserveses.append(reserve[i])
+
+            reserveses = reserveses[0: reserve.count()]
+            # reserves = Hotel_reserve.objects.filter(q).values().order_by('-hotel_reserve_startdate')
+            # print(reserves[0].room_id_id)
+        
+
+            # hotel_room = Hotel_room.objects.filter(hotel_id_id = hotel_id)
+            # rooms = []
+            # for r in hotel_room:
+            #     rooms.append(hotel_room.room_id)
+            # print(rooms)
+
+            # reserves = Hotel_reserve.objects.filter(room_id_id.hotel_id = hotel_id)
+            # room_id = Hotel_room.objects.filter(hotel_id_id=hotel_id)
+            # 선택한 hotel 이 가지고 있는 room들의 room_id 의 집합. => room_id[r].room_id
+
+            # reserve 의 room_id_id가 위 집합 중 하나인 것들 -> 쿼리셋
+            # for r in room_id:
+            #     temp_list = Hotel_reserve.objects.filter(room_id=room_id[r].room_id)
+            
+            context['place_type'] = 'hotel'
+            context['reserves'] = reserveses
+            return render(request, 'admin_manage.html', context)
+
+            
+        elif choice == 'vacation':
+            selected_place = request.POST.get('choice_vacation')
+            vacation_id = Vacation.objects.get(TURSM_INFO_NM=selected_place).vacation_id
+            reserves = Vacation_reserve.objects.filter(vacation_id_id=vacation_id).order_by('-vacation_reserve_date')
+            if reserve_name != '':
+                reserves = reserves.filter(vacation_reserve_username=reserve_name)
+            if reserve_num != '':
+                reserves = reserves.filter(vacation_reserve_id=reserve_num)
+            if reserve_date != '':
+                reserves = reserves.filter(vacation_reserve_date=reserve_date)
+            if reserves.count() == 0 :
+                context['message'] = '예약정보가 없습니다.' 
+            context['place_type'] = 'vacation'
+            context['reserve_count'] = reserves.count()
+            context['reserves'] = reserves
+            return render(request, 'admin_manage.html', context)
+
+
 
 def hotel_register(request):
     pk = request.session['user']
