@@ -12,6 +12,7 @@
 {% block contents %}
 {% block script %}
 <script src="{% static 'bs/js/admin_hotel.js' %}"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fcba78034b5a60b2b8f8d5dc4dcd572a&libraries=services"></script>
 [출처] 21. Daum 우편번호찾기를 이용한 위,경도 좌표 구하기|작성자 LaValse
@@ -41,30 +42,18 @@
                 <label>숙소이름</label>
                 <input class="form-control" type="text" name="hotel_name" required>
             </div>
+            <!-- <label>시군명</label> -->
+            <input id="hotel_area" class="form-control" type="hidden" name="hotel_area" required>
             <div class="form-group">
-                <label>시군명</label>
-                <input class="form-control" type="text" name="hotel_area" required>
+                <label>도로명주소</label><br>
+                <input class="address_input" type="text" id="sample4_postcode" placeholder="우편번호" readonly>
+                <input class="address_input" type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                <input class="address_input" type="text" name="hotel_addr" id="sample4_roadAddress" placeholder="도로명주소" readonly>
+                <input class="address_input_add" type="text" id="sample4_extraAddress" placeholder="추가주소" readonly>
+                <input name="lat" id="lat" type="hidden">
+                <input name="lng" id="lng" type="hidden">
             </div>
-            <div class="form-group">
-                <label>도로명주소</label>
-                <input type="text" id="sample4_postcode" placeholder="우편번호">
-                <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-                <input type="text" name="hotel_addr" id="sample4_roadAddress" placeholder="도로명주소">
-                <input type="text" id="sample4_jibunAddress" placeholder="지번주소">
-                <!-- <span id="guide" style="color:#999;"></span> -->
-                <input type="text" id="sample4_extraAddress" placeholder="참고항목">
-                <input type="text" id="sample4_detailAddress" placeholder="상세주소">
-                <div id="lat" type="hidden"></div>
-                <div id="lng" type="hidden"></div>
 
-            </div>
-            <!-- <div class="form-group">
-                <label>영업상태</label>
-                <select class="bsn_state form-control">
-                    <option name="BSN_STATE_NM" value="TRUE">영업중</option>
-                    <option name="BSN_STATE_NM" value="FALSE">휴업중</option>
-                </select>
-            </div> -->
             <div class="form-group">
                 <label>요약설명</label>
                 <textarea class="form-control" name='context'></textarea>

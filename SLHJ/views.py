@@ -801,6 +801,10 @@ def history_hotel(request):
 
     except Hotel_image.DoesNotExist:
         hotel_image = ''
+    
+    except IndexError:
+        hotel_image = ''
+    
 
     # for i in range(hotel_reserve.count()):
     #     hotel_reserves.append(hotel_reserve[i])
@@ -1082,8 +1086,8 @@ def hotel_register(request):
         SIGUN_NM = request.POST.get('hotel_area')
         BSN_STATE_NM = 1
         REFINE_ROADNM_ADDR = request.POST.get('hotel_addr', '')
-        REFINE_WGS84_LAT = 0.0
-        REFINE_WGS84_LOGT = 0.0
+        REFINE_WGS84_LAT = request.POST.get('lat')
+        REFINE_WGS84_LOGT = request.POST.get('lng')
         hotel_rate = 0.0
         hotel_comment = request.POST.get('context')
         hotel_admin_id = user
@@ -1149,8 +1153,8 @@ def vacation_register(request):
         TURSM_INFO_NM = request.POST.get('vacation_name')
         SM_RE_ADDR =  request.POST.get('vacation_adress')
         TELNO =  request.POST.get('phoneNum')
-        REFINE_WGS84_LAT = 0.0
-        REFINE_WGS84_LOGT = 0.0
+        REFINE_WGS84_LAT = request.POST.get('lat')
+        REFINE_WGS84_LOGT = request.POST.get('lng')
         vacation_comment = request.POST.get('context')
         vacation_price = request.POST.get('vacation_price')
         vacation_rate = 0.0
@@ -1296,10 +1300,10 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 def sample3(request):   # hotel_room 포맷입니다.
 
     room_type = "디럭스"
-    room_price = 90000
+    room_price = 80000
     room_people = 2
 
-    hotel_id = Hotel.objects.get(pk=1)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
+    hotel_id = Hotel.objects.get(pk=6)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
     hotel_room = Hotel_room(
         room_type = room_type,
