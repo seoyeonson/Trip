@@ -42,10 +42,14 @@ urlpatterns = [
 
     path('hotel_register/', views.hotel_register, name="hotel_register"),
     path('hotel_delete/', views.hotel_delete, name="hotel_delete"),
+    path('hotel_delete2/', views.hotel_delete2, name="hotel_delete2"),
     path('hotel_deleteOk/', views.hotel_deleteOk, name="hotel_deleteOk"),
+    path('hotel_deleteOk2/', views.hotel_deleteOk2, name="hotel_deleteOk2"),
     path('vacation_register/', views.vacation_register, name="vacation_register"),
     path('vacation_delete/', views.vacation_delete, name="vacation_delete"),
+    path('vacation_delete2/', views.vacation_delete2, name="vacation_delete2"),
     path('vacation_deleteOk/', views.vacation_deleteOk, name="vacation_deleteOk"),
+    path('vacation_deleteOk2/', views.vacation_deleteOk2, name="vacation_deleteOk2"),
 
     path('admin_hotel_detail/<int:hk>/', views.admin_hotel_detail, name="admin_hotel_detail"),
     path('admin_vacation_detail/<int:hk>/', views.admin_vacation_detail, name="admin_vacation_detail"),

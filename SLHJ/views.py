@@ -1260,6 +1260,19 @@ def hotel_delete(request):
 
     return render(request, 'hotel_delete.html', context)
 
+def hotel_delete2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    temp = request.POST.get('hotel_reserve_id')
+    request.session['rk2'] = temp
+    print(temp)
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'hotel_delete2.html', context)  
+
+
 def hotel_deleteOk(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
@@ -1271,6 +1284,18 @@ def hotel_deleteOk(request):
     }
 
     return render(request, 'hotel_deleteOk.html', context)
+
+def hotel_deleteOk2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    hotel_reserve_id = request.session.get('rk2')
+    hotel_reserve = Hotel_reserve.objects.get(pk=hotel_reserve_id)
+    hotel_reserve.delete()
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'hotel_deleteOk2.html', context)
 
 def vacation_register(request):
     pk = request.session['user']
@@ -1332,6 +1357,18 @@ def vacation_delete(request):
 
     return render(request, 'vacation_delete.html', context)
 
+def vacation_delete2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    temp = request.POST.get('vacation_reserve_id')
+    request.session['rk'] = temp
+    print(temp)
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'vacation_delete2.html', context)  
+
 def vacation_deleteOk(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
@@ -1343,6 +1380,18 @@ def vacation_deleteOk(request):
     }
 
     return render(request, 'vacation_deleteOk.html', context)
+
+def vacation_deleteOk2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    vacation_reserve_id = request.session.get('rk')
+    vacation_reserve = Vacation_reserve.objects.get(pk=vacation_reserve_id)
+    vacation_reserve.delete()
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'vacation_deleteOk2.html', context)
 
 def admin_hotel_detail(request, hk):
     pk = request.session['user']
