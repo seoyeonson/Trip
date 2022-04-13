@@ -32,8 +32,8 @@
         <div class="info_form" name="hotel_info_form">
            
             <label class="index_title">기본정보</label>
-            <input id="adjust_btn" type="button" value="정보 수정">
-            <input id="delete_btn" type="button" value="숙소 삭제">
+            <a id="adjust_btn" type="button" href="{% url 'hotel_update' %}">정보수정</a>
+            <a id="adjust_btn" type="button" href="{% url 'hotel_delete' %}">숙소삭제</a>
         
             <div class="hotel_info_title">
                 <div class="info">

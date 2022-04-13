@@ -41,8 +41,12 @@ urlpatterns = [
     path('admin_manage/', views.admin_manage, name='admin_manage'),
 
     path('hotel_register/', views.hotel_register, name="hotel_register"),
+    path('hotel_delete/', views.hotel_delete, name="hotel_delete"),
+    path('hotel_deleteOk/', views.hotel_deleteOk, name="hotel_deleteOk"),
     path('vacation_register/', views.vacation_register, name="vacation_register"),
-    
+    path('vacation_delete/', views.vacation_delete, name="vacation_delete"),
+    path('vacation_deleteOk/', views.vacation_deleteOk, name="vacation_deleteOk"),
+
     path('admin_hotel_detail/<int:hk>/', views.admin_hotel_detail, name="admin_hotel_detail"),
     path('admin_vacation_detail/<int:hk>/', views.admin_vacation_detail, name="admin_vacation_detail"),
     path('hotel_update/', views.hotel_update, name="hotel_update"),
