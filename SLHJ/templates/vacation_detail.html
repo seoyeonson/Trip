@@ -38,10 +38,10 @@
             <hr>
             <div>
                 <h2>위치</h2>
-                {% if vacation.REFINE_WGS84_LAT == 0 %}
-                <div class="google_map mb-lg-0 mb-5"></div>
-                {% else %}
+                {% if vacation.REFINE_WGS84_LAT %}
                 <div id="googleMap" class="google_map mb-lg-0 mb-5"></div>
+                {% else %}
+                <div class="google_map mb-lg-0 mb-5"></div>
                 {% endif %}
             </div>
         </div>

@@ -1599,13 +1599,13 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_people = 2
     hotel_reserve_username = '유재석'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-08-09'
-    hotel_reserve_enddate = '2022-08-10'
+    hotel_reserve_startdate = '2022-02-10'
+    hotel_reserve_enddate = '2022-02-12'
 
-    hotel_room = Hotel_room.objects.get(pk=10)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=29)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=3)
+    id = User.objects.get(pk=2)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(
