@@ -157,14 +157,26 @@
                         {% if forloop.counter < 4 %}
                             {% if vacation %}
                                 <a href="{% url 'vacation_detail' vacation.vacation_id_id %}"><div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div></a>
+                                <span>
+                                    {{ vacation.vacation_id }}
+                                </span>
                             {% else %}
                                 <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
+                                <span>
+                                    {{ vacation.vacation_id }}
+                                </span>
                             {% endif %}
                         {% else %}
                             {% if vacation %}
                                 <a href="{% url 'vacation_detail' vacation.vacation_id_id %}"><div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div></a>
+                                <span>
+                                    {{ vacation.vacation_id }}
+                                </span>
                             {% else %}
                                 <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
+                                <span>
+                                    {{ vacation.vacation_id }}
+                                </span>
                             {% endif %}
                         {% endif %}
                     {% endfor %}
@@ -179,14 +191,26 @@
                     {% if forloop.counter < 4 %}
                         {% if hotel %}
                             <a href="{% url 'hotel_detail' hotel.hotel_id_id %}"><div class="recommend_vaction  me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div></a>
+                            <span>
+                                {{ hotel.hotel_id }}
+                            </span>
                         {% else %}
                             <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
+                            <span>
+                                {{ vacation.vacation_id }}
+                            </span>
                         {% endif %}
                     {% else %}
                         {% if hotel %}
                             <a href="{% url 'hotel_detail' hotel.hotel_id_id %}"><div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ hotel.hotel_image_file_path }}');"></div></a>
+                            <span>
+                                {{ vacation.vacation_id }}
+                            </span>
                         {% else %}
                             <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
+                            <span>
+                                {{ vacation.vacation_id }}
+                            </span>
                         {% endif %}
                     {% endif %}
                 {% endfor %}

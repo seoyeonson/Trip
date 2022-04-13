@@ -31,6 +31,7 @@
         <h5 id="title">마이페이지 > 여행지등록</h5>
         <form action="{% url 'vacation_register' %}" class="regist_form" method="POST" name="vacation_regist_form" enctype="multipart/form-data">
             {% csrf_token %}
+            <a id="adjust_btn" type="button" href="{% url 'vacation_update'%}">정보수정</a>
             <input id="register_btn" type="submit" value="정보등록">
             <input id="cancel_btn" type="button" value="등록취소">
             <label class="index_title">기본정보</label>

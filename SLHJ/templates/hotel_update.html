@@ -31,25 +31,25 @@
 
 <div class="con2">
     <div class="contents">
-        <h5 id="title">마이페이지 > 숙소등록</h5>
-        <form action="{% url 'hotel_register' %}" class="regist_form" name="hotel_regist_form" method="POST" enctype="multipart/form-data">
+        <h5 id="title">마이페이지 > 정보수정</h5>
+        <form action="{% url 'hotel_update' %}" class="regist_form" name="hotel_regist_form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input id="register_btn" type="submit" value="정보등록">
             <input id="cancel_btn" type="button" value="등록취소">
             <label class="index_title">기본정보</label>
             <div class="form-group">
                 <label>숙소이름</label>
-                <input class="form-control" type="text" name="hotel_name" required>
+                <input class="form-control" type="text" name="hotel_name" value="{{ hotel.BIZPLC_NM }}" required>
             </div>
             <div class="form-group">
                 <label>시군명</label>
-                <input class="form-control" type="text" name="hotel_area" required>
+                <input class="form-control" type="text" name="hotel_area" value="{{ hotel.SIGUN_NM }}" required>
             </div>
             <div class="form-group">
                 <label>도로명주소</label>
                 <input type="text" id="sample4_postcode" placeholder="우편번호">
                 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-                <input type="text" name="hotel_addr" id="sample4_roadAddress" placeholder="도로명주소">
+                <input type="text" name="hotel_addr" id="sample4_roadAddress" placeholder="도로명주소" value="{{ hotel.REFINE_ROADNM_ADDR }}">
                 <input type="text" id="sample4_jibunAddress" placeholder="지번주소">
                 <!-- <span id="guide" style="color:#999;"></span> -->
                 <input type="text" id="sample4_extraAddress" placeholder="참고항목">
@@ -86,11 +86,13 @@
                     </tr>
                 </thead>
                 <tbody id="room_table">
+                    {% for hotel_room in hotel_rooms %}
                     <tr>
-                        <td><input type="text" name="room_type[]" placeholder="객실타입 입력"></td>
-                        <td><input type="number" name="room_price[]" placeholder="객실가격 입력"></td>
-                        <td><input type="number" name="room_people[]" placeholder="객실인원 입력"></td>
+                        <td><input type="text" name="room_type[]" value="{{ hotel_room.room_type }}" placeholder="객실타입 입력"></td>
+                        <td><input type="number" name="room_price[]" value="{{ hotel_room.room_price }}" placeholder="객실가격 입력"></td>
+                        <td><input type="number" name="room_people[]" value="{{ hotel_room.room_people }}" placeholder="객실인원 입력"></td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             <button type="button" class="add_row">객실추가</button>
