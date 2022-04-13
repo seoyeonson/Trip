@@ -309,11 +309,9 @@ def user_create(request):
     return render(request, 'user_create.html')
 
 def hotel_reserve(request):
-    try:    
-        id = id=request.session.get('user','') # session에 저장된 user의 정보를 불러옵니다.
+        id = request.session.get('user','') # session에 저장된 user의 정보를 불러옵니다.
         if id == "": # session에 저장된 user 정보가 없을경우 로그인페이지로 redirect됩니다.
             return redirect('/login/')
-    except:
         # 세션에 저장된 예약 정보들 (hotel_detail 에서 선택한 옵션들) 받아옵니다. *추후 기본값 수정 필요*
         hotel_name = request.session.get('hotel_name', Hotel.objects.get(hotel_id=1).BIZPLC_NM)
         hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
@@ -322,6 +320,8 @@ def hotel_reserve(request):
         start_date = datetime.datetime.strptime(hotel_reserve_startdate, '%Y-%m-%d').date()
         end_date = datetime.datetime.strptime(hotel_reserve_enddate, '%Y-%m-%d').date()
         reserve_room = request.session.get('reserve_room')
+
+        print(hotel_name, hotel_reserve_people)
 
         if (hotel_reserve_people=="") or (hotel_reserve_startdate==""):
             return redirect('/main/') # session에 예약정보가 담겨있지 않은 경우 main으로 redirect됩니다.
@@ -347,7 +347,7 @@ def hotel_reserve(request):
             hotel_reserve_username = request.POST["reserve_name"]
             hotel_reserve_phonenum = request.POST["phone_num"]
 
-            id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
+            id = User.objects.get(id=id) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
             room_id = hotel_room
 
             hotel_reserve = Hotel_reserve(
@@ -563,7 +563,7 @@ def hotel_detail(request, pk):
         request.session['reserve_room'] = reserve_room
         request.session['hotel_room_pk'] = hotel_room_pk
 
-        return render(request, 'hotel_reserve.html')
+        return redirect('/hotel_reserve/')
 
 
 def vacation_detail(request, pk):
@@ -1622,10 +1622,10 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 def sample3(request):   # hotel_room 포맷입니다.
 
     room_type = "디럭스"
-    room_price = 80000
+    room_price = 67586
     room_people = 2
 
-    hotel_id = Hotel.objects.get(pk=6)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
+    hotel_id = Hotel.objects.get(pk=90)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
     hotel_room = Hotel_room(
         room_type = room_type,
@@ -1644,13 +1644,13 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_people = 2
     hotel_reserve_username = '유재석'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-08-09'
-    hotel_reserve_enddate = '2022-08-10'
+    hotel_reserve_startdate = '2022-02-10'
+    hotel_reserve_enddate = '2022-02-12'
 
-    hotel_room = Hotel_room.objects.get(pk=10)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=29)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=3)
+    id = User.objects.get(pk=2)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(

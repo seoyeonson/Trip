@@ -37,10 +37,10 @@
             <hr>
             <div>
                 <h2>위치</h2>
-                {% if hotel.hotel_REFINE_WGS84_LAT == 0 %}
-                <div class="google_map mb-lg-0 mb-5"></div>
-                {% else %}
+                {% if hotel.hotel_REFINE_WGS84_LAT %}
                 <div id="googleMap" class="google_map mb-lg-0 mb-5"></div>
+                {% else %}
+                <div class="google_map mb-lg-0 mb-5"></div>
                 {% endif %}
             </div>
         </div>
@@ -202,7 +202,7 @@
                     {% endif %}
 
                     {# < 표시 여부 #}
-                    {% if reviews.number > 1 %}
+                    {% if reviews.number > reviews.paginator.num_pages %}
                     <li class="page-item"><a class="page-link" href="?page={{ reviews.previous_page_number }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
                     {% endif %}
 
@@ -232,25 +232,27 @@
     </div>
 
     <div>
+        {% if vacation_imgs%}
         <h2>추천여행지</h2>
         <div class="d-flex">
             {% for vacation in vacation_imgs %}
                 {% if forloop.counter < 4 %}
                     {% if vacation %}
-                        <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div>
+                        <a href="{% url 'vacation_detail' vacation.vacation_id_id %}"><div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-2 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div><span class="recommend">{{ vacation.vacation_id }}</span></a>
                     {% else %}
                         <div class="recommend_vaction col-lg-3 col-12 me-lg-3 mb-lg-0 mb-3"></div>
                     {% endif %}
                 {% else %}
                     {% if vacation %}
-                        <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div>
+                        <a href="{% url 'vacation_detail' vacation.vacation_id_id %}"><div class="recommend_vaction col-lg-3 col-12 mb-lg-2 mb-3" style="background-image: url('/media/{{ vacation.vacation_image_file_path }}');"></div><span class="recommend">{{ vacation.vacation_id }}</span></a>
                     {% else %}
                         <div class="recommend_vaction col-lg-3 col-12 mb-lg-0 mb-3"></div>
                     {% endif %}
                 {% endif %}
             {% endfor %}
+            </div>
+        {% endif %}
         </div>
-    </div>
 
     <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="lat">
     <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="lng">
