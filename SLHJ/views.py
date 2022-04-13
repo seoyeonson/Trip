@@ -38,10 +38,7 @@ def main(request):
         hotel_reserve_people = request.session.get('hotel_reserve_people')
         vacation_reserve_people = request.session.get('vacation_reserve_people', 1)
 
-        print(start_date, end_date, hotel_reserve_people, vacation_reserve_people)
-        print(not(start_date or end_date or hotel_reserve_people or vacation_reserve_people))
         if not(start_date or end_date or hotel_reserve_people or vacation_reserve_people):
-            print("들어옴")
             del request.session['SIGUN_NM']
             del request.session['start_date']
             del request.session['end_date']
@@ -427,8 +424,6 @@ def hotel_detail(request, pk):
     hotel_reserve_people = request.session.get('hotel_reserve_people')
     pos_rooms = request.session.get('pos_rooms')
 
-    print(start_date, end_date, hotel_reserve_people, pos_rooms)
-
     if not (start_date or end_date or hotel_reserve_people):
         request.session['start_date'] = now.strftime('%Y-%m-%d')
         request.session['end_date'] = next_date.strftime('%Y-%m-%d')
@@ -557,17 +552,17 @@ def hotel_detail(request, pk):
         hotel_reserve_people = request.POST.get('hotel_reserve_people')
         reserve_room = request.POST.get('reserve_room')
         hotel_room_pk = request.POST.get('hotel_room_pk')
-        # hotel_name = 
+        hotel_name = request.POST.get('hotel_name')
 
-        request.session['hotel_name'] = hotel_name
         request.session['start_date'] = start_date
         request.session['end_date'] = end_date
         request.session['hotel_pk'] = hotel_pk
+        request.session['hotel_name'] = hotel_name
         request.session['hotel_reserve_people'] = hotel_reserve_people
         request.session['reserve_room'] = reserve_room
         request.session['hotel_room_pk'] = hotel_room_pk
 
-        return redirect('/hotel_reserve/')
+        return render(request, 'hotel_reserve.html')
 
 
 def vacation_detail(request, pk):
@@ -1135,10 +1130,10 @@ def admin_manage(request):
 
             rooms_2 = Hotel_room.objects.filter(hotel_id=hotel_id)
             reserveses = []
-            print(rooms_2.count())
+            # print(rooms_2.count())
             for r in range(rooms_2.count()):
                 reserve = Hotel_reserve.objects.filter(room_id=rooms_2[r].hotel_id_id)
-                print(type(reserve))
+                # print(type(reserve))
                 for i in range(reserve.count()):
                     reserveses.append(reserve[i])
 
@@ -1884,7 +1879,7 @@ def option_change(request, pk):
             'pos_rooms': pos_rooms,
         }
 
-        print(json.dumps(context))
+        # print(json.dumps(context))
         return HttpResponse(json.dumps(context), content_type="application/json")
         # context를 json 타입으로
     else:

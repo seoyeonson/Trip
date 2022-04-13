@@ -26,6 +26,12 @@ hr{
     border-color : var(--sub-grey-color);
 }
 
+img{
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 .page-link{
     color: var(--main-color);
 }
@@ -674,12 +680,18 @@ footer{
     content: "";
 }
 
+.recommend{
+    font-size: 16px;
+}
+
 .recommend_vaction, .recommend_vaction a{
     height: 194px;
     width: 324px;
     background-image: url(/static/img/img_noimg.jpg);
     border-radius: 10px;
     background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .hotel_room_select{
