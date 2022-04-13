@@ -36,20 +36,24 @@
                         <label class="reserve_name">{{ vacation_reserve.vacation_id.TURSM_INFO_NM }}</label>
                         <label class="reserve_adress">{{ vacation_reserve.vacation_id.SM_RE_ADDR }}</label>
                         <label class="review_count">
-                            <span>여행지평점{{ vacation_reserve.vacation_id.vacation_rate }}</span>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <div class="after_visit">
+                            <div>
+                                <span>여행지평점{{ vacation_reserve.vacation_id.vacation_rate }}</span>
+                                {% for i in "x"|rjust:"5" %}
+                                {% if vacation_reserve.vacation_id.vacation_rate >= forloop.counter %}
+                                <i class="fas fa-star"></i>
+                                {% else %}
+                                <i class="fas fa-star no_star"></i>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <!-- <div>
                             <span>My</span>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
-                            </div>
+                            </div> -->
                         </label>
 
                         <ul class="reserve_info">
@@ -65,10 +69,13 @@
                     <div class="after_visit comment_box">
                         <form name="reivew" class="form-group" method="POST">
                             {% csrf_token %}
-                            <textarea class="form-control review_comment"></textarea>
-                            <input type="button" value="리뷰등록">
-                            <input type="button" value="수정">
-                            <input type="button" value="취소">
+                            <input type="hidden" id=vacation_id name=vacation_id
+                                value="{{ vacation_reserve.vacation_id_id }}">
+                            <textarea id = review name = review class="form-control review_comment"></textarea>
+                            <input type="number" id=rate name=rate class="form-control review_comment" min="1" max="5">
+                            <input type="submit" value="리뷰등록">
+                            <!-- <input type="button" value="수정">
+                            <input type="button" value="취소"> -->
                         </form>
                     </div>
                     {% endif %}
@@ -103,7 +110,7 @@
             
                 {# >> 표시 #}
                 {% if vacation_reserves.number < vacation_reserves.paginator.num_pages %}
-                <li class="page-item"><a class="page-link" href="?page={{ end_page }}" title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ vacation_reserves.paginator.num_pages }}" title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
                 {% endif %}
             </ul>
         </div>

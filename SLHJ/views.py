@@ -26,6 +26,7 @@ from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
 import time
 from django.views.decorators.csrf import csrf_exempt
+import re
 
 def main(request):
 
@@ -38,10 +39,7 @@ def main(request):
         hotel_reserve_people = request.session.get('hotel_reserve_people')
         vacation_reserve_people = request.session.get('vacation_reserve_people', 1)
 
-        print(start_date, end_date, hotel_reserve_people, vacation_reserve_people)
-        print(not(start_date or end_date or hotel_reserve_people or vacation_reserve_people))
         if not(start_date or end_date or hotel_reserve_people or vacation_reserve_people):
-            print("들어옴")
             del request.session['SIGUN_NM']
             del request.session['start_date']
             del request.session['end_date']
@@ -427,8 +425,6 @@ def hotel_detail(request, pk):
     hotel_reserve_people = request.session.get('hotel_reserve_people')
     pos_rooms = request.session.get('pos_rooms')
 
-    print(start_date, end_date, hotel_reserve_people, pos_rooms)
-
     if not (start_date or end_date or hotel_reserve_people):
         request.session['start_date'] = now.strftime('%Y-%m-%d')
         request.session['end_date'] = next_date.strftime('%Y-%m-%d')
@@ -557,17 +553,17 @@ def hotel_detail(request, pk):
         hotel_reserve_people = request.POST.get('hotel_reserve_people')
         reserve_room = request.POST.get('reserve_room')
         hotel_room_pk = request.POST.get('hotel_room_pk')
-        # hotel_name = 
+        hotel_name = request.POST.get('hotel_name')
 
-        request.session['hotel_name'] = hotel_name
         request.session['start_date'] = start_date
         request.session['end_date'] = end_date
         request.session['hotel_pk'] = hotel_pk
+        request.session['hotel_name'] = hotel_name
         request.session['hotel_reserve_people'] = hotel_reserve_people
         request.session['reserve_room'] = reserve_room
         request.session['hotel_room_pk'] = hotel_room_pk
 
-        return redirect('/hotel_reserve/')
+        return render(request, 'hotel_reserve.html')
 
 
 def vacation_detail(request, pk):
@@ -912,6 +908,27 @@ def history_vacation(request):
         'page_range': range(start_page, end_page+1),
         'today': datetime.datetime.now().date()
     }
+    if request.method == 'POST':
+        review = request.POST.get('review')
+        rate = request.POST.get('rate')
+        vacation_id = request.POST.get('vacation_id')
+        vacation = Vacation.objects.get(pk=vacation_id)
+        now = datetime.datetime.now().strftime('%Y-%m-%d')
+
+        vacation_review = Vacation_review(
+            vacation_review_content = review,
+            vacation_review_rate = rate,
+            vacation_review_date = now,
+            id = user,
+            vacation_id = vacation
+        )
+
+        vacation_review.save()
+
+        all_cnt = Vacation_review.objects.filter(vacation_id_id = vacation_id).count()
+        vacation.vacation_rate = round((vacation.vacation_rate * (all_cnt-1) + int(rate)) / all_cnt, 2)    # 평점을 새로고침하는 계산식입니다.
+        vacation.save()
+        return redirect(f'/vacation_detail/{vacation_id}')
     return render(request, 'history_vacation.html', context)
 
 def admin_info(request):
@@ -1094,59 +1111,58 @@ def admin_manage(request):
         'vacation': my_vacations,
         'user' : user,
     }
-    if request.method == "GET":
-        return render(request, 'admin_manage.html', context)
-
+    
     if request.method == "POST":
 
         choice = request.POST.get('choice') # 호텔인지, 여행지인지 선택하는 항목
         reserve_name = request.POST.get('reserve_name')
         reserve_num = request.POST.get('reserve_num')
         reserve_date = request.POST.get('reserve_date')
+        reserve_date = re.sub('[^0-9]', '', reserve_date)
         if choice == 'hotel':
             selected_place = request.POST.get('choice_hotel')
+            if selected_place == "default":
+                return redirect('/admin_manage/')
             hotel_id = Hotel.objects.get(BIZPLC_NM=selected_place).hotel_id
-            
-            # rooms = list(Hotel_room.objects.filter(hotel_id=hotel_id).values())
-            # q = Q()
-            # for room in rooms:
-            #     q.add(Q(room_id_id=room['room_id']), q.OR)
-
             rooms_2 = Hotel_room.objects.filter(hotel_id=hotel_id)
             reserveses = []
-            print(rooms_2.count())
             for r in range(rooms_2.count()):
                 reserve = Hotel_reserve.objects.filter(room_id=rooms_2[r].hotel_id_id)
-                print(type(reserve))
                 for i in range(reserve.count()):
                     reserveses.append(reserve[i])
+                    reserveses = reserveses[0: reserve.count()]
+            if reserve_name != '':
+                reserveses = list(filter(lambda x: x.hotel_reserve_username == reserve_name, reserveses))
+            if reserve_num != '':
+                reserveses = list(filter(lambda x: str(x.hotel_reserve_id) == str(reserve_num), reserveses))
+            if reserve_date != '':
+                
+                reserveses = list(filter(lambda x: re.sub('[^0-9]', '', str(x.hotel_reserve_startdate)) == reserve_date, reserveses))
+            if len(reserveses) == 0 :
+                context['message'] = '예약정보가 없습니다.' 
+            context['place_type'] = 'hotel'
+            context['reserves'] = reserveses
+            context['reserve_count'] = len(reserveses)
+            return render(request, 'admin_manage.html', context)
 
-            reserveses = reserveses[0: reserve.count()]
             # reserves = Hotel_reserve.objects.filter(q).values().order_by('-hotel_reserve_startdate')
             # print(reserves[0].room_id_id)
-        
-
             # hotel_room = Hotel_room.objects.filter(hotel_id_id = hotel_id)
             # rooms = []
             # for r in hotel_room:
             #     rooms.append(hotel_room.room_id)
             # print(rooms)
-
             # reserves = Hotel_reserve.objects.filter(room_id_id.hotel_id = hotel_id)
             # room_id = Hotel_room.objects.filter(hotel_id_id=hotel_id)
             # 선택한 hotel 이 가지고 있는 room들의 room_id 의 집합. => room_id[r].room_id
-
             # reserve 의 room_id_id가 위 집합 중 하나인 것들 -> 쿼리셋
             # for r in room_id:
-            #     temp_list = Hotel_reserve.objects.filter(room_id=room_id[r].room_id)
-            
-            context['place_type'] = 'hotel'
-            context['reserves'] = reserveses
-            return render(request, 'admin_manage.html', context)
-
+            #     temp_list = Hotel_reserve.objects.filter(room_id=room_id[r].room_id) 
             
         elif choice == 'vacation':
             selected_place = request.POST.get('choice_vacation')
+            if selected_place == "default":
+                return redirect('/admin_manage/')
             vacation_id = Vacation.objects.get(TURSM_INFO_NM=selected_place).vacation_id
             reserves = Vacation_reserve.objects.filter(vacation_id_id=vacation_id).order_by('-vacation_reserve_date')
             if reserve_name != '':
@@ -1161,6 +1177,10 @@ def admin_manage(request):
             context['reserve_count'] = reserves.count()
             context['reserves'] = reserves
             return render(request, 'admin_manage.html', context)
+
+    if request.method == "GET":
+        return render(request, 'admin_manage.html', context)
+
 
 
 
@@ -1863,7 +1883,7 @@ def option_change(request, pk):
             'pos_rooms': pos_rooms,
         }
 
-        print(json.dumps(context))
+        # print(json.dumps(context))
         return HttpResponse(json.dumps(context), content_type="application/json")
         # context를 json 타입으로
     else:

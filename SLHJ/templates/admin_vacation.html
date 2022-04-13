@@ -33,27 +33,33 @@
                 <a type="button" class="to_register" href="{% url 'vacation_register' %}">여행지등록</a>
             </div>
 
-            <tr><!--테이블시작-->
+            <tr>
+                <!--테이블시작-->
                 {% for vacation in vacations %}
                 <!--sample: review-->
                 <td class="reserve hotel_reserve">
-                    <img style="background-image: url('/media/{{ vacation.vacation_image.vacation_image_file_path }}');">
+                    <img
+                        style="background-image: url('/media/{{ vacation.vacation_image.vacation_image_file_path }}');">
                     <div class="info_container">
-                        <a type="button" class="detail_btn" href="{% url 'admin_vacation_detail' vacation.vacation_id %}">세부정보</a>
+                        <a type="button" class="detail_btn"
+                            href="{% url 'admin_vacation_detail' vacation.vacation_id %}">세부정보</a>
                         <label class="reserve_name">{{ vacation.TURSM_INFO_NM }}</label>
                         <label class="reserve_adress">{{ vacation.SM_RE_ADDR }}</label>
                         <label class="review_count">{{ vacation.vacation_rate}}
+                            {% for i in "x"|rjust:"5" %}
+                            {% if vacation.vacation_rate >= forloop.counter %}
                             <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            {% else %}
+                            <i class="fas fa-star no_star"></i>
+                            {% endif %}
+                            {% endfor %}
                         </label>
                         <label>{{ vacation.vacation_price }} 원</label>
                     </div>
                 </td>
                 {% endfor %}
-            </tr> <!--테이블끝-->
+            </tr>
+            <!--테이블끝-->
         </table>
 
         <div class="container mt-1">
@@ -66,8 +72,8 @@
 
                 {# < 표시 여부 #}
                 {% if vacations.number > 1 %}
-                <li class="page-item"><a class="page-link" href="?page={{ vacations.previous_page_number }}" title="이전"><i
-                            class='fas fa-angle-left'></i></a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ vacations.previous_page_number }}"
+                        title="이전"><i class='fas fa-angle-left'></i></a></li>
                 {% endif %}
 
                 {# 페이징 안의 '숫자' 표시 #}
@@ -89,7 +95,7 @@
 
                 {# >> 표시 #}
                 {% if vacations.number < vacations.paginator.num_pages %}
-                <li class="page-item"><a class="page-link" href="?page={{ end_page }}" title="마지막"><i
+                <li class="page-item"><a class="page-link" href="?page={{ vacations.paginator.num_pages }}" title="마지막"><i
                             class='fas fa-angle-double-right'></i></a></li>
                 {% endif %}
             </ul>
