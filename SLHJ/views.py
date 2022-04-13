@@ -1260,6 +1260,19 @@ def hotel_delete(request):
 
     return render(request, 'hotel_delete.html', context)
 
+def hotel_delete2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    temp = request.POST.get('hotel_reserve_id')
+    request.session['rk2'] = temp
+    print(temp)
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'hotel_delete2.html', context)  
+
+
 def hotel_deleteOk(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
@@ -1271,6 +1284,18 @@ def hotel_deleteOk(request):
     }
 
     return render(request, 'hotel_deleteOk.html', context)
+
+def hotel_deleteOk2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    hotel_reserve_id = request.session.get('rk2')
+    hotel_reserve = Hotel_reserve.objects.get(pk=hotel_reserve_id)
+    hotel_reserve.delete()
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'hotel_deleteOk2.html', context)
 
 def vacation_register(request):
     pk = request.session['user']
@@ -1332,6 +1357,18 @@ def vacation_delete(request):
 
     return render(request, 'vacation_delete.html', context)
 
+def vacation_delete2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    temp = request.POST.get('vacation_reserve_id')
+    request.session['rk'] = temp
+    print(temp)
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'vacation_delete2.html', context)  
+
 def vacation_deleteOk(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
@@ -1343,6 +1380,18 @@ def vacation_deleteOk(request):
     }
 
     return render(request, 'vacation_deleteOk.html', context)
+
+def vacation_deleteOk2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    vacation_reserve_id = request.session.get('rk')
+    vacation_reserve = Vacation_reserve.objects.get(pk=vacation_reserve_id)
+    vacation_reserve.delete()
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'vacation_deleteOk2.html', context)
 
 def admin_hotel_detail(request, hk):
     pk = request.session['user']
@@ -1393,7 +1442,6 @@ def hotel_update(request):
         REFINE_ROADNM_ADDR = request.POST.get('hotel_addr', '')
         REFINE_WGS84_LAT = 0.0
         REFINE_WGS84_LOGT = 0.0
-        hotel_rate = 0.0
         hotel_comment = request.POST.get('context')
         hotel_admin_id = user
         if hotel_comment == '':
@@ -1405,7 +1453,6 @@ def hotel_update(request):
         hotel.REFINE_ROADNM_ADDR = REFINE_ROADNM_ADDR
         hotel.REFINE_WGS84_LAT = REFINE_WGS84_LAT
         hotel.REFINE_WGS84_LOGT = REFINE_WGS84_LOGT
-        hotel.hotel_rate = hotel_rate
         hotel.hotel_comment = hotel_comment
         hotel.hotel_admin_id = hotel_admin_id
         
@@ -1426,8 +1473,6 @@ def hotel_update(request):
         room_price = request.POST.getlist('room_price[]')
         room_people = request.POST.getlist('room_people[]')
         all_room = len(room_type)
-        if room_type[-1] == "":
-            all_room -= 1
 
         # for i in range(all_room):
 
@@ -1487,7 +1532,6 @@ def vacation_update(request):
         REFINE_WGS84_LOGT = 0.0
         vacation_comment = request.POST.get('context')
         vacation_price = request.POST.get('vacation_price')
-        vacation_rate = 0.0
         if vacation_comment == '':
             vacation_comment = '설명이 없습니다.'
         
@@ -1499,7 +1543,6 @@ def vacation_update(request):
         vacation.REFINE_WGS84_LOGT = REFINE_WGS84_LOGT
         vacation.vacation_comment = vacation_comment
         vacation.vacation_price = vacation_price
-        vacation.vacation_rate = vacation_rate
     
         vacation.save()
 
