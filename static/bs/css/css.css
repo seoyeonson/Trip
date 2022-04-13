@@ -179,7 +179,7 @@ footer{
     padding: 0;
     min-height: 100%;
     position: relative;
-    padding-bottom:64px;
+    /* padding-bottom:64px; */
     max-width: 6144px;
 }
 

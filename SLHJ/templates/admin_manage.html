@@ -32,14 +32,14 @@
             {% csrf_token %}
             <input type="submit" class="search_btn" value="조회">
             <div class="choice_box">
-                <button class="choice ch" type="button" value="hotel">호텔</button>
+                <button class="choice ch clicked_btn" type="button" value="hotel">호텔</button>
                 <button class="choice cv" type="button" value="vacation">여행지</button>
-                <input type="hidden" name="choice" id="choice">
+                <input type="hidden" name="choice" id="choice" value="hotel">
             </div>
             <div id="choice_vacation">
                 <label class="index_title">여행지 선택</label>
                 <select class="choice_vacation form-select" name="choice_vacation">
-                    <option value="none">=== 선택 ===</option>
+                    <option value="default">=== 선택 ===</option>
                     {% for p in vacation%}
                     <option value="{{ p }}">{{ p }}</option>
                     {% endfor %}
@@ -48,7 +48,7 @@
             <div id="choice_hotel">
                 <label class="index_title">호텔 선택</label>
                 <select class="choice_hotel form-select" name="choice_hotel">
-                    <option value="none">=== 선택 ===</option>
+                    <option value="default">=== 선택 ===</option>
                     {% for p in hotel%}
                     <option value="{{ p }}">{{ p }}</option>
                     {% endfor %}

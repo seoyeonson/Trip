@@ -39,15 +39,18 @@
                 <td class="reserve hotel_reserve">
                     <img style="background-image: url('/media/{{ hotel.hotel_image.hotel_image_file_path }}');">
                     <div class="info_container">
-                        <a type="button" class="detail_btn" href="{% url 'admin_hotel_detail' hotel.hotel_id %}">세부정보</a>
+                        <a type="button" class="detail_btn"
+                            href="{% url 'admin_hotel_detail' hotel.hotel_id %}">세부정보</a>
                         <label class="reserve_name">{{ hotel.BIZPLC_NM }}</label>
                         <label class="reserve_adress">{{ hotel.REFINE_ROADNM_ADDR }}</label>
                         <label class="review_count">{{ hotel.hotel_rate}}
+                            {% for i in "x"|rjust:"5" %}
+                            {% if hotel.hotel_rate >= forloop.counter %}
                             <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            {% else %}
+                            <i class="fas fa-star no_star"></i>
+                            {% endif %}
+                            {% endfor %}
                         </label>
                     </div>
                 </td>
@@ -59,17 +62,19 @@
             <ul class="pagination justify-content-center">
                 {# << 표시 여부 #}
                 {% if hotels.number > 1 %}
-                <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
-                <li class="page-item"><a class="page-link" href="?page={{ hotels.previous_page_number }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
+                <li class="page-item"><a class="page-link" href="?page=1" title="처음"><i
+                            class='fas fa-angle-double-left'></i></a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.previous_page_number }}" title="이전"><i
+                            class='fas fa-angle-left'></i></a></li>
                 {% endif %}
 
                 {% if hotels.paginator.num_pages > 1 %}
                 {% for p in page_range %}
-                    {% if hotels.number != p %}
-                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                    {% else %}
-                     <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
-                    {% endif %}
+                {% if hotels.number != p %}
+                <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                {% else %}
+                <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
+                {% endif %}
                 {% endfor %}
                 {% endif %}
 
