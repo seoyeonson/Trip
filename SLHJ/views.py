@@ -1429,11 +1429,21 @@ def hotel_update(request):
             room.room_price = room_price[i]
             room.room_people = room_people[i]
             i += 1
-        
         Hotel_room.objects.bulk_update(hotel_room, ['room_type'])
         Hotel_room.objects.bulk_update(hotel_room, ['room_price'])
         Hotel_room.objects.bulk_update(hotel_room, ['room_people'])
+        
+        for i in range(i, all_room):
+            hotel_room = Hotel_room(
+                room_type = room_type[i],
+                room_price = room_price[i],
+                room_people = room_people[i],
 
+                hotel_id = hotel_id                
+            )
+
+            hotel_room.save()
+        
         return redirect('/admin_hotel/')
     context = {
         'user' : user,
