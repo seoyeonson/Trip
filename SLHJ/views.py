@@ -557,7 +557,9 @@ def hotel_detail(request, pk):
         hotel_reserve_people = request.POST.get('hotel_reserve_people')
         reserve_room = request.POST.get('reserve_room')
         hotel_room_pk = request.POST.get('hotel_room_pk')
+        # hotel_name = 
 
+        request.session['hotel_name'] = hotel_name
         request.session['start_date'] = start_date
         request.session['end_date'] = end_date
         request.session['hotel_pk'] = hotel_pk
