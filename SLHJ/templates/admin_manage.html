@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load humanize %}
 
 {% block extrahead %}
 <link href="{% static 'bs/css/user_mypage.css' %}" rel="stylesheet">
@@ -31,6 +31,29 @@
         <form class="search_form form-group" action="." method="POST">
             {% csrf_token %}
             <input type="submit" class="search_btn" value="조회">
+            <div class="choice_box">
+                <button class="choice ch" type="button" value="hotel">호텔</button>
+                <button class="choice cv" type="button" value="vacation">여행지</button>
+                <input type="hidden" name="choice" id="choice">
+            </div>
+            <div id="choice_vacation">
+                <label class="index_title">여행지 선택</label>
+                <select class="choice_vacation form-select" name="choice_vacation">
+                    <option value="none">=== 선택 ===</option>
+                    {% for p in vacation%}
+                    <option value="{{ p }}">{{ p }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div id="choice_hotel">
+                <label class="index_title">호텔 선택</label>
+                <select class="choice_hotel form-select" name="choice_hotel">
+                    <option value="none">=== 선택 ===</option>
+                    {% for p in hotel%}
+                    <option value="{{ p }}">{{ p }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             <div>
                 <label class="index_title">예약자명</label>
                 <input type="text" class="form-control reserve_info" name="reserve_name">
@@ -48,7 +71,8 @@
 
         <div>
             <label class="res_title">검색결과 </label>
-            <label class="res_title res_sum"> 총 {##} 건 </label>
+            <label class="res_title res_sum"> 총 {{ reserve_count }} 건 </label>
+
             <table class="table mt-4">
                 <thead>
                     <tr>
@@ -57,12 +81,45 @@
                         <th>객실정보</th>
                         <th>예약자명</th>
                         <th>결제금액</th>
+                        <th>예약취소</th>
                     </tr>
                 </thead>
+
+                {% if place_type == 'vacation'%}
                 <tbody>
-                    {# 예약정보 #}
+                    {% for r in reserves %}
+                    <tr>
+                        <td>{{ r.vacation_reserve_id }}</td>
+                        <td>{{ r.vacation_reserve_date }}</td>
+                        <td> - </td>
+                        <td>{{ r.vacation_reserve_username}}</td>
+                        <td>{{ r.vacation_reserve_price|intcomma }}</td>
+                        <td><button type="button" id="del_reserve" value="{{ r.vacation_reserve_id }}">예약취소</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
+                {% endif %}
+
+                {% if place_type == 'hotel'%}
+                <tbody>
+                    {% for r in reserves %}
+                    <tr>
+                        <td>{{ r.hotel_reserve_id }}</td>
+                        <td>{{ r.hotel_reserve_startdate }} ~ {{ r.hotel_reserve_enddate }}</td>
+                        <td> {{ r.room_id.room_type }} </td>
+                        <td>{{ r.hotel_reserve_username}}</td>
+                        <td>{{ r.hotel_reserve_price|intcomma }}</td>
+                        <td><button type="button" id="del_reserve" value="{{ r.vacation_reserve_id }}">예약취소</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% endif %}
             </table>
+            <div>
+                {{ message }}
+            </div>
         </div>
     </div>
 </div>

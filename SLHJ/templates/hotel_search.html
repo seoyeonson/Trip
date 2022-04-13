@@ -80,12 +80,13 @@
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="li_lng"> 
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}" name="lat">
                     <input type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}" name="lng">                  
+                    <div name="price_list">
                     {% for hotel_room in hotel_rooms %}                                           
                         {% if hotel_room.hotel_id_id == hotel.hotel_id %}
                             <input type="hidden" value="{{ hotel_room.room_price }}" name="price[]">  
                         {% endif %}                                       
                     {% endfor %}
-                    <input type="hidden" value="0" name="min_price"> 
+                    </div>
                     <div class="list_table_content">
                         {% if  hotel_img.hotel_image_file_path %}
                         <div class="list_hotel_image" style="background-image: url('/media/{{ hotel_img.hotel_image_file_path }}');"></div>

@@ -815,6 +815,10 @@ def history_hotel(request):
 
     except Hotel_image.DoesNotExist:
         hotel_image = ''
+    
+    except IndexError:
+        hotel_image = ''
+    
 
     # for i in range(hotel_reserve.count()):
     #     hotel_reserves.append(hotel_reserve[i])
@@ -1081,11 +1085,82 @@ def admin_vacation(request):
 def admin_manage(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
-
+    my_hotels = Hotel.objects.filter(hotel_admin_id_id=pk)
+    my_vacations = Vacation.objects.filter(vacation_admin_id_id=pk)
     context = {
+        'hotel': my_hotels,
+        'vacation': my_vacations,
         'user' : user,
     }
-    return render(request, 'admin_manage.html', context)
+    if request.method == "GET":
+        return render(request, 'admin_manage.html', context)
+
+    if request.method == "POST":
+
+        choice = request.POST.get('choice') # 호텔인지, 여행지인지 선택하는 항목
+        reserve_name = request.POST.get('reserve_name')
+        reserve_num = request.POST.get('reserve_num')
+        reserve_date = request.POST.get('reserve_date')
+        if choice == 'hotel':
+            selected_place = request.POST.get('choice_hotel')
+            hotel_id = Hotel.objects.get(BIZPLC_NM=selected_place).hotel_id
+            
+            # rooms = list(Hotel_room.objects.filter(hotel_id=hotel_id).values())
+            # q = Q()
+            # for room in rooms:
+            #     q.add(Q(room_id_id=room['room_id']), q.OR)
+
+            rooms_2 = Hotel_room.objects.filter(hotel_id=hotel_id)
+            reserveses = []
+            print(rooms_2.count())
+            for r in range(rooms_2.count()):
+                reserve = Hotel_reserve.objects.filter(room_id=rooms_2[r].hotel_id_id)
+                print(type(reserve))
+                for i in range(reserve.count()):
+                    reserveses.append(reserve[i])
+
+            reserveses = reserveses[0: reserve.count()]
+            # reserves = Hotel_reserve.objects.filter(q).values().order_by('-hotel_reserve_startdate')
+            # print(reserves[0].room_id_id)
+        
+
+            # hotel_room = Hotel_room.objects.filter(hotel_id_id = hotel_id)
+            # rooms = []
+            # for r in hotel_room:
+            #     rooms.append(hotel_room.room_id)
+            # print(rooms)
+
+            # reserves = Hotel_reserve.objects.filter(room_id_id.hotel_id = hotel_id)
+            # room_id = Hotel_room.objects.filter(hotel_id_id=hotel_id)
+            # 선택한 hotel 이 가지고 있는 room들의 room_id 의 집합. => room_id[r].room_id
+
+            # reserve 의 room_id_id가 위 집합 중 하나인 것들 -> 쿼리셋
+            # for r in room_id:
+            #     temp_list = Hotel_reserve.objects.filter(room_id=room_id[r].room_id)
+            
+            context['place_type'] = 'hotel'
+            context['reserves'] = reserveses
+            return render(request, 'admin_manage.html', context)
+
+            
+        elif choice == 'vacation':
+            selected_place = request.POST.get('choice_vacation')
+            vacation_id = Vacation.objects.get(TURSM_INFO_NM=selected_place).vacation_id
+            reserves = Vacation_reserve.objects.filter(vacation_id_id=vacation_id).order_by('-vacation_reserve_date')
+            if reserve_name != '':
+                reserves = reserves.filter(vacation_reserve_username=reserve_name)
+            if reserve_num != '':
+                reserves = reserves.filter(vacation_reserve_id=reserve_num)
+            if reserve_date != '':
+                reserves = reserves.filter(vacation_reserve_date=reserve_date)
+            if reserves.count() == 0 :
+                context['message'] = '예약정보가 없습니다.' 
+            context['place_type'] = 'vacation'
+            context['reserve_count'] = reserves.count()
+            context['reserves'] = reserves
+            return render(request, 'admin_manage.html', context)
+
+
 
 def hotel_register(request):
     pk = request.session['user']
@@ -1096,8 +1171,8 @@ def hotel_register(request):
         SIGUN_NM = request.POST.get('hotel_area')
         BSN_STATE_NM = 1
         REFINE_ROADNM_ADDR = request.POST.get('hotel_addr', '')
-        REFINE_WGS84_LAT = 0.0
-        REFINE_WGS84_LOGT = 0.0
+        REFINE_WGS84_LAT = request.POST.get('lat')
+        REFINE_WGS84_LOGT = request.POST.get('lng')
         hotel_rate = 0.0
         hotel_comment = request.POST.get('context')
         hotel_admin_id = user
@@ -1154,6 +1229,27 @@ def hotel_register(request):
     }
     return render(request, 'hotel_register.html', context)
 
+def hotel_delete(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'hotel_delete.html', context)
+
+def hotel_deleteOk(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    hotel_id = request.session.get('hk')
+    hotel = Hotel.objects.get(pk=hotel_id)
+    hotel.delete()
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'hotel_deleteOk.html', context)
+
 def vacation_register(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
@@ -1163,8 +1259,8 @@ def vacation_register(request):
         TURSM_INFO_NM = request.POST.get('vacation_name')
         SM_RE_ADDR =  request.POST.get('vacation_adress')
         TELNO =  request.POST.get('phoneNum')
-        REFINE_WGS84_LAT = 0.0
-        REFINE_WGS84_LOGT = 0.0
+        REFINE_WGS84_LAT = request.POST.get('lat')
+        REFINE_WGS84_LOGT = request.POST.get('lng')
         vacation_comment = request.POST.get('context')
         vacation_price = request.POST.get('vacation_price')
         vacation_rate = 0.0
@@ -1205,8 +1301,30 @@ def vacation_register(request):
     }
     return render(request, 'vacation_register.html', context)
 
+def vacation_delete(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'vacation_delete.html', context)
+
+def vacation_deleteOk(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    vacation_id = request.session.get('vk')
+    vacation = Vacation.objects.get(pk=vacation_id)
+    vacation.delete()
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'vacation_deleteOk.html', context)
+
 def admin_hotel_detail(request, hk):
     pk = request.session['user']
+    request.session['hk'] = hk
     user = User.objects.get(pk=pk)
     hotel = Hotel.objects.get(pk = hk)
     hotel_review = Hotel_review.objects.filter(hotel_id = hk) 
@@ -1224,6 +1342,7 @@ def admin_hotel_detail(request, hk):
 
 def admin_vacation_detail(request, hk):
     pk = request.session['user']
+    request.session['vk'] = hk
     user = User.objects.get(pk=pk)
     vacation = Vacation.objects.get(pk = hk)
     vacation_review = Vacation_review.objects.filter(vacation_id = hk)
@@ -1241,19 +1360,135 @@ def admin_vacation_detail(request, hk):
 def hotel_update(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
+    hotel_id = request.session.get('hk')
+    hotel = Hotel.objects.get(pk=hotel_id)
+    hotel_room = Hotel_room.objects.filter(hotel_id = hotel.hotel_id)
 
+    if request.method == 'POST':
+        BIZPLC_NM = request.POST.get('hotel_name')
+        SIGUN_NM = request.POST.get('hotel_area')
+        BSN_STATE_NM = 1
+        REFINE_ROADNM_ADDR = request.POST.get('hotel_addr', '')
+        REFINE_WGS84_LAT = 0.0
+        REFINE_WGS84_LOGT = 0.0
+        hotel_rate = 0.0
+        hotel_comment = request.POST.get('context')
+        hotel_admin_id = user
+        if hotel_comment == '':
+            hotel_comment = '설명이 없습니다.'
+        
+        hotel.BIZPLC_NM = BIZPLC_NM
+        hotel.SIGUN_NM = SIGUN_NM
+        hotel.BSN_STATE_NM = BSN_STATE_NM
+        hotel.REFINE_ROADNM_ADDR = REFINE_ROADNM_ADDR
+        hotel.REFINE_WGS84_LAT = REFINE_WGS84_LAT
+        hotel.REFINE_WGS84_LOGT = REFINE_WGS84_LOGT
+        hotel.hotel_rate = hotel_rate
+        hotel.hotel_comment = hotel_comment
+        hotel.hotel_admin_id = hotel_admin_id
+        
+        hotel.save()
+
+        hotel_id = Hotel.objects.get(pk = hotel.hotel_id)
+        hotel_image_title = request.POST['fileTitle']
+        hotel_image_file_path = request.FILES["uploadedFile"]
+        document = Hotel_image(
+            hotel_id = hotel_id,
+            hotel_image_title = hotel_image_title,
+            hotel_image_file_path = hotel_image_file_path,
+            hotel_image_originname = "",
+        )
+        document.save()
+
+        room_type = request.POST.getlist('room_type[]')
+        room_price = request.POST.getlist('room_price[]')
+        room_people = request.POST.getlist('room_people[]')
+        all_room = len(room_type)
+        if room_type[-1] == "":
+            all_room -= 1
+
+        # for i in range(all_room):
+
+        #     print(hotel_room[i])
+        #     print(hotel_room[i].room_type, room_type[i])
+        #     hotel_room[i].room_type = room_type[i]
+        #     print(hotel_room[i].room_type, room_type[i])
+        #     # hotel_room[i].room_prcie = room_price[i]
+        #     # hotel_room[i].room_people = room_people[i]
+        #     hotel_room[i].save()
+
+        #     # hotel_room.update(room_type=room_type[i])
+        # for hotel_room in range(all_room):
+        #     hotel_room.room_type = room_type
+
+        i = 0
+        for room in hotel_room:
+            room.room_type = room_type[i]
+            room.room_price = room_price[i]
+            room.room_people = room_people[i]
+            i += 1
+        
+        Hotel_room.objects.bulk_update(hotel_room, ['room_type'])
+        Hotel_room.objects.bulk_update(hotel_room, ['room_price'])
+        Hotel_room.objects.bulk_update(hotel_room, ['room_people'])
+
+        return redirect('/admin_hotel/')
     context = {
         'user' : user,
+        'hotel' : hotel,
+        'hotel_rooms' : hotel_room,
     }
     return render(request, 'hotel_update.html', context)
 
 def vacation_update(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
+    vacation_id = request.session.get('vk')
+    vacation = Vacation.objects.get(pk=vacation_id)
 
+    if request.method == 'POST':
+        SIGUN_NM = request.POST.get('SIGUN_NM')
+        TURSM_INFO_NM = request.POST.get('vacation_name')
+        SM_RE_ADDR =  request.POST.get('vacation_adress')
+        TELNO =  request.POST.get('phoneNum')
+        REFINE_WGS84_LAT = 0.0
+        REFINE_WGS84_LOGT = 0.0
+        vacation_comment = request.POST.get('context')
+        vacation_price = request.POST.get('vacation_price')
+        vacation_rate = 0.0
+        if vacation_comment == '':
+            vacation_comment = '설명이 없습니다.'
+        
+        vacation.SIGUN_NM = SIGUN_NM
+        vacation.TURSM_INFO_NM = TURSM_INFO_NM
+        vacation.SM_RE_ADDR = SM_RE_ADDR
+        vacation.TELNO = TELNO
+        vacation.REFINE_WGS84_LAT = REFINE_WGS84_LAT
+        vacation.REFINE_WGS84_LOGT = REFINE_WGS84_LOGT
+        vacation.vacation_comment = vacation_comment
+        vacation.vacation_price = vacation_price
+        vacation.vacation_rate = vacation_rate
+    
+        vacation.save()
+
+        vacation_id = Vacation.objects.get(pk = vacation.vacation_id)
+        vacation_image_title = request.POST['fileTitle']
+        vacation_image_file_path = request.FILES["uploadedFile"]
+        document = Vacation_image(
+            vacation_id = vacation_id,
+            vacation_image_title = vacation_image_title,
+            vacation_image_file_path = vacation_image_file_path,
+            vacation_image_originname = "",
+        )
+        document.save()
+
+        return redirect('/admin_vacation/')
+        
     context = {
         'user' : user,
+        'vacation' : vacation,
     }
+    
     return render(request, 'vacation_update.html', context)
 
 def sample(request):  # vacation_review 데이터 입력포맷입니다.
@@ -1310,10 +1545,10 @@ def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 def sample3(request):   # hotel_room 포맷입니다.
 
     room_type = "디럭스"
-    room_price = 90000
+    room_price = 80000
     room_people = 2
 
-    hotel_id = Hotel.objects.get(pk=1)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
+    hotel_id = Hotel.objects.get(pk=6)  # 외래키 지정으로 pk값은 외부로 부터 받아와야합니다.
 
     hotel_room = Hotel_room(
         room_type = room_type,
