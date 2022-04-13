@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    console.log(test)
     var startDate = $('input[name=start_date]').val();
     var today = new Date();
     var minDate = today.getFullYear() + '-' + ("0" + (1 + today.getMonth())).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);

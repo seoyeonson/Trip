@@ -578,6 +578,7 @@ footer{
     margin-bottom: 12px;
     border-radius: 10px;
     background-color: var(--sub-grey-color);
+    text-align: center;
 }
 
 .hotel_detail_reserve_btn button{

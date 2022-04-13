@@ -3,6 +3,7 @@
 {% block extrahead %}
 <!-- <script src="{% static 'bs/js/vacation_detail.js' %}"></script> -->
 <script src="{% static 'bs/js/va_search.js' %}"></script>
+<script src="{% static 'bs/js/vacation_detail.js' %}"></script>
 {% endblock %}
 
 {% block title %}{{ vacation.TURSM_INFO_NM }}{% endblock %} {# 호텔명 #}
@@ -52,11 +53,11 @@
                 <input type="hidden" name="vacation_name" value="{{ vacation.TURSM_INFO_NM }}">
                 {% csrf_token %}
                 <div>
-                    <div class="hotel_detail_reserve_btn hotel_detail_reserve_date" onclick="choice_date()">
+                    <div class="hotel_detail_reserve_btn hotel_detail_reserve_date" onclick="vacation_get_date()">
                         <button type="button" class="hotel_detail_reserve_checkin"><i class="fas fa-calendar-alt"></i><span class="icon_before">{{ request.session.vacation_date }}</span></button>
                         <input type="hidden" value="{{ request.session.vacation_date }}" name="vacation_date">
                     </div>
-                    <div class="date_pick" id="date_pick">
+                    <div class="vacation_date_pick" id="vacation_date_pick">
                         <div class="d-flex justify-content-center">
                             <div class="input-daterange reserve_date"><input type="text" name="va_daterange" id="datepicker" readonly /> 
                             <input type="button" value="적용" name="reserve_date_choice">
@@ -64,8 +65,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="choice_people">
-                    <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="vacation_reserve_people" onclick="vacation_choice_people()"><i class="fas fa-user-alt"></i><span class="people">{{ vacation_reserve_people }}명</span></button>
+                <div class="vacation_choice_people">
+                    <button type="button" class="hotel_detail_reserve_btn hotel_detail_reserve_people" name="vacation_reserve_people" onclick="vacation_choice_people()"><i class="fas fa-user-alt"></i><span class="va_people">{{ vacation_reserve_people }}명</span></button>
                     <div class="d-flex justify-content-center hotel_detail_reserve_btn plus_minus_btn">
                         <div class="vacation_reserve_people">
                           <button type="button" data-quantity="minus" data-field="vacation_reserve_people">

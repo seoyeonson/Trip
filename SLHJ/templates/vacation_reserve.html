@@ -10,7 +10,7 @@
 {% block contents %}
 {% block script %}
 <script src="{% static 'bs/js/reserve.js' %}"></script>
-<script src="{% static 'bs/js/detail.js' %}"></script>
+<script src="{% static 'bs/js/vacation_detail.js' %}"></script>
 {% endblock %}
 
 
@@ -31,12 +31,19 @@
                     <div>
                         <input type="text" class="form-control vacation_reserve_date"
                             value="{{vacation_reserve_date}}" name="end_date" readonly>
-                        <button type="button" onclick="choice_date()" id="date_change"> 날짜변경</button>
+                        <button type="button" onclick="vacation_get_date()" id="date_change"> 날짜변경</button>
 
-                        <div class="date_pick" id="date_pick">
+                        <!-- <div class="vacation_date_pick" id="vacation_date_pick">
                             <div class="input-daterange reserve_date">
                                 <input type="text" name="daterange" id="datepicker" readonly />
+                                <input type="button" value="적용" name="reserve_date_choice" onclick="change_date()">
+                            </div>
+                        </div> -->
+                        <div class="vacation_date_pick" id="vacation_date_pick">
+                            <div class="d-flex justify-content-center">
+                                <div class="input-daterange reserve_date"><input type="text" name="va_daterange" id="datepicker" readonly /> 
                                 <input type="button" value="적용" name="reserve_date_choice">
+                                </div>
                             </div>
                         </div>
                     </div>

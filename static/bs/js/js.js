@@ -75,7 +75,9 @@ function vacation_lo_select(text) {
 // 2. 예약 날짜
 function vacation_get_date() {
     document.getElementById("vacation_date_pick").style.display ='block';
-    document.getElementById("vacation_location").style.display ='none';
+    if($("#vacation_location").val()){
+        document.getElementById("vacation_location").style.display ='none';
+    }
     $('.vacation_reserve_people').css('display', 'none');
 }
 
@@ -227,35 +229,6 @@ $(document).ready(function() {
         } else {
             $('input[name='+fieldName+']').val(1);
         }
-
-        var pk = $('input[name=hotel_pk]').val();
-        var hotel_reserve_people = $('input[name=hotel_reserve_people]').val();
-        var start_date = $('input[name=start_date]').val();
-        var end_date = $('input[name=end_date]').val();
-        var html ="";
-
-        $.ajax({ // <새로고침> 없이 ajax로 서버와 통신하겠다.
-        type: "POST", // 데이터를 전송하는 방법을 지정
-        url: "/option_change/"+ pk +"/", // 통신할 url을 지정
-        data: {'pk': '{{ hotel.hotel_id }}', 'hotel_reserve_people': hotel_reserve_people, 'start_date' : start_date, 'end_date': end_date, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, // 서버로 데이터 전송시 옵션
-        dataType: "json", 
-            success:function(json){
-                console.log("성공");
-                for (var i=0;i<json['hotel_room'].length;i++){
-                    // console.log("들어옴");
-                    // console.log(json['hotel_room']);
-                    // console.log(json['hotel_reserve_people']);
-                    // console.log(json['hotel_room'][i]['room_people']);
-                    if(json['hotel_reserve_people'] <= json['hotel_room'][i]['room_people']){
-                        html += '<a onclick="hotel_room_select(this)" class="select" data-value="'+ json['hotel_room'][i]['room_type'] + '"><li id="'+ json['hotel_room'][i]['room_type'] + '" class="hotel_room_select" value="'+ json['hotel_room'][i]['room_id'] + '">'+ json['hotel_room'][i]['room_type'] + '</li></a>'
-                    }
-                }
-                $('.hotel_room_type').html(html);
-            },
-            error : function(xhr,errmsg,err) {
-                console.log("실패"); 
-            }
-        });
     });
 
     $('[data-quantity="minus"]').click(function(e) {
@@ -272,35 +245,6 @@ $(document).ready(function() {
         } else {
             $('input[name='+fieldName+']').val(1);
         }
-
-        var pk = $('input[name=hotel_pk]').val();
-        var hotel_reserve_people = $('input[name=hotel_reserve_people]').val();
-        var start_date = $('input[name=start_date]').val();
-        var end_date = $('input[name=end_date]').val();
-        var html = "";
-
-        $.ajax({ // .like 버튼을 클릭하면 <새로고침> 없이 ajax로 서버와 통신하겠다.
-            type: "POST", // 데이터를 전송하는 방법을 지정
-            url: "/option_change/"+ pk +"/", // 통신할 url을 지정
-            data: {'pk': '{{ hotel.hotel_id }}', 'hotel_reserve_people': hotel_reserve_people, 'start_date' : start_date, 'end_date': end_date, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, // 서버로 데이터 전송시 옵션
-            dataType: "json", // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
-                success:function(json){
-                    console.log("성공");
-                    for (var i=0;i<json['hotel_room'].length;i++){
-                        // console.log("들어옴");
-                        // console.log(json['hotel_room']);
-                        // console.log(json['hotel_reserve_people']);
-                        // console.log(json['hotel_room'][i]['room_people']);
-                        if(json['hotel_reserve_people'] <= json['hotel_room'][i]['room_people']){
-                            html += '<a onclick="hotel_room_select(this)" class="select" data-value="'+ json['hotel_room'][i]['room_type'] + '"><li id="'+ json['hotel_room'][i]['room_type'] + '" class="hotel_room_select" value="'+ json['hotel_room'][i]['room_id'] + '">'+ json['hotel_room'][i]['room_type'] + '</li></a>'
-                        }
-                    }
-                    $('.hotel_room_type').html(html);
-                },
-                error:function(xhr,errmsg,err) {
-                    console.log("실패"); 
-                }
-        });
     });
 
     $('.chk_ho_form').click(function(){
@@ -312,7 +256,7 @@ $(document).ready(function() {
             return false;
         }
         if(start_date == ''){
-            alert('체크인・체크아웃 날짜를 선택해주세요.');
+            alert('체크인·체크아웃 날짜를 선택해주세요.');
             return false;
         }
     });
@@ -331,15 +275,6 @@ $(document).ready(function() {
         }
         return true;
     });
-
-    // $('[name="reserve_date_choice"]').click(function(e) {
-    //     $('.date_pick').css('display', 'none');
-    //     $('.hotel_detail_reserve_checkin').html('<i class="fas fa-calendar-alt"></i><span class="icon_before">'+startDate);
-    //     $('.hotel_detail_reserve_checkout').html(endDate);
-    //     $('input[name=start_date]').attr('value', startDate);
-    //     $('input[name=end_date]').attr('value', endDate);
-    //     console.log("startDate", startDate, "endDate", endDate);
-    // });
 
     $('.fa-bars').click(side_nav)
     $('.nav_close').click(side_nav)
