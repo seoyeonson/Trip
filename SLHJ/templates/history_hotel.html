@@ -72,21 +72,21 @@
                             <div>
                                 <span>호텔평점{{ hotel_reserve.room_id.hotel_id.hotel_rate }}</span>
                                 {% for i in "x"|rjust:"5" %}
-                                {% if hotel.hotel_rate >= forloop.counter %}
+                                {% if hotel_reserve.room_id.hotel_id.hotel_rate >= forloop.counter %}
                                 <i class="fas fa-star"></i>
                                 {% else %}
                                 <i class="fas fa-star no_star"></i>
                                 {% endif %}
                                 {% endfor %}
                             </div>
-                            <div>
+                            <!-- <div>
                                 <span>내 평점{{ hotel_reserve.room_id.hotel_id.hotel_image_title }}</span>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                            </div>
+                            </div> -->
                         </label>
                         <ul class="reserve_info">
                             <li class="left">인원</li>

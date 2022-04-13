@@ -912,6 +912,27 @@ def history_vacation(request):
         'page_range': range(start_page, end_page+1),
         'today': datetime.datetime.now().date()
     }
+    if request.method == 'POST':
+        review = request.POST.get('review')
+        rate = request.POST.get('rate')
+        vacation_id = request.POST.get('vacation_id')
+        vacation = Vacation.objects.get(pk=vacation_id)
+        now = datetime.datetime.now().strftime('%Y-%m-%d')
+
+        vacation_review = Vacation_review(
+            vacation_review_content = review,
+            vacation_review_rate = rate,
+            vacation_review_date = now,
+            id = user,
+            vacation_id = vacation
+        )
+
+        vacation_review.save()
+
+        all_cnt = Vacation_review.objects.filter(vacation_id_id = vacation_id).count()
+        vacation.vacation_rate = round((vacation.vacation_rate * (all_cnt-1) + int(rate)) / all_cnt, 2)    # 평점을 새로고침하는 계산식입니다.
+        vacation.save()
+        return redirect(f'/vacation_detail/{vacation_id}')
     return render(request, 'history_vacation.html', context)
 
 def admin_info(request):

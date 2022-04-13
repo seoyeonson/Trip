@@ -47,7 +47,7 @@
                         <label class="reserve_adress">{{ vacation.SM_RE_ADDR }}</label>
                         <label class="review_count">{{ vacation.vacation_rate}}
                             {% for i in "x"|rjust:"5" %}
-                            {% if hotel.hotel_rate >= forloop.counter %}
+                            {% if vacation.vacation_rate >= forloop.counter %}
                             <i class="fas fa-star"></i>
                             {% else %}
                             <i class="fas fa-star no_star"></i>
