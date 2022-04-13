@@ -88,11 +88,7 @@
                     {% endfor %}
                     </div>
                     <div class="list_table_content">
-                        {% if  hotel_img.hotel_image_file_path %}
-                        <div class="list_hotel_image" style="background-image: url('/media/{{ hotel_img.hotel_image_file_path }}');"></div>
-                        {% else %}
-                        <div class="list_hotel_image" style="background-image: url('/static/img/img_noimg.jpg');"></div>
-                        {% endif %}                
+                        <img class="list_hotel_image" style="background-image: url('/media/{{ hotel.hotel_image.hotel_image_file_path }}');">
                         <!-- <div class="list_hotel_image"></div> -->
                         <div class= "list_text">
                             <ul>

@@ -309,11 +309,9 @@ def user_create(request):
     return render(request, 'user_create.html')
 
 def hotel_reserve(request):
-    try:    
-        id = id=request.session.get('user','') # session에 저장된 user의 정보를 불러옵니다.
+        id = request.session.get('user','') # session에 저장된 user의 정보를 불러옵니다.
         if id == "": # session에 저장된 user 정보가 없을경우 로그인페이지로 redirect됩니다.
             return redirect('/login/')
-    except:
         # 세션에 저장된 예약 정보들 (hotel_detail 에서 선택한 옵션들) 받아옵니다. *추후 기본값 수정 필요*
         hotel_name = request.session.get('hotel_name', Hotel.objects.get(hotel_id=1).BIZPLC_NM)
         hotel_reserve_people = request.session.get('hotel_reserve_people', 2)
@@ -322,6 +320,8 @@ def hotel_reserve(request):
         start_date = datetime.datetime.strptime(hotel_reserve_startdate, '%Y-%m-%d').date()
         end_date = datetime.datetime.strptime(hotel_reserve_enddate, '%Y-%m-%d').date()
         reserve_room = request.session.get('reserve_room')
+
+        print(hotel_name, hotel_reserve_people)
 
         if (hotel_reserve_people=="") or (hotel_reserve_startdate==""):
             return redirect('/main/') # session에 예약정보가 담겨있지 않은 경우 main으로 redirect됩니다.
@@ -347,7 +347,7 @@ def hotel_reserve(request):
             hotel_reserve_username = request.POST["reserve_name"]
             hotel_reserve_phonenum = request.POST["phone_num"]
 
-            id = User.objects.get(id=request.session.get('id',1)) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
+            id = User.objects.get(id=id) # session에 저장된 user의 정보를 불러옵니다.(기본값 1은 추후 수정)
             room_id = hotel_room
 
             hotel_reserve = Hotel_reserve(
@@ -563,7 +563,7 @@ def hotel_detail(request, pk):
         request.session['reserve_room'] = reserve_room
         request.session['hotel_room_pk'] = hotel_room_pk
 
-        return render(request, 'hotel_reserve.html')
+        return redirect('/hotel_reserve/')
 
 
 def vacation_detail(request, pk):
@@ -1260,6 +1260,19 @@ def hotel_delete(request):
 
     return render(request, 'hotel_delete.html', context)
 
+def hotel_delete2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    temp = request.POST.get('hotel_reserve_id')
+    request.session['rk2'] = temp
+    print(temp)
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'hotel_delete2.html', context)  
+
+
 def hotel_deleteOk(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
@@ -1271,6 +1284,18 @@ def hotel_deleteOk(request):
     }
 
     return render(request, 'hotel_deleteOk.html', context)
+
+def hotel_deleteOk2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    hotel_reserve_id = request.session.get('rk2')
+    hotel_reserve = Hotel_reserve.objects.get(pk=hotel_reserve_id)
+    hotel_reserve.delete()
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'hotel_deleteOk2.html', context)
 
 def vacation_register(request):
     pk = request.session['user']
@@ -1332,6 +1357,18 @@ def vacation_delete(request):
 
     return render(request, 'vacation_delete.html', context)
 
+def vacation_delete2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    temp = request.POST.get('vacation_reserve_id')
+    request.session['rk'] = temp
+    print(temp)
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'vacation_delete2.html', context)  
+
 def vacation_deleteOk(request):
     pk = request.session['user']
     user = User.objects.get(pk=pk)
@@ -1343,6 +1380,18 @@ def vacation_deleteOk(request):
     }
 
     return render(request, 'vacation_deleteOk.html', context)
+
+def vacation_deleteOk2(request):
+    pk = request.session['user']
+    user = User.objects.get(pk=pk)
+    vacation_reserve_id = request.session.get('rk')
+    vacation_reserve = Vacation_reserve.objects.get(pk=vacation_reserve_id)
+    vacation_reserve.delete()
+    context = {
+        'user' : user,
+    }
+
+    return render(request, 'vacation_deleteOk2.html', context)
 
 def admin_hotel_detail(request, hk):
     pk = request.session['user']
@@ -1393,7 +1442,6 @@ def hotel_update(request):
         REFINE_ROADNM_ADDR = request.POST.get('hotel_addr', '')
         REFINE_WGS84_LAT = 0.0
         REFINE_WGS84_LOGT = 0.0
-        hotel_rate = 0.0
         hotel_comment = request.POST.get('context')
         hotel_admin_id = user
         if hotel_comment == '':
@@ -1405,7 +1453,6 @@ def hotel_update(request):
         hotel.REFINE_ROADNM_ADDR = REFINE_ROADNM_ADDR
         hotel.REFINE_WGS84_LAT = REFINE_WGS84_LAT
         hotel.REFINE_WGS84_LOGT = REFINE_WGS84_LOGT
-        hotel.hotel_rate = hotel_rate
         hotel.hotel_comment = hotel_comment
         hotel.hotel_admin_id = hotel_admin_id
         
@@ -1426,8 +1473,6 @@ def hotel_update(request):
         room_price = request.POST.getlist('room_price[]')
         room_people = request.POST.getlist('room_people[]')
         all_room = len(room_type)
-        if room_type[-1] == "":
-            all_room -= 1
 
         # for i in range(all_room):
 
@@ -1487,7 +1532,6 @@ def vacation_update(request):
         REFINE_WGS84_LOGT = 0.0
         vacation_comment = request.POST.get('context')
         vacation_price = request.POST.get('vacation_price')
-        vacation_rate = 0.0
         if vacation_comment == '':
             vacation_comment = '설명이 없습니다.'
         
@@ -1499,7 +1543,6 @@ def vacation_update(request):
         vacation.REFINE_WGS84_LOGT = REFINE_WGS84_LOGT
         vacation.vacation_comment = vacation_comment
         vacation.vacation_price = vacation_price
-        vacation.vacation_rate = vacation_rate
     
         vacation.save()
 
@@ -1599,13 +1642,13 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_people = 2
     hotel_reserve_username = '유재석'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-08-09'
-    hotel_reserve_enddate = '2022-08-10'
+    hotel_reserve_startdate = '2022-02-10'
+    hotel_reserve_enddate = '2022-02-12'
 
-    hotel_room = Hotel_room.objects.get(pk=10)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=29)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=3)
+    id = User.objects.get(pk=2)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(

@@ -94,8 +94,11 @@
                         <td> - </td>
                         <td>{{ r.vacation_reserve_username}}</td>
                         <td>{{ r.vacation_reserve_price|intcomma }}</td>
-                        <td><button type="button" id="del_reserve" value="{{ r.vacation_reserve_id }}">예약취소</button>
-                        </td>
+                        <form action="{% url 'vacation_delete2' %}" method="POST">
+                            {% csrf_token %}
+                            <td><button type="submit" id="del_reserve" value="{{ r.vacation_reserve_id }}">예약취소</button></td>
+                            <input type="hidden" name="vacation_reserve_id" value="{{ r.vacation_reserve_id }}">  
+                        </form>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -105,13 +108,16 @@
                 <tbody>
                     {% for r in reserves %}
                     <tr>
-                        <td>{{ r.hotel_reserve_id }}</td>
+                        <td>{{ r.hotel_reserve_id }}</td>   
                         <td>{{ r.hotel_reserve_startdate }} ~ {{ r.hotel_reserve_enddate }}</td>
                         <td> {{ r.room_id.room_type }} </td>
                         <td>{{ r.hotel_reserve_username}}</td>
                         <td>{{ r.hotel_reserve_price|intcomma }}</td>
-                        <td><button type="button" id="del_reserve" value="{{ r.vacation_reserve_id }}">예약취소</button>
-                        </td>
+                        <form action="{% url 'hotel_delete2' %}" method="POST">
+                            {% csrf_token %}
+                            <td><button type="submit" id="del_reserve" value="{{ r.hotel_reserve_id }}">예약취소</button></td>
+                            <input type="hidden" name="hotel_reserve_id" value="{{ r.hotel_reserve_id }}">
+                        </form>
                     </tr>
                     {% endfor %}
                 </tbody>
