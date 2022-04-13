@@ -9,21 +9,80 @@ $(document).ready(function(){
     }
 
     $(function() {
-        
+            
         if(document.getElementsByName("price[]").length == 0) {
             min_price=0;
             min_price= Number(min_price); 
         }   else{
-            let min_price=document.getElementsByName("price[]")[0].value;   
-            for (var i=0; i<document.getElementsByName("price[]").length; i++){
-                if (document.getElementsByName("price[]")[i].value<min_price){
-                    min_price = document.getElementsByName("price[]")[i].value;
+            let min_price=document.getElementsByClassName("table_list")[0].children[4].children[0].value;   
+            for (var j=0; j<document.getElementsByClassName("table_list")[0].children[4].children.length; j++){
+                if (document.getElementsByClassName("table_list")[0].children[4].children[j].value<min_price){
+                    min_price = document.getElementsByClassName("table_list")[0].children[4].children[j].value;
                 }
             min_price= Number(min_price);   
             }
         min_price= min_price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        document.getElementById("fn_price").innerText = min_price;
+        document.getElementById("fn_price1").innerText = min_price;
         }
+
+            
+        if(document.getElementsByName("price[]").length == 0) {
+            min_price=0;
+            min_price= Number(min_price); 
+        }   else{
+            let min_price=document.getElementsByClassName("table_list")[1].children[4].children[0].value;   
+            for (var j=0; j<document.getElementsByClassName("table_list")[1].children[4].children.length; j++){
+                if (document.getElementsByClassName("table_list")[1].children[4].children[j].value<min_price){
+                    min_price = document.getElementsByClassName("table_list")[1].children[4].children[j].value;
+                }
+            min_price= Number(min_price);   
+            }
+        min_price= min_price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById("fn_price2").innerText = min_price;
+        }
+        if(document.getElementsByName("price[]").length == 0) {
+            min_price=0;
+            min_price= Number(min_price); 
+        }   else{
+            let min_price=document.getElementsByClassName("table_list")[2].children[4].children[0].value;   
+            for (var j=0; j<document.getElementsByClassName("table_list")[2].children[4].children.length; j++){
+                if (document.getElementsByClassName("table_list")[2].children[4].children[j].value<min_price){
+                    min_price = document.getElementsByClassName("table_list")[2].children[4].children[j].value;
+                }
+            min_price= Number(min_price);   
+            }
+        min_price= min_price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById("fn_price3").innerText = min_price;
+        }
+        if(document.getElementsByName("price[]").length == 0) {
+            min_price=0;
+            min_price= Number(min_price); 
+        }   else{
+            let min_price=document.getElementsByClassName("table_list")[3].children[4].children[0].value;   
+            for (var j=0; j<document.getElementsByClassName("table_list")[3].children[4].children.length; j++){
+                if (document.getElementsByClassName("table_list")[3].children[4].children[j].value<min_price){
+                    min_price = document.getElementsByClassName("table_list")[3].children[4].children[j].value;
+                }
+            min_price= Number(min_price);   
+            }
+        min_price= min_price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById("fn_price4").innerText = min_price;
+        }
+        if(document.getElementsByName("price[]").length == 0) {
+            min_price=0;
+            min_price= Number(min_price); 
+        }   else{
+            let min_price=document.getElementsByClassName("table_list")[4].children[4].children[0].value;   
+            for (var j=0; j<document.getElementsByClassName("table_list")[4].children[4].children.length; j++){
+                if (document.getElementsByClassName("table_list")[4].children[4].children[j].value<min_price){
+                    min_price = document.getElementsByClassName("table_list")[4].children[4].children[j].value;
+                }
+            min_price= Number(min_price);   
+            }
+        min_price= min_price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById("fn_price5").innerText = min_price;
+        }
+
     });
 });
 // $(document).ready(function(){
