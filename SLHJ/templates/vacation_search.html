@@ -80,14 +80,14 @@
     <div class="left_list">
         {% if lists %}
             {% for vacation in lists %}
-            
                 <button type="submit" class="table_list" onclick="search_choice(this)">
                     <input type="hidden" value="{{ vacation.REFINE_WGS84_LAT }}" name="li_lat">
                     <input type="hidden" value="{{ vacation.REFINE_WGS84_LOGT }}" name="li_lng"> 
                     <input type="hidden" value="{{ vacation.REFINE_WGS84_LAT }}" name="lat">
                     <input type="hidden" value="{{ vacation.REFINE_WGS84_LOGT }}" name="lng">
                     <div class="list_table_content">                
-                        <div class="list_vacation_image"></div>
+                        <!-- <div class="list_vacation_image">여기여기여기</div> -->
+                        <img class="list_vacation_image" style="background-image: url('/media/{{ vacation.vacation_image.vacation_image_file_path }}');">
                         <div class= "list_text">
                             <ul>
                                 <li class="list_vacation_name"> <a href="{% url 'vacation_detail' vacation.vacation_id %}">{{ vacation.TURSM_INFO_NM }}</a></li> 
