@@ -1143,6 +1143,7 @@ def admin_manage(request):
             context['place_type'] = 'hotel'
             context['reserves'] = reserveses
             context['reserve_count'] = len(reserveses)
+            context['selected'] = selected_place
             return render(request, 'admin_manage.html', context)
 
             # reserves = Hotel_reserve.objects.filter(q).values().order_by('-hotel_reserve_startdate')
@@ -1176,6 +1177,7 @@ def admin_manage(request):
             context['place_type'] = 'vacation'
             context['reserve_count'] = reserves.count()
             context['reserves'] = reserves
+            context['selected'] = selected_place
             return render(request, 'admin_manage.html', context)
 
     if request.method == "GET":

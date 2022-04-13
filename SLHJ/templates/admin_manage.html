@@ -70,28 +70,25 @@
         </form>
 
         <div>
-            <label class="res_title">검색결과 </label>
-            <label class="res_title res_sum"> 총 {{ reserve_count }} 건 </label>
-
-            <table class="table mt-4">
-                <thead>
-                    <tr>
-                        <th>예약번호</th>
-                        <th>이용일시</th>
-                        <th>객실정보</th>
-                        <th>예약자명</th>
-                        <th>결제금액</th>
-                        <th>예약취소</th>
-                    </tr>
-                </thead>
-
                 {% if place_type == 'vacation'%}
+                <label class="res_title">{{ selected}} : 검색결과 </label>
+                <label class="res_title res_sum"> 총 {{ reserve_count }} 건 </label>
+    
+                <table class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th>예약번호</th>
+                            <th>이용일시</th>
+                            <th>예약자명</th>
+                            <th>결제금액</th>
+                            <th>예약취소</th>
+                        </tr>
+                    </thead>
                 <tbody>
                     {% for r in reserves %}
                     <tr>
                         <td>{{ r.vacation_reserve_id }}</td>
                         <td>{{ r.vacation_reserve_date }}</td>
-                        <td> - </td>
                         <td>{{ r.vacation_reserve_username}}</td>
                         <td>{{ r.vacation_reserve_price|intcomma }}</td>
                         <form action="{% url 'vacation_delete2' %}" method="POST">
@@ -105,6 +102,20 @@
                 {% endif %}
 
                 {% if place_type == 'hotel'%}
+                <label class="res_title">{{ selected}} : 검색결과 </label>
+                <label class="res_title res_sum"> 총 {{ reserve_count }} 건 </label>
+    
+                <table class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th>예약번호</th>
+                            <th>이용일시</th>
+                            <th>객실정보</th>
+                            <th>예약자명</th>
+                            <th>결제금액</th>
+                            <th>예약취소</th>
+                        </tr>
+                    </thead>
                 <tbody>
                     {% for r in reserves %}
                     <tr>
