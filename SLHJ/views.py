@@ -27,6 +27,7 @@ from django.http import FileResponse
 import time
 from django.views.decorators.csrf import csrf_exempt
 import re
+import random
 
 def main(request):
 
@@ -1571,7 +1572,7 @@ def vacation_update(request):
 def sample(request):  # vacation_review 데이터 입력포맷입니다.
 
     vacation_review_content = 'sample데이터입니다.'
-    vacation_review_rate = 1
+    vacation_review_rate = random.randint(1, 5)
     
     id = User.objects.get(pk=1)
     # id = User.objects.get(pk=pk)  pk 값을 받아와서 처리
@@ -1644,13 +1645,13 @@ def sample4(request):   # hotel_reserve 포맷입니다.
     hotel_reserve_people = 2
     hotel_reserve_username = '유재석'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-02-10'
-    hotel_reserve_enddate = '2022-02-12'
+    hotel_reserve_startdate = '2022-03-05'
+    hotel_reserve_enddate = '2022-03-06'
 
-    hotel_room = Hotel_room.objects.get(pk=29)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=4)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=2)
+    id = User.objects.get(pk=12)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(
@@ -1672,25 +1673,28 @@ def sample4(request):   # hotel_reserve 포맷입니다.
 def sample5(request):       # hotel_review 포맷입니다.
 
     hotel_review_content = 'sample 데이터입니다.'
-    hotel_review_rate = 4.0
+    hotel_review_rate = 5
     hotel_review_date = datetime.datetime.now().strftime('%Y-%m-%d')    # 현재시간을 YYYY-MM-DD형태로 가져옵니다.
+    id = User.objects.get(pk=8)             # 유저의 primary key 를 외부로 받아옵니다. 
 
-    id = User.objects.get(pk=3)             # 유저의 primary key 를 외부로 받아옵니다. 
-    hotel_id = Hotel.objects.get(pk = 1)    # 호텔의 primary key 를 외부로 받아와야 됩니다. pk=pk
+    peongtaek_hotels = [1,2,3,4,5,6,7,25,88,89,90,91,113,192,193,195,200,212,216,256,310,337,363]
 
-    hotel_review = Hotel_review(
-        hotel_review_content = hotel_review_content,
-        hotel_review_rate = hotel_review_rate,
-        hotel_review_date = hotel_review_date,
-        id = id,
-        hotel_id = hotel_id
-    )
 
-    hotel_review.save()
+    for i in peongtaek_hotels:
+        hotel_id = Hotel.objects.get(pk = i)    # 호텔의 primary key 를 외부로 받아와야 됩니다. pk=pk
+        hotel_review = Hotel_review(
+            hotel_review_content = hotel_review_content,
+            hotel_review_rate = hotel_review_rate,
+            hotel_review_date = hotel_review_date,
+            id = id,
+            hotel_id = hotel_id
+        )
 
-    all_cnt = Hotel_review.objects.filter(hotel_id_id = 1).count()    # 외래키인 vacation_id 를 받아와야합니다. filter(vacation_id_id = pk)
-    hotel_id.hotel_rate = round((hotel_id.hotel_rate * (all_cnt-1) + hotel_review_rate) / all_cnt, 2)    # 평점을 새로고침하는 계산식입니다.
-    hotel_id.save()
+        hotel_review.save()
+
+        all_cnt = Hotel_review.objects.filter(hotel_id_id = i).count()    # 외래키인 vacation_id 를 받아와야합니다. filter(vacation_id_id = pk)
+        hotel_id.hotel_rate = round((hotel_id.hotel_rate * (all_cnt-1) + hotel_review_rate) / all_cnt, 2)    # 평점을 새로고침하는 계산식입니다.
+        hotel_id.save()
 
     return render(request, 'sample5.html')
 

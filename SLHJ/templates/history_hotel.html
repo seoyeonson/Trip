@@ -66,7 +66,7 @@
                     <img
                         style="background-image: url('/media/{{ hotel_reserve.room_id.hotel_id.hotel_image.hotel_image_file_path }}');">
                     <div class="info_container">
-                        <label class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label>
+                        <a id="to_detail" href="{% url 'hotel_detail' hotel_reserve.room_id.hotel_id_id %}"><label class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label></a>
                         <label class="reserve_adress">{{ hotel_reserve.room_id.hotel_id.REFINE_ROADNM_ADDR }}</label>
                         <label class="review_count">
                             <div>
@@ -96,6 +96,8 @@
                             <li class="left">예약일시</li>
                             <li class="right">{{ hotel_reserve.hotel_reserve_startdate}} ~
                                 {{ hotel_reserve.hotel_reserve_enddate }}</li>
+                            <li class="left">객실타입</li>
+                            <li class="right">{{ hotel_reserve.room_id.room_type }}</li>
                         </ul>
 
                     </div>

@@ -30,6 +30,7 @@
 }
 
 .reserve_name{
+    cursor: pointer;
     font-weight:bold;
     font-size: 20px;
 }
@@ -120,7 +121,10 @@
     background-color: rgb(252, 252, 252);
 }
 
-
+#to_detail:hover{
+    cursor: pointer !important; 
+    color: black;
+}
 @media(min-width:768px){
     
     .info_container{
