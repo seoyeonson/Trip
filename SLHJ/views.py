@@ -1127,7 +1127,8 @@ def admin_manage(request):
             rooms_2 = Hotel_room.objects.filter(hotel_id=hotel_id)
             reserveses = []
             for r in range(rooms_2.count()):
-                reserve = Hotel_reserve.objects.filter(room_id=rooms_2[r].hotel_id_id)
+                reserve = Hotel_reserve.objects.filter(room_id=rooms_2[r].room_id)
+                # print(reserve)
                 for i in range(reserve.count()):
                     reserveses.append(reserve[i])
                     reserveses = reserveses[0: reserve.count()]
@@ -1136,7 +1137,6 @@ def admin_manage(request):
             if reserve_num != '':
                 reserveses = list(filter(lambda x: str(x.hotel_reserve_id) == str(reserve_num), reserveses))
             if reserve_date != '':
-                
                 reserveses = list(filter(lambda x: re.sub('[^0-9]', '', str(x.hotel_reserve_startdate)) == reserve_date, reserveses))
             if len(reserveses) == 0 :
                 context['message'] = '예약정보가 없습니다.' 
