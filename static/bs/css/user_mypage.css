@@ -66,8 +66,10 @@
 }
 
 .con2 {
-    margin-left:200px;
-    padding:0;
+    /* margin-left:200px; */
+    padding-left:120px;
+    max-width: 1900px;
+    margin: auto;
 }
 
 .nav_close{

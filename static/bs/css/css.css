@@ -138,7 +138,7 @@ footer{
     background: #f7f7f7;
     position: relative;
     /* transform: translateY(-100%); */
-    margin-top: 64px;
+    /* margin-top: 64px; */
     bottom: 0;
 }
 .left_footer{
