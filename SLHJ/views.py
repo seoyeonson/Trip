@@ -1677,11 +1677,11 @@ def sample5(request):       # hotel_review 포맷입니다.
     hotel_review_date = datetime.datetime.now().strftime('%Y-%m-%d')    # 현재시간을 YYYY-MM-DD형태로 가져옵니다.
     id = User.objects.get(pk=8)             # 유저의 primary key 를 외부로 받아옵니다. 
 
-    peongtaek_hotels = [1,2,3,4,5,6,7,25,88,89,90,91,113,192,193,195,200,212,216,256,310,337,363]
+    # peongtaek_hotels = [1,2,3,4,5,6,7,25,88,89,90,91,113,192,193,195,200,212,216,256,310,337,363]
 
 
-    for i in peongtaek_hotels:
-        hotel_id = Hotel.objects.get(pk = i)    # 호텔의 primary key 를 외부로 받아와야 됩니다. pk=pk
+    for i in range(5):
+        hotel_id = Hotel.objects.get(pk = 5)    # 호텔의 primary key 를 외부로 받아와야 됩니다. pk=pk
         hotel_review = Hotel_review(
             hotel_review_content = hotel_review_content,
             hotel_review_rate = hotel_review_rate,
@@ -1692,7 +1692,7 @@ def sample5(request):       # hotel_review 포맷입니다.
 
         hotel_review.save()
 
-        all_cnt = Hotel_review.objects.filter(hotel_id_id = i).count()    # 외래키인 vacation_id 를 받아와야합니다. filter(vacation_id_id = pk)
+        all_cnt = Hotel_review.objects.filter(hotel_id_id = 5).count()    # 외래키인 vacation_id 를 받아와야합니다. filter(vacation_id_id = pk)
         hotel_id.hotel_rate = round((hotel_id.hotel_rate * (all_cnt-1) + hotel_review_rate) / all_cnt, 2)    # 평점을 새로고침하는 계산식입니다.
         hotel_id.save()
 
