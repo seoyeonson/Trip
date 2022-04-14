@@ -54,8 +54,8 @@
                 <!-- <span id="guide" style="color:#999;"></span> -->
                 <input type="text" id="sample4_extraAddress" placeholder="참고항목">
                 <input type="text" id="sample4_detailAddress" placeholder="상세주소">
-                <div id="lat" type="hidden"></div>
-                <div id="lng" type="hidden"></div>
+                <input name="lat" id="lat" type="hidden" value="{{ hotel.REFINE_WGS84_LAT }}">
+                <input name="lng" id="lng" type="hidden" value="{{ hotel.REFINE_WGS84_LOGT }}">
 
             </div>
             <!-- <div class="form-group">

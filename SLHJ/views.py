@@ -1442,8 +1442,8 @@ def hotel_update(request):
         SIGUN_NM = request.POST.get('hotel_area')
         BSN_STATE_NM = 1
         REFINE_ROADNM_ADDR = request.POST.get('hotel_addr', '')
-        REFINE_WGS84_LAT = 0.0
-        REFINE_WGS84_LOGT = 0.0
+        REFINE_WGS84_LAT = request.POST.get('lat')
+        REFINE_WGS84_LOGT = request.POST.get('lng')
         hotel_comment = request.POST.get('context')
         hotel_admin_id = user
         if hotel_comment == '':
@@ -1530,8 +1530,8 @@ def vacation_update(request):
         TURSM_INFO_NM = request.POST.get('vacation_name')
         SM_RE_ADDR =  request.POST.get('vacation_adress')
         TELNO =  request.POST.get('phoneNum')
-        REFINE_WGS84_LAT = 0.0
-        REFINE_WGS84_LOGT = 0.0
+        REFINE_WGS84_LAT = request.POST.get('lat')
+        REFINE_WGS84_LOGT = request.POST.get('lng')
         vacation_comment = request.POST.get('context')
         vacation_price = request.POST.get('vacation_price')
         if vacation_comment == '':
