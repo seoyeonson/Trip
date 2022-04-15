@@ -28,6 +28,7 @@ import time
 from django.views.decorators.csrf import csrf_exempt
 import re
 import random
+import functools
 
 def main(request):
 
@@ -1129,10 +1130,10 @@ def admin_manage(request):
             reserveses = []
             for r in range(rooms_2.count()):
                 reserve = Hotel_reserve.objects.filter(room_id=rooms_2[r].room_id)
-                # print(reserve)
                 for i in range(reserve.count()):
                     reserveses.append(reserve[i])
-                    reserveses = reserveses[0: reserve.count()]
+                    
+                    # reserveses = reserveses[0: reserve.count()]
             if reserve_name != '':
                 reserveses = list(filter(lambda x: x.hotel_reserve_username == reserve_name, reserveses))
             if reserve_num != '':
@@ -1595,14 +1596,14 @@ def sample(request):  # vacation_review 데이터 입력포맷입니다.
 
 def sample2(request):  # vacation_reserve 데이터 입력포맷입니다.
 
-    vacation_reserve_people = 2
+    vacation_reserve_people = 3
     vacation_reserve_date = '2022-12-31'
-    vacation_reserve_username = '이광우'
+    vacation_reserve_username = '손서연'
     vacation_reserve_phonenum = '010-1234-5678'
 
     id = User.objects.get(pk=3)
     # id = User.objects.get(pk=pk)
-    vacation_id = Vacation.objects.get(pk=14)
+    vacation_id = Vacation.objects.get(pk=485)
 
     vacation_reserve_price = vacation_id.vacation_price * vacation_reserve_people  # 기본가격 + 인원 수
 
@@ -1643,15 +1644,15 @@ def sample3(request):   # hotel_room 포맷입니다.
 def sample4(request):   # hotel_reserve 포맷입니다.
     
     hotel_reserve_people = 2
-    hotel_reserve_username = '유재석'
+    hotel_reserve_username = '허소영'
     hotel_reserve_phonenum = '010-1234-5678'
-    hotel_reserve_startdate = '2022-03-05'
-    hotel_reserve_enddate = '2022-03-06'
+    hotel_reserve_startdate = '2022-03-02'
+    hotel_reserve_enddate = '2022-03-03'
 
-    hotel_room = Hotel_room.objects.get(pk=4)       # 방의 번호 hotel_room_id 를 사용합니다.
+    hotel_room = Hotel_room.objects.get(pk=100)       # 방의 번호 hotel_room_id 를 사용합니다.
     hotel_reserve_price = hotel_room.room_price     # 각 방의 가격을 데이터 테이블로 받아와서 사용합니다.
 
-    id = User.objects.get(pk=12)
+    id = User.objects.get(pk=14)
     room_id = hotel_room
 
     hotel_reserve = Hotel_reserve(
@@ -1675,13 +1676,13 @@ def sample5(request):       # hotel_review 포맷입니다.
     hotel_review_content = 'sample 데이터입니다.'
     hotel_review_rate = 5
     hotel_review_date = datetime.datetime.now().strftime('%Y-%m-%d')    # 현재시간을 YYYY-MM-DD형태로 가져옵니다.
-    id = User.objects.get(pk=8)             # 유저의 primary key 를 외부로 받아옵니다. 
+    id = User.objects.get(pk=3)             # 유저의 primary key 를 외부로 받아옵니다. 
 
     # peongtaek_hotels = [1,2,3,4,5,6,7,25,88,89,90,91,113,192,193,195,200,212,216,256,310,337,363]
 
 
-    for i in range(5):
-        hotel_id = Hotel.objects.get(pk = 5)    # 호텔의 primary key 를 외부로 받아와야 됩니다. pk=pk
+    for i in range(3):
+        hotel_id = Hotel.objects.get(pk = 42)    # 호텔의 primary key 를 외부로 받아와야 됩니다. pk=pk
         hotel_review = Hotel_review(
             hotel_review_content = hotel_review_content,
             hotel_review_rate = hotel_review_rate,
