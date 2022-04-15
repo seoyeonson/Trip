@@ -74,11 +74,9 @@ function vacation_lo_select(text) {
 
 // 2. 예약 날짜
 function vacation_get_date() {
-    document.getElementById("vacation_date_pick").style.display ='block';
-    if($("#vacation_location").val()){
-        document.getElementById("vacation_location").style.display ='none';
-    }
     $('.vacation_reserve_people').css('display', 'none');
+    $('.vacation_location').css('display', 'none');
+    document.getElementById("vacation_date_pick").style.display ='block';
 }
 
 // 3.예약 인원
