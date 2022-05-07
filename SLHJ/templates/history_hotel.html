@@ -9,6 +9,10 @@
 {% block title %}호텔관리{% endblock %}
 
 {% block contents %}
+{% block script%}
+<script src="{% static 'bs/js/user_reserve.js' %}"></script>
+{% endblock %}
+
 <i class="fa fa-bars"></i>
 
 <div id="side_nav" class="side_nav">
@@ -63,10 +67,35 @@
             {% for hotel_reserve in hotel_reserves %}
             <tr>
                 <td class="reserve">
+                    {% if hotel_reserve.hotel_reserve_enddate < today %}
+                    <div class="review_modal">
+                        <div class="after_visit comment_box">
+                            <span class="review_cancel">&#10006;</span>
+                            <form name="reivew" class="form-group" method="POST">
+                                <div id="review_hotel_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</div>
+                                {% csrf_token %}
+                                <input type="hidden" id=hotel_id name=hotel_id
+                                    value="{{ hotel_reserve.room_id.hotel_id_id }}">
+                                <!--views 에 어떤호텔인지 인자를 넘겨주기 위한 값입니다. -->
+                                <div class="modal_star_box">
+                                {% for i in "x"|rjust:"5" %}
+                                <i class="fas fa-star reviewstar no_star"></i>
+                                <!-- <i class="fas fa-star no_star reviewstar"></i> -->
+                                {% endfor %}
+                                </div>
+                                <textarea id=review name=review class="form-control review_comment"></textarea>
+                                <input type="hidden" id=rate name=rate class="form-control review_comment" min="1"
+                                    max="5">
+                                <input type="submit" value="리뷰등록">
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
                     <img
                         style="background-image: url('/media/{{ hotel_reserve.room_id.hotel_id.hotel_image.hotel_image_file_path }}');">
                     <div class="info_container">
-                        <a id="to_detail" href="{% url 'hotel_detail' hotel_reserve.room_id.hotel_id_id %}"><label class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label></a>
+                        <a id="to_detail" href="{% url 'hotel_detail' hotel_reserve.room_id.hotel_id_id %}"><label
+                                class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label></a>
                         <label class="reserve_adress">{{ hotel_reserve.room_id.hotel_id.REFINE_ROADNM_ADDR }}</label>
                         <label class="review_count">
                             <div>
@@ -99,21 +128,11 @@
                             <li class="left">객실타입</li>
                             <li class="right">{{ hotel_reserve.room_id.room_type }}</li>
                         </ul>
-
                     </div>
                     {% if hotel_reserve.hotel_reserve_enddate < today %}
-                    <div class="after_visit comment_box">
-                        <form name="reivew" class="form-group" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" id=hotel_id name=hotel_id
-                                value="{{ hotel_reserve.room_id.hotel_id_id }}">
-                            <!--views 에 어떤호텔인지 인자를 넘겨주기 위한 값입니다. -->
-                            <textarea id=review name=review class="form-control review_comment"></textarea>
-                            <input type="number" id=rate name=rate class="form-control review_comment" min="1" max="5">
-                            <input type="submit" value="리뷰등록">
-                        </form>
-                    </div>
+                    <input type="button" value="리뷰작성" class="review_modal_open">
                     {% endif %}
+
                 </td>
             </tr>
             {% endfor %}
@@ -150,8 +169,8 @@
 
                 {# >> 표시 #}
                 {% if hotel_reserves.number < hotel_reserves.paginator.num_pages %}
-                <li class="page-item"><a class="page-link" href="?page={{ hotel_reserves.paginator.num_pages }}" title="마지막"><i
-                            class='fas fa-angle-double-right'></i></a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ hotel_reserves.paginator.num_pages }}"
+                        title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
                 {% endif %}
             </ul>
         </div>
