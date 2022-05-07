@@ -1,3 +1,4 @@
+from queue import PriorityQueue
 from statistics import mode
 from tabnanny import verbose
 from tkinter import CASCADE
@@ -64,6 +65,7 @@ class Vacation_reserve(models.Model):
     vacation_reserve_username = models.CharField(max_length=20, verbose_name='예약자명')
     vacation_reserve_phonenum = models.CharField(max_length=15, verbose_name='핸드폰번호')
     vacation_reserve_price = models.IntegerField(verbose_name='결제금액')
+    # vacation_payment_status = models.BooleanField(verbose_name='결제상태')
 
     id = models.ForeignKey(User, on_delete=models.CASCADE)
     vacation_id = models.ForeignKey(Vacation, on_delete=models.CASCADE)
@@ -112,6 +114,22 @@ class Hotel(models.Model):
     def __str__(self):
         return self.BIZPLC_NM
 
+# class Hotel_option(models.Model):
+#     option_id = models.AutoField(primary_key=True)
+#     option_main_category = models.CharField(max_length=0, verbose_name='대분류')
+#     option_subcategory = models.CharField(max_length=20, verbose_name='소분류')
+
+#     hotel_id = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+
+#     class Meta:
+#         db_table = 'SLHJ_hotel_option'
+#         verbose_name = '호텔옵션'
+#         verbose_name_plural = '호텔옵션(들)'
+
+#     def __str__(self):
+#         return self.option_subcategory
+
+
 class Hotel_room(models.Model):
     room_id = models.AutoField(primary_key=True)
     room_type = models.CharField(max_length=20, verbose_name='방타입')
@@ -136,9 +154,11 @@ class Hotel_reserve(models.Model):
     hotel_reserve_startdate = models.DateField(verbose_name='체크인날짜')
     hotel_reserve_enddate = models.DateField(verbose_name='체크아웃날짜')
     hotel_reserve_price = models.IntegerField(verbose_name='결제금액')
+    # hotel_payment_status = models.BooleanField(verbose_name='결제상태')
 
     id = models.ForeignKey(User, on_delete=models.CASCADE)
     room_id = models.ForeignKey(Hotel_room, on_delete=models.CASCADE)
+    # hotel_id = mode ls.ForeignKey(Hotel, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'SLHJ_hotel_reserve'
@@ -156,6 +176,7 @@ class Hotel_review(models.Model):
 
     id = models.ForeignKey(User, on_delete=models.CASCADE)
     hotel_id = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=True)
+    # hotel_reserve_id = models.OneToOneField(Hotel_reserve, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'SLHJ_hotel_review'
@@ -180,3 +201,9 @@ class Hotel_image(models.Model):
 
     def __str__(self):
         return self.hotel_id
+
+# class Phone_ok(models.Model):
+#     ok_id = models.AutoField(primary_key=True)
+#     phonenum = models.CharField(max_length=11, verbose_name='전화번호')
+#     check_num = models.CharField(max_length=10, verbose_name='인증번호')
+#     send_date = models.DateTimeField(verbose_name='발신일')
