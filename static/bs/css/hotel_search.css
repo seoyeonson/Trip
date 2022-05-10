@@ -99,6 +99,10 @@
     border-radius: 10px;
     flex-direction: row;
 }
+
+.table_list:hover{
+    background-color: #f566001a;
+}
 .list_table_content{
     display: flex;
     justify-content: center;
