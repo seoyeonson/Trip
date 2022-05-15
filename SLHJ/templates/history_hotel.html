@@ -64,9 +64,9 @@
 
                     </div>
                 </td> -->
-            {% for hotel_reserve in hotel_reserves %}
-            <tr>
-                <td class="reserve">
+                {% for hotel_reserve in hotel_reserves %}
+                <tr>
+                    <td class="reserve">
                     {% if hotel_reserve.hotel_reserve_enddate < today %}
                     <div class="review_modal">
                         <div class="after_visit comment_box">
