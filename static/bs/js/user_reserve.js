@@ -1,11 +1,14 @@
 $(document).ready(function(){
     $('.reviewstar').off().on('click', star_rating);
     $('.review_modal_open').off().on('click', function(){
-        $(this).siblings('.review_modal').css('display','block')
+        $(this).parent().siblings('.review_modal').css('display','block')
     })
     $('.review_cancel').off().on('click', function(){
         $(this).parent().parent('.review_modal').css('display', 'none');
     });
+    $('#review_submit').off().on('click', function(){
+        $(this).parent().parent().parent('.review_modal').css('display', 'none');
+    })
 });
 
 function star_rating(){

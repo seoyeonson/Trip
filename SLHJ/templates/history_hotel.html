@@ -64,9 +64,9 @@
 
                     </div>
                 </td> -->
-                {% for hotel_reserve in hotel_reserves %}
-                <tr>
-                    <td class="reserve">
+            {% for hotel_reserve in hotel_reserves %}
+            <tr>
+                <td class="reserve">
                     {% if hotel_reserve.hotel_reserve_enddate < today %}
                     <div class="review_modal">
                         <div class="after_visit comment_box">
@@ -78,10 +78,10 @@
                                     value="{{ hotel_reserve.room_id.hotel_id_id }}">
                                 <!--views 에 어떤호텔인지 인자를 넘겨주기 위한 값입니다. -->
                                 <div class="modal_star_box">
-                                {% for i in "x"|rjust:"5" %}
-                                <i class="fas fa-star reviewstar no_star"></i>
-                                <!-- <i class="fas fa-star no_star reviewstar"></i> -->
-                                {% endfor %}
+                                    {% for i in "x"|rjust:"5" %}
+                                    <i class="fas fa-star reviewstar no_star"></i>
+                                    <!-- <i class="fas fa-star no_star reviewstar"></i> -->
+                                    {% endfor %}
                                 </div>
                                 <textarea id=review name=review class="form-control review_comment"></textarea>
                                 <input type="hidden" id=rate name=rate class="form-control review_comment" min="1"
@@ -91,48 +91,42 @@
                         </div>
                     </div>
                     {% endif %}
-                    <img
-                        style="background-image: url('/media/{{ hotel_reserve.room_id.hotel_id.hotel_image.hotel_image_file_path }}');">
-                    <div class="info_container">
-                        <a id="to_detail" href="{% url 'hotel_detail' hotel_reserve.room_id.hotel_id_id %}"><label
-                                class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label></a>
-                        <label class="reserve_adress">{{ hotel_reserve.room_id.hotel_id.REFINE_ROADNM_ADDR }}</label>
-                        <label class="review_count">
-                            <div>
-                                <span>호텔평점{{ hotel_reserve.room_id.hotel_id.hotel_rate }}</span>
-                                {% for i in "x"|rjust:"5" %}
-                                {% if hotel_reserve.room_id.hotel_id.hotel_rate >= forloop.counter %}
-                                <i class="fas fa-star"></i>
-                                {% else %}
-                                <i class="fas fa-star no_star"></i>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                            <!-- <div>
-                                <span>내 평점{{ hotel_reserve.room_id.hotel_id.hotel_image_title }}</span>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div> -->
-                        </label>
-                        <ul class="reserve_info">
-                            <li class="left">인원</li>
-                            <li class="right">{{ hotel_reserve.hotel_reserve_people }}인</li>
-                            <li class="left">가격</li>
-                            <li class="right">{{ hotel_reserve.hotel_reserve_price }}원</li>
-                            <li class="left">예약일시</li>
-                            <li class="right">{{ hotel_reserve.hotel_reserve_startdate}} ~
-                                {{ hotel_reserve.hotel_reserve_enddate }}</li>
-                            <li class="left">객실타입</li>
-                            <li class="right">{{ hotel_reserve.room_id.room_type }}</li>
-                        </ul>
+                    <div class="reserve_main">
+                        <img
+                            style="background-image: url('/media/{{ hotel_reserve.room_id.hotel_id.hotel_image.hotel_image_file_path }}');">
+                        <div class="info_container">
+                            <a id="to_detail" href="{% url 'hotel_detail' hotel_reserve.room_id.hotel_id_id %}"><label
+                                    class="reserve_name">{{ hotel_reserve.room_id.hotel_id.BIZPLC_NM }}</label></a>
+                            <label
+                                class="reserve_adress">{{ hotel_reserve.room_id.hotel_id.REFINE_ROADNM_ADDR }}</label>
+                            <label class="review_count">
+                                <div>
+                                    <span>호텔평점{{ hotel_reserve.room_id.hotel_id.hotel_rate }}</span>
+                                    {% for i in "x"|rjust:"5" %}
+                                    {% if hotel_reserve.room_id.hotel_id.hotel_rate >= forloop.counter %}
+                                    <i class="fas fa-star"></i>
+                                    {% else %}
+                                    <i class="fas fa-star no_star"></i>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </label>
+                            <ul class="reserve_info">
+                                <li class="left">인원</li>
+                                <li class="right">{{ hotel_reserve.hotel_reserve_people }}인</li>
+                                <li class="left">가격</li>
+                                <li class="right">{{ hotel_reserve.hotel_reserve_price }}원</li>
+                                <li class="left">예약일시</li>
+                                <li class="right">{{ hotel_reserve.hotel_reserve_startdate}} ~
+                                    {{ hotel_reserve.hotel_reserve_enddate }}</li>
+                                <li class="left">객실타입</li>
+                                <li class="right">{{ hotel_reserve.room_id.room_type }}</li>
+                            </ul>
+                        </div>
+                        {% if hotel_reserve.hotel_reserve_enddate < today %}
+                        <input type="button" value="리뷰작성" class="review_modal_open">
+                        {% endif %}
                     </div>
-                    {% if hotel_reserve.hotel_reserve_enddate < today %}
-                    <input type="button" value="리뷰작성" class="review_modal_open">
-                    {% endif %}
-
                 </td>
             </tr>
             {% endfor %}
