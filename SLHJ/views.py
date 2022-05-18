@@ -488,6 +488,8 @@ def hotel_detail(request, pk):
             # 같은 지역,vacation_rate 가 높은 순으로 4개 가져오기
             recommand_vacations = Vacation.objects.filter(SIGUN_NM = hotel.SIGUN_NM).order_by('-vacation_rate')[:4]
 
+            recommand_hotels = Hotel.objects.order_by('-hotel_rate')[:4]
+
             try:
                 # hotel 대표 사진 가져오기.
                 # 없으면 빈 문자열로.
@@ -541,6 +543,7 @@ def hotel_detail(request, pk):
             'end_page': end_page,
             'page_range': range(start_page, end_page + 1),
             'recommand_vacations' : recommand_vacations,
+            'recommand_hotels' : recommand_hotels,
             'count' : count,
             'hotel_img' : hotel_img,
             'reserve_pos' : reserve_pos,

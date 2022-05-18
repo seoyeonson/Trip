@@ -10,7 +10,18 @@
 <div class="container hotel_detail">
     <!--상단 평점, 호텔명, 주소-->
     <div class="col-12">
-        <div class="rating_head">
+        <div class="rating_head d-flex">
+            <i class="fas fa-star"></i>
+            <h5 class="mb-0">{{ hotel.hotel_rate }}</h5>
+        </div>
+        <h1 class="mt-3">{{ hotel.BIZPLC_NM }}
+            {% for recommand_hotel in recommand_hotels %}
+                {% if recommand_hotel.hotel_id == hotel.hotel_id %}
+                <i class="far fa-thumbs-up ms-1"></i>
+                {% endif %}
+            {% endfor %}
+        </h1>
+        <!-- <div class="rating_head">
             {% for i in "x"|rjust:"5" %}
                 {% if hotel.hotel_rate >= forloop.counter %}
                     <i class="fas fa-star"></i>
@@ -18,8 +29,8 @@
                 <i class="fas fa-star no_star"></i>
                 {% endif %}
             {% endfor %}
-        </div>
-        <h1 class="mt-3">{{ hotel.BIZPLC_NM }}</h1>
+            <div>{{ hotel.hotel_rate }}</div>
+        </div> -->
         <h5>{{ hotel.REFINE_ROADNM_ADDR }}</h5>
         {% if  hotel_img %}
         <div class="hotel_main_img mt-4 mb-5" style="background-image: url('/media/{{ hotel_img.hotel_image_file_path }}');"></div>

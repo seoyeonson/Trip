@@ -559,7 +559,13 @@ footer{
 }
 
 .rating_head i{
-    font-size:22px;
+    font-size:18px;
+}
+
+.rating_head h5{
+    color: #000 !important;
+    margin-left: 5px;
+    margin-top: 2px;
 }
 
 .hotel_detail {
@@ -571,7 +577,7 @@ footer{
 }
 
 .hotel_detail h1{
-    font-size: 26px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -582,7 +588,7 @@ footer{
 }
 
 .hotel_detail h5{
-    font-size: 18px;
+    font-size: 15px;
     color: var(--text-sub-color);
 }
 
