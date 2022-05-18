@@ -134,42 +134,91 @@ img{
 }
 footer{
     border-top: 1px solid #dee5e7;
-    height: 64px;
+    /* height: 500px; */
     background: #f7f7f7;
     position: relative;
-    /* transform: translateY(-100%); */
     /* margin-top: 64px; */
     bottom: 0;
+    font-size: 7px;
+    min-width: 1200px;
+
 }
 .left_footer{
     list-style: none;
-    float: left;
+    display: inline-block;
     padding: 20px 0px;
-    margin: 0 5px;
+    margin: 0 20px;
     font-size: 12px;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 800;
+    white-space: nowrap;
 }
 .right_footer{
     list-style: none;
-    float: right;
+    display: inline-block;
+    font-size: 12px;
     padding: 20px 0px;
     margin: 0 20px;
+    white-space: nowrap;
     
 }
 .right_footer a{
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 7px;
 }
-
-
+.left_zip{
+    display: inline-block; 
+    width:50% ;
+    white-space: nowrap;
+    float: left;
+}
+.right_zip{
+    clear:both;
+    display: inline-block;
+    width:50%;
+    white-space: nowrap;
+}
+@media (max-width:1200px){
+    .blank{
+        display:hidden;
+    }
+    .left_zip{
+        width:50% ;
+        display: flex;
+    }
+    .left_footer{
+        margin: 0;
+        margin-right: 40px;
+    }
+    .right_footer{
+        margin: 0;
+        margin-right: 40px;
+    }
+    .right_zip{
+        width:50%;
+        display: flex;
+        
+    }
+    
+}
 /* nav 끝 */
 
 
+/* @media (min-width: 768px){
+    .reservation{
+        display: flex;
+        justify-content: center;
+    }
+    .reserve_confirm{
+        width: 40%;
+    }
 
+    .reserve {
+        width: 40%;
+    } */
 /* 공통끝 */
 .menu_icon i{
     font-size: 30px;
