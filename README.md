@@ -79,6 +79,11 @@
     </tr>
 </table>
 <br>
+
+### 협업 문서
+📝 [기획 및 개발 notion](https://wobbly-chip-64e.notion.site/SLHJ-Django-Web-Project-c3b5970669b741229b4e51428f81a983?pvs=4)
+
+<br>
 <br>
 
 [사용 이미지 출처]
