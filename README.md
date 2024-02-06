@@ -36,8 +36,25 @@
 <div align="center"><img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/ffb2e27b-f63e-43e7-92da-b28e1282a50c" style="width:80%;"/></div>
 <br>
 
-### 💽 ERD
+### 💽 DB 설계
 <div><img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/fa1654f9-9c37-42af-a7aa-e381ed71d2db" style="width:50%;"></div>
+<br>
+
+### 🌊 흐름도
+<table style="text-align: center">
+  <tr>
+      <td><img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/d068a66d-1487-44b5-8c92-52956ed40b8a"/></td>
+      <td><img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/98f7b9a8-4353-40d2-b8eb-139610746c09"/></td>
+  </tr>
+  <tr>
+      <td><img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/7545bbb6-82cb-4332-9b06-d4bb4e8497ce"/></td>
+      <td><img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/ee6e3641-e210-49c9-8bdd-afdca740d3e5"/></td>
+  </tr>
+  <tr>
+      <td><img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/ce6989ae-1e08-4b8c-b2f9-ce5b794f1144"/></td>
+  </tr>
+</table>
+<br>
 
 ### 🖥️ 페이지 이미지 
 <table style="text-align: center">
