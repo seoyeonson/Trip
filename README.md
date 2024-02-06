@@ -1,19 +1,14 @@
 # 🌆 Trip
 <div style="font-weight: 600 font-size: 20px">
-‘Trip’은 위치기반으로 국내의 호텔과 여행지 정보를 제공하고 호텔과 여행지의 예약을 도와 생산자와 소비자를 연결하는 서비스입니다.</div>
-
-<br>
-<div align="center">
-<img src="" style="padding-right: 20px"/>
-</div>
+‘Trip’은 위치기반으로 국내의 호텔과 여행지 정보를 제공하고<br> 호텔과 여행지의 예약을 도와 생산자와 소비자를 연결하는 서비스입니다.</div>
 <br>
 
 ### 🚞 Member
 
 |팀장|팀원|팀원|팀원|
 | :-: | :-: | :-: | :-: |
-| <img src="" width="150"> |<img src="" width="150"> |<img src="" width="150"> |<img src="" width="150">|<img src="" width="150">|
-|[손서연](https://github.com/seoyeonson)|[허소영]()|[정태경]()|[이광우]()|
+| <img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/ebcba24a-ca67-4a5e-9640-bbd4df97e095" width="150"> |<img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/976c4daf-a0d0-4fe7-83d6-4010c81d32c0" width="150"> |<img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/c99034ca-dc64-433e-a213-e90d7ba4de77" width="150"> |<img src="https://github.com/seoyeonson/seoyeonson/assets/93702730/afbd33b9-92ae-4c45-b4a3-65d2af5ff707" width="150">|
+|[손서연](https://github.com/seoyeonson)|[허소영](https://github.com/SoyoungHeo2)|[정태경](https://github.com/jungtaekyung)|[이광우](https://github.com/gwo0o)|
 <br>
 
 ### 🏖️ 기획
@@ -87,4 +82,4 @@
 <br>
 
 [사용 이미지 출처]
-
+출처 <a href="https://kr.freepik.com/free-vector/hand-drawn-flat-tourists-pack_16863856.htm#query=%EC%97%AC%ED%96%89%ED%95%98%EB%8A%94%20%EC%82%AC%EB%9E%8C%EB%93%A4&position=11&from_view=keyword&track=ais&uuid=229a3f71-f096-42a9-ba85-a5c9643da177">Freepik</a>
